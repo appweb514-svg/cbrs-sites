@@ -118,6 +118,10 @@
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Contact</span>
   </a>
+  <a data-auth-link="1" class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="connexion.html">
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
+    <span class="sidebar-label" data-auth-label>Connexion</span>
+  </a>
 </nav>
 <div class="sidebar-quote p-4 mt-auto border-t border-white/10">
   <div class="w-6 h-0.5 bg-cbrs-green mb-3"></div>
@@ -228,6 +232,7 @@
       <li><a class="hover:text-cbrs-blue" href="planning.html">Planning</a></li>
       <li><a class="hover:text-cbrs-blue" href="adhesion.html">Inscriptions</a></li>
       <li><a class="hover:text-cbrs-blue" href="contact.html">Contact</a></li>
+      <li><a data-auth-link="1" class="hover:text-cbrs-blue" href="connexion.html" data-auth-label>Connexion</a></li>
       <li><a class="hover:text-cbrs-blue" href="liens-utiles.html">Liens utiles</a></li>
     </ul>
   </div>
@@ -941,30 +946,45 @@ const scrapedPhotos = [
 
 function loadScrapedPhotos() {
   const gallery = document.getElementById('gallery');
+
+  function appendPhoto(src, cat, year, caption) {
+    const fig = document.createElement('figure');
+    fig.className = 'gallery-item';
+    fig.setAttribute('data-cat', cat);
+    fig.setAttribute('data-year', year);
+    fig.onclick = function() { openLightbox(src, caption); };
+    fig.innerHTML = '<img src="' + src + '" alt="" loading="lazy"/><figcaption>' + caption + '</figcaption>';
+    gallery.appendChild(fig);
+  }
+
+  let local = [];
+  try { local = JSON.parse(localStorage.getItem('cbrs-gallery') || '[]'); } catch(e) {}
+
   fetch('/api/public/gallery').then(r => r.ok && r.json()).then(data => {
+    if (local.length) {
+      local.forEach(function(p) {
+        appendPhoto(p.dataUrl, p.category || 'vie', p.year || '2026', p.caption || p.filename);
+      });
+    }
     if (data && data.photos && data.photos.length) {
       data.photos.forEach(function(p) {
-        const fig = document.createElement('figure');
-        fig.className = 'gallery-item';
-        fig.setAttribute('data-cat', p.category);
-        fig.setAttribute('data-year', p.year);
-        fig.onclick = function() { openLightbox('photos/' + p.filename, p.caption || 'CBRS ' + p.year); };
-        fig.innerHTML = '<img src="photos/' + p.filename + '" alt="" loading="lazy"/><figcaption>' + (p.caption || 'CBRS ' + p.year) + '</figcaption>';
-        gallery.appendChild(fig);
+        appendPhoto('photos/' + p.filename, p.category, p.year, p.caption || 'CBRS ' + p.year);
       });
-      return;
+    } else if (!local.length) {
+      fallback();
     }
-    fallback();
-  }).catch(function() { fallback(); });
+  }).catch(function() {
+    if (local.length) {
+      local.forEach(function(p) {
+        appendPhoto(p.dataUrl, p.category || 'vie', p.year || '2026', p.caption || p.filename);
+      });
+    } else {
+      fallback();
+    }
+  });
   function fallback() {
     scrapedPhotos.forEach(function(p) {
-      const fig = document.createElement('figure');
-      fig.className = 'gallery-item';
-      fig.setAttribute('data-cat', p.cat);
-      fig.setAttribute('data-year', p.year);
-      fig.onclick = function() { openLightbox('photos/' + p.file, 'CBRS ' + p.year); };
-      fig.innerHTML = '<img src="photos/' + p.file + '" alt="" loading="lazy"/><figcaption>CBRS ' + p.year + '</figcaption>';
-      gallery.appendChild(fig);
+      appendPhoto('photos/' + p.file, p.cat, p.year, 'CBRS ' + p.year);
     });
   }
 }
@@ -1013,4 +1033,5 @@ document.addEventListener('DOMContentLoaded', loadScrapedPhotos);
 })();
 </script>
 
+<script src="auth.js"></script>
 </body></html>

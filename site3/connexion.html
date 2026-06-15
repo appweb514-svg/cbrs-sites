@@ -2,7 +2,7 @@
 <html lang="fr"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Contact - CBRS Club du Beauvaisis de la Retraite Sportive</title>
+<title>Connexion - CBRS Club du Beauvaisis de la Retraite Sportive</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <style data-purpose="custom-fonts">
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap');
@@ -29,7 +29,7 @@
 <style>
   .sidebar { transition: width 0.3s ease; }
   .sidebar.collapsed { width: 4rem; }
-  .sidebar.collapsed .sidebar-logo-text, .sidebar.collapsed .sidebar-label, .sidebar.collapsed .sidebar-quote, .sidebar.collapsed .sidebar-divider { display: none; }
+  .sidebar.collapsed .sidebar-label, .sidebar.collapsed .sidebar-quote, .sidebar.collapsed .sidebar-divider { display: none; }
   .sidebar.collapsed .sidebar-link { justify-content: center; padding: 0.75rem 0; margin-right: 0; border-radius: 0; }
   .sidebar.collapsed .sidebar-link svg { margin-right: 0; }
   .sidebar.collapsed .sidebar-logo { padding: 0.5rem; }
@@ -61,6 +61,25 @@
 
 </head>
 <body class="bg-gray-50 text-cbrs-text antialiased flex min-h-screen">
+<a href="#contenu" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-white focus:text-cbrs-blue focus:px-4 focus:py-2 focus:rounded-lg focus:shadow">Aller au contenu</a>
+<header class="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+  <div class="flex items-center justify-between px-4 py-3">
+    <a href="index.html" class="flex items-center gap-2 font-bold text-cbrs-blue"><img src="logo-cbrs.png" alt="CBRS" class="w-9 h-9 object-contain"/>CBRS</a>
+    <button onclick="toggleMobileMenu()" class="px-3 py-2 rounded-lg bg-cbrs-blue text-white text-sm font-semibold" aria-controls="mobile-menu" aria-expanded="false">Menu</button>
+  </div>
+  <nav id="mobile-menu" class="hidden border-t border-gray-100 bg-white px-4 py-3 space-y-2 text-sm">
+    <a class="block py-2 text-cbrs-blue font-medium" href="index.html">Accueil</a>
+    <a class="block py-2 text-cbrs-blue font-medium" href="activites.html">Activités</a>
+    <a class="block py-2 text-cbrs-blue font-medium" href="planning.html">Planning</a>
+    <a class="block py-2 text-cbrs-blue font-medium" href="formation.html">Formation</a>
+    <a class="block py-2 text-cbrs-blue font-medium" href="sorties-voyages.html">Sorties - Voyages</a>
+    <a class="block py-2 text-cbrs-blue font-medium" href="galerie.html">Galerie photo</a>
+    <a class="block py-2 text-cbrs-blue font-medium" href="liens-utiles.html">Liens utiles</a>
+    <a class="block py-2 text-cbrs-green font-bold" href="adhesion.html">Adhérer</a>
+    <a class="block py-2 text-cbrs-blue font-medium" href="contact.html">Contact</a>
+    <a data-auth-link="1" class="block py-2 text-cbrs-blue font-medium" href="connexion.html" data-auth-label>Connexion</a>
+  </nav>
+</header>
 <aside id="sidebar" class="sidebar w-64 bg-cbrs-blue text-white flex-shrink-0 hidden md:flex flex-col sticky top-0 h-screen overflow-y-auto overflow-x-hidden">
 <div class="sidebar-logo p-3 bg-white flex items-center justify-center">
   <img src="logo-cbrs.png" alt="CBRS" class="w-full h-auto object-contain"/>
@@ -71,43 +90,43 @@
 </button>
 <nav class="flex-1 py-4 space-y-1">
   <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="index.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Accueil</span>
   </a>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="activites.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Activités</span>
   </a>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="planning.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Planning</span>
   </a>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="formation.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Formation</span>
   </a>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="sorties-voyages.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.858 15.355-5.858 21.213 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.858 15.355-5.858 21.213 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Sorties - Voyages</span>
   </a>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="galerie.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Galerie photo</span>
   </a>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="liens-utiles.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Liens utiles</span>
   </a>
   <div class="sidebar-divider border-t border-white/10 my-4 mx-4"></div>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="adhesion.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Adhérer</span>
   </a>
-  <a class="sidebar-link flex items-center px-4 py-2.5 bg-cbrs-green text-white font-medium rounded-r-full mr-4 transition-colors" href="contact.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="contact.html">
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Contact</span>
   </a>
-  <a data-auth-link="1" class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="connexion.html">
+  <a data-auth-link="1" class="sidebar-link flex items-center px-4 py-2.5 bg-cbrs-green text-white font-medium rounded-r-full mr-4 transition-colors" href="connexion.html">
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
     <span class="sidebar-label" data-auth-label>Connexion</span>
   </a>
@@ -117,87 +136,58 @@
   <p class="text-sm font-bold leading-tight"><span class="text-cbrs-green">Le sport</span><br/>au service<br/>du bien-être<br/>et du lien<br/>social</p>
 </div>
 </aside>
-<main class="flex-1 overflow-x-hidden relative">
+<main id="contenu" class="flex-1 overflow-x-hidden relative pt-16 md:pt-0">
 
 
 <section class="relative h-[260px] bg-cbrs-blue overflow-hidden flex items-center">
   <div class="absolute inset-0 bg-gradient-to-r from-cbrs-blue/90 to-cbrs-blue-light/70"></div>
   <div class="relative z-10 px-8 md:px-16 max-w-4xl">
-    <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight mb-3">Contact <span class="text-cbrs-green font-serif-italic">CBRS</span></h1>
-    <p class="text-base text-white/90 max-w-xl">Une question sur le club, les activités, les horaires ou les sorties ? Retrouvez ici nos coordonnées.</p>
+    <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight mb-3">Espace <span class="text-cbrs-green font-serif-italic">membres</span></h1>
+    <p class="text-base text-white/90 max-w-xl">Accédez à l'interface d'administration du site pour gérer les activités, la galerie, le flash info et les paramètres.</p>
   </div>
 </section>
 
-<section class="max-w-7xl mx-auto px-6 py-12">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-    <div>
-      <h2 class="text-2xl font-bold text-cbrs-text mb-6">Nous <span class="text-cbrs-blue font-serif-italic">contacter</span></h2>
-      <div class="space-y-5">
-        <div class="flex items-start gap-4">
-          <div class="w-11 h-11 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
-            <svg class="w-5 h-5 text-cbrs-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-          </div>
-          <div>
-            <h3 class="font-semibold text-gray-900 mb-1">Adresse</h3>
-            <p class="text-gray-600 text-sm">3 rue de l'Industrie<br/>60000 Beauvais</p>
-          </div>
-        </div>
-        <div class="flex items-start gap-4">
-          <div class="w-11 h-11 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
-            <svg class="w-5 h-5 text-cbrs-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-          </div>
-          <div>
-            <h3 class="font-semibold text-gray-900 mb-1">Téléphone</h3>
-            <p class="text-gray-600 text-sm"><a href="tel:0360361747" class="hover:text-cbrs-green">03 60 36 17 47</a></p>
-          </div>
-        </div>
-        <div class="flex items-start gap-4">
-          <div class="w-11 h-11 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
-            <svg class="w-5 h-5 text-cbrs-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          </div>
-          <div>
-            <h3 class="font-semibold text-gray-900 mb-1">E-mail</h3>
-            <p class="text-gray-600 text-sm"><a href="mailto:cbrs@cbrs60.fr" class="hover:text-cbrs-green">cbrs@cbrs60.fr</a></p>
-          </div>
-        </div>
-        <div class="flex items-start gap-4">
-          <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
-            <svg class="w-5 h-5 text-cbrs-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-          </div>
-          <div>
-            <h3 class="font-semibold text-gray-900 mb-1">Sorties & Voyages – Martine</h3>
-            <p class="text-gray-600 text-sm"><a href="tel:0632119029" class="hover:text-cbrs-green">06 32 11 90 29</a></p>
-          </div>
-        </div>
+<section class="max-w-md mx-auto px-6 py-16">
+  <div class="bg-white rounded-2xl shadow-card p-8">
+    <div class="text-center mb-6">
+      <div class="w-16 h-16 bg-cbrs-blue rounded-2xl flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
       </div>
-      <div class="mt-8 bg-cbrs-gray-100 rounded-2xl p-5">
-        <h3 class="font-semibold text-cbrs-blue mb-3 text-sm">Permanence bureau</h3>
-        <div class="space-y-1.5 text-sm text-gray-600">
-          <div class="flex justify-between"><span>Lundi</span><span class="font-medium">9h00 – 12h00</span></div>
-          <div class="flex justify-between"><span>Mercredi</span><span class="font-medium">9h00 – 12h00</span></div>
-          <div class="flex justify-between"><span>Vendredi</span><span class="font-medium">9h00 – 12h00</span></div>
-          <div class="flex justify-between text-gray-400"><span>Mardi, Jeudi, Samedi</span><span>Fermé</span></div>
-        </div>
-      </div>
+      <h2 class="text-2xl font-bold text-cbrs-text">Connexion</h2>
+      <p class="text-sm text-gray-500 mt-1">Saisissez vos identifiants pour continuer</p>
     </div>
-    <div>
-      <h2 class="text-2xl font-bold text-cbrs-text mb-6">Nous <span class="text-cbrs-blue font-serif-italic">trouver</span></h2>
-      <div class="rounded-2xl overflow-hidden shadow-md h-72 bg-gray-100">
-        <iframe title="Localisation CBRS Beauvais" width="100%" height="100%" style="border:0;" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=2.0712%2C49.4290%2C2.0812%2C49.4340&amp;layer=mapnik&amp;marker=49.43156%2C2.07616"></iframe>
-      </div>
-      <p class="text-xs text-gray-400 mt-2">&copy; OpenStreetMap contributors</p>
-      <a href="https://www.openstreetmap.org/?mlat=49.43156&mlon=2.07616#map=17/49.43156/2.07616" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-sm text-cbrs-green hover:underline mt-2">
-        Ouvrir dans OpenStreetMap <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
 
-<section class="bg-white border-y border-gray-100 py-10">
-  <div class="max-w-3xl mx-auto px-6 text-center">
-    <h2 class="text-2xl font-bold text-gray-900 mb-3">Vous souhaitez adhérer ?</h2>
-    <p class="text-gray-600 mb-5">La page adhésion regroupe le formulaire et les informations d'inscription.</p>
-    <a href="adhesion.html" class="inline-block bg-cbrs-green hover:bg-cbrs-green-hover text-white font-semibold py-3 px-7 rounded-full transition-colors text-sm">Aller à la page adhésion</a>
+    <form id="login-form" class="space-y-4" novalidate>
+      <div>
+        <label for="login-username" class="block text-sm font-semibold text-gray-700 mb-1">Identifiant</label>
+        <input type="text" id="login-username" name="username" required autocomplete="username"
+               class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none transition-colors"
+               placeholder="admin ou formateur"/>
+      </div>
+      <div>
+        <label for="login-password" class="block text-sm font-semibold text-gray-700 mb-1">Mot de passe</label>
+        <input type="password" id="login-password" name="password" required autocomplete="current-password"
+               class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none transition-colors"
+               placeholder="••••••••"/>
+      </div>
+      <div id="login-error" class="hidden bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-3 py-2"></div>
+      <button type="submit"
+              class="w-full bg-cbrs-green hover:bg-cbrs-green-hover text-white font-semibold py-2.5 rounded-lg transition-colors">
+        Se connecter
+      </button>
+    </form>
+
+    <div class="mt-6 pt-6 border-t border-gray-100">
+      <p class="text-xs text-gray-500 text-center">
+        <strong>Identifiants de démonstration :</strong><br>
+        <code class="bg-gray-100 px-1.5 py-0.5 rounded">admin</code> /
+        <code class="bg-gray-100 px-1.5 py-0.5 rounded">cbrs2026</code>
+        (accès complet)<br>
+        <code class="bg-gray-100 px-1.5 py-0.5 rounded">formateur</code> /
+        <code class="bg-gray-100 px-1.5 py-0.5 rounded">cbrs2026</code>
+        (activités uniquement)
+      </p>
+    </div>
   </div>
 </section>
 
@@ -208,7 +198,7 @@
       <img src="logo-cbrs.png" alt="CBRS" class="w-8 h-8 object-contain"/>
       <div class="text-xs text-gray-600 font-medium leading-tight">Club du Beauvaisis<br/>de la Retraite Sportive</div>
     </div>
-    <p class="text-xs text-gray-500 mb-2 max-w-xs">Association loi 1901 affiliée à la Fédération Française de la Retraite Sportive (FFRS).</p>
+    <p class="text-xs text-gray-500 mb-2 max-w-xs">Association loi 1901 affiliée à la FFRS et au CODERS de l'Oise.</p>
     <a class="text-xs text-cbrs-blue hover:underline" href="contact.html">Mentions légales</a>
   </div>
   <div>
@@ -225,7 +215,6 @@
       <li><a class="hover:text-cbrs-blue" href="planning.html">Planning</a></li>
       <li><a class="hover:text-cbrs-blue" href="adhesion.html">Inscriptions</a></li>
       <li><a class="hover:text-cbrs-blue" href="contact.html">Contact</a></li>
-      <li><a data-auth-link="1" class="hover:text-cbrs-blue" href="connexion.html" data-auth-label>Connexion</a></li>
       <li><a class="hover:text-cbrs-blue" href="liens-utiles.html">Liens utiles</a></li>
     </ul>
   </div>
@@ -233,13 +222,13 @@
     <h4 class="font-bold text-gray-900 mb-3 text-sm">Multimédia</h4>
     <ul class="space-y-1.5 text-xs text-gray-600">
       <li><a class="hover:text-cbrs-blue" href="galerie.html">Galerie photo</a></li>
-      <li><a class="hover:text-cbrs-blue" href="galerie.html">Vidéos</a></li>
     </ul>
   </div>
 </div>
 <div class="border-t border-gray-100 py-4 text-center text-xs text-gray-400">2026 &copy; CBRS — Club du Beauvaisis de la Retraite Sportive</div>
 </footer>
 </main>
+
 <script>
 let sidebarCollapsed = false;
 function toggleSidebar() {
@@ -249,10 +238,51 @@ function toggleSidebar() {
   const btn = s.querySelector('.sidebar-toggle span');
   if (btn) btn.textContent = sidebarCollapsed ? 'Ouvrir' : 'Réduire';
 }
+function toggleMobileMenu() {
+  const m = document.getElementById('mobile-menu');
+  m.classList.toggle('hidden');
+}
+
+</script>
+<script src="auth.js"></script>
+<script>
+const USERS = {
+  admin: { password: 'cbrs2026', role: 'admin', name: 'Administrateur' },
+  formateur: { password: 'cbrs2026', role: 'formateur', name: 'Animateur' }
+};
+
+const form = document.getElementById('login-form');
+const errorBox = document.getElementById('login-error');
+
+if (CBRS_AUTH.isLoggedIn()) {
+  window.location.href = 'admin.html';
+}
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const username = document.getElementById('login-username').value.trim().toLowerCase();
+  const password = document.getElementById('login-password').value;
+
+  const user = USERS[username];
+  if (!user || user.password !== password) {
+    errorBox.textContent = 'Identifiant ou mot de passe incorrect.';
+    errorBox.classList.remove('hidden');
+    return;
+  }
+
+  const auth = {
+    username: user.role,
+    name: user.name,
+    role: user.role,
+    loginAt: new Date().toISOString()
+  };
+  localStorage.setItem('cbrs-auth', JSON.stringify(auth));
+  window.location.href = 'admin.html';
+});
 </script>
 
 <div class="accessibility-panel" id="accessibility-panel" aria-labelledby="accessibility-title">
-  <h2 id="accessibility-title">Options d’accessibilité</h2>
+  <h2 id="accessibility-title">Options d'accessibilité</h2>
   <button type="button" data-a11y-toggle="a11y-large" aria-pressed="false">Agrandir le texte</button>
   <button type="button" data-a11y-toggle="a11y-contrast" aria-pressed="false">Contraste renforcé</button>
   <button type="button" data-a11y-toggle="a11y-links" aria-pressed="false">Souligner les liens</button>
@@ -292,5 +322,4 @@ function toggleSidebar() {
 })();
 </script>
 
-<script src="auth.js"></script>
 </body></html>
