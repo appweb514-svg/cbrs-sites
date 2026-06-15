@@ -2,72 +2,66 @@
 <html lang="fr"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Admin - CBRS</title>
+<title>Admin — CBRS</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<style data-purpose="custom-fonts">
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap');
-    body { font-family: 'Inter', sans-serif; }
-    .font-serif-italic { font-family: 'Playfair Display', serif; font-style: italic; }
-  </style>
-<script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'cbrs-blue': '#0a3273', 'cbrs-blue-light': '#1e4b99', 'cbrs-green': '#58a01a',
-            'cbrs-green-hover': '#4a8716', 'cbrs-teal': '#145c75', 'cbrs-gray-100': '#f8f9fa',
-            'cbrs-gray-200': '#e9ecef', 'cbrs-text': '#333333', 'cbrs-text-light': '#666666',
-          },
-          boxShadow: {
-            'card': '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)',
-            'card-hover': '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
-          }
-        }
-      }
-    }
-  </script>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  body { font-family: 'Inter', sans-serif; }
   .tab-active { background-color: #0a3273; color: #fff; }
   .tab-active:hover { background-color: #1e4b99; }
-  .toast { animation: slideIn 0.3s ease-out; }
-  @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
   .admin-section { display: none; }
   .admin-section.active { display: block; }
   .photo-thumb { aspect-ratio: 1; object-fit: cover; }
+  .toast { animation: slideIn 0.3s ease-out; }
+  @keyframes slideIn { from { transform: translateY(-10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 </style>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'cbrs-blue': '#0a3273', 'cbrs-blue-light': '#1e4b99',
+          'cbrs-green': '#58a01a', 'cbrs-green-hover': '#4a8716',
+          'cbrs-teal': '#145c75', 'cbrs-gray-100': '#f8f9fa',
+          'cbrs-gray-200': '#e9ecef', 'cbrs-text': '#333333',
+        },
+        boxShadow: {
+          'card': '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)',
+        }
+      }
+    }
+  }
+</script>
 </head>
 <body class="bg-gray-100 text-cbrs-text antialiased min-h-screen">
 
 <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
   <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
     <div class="flex items-center gap-3">
-      <img src="logo-cbrs.png" alt="CBRS" class="w-9 h-9 object-contain"/>
+      <img src="logo-cbrs.png" alt="" class="w-8 h-8 object-contain"/>
       <div>
-        <div class="text-sm font-bold text-cbrs-blue">CBRS Admin</div>
-        <div class="text-[10px] text-gray-500">Gestion du site</div>
+        <span class="text-sm font-bold text-cbrs-blue">CBRS Admin</span>
+        <span class="text-[10px] text-gray-500 ml-2" id="user-role-label"></span>
       </div>
     </div>
     <div class="flex items-center gap-3">
-      <div class="text-right hidden sm:block">
-        <div id="user-name" class="text-sm font-semibold text-gray-900">—</div>
-        <div id="user-role" class="text-[10px] text-gray-500 uppercase tracking-wider">—</div>
-      </div>
-      <a href="index.html" class="px-3 py-1.5 text-sm text-gray-600 hover:text-cbrs-blue transition-colors">Voir le site</a>
-      <button onclick="logout()" class="px-3 py-1.5 text-sm bg-red-50 text-red-600 hover:bg-red-100 rounded-lg transition-colors font-medium">Déconnexion</button>
+      <span class="text-sm text-gray-700" id="user-name-label"></span>
+      <a href="index.html" class="text-xs text-gray-500 hover:text-cbrs-blue transition-colors">Voir le site</a>
+      <button onclick="logout()" class="text-xs px-3 py-1.5 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg transition-colors font-medium">Déconnexion</button>
     </div>
   </div>
 </header>
 
-<div id="toast-container" class="fixed top-20 right-6 z-50 space-y-2"></div>
+<div id="toast-container" class="fixed top-16 right-6 z-50 space-y-2"></div>
 
 <main class="max-w-7xl mx-auto px-6 py-8">
   <div class="mb-6">
-    <h1 class="text-2xl md:text-3xl font-bold text-cbrs-text">Tableau de bord</h1>
-    <p class="text-sm text-gray-500 mt-1">Gérez les contenus du site CBRS. Les modifications sont sauvegardées localement dans votre navigateur.</p>
+    <h1 class="text-2xl font-bold">Tableau de bord</h1>
+    <p class="text-sm text-gray-500 mt-1">Les modifications sont stockées localement dans votre navigateur.</p>
   </div>
 
   <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-6 text-xs text-amber-800">
-    <strong>Mode démo :</strong> les modifications sont stockées dans le <code>localStorage</code> de votre navigateur uniquement. Pour une persistance réelle (visible par tous les visiteurs), il faut migrer vers Vercel KV ou un backend avec base de données.
+    <strong>Mode démo :</strong> modifications stockées en <code>localStorage</code> uniquement.
   </div>
 
   <nav class="flex flex-wrap gap-2 mb-6" id="tabs-nav">
@@ -78,38 +72,36 @@
   </nav>
 
   <section id="section-flash" class="admin-section bg-white rounded-2xl shadow-card p-6">
-    <h2 class="text-xl font-bold text-cbrs-text mb-1">Flash info</h2>
-    <p class="text-sm text-gray-500 mb-6">Bandeau d'information affiché en haut de la page d'accueil.</p>
-
+    <h2 class="text-lg font-bold mb-1">Flash info</h2>
+    <p class="text-sm text-gray-500 mb-6">Bandeau d'information affiché sur l'accueil.</p>
     <form id="flash-form" class="space-y-4 max-w-2xl">
       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1">Activer le bandeau</label>
-        <label class="inline-flex items-center gap-2 cursor-pointer">
+        <label class="inline-flex items-center gap-2 cursor-pointer text-sm">
           <input type="checkbox" id="flash-enabled" class="w-4 h-4 text-cbrs-green focus:ring-cbrs-green border-gray-300 rounded">
-          <span class="text-sm">Afficher le flash info sur le site</span>
+          Afficher le bandeau
         </label>
       </div>
       <div>
         <label for="flash-title" class="block text-sm font-semibold text-gray-700 mb-1">Titre</label>
-        <input type="text" id="flash-title" maxlength="60" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none" placeholder="Flash info">
+        <input type="text" id="flash-title" maxlength="60" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none text-sm">
       </div>
       <div>
         <label for="flash-message" class="block text-sm font-semibold text-gray-700 mb-1">Message</label>
-        <textarea id="flash-message" rows="3" maxlength="200" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none" placeholder="Votre message…"></textarea>
+        <textarea id="flash-message" rows="3" maxlength="200" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none text-sm"></textarea>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label for="flash-cta-label" class="block text-sm font-semibold text-gray-700 mb-1">Texte du bouton</label>
-          <input type="text" id="flash-cta-label" maxlength="40" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none" placeholder="En savoir plus">
+          <input type="text" id="flash-cta-label" maxlength="40" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none text-sm">
         </div>
         <div>
           <label for="flash-cta-url" class="block text-sm font-semibold text-gray-700 mb-1">Lien du bouton</label>
-          <input type="text" id="flash-cta-url" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none" placeholder="adhesion.html">
+          <input type="text" id="flash-cta-url" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none text-sm">
         </div>
       </div>
       <div class="flex items-center gap-3 pt-2">
-        <button type="submit" class="px-5 py-2 bg-cbrs-green hover:bg-cbrs-green-hover text-white font-semibold rounded-lg transition-colors">Enregistrer</button>
-        <button type="button" onclick="resetFlashInfo()" class="px-5 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors">Réinitialiser (valeur serveur)</button>
+        <button type="submit" class="px-5 py-2 bg-cbrs-green hover:bg-cbrs-green-hover text-white font-semibold rounded-lg transition-colors text-sm">Enregistrer</button>
+        <button type="button" onclick="resetFlashInfo()" class="px-5 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors text-sm">Réinitialiser</button>
         <span id="flash-saved-at" class="text-xs text-gray-500"></span>
       </div>
     </form>
@@ -118,73 +110,66 @@
   <section id="section-activities" class="admin-section bg-white rounded-2xl shadow-card p-6">
     <div class="flex items-center justify-between mb-4">
       <div>
-        <h2 class="text-xl font-bold text-cbrs-text mb-1">Activités</h2>
-        <p class="text-sm text-gray-500">Modifiez les descriptions et animateurs des activités du club.</p>
+        <h2 class="text-lg font-bold mb-1">Activités</h2>
+        <p class="text-sm text-gray-500">Modifiez les descriptions des activités.</p>
       </div>
-      <span id="activities-count" class="text-xs text-gray-500">—</span>
+      <span id="activities-count" class="text-xs text-gray-500"></span>
     </div>
-
-    <div class="flex gap-2 mb-4">
-      <input type="text" id="activity-search" placeholder="Rechercher une activité…" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none">
-    </div>
-
+    <input type="text" id="activity-search" placeholder="Rechercher…" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none mb-4">
     <div id="activities-list" class="space-y-3"></div>
   </section>
 
   <section id="section-gallery" class="admin-section bg-white rounded-2xl shadow-card p-6">
-    <h2 class="text-xl font-bold text-cbrs-text mb-1">Galerie photo</h2>
-    <p class="text-sm text-gray-500 mb-4">Ajoutez des photos à la galerie. Les images sont stockées en local dans votre navigateur (limite ≈ 5 Mo total).</p>
-
+    <h2 class="text-lg font-bold mb-1">Galerie photo</h2>
+    <p class="text-sm text-gray-500 mb-4">Ajoutez des photos (stockage local, limite ≈ 5 Mo).</p>
     <div class="mb-6 p-4 border-2 border-dashed border-gray-300 rounded-lg text-center">
       <input type="file" id="photo-input" accept="image/*" multiple class="hidden">
-      <button onclick="document.getElementById('photo-input').click()" class="px-4 py-2 bg-cbrs-blue hover:bg-cbrs-blue-light text-white font-semibold rounded-lg transition-colors">
-        + Ajouter des photos
-      </button>
-      <p class="text-xs text-gray-500 mt-2">JPG, PNG, WebP. Stockage local uniquement.</p>
+      <button onclick="document.getElementById('photo-input').click()" class="px-4 py-2 bg-cbrs-blue hover:bg-cbrs-blue-light text-white font-semibold rounded-lg transition-colors text-sm">+ Ajouter des photos</button>
+      <p class="text-xs text-gray-500 mt-2">JPG, PNG, WebP — 2 Mo max</p>
       <div id="upload-status" class="text-xs mt-2"></div>
     </div>
-
     <div class="flex items-center justify-between mb-3">
-      <div class="text-sm text-gray-600"><span id="gallery-count">0</span> photos</div>
-      <button onclick="clearGallery()" class="text-xs text-red-600 hover:underline">Vider la galerie</button>
+      <span class="text-sm text-gray-600"><span id="gallery-count">0</span> photos</span>
+      <button onclick="clearGallery()" class="text-xs text-red-600 hover:underline">Tout supprimer</button>
     </div>
     <div id="gallery-grid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2"></div>
   </section>
 
   <section id="section-settings" class="admin-section bg-white rounded-2xl shadow-card p-6">
-    <h2 class="text-xl font-bold text-cbrs-text mb-1">Paramètres du site</h2>
-    <p class="text-sm text-gray-500 mb-6">Modifiez les informations globales du club (stockage local).</p>
-
+    <h2 class="text-lg font-bold mb-1">Paramètres du site</h2>
+    <p class="text-sm text-gray-500 mb-6">Informations globales du club.</p>
     <form id="settings-form" class="space-y-4 max-w-2xl">
       <div>
         <label for="set-name" class="block text-sm font-semibold text-gray-700 mb-1">Nom du club</label>
-        <input type="text" id="set-name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none">
+        <input type="text" id="set-name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none text-sm">
       </div>
-      <div>
-        <label for="set-email" class="block text-sm font-semibold text-gray-700 mb-1">Email de contact</label>
-        <input type="email" id="set-email" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="set-email" class="block text-sm font-semibold text-gray-700 mb-1">Email</label>
+          <input type="email" id="set-email" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none text-sm">
+        </div>
+        <div>
+          <label for="set-phone" class="block text-sm font-semibold text-gray-700 mb-1">Téléphone</label>
+          <input type="text" id="set-phone" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none text-sm">
+        </div>
       </div>
-      <div>
-        <label for="set-phone" class="block text-sm font-semibold text-gray-700 mb-1">Téléphone</label>
-        <input type="text" id="set-phone" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none">
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="grid grid-cols-3 gap-4">
         <div>
           <label for="set-members" class="block text-sm font-semibold text-gray-700 mb-1">Adhérents</label>
-          <input type="number" id="set-members" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none">
+          <input type="number" id="set-members" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none text-sm">
         </div>
         <div>
-          <label for="set-activities" class="block text-sm font-semibold text-gray-700 mb-1">Nb activités</label>
-          <input type="number" id="set-activities" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none">
+          <label for="set-activities" class="block text-sm font-semibold text-gray-700 mb-1">Activités</label>
+          <input type="number" id="set-activities" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none text-sm">
         </div>
         <div>
-          <label for="set-founded" class="block text-sm font-semibold text-gray-700 mb-1">Année fondation</label>
-          <input type="number" id="set-founded" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none">
+          <label for="set-founded" class="block text-sm font-semibold text-gray-700 mb-1">Fondation</label>
+          <input type="number" id="set-founded" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none text-sm">
         </div>
       </div>
-      <div class="flex items-center gap-3 pt-2">
-        <button type="submit" class="px-5 py-2 bg-cbrs-green hover:bg-cbrs-green-hover text-white font-semibold rounded-lg transition-colors">Enregistrer</button>
-        <button type="button" onclick="resetSettings()" class="px-5 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors">Réinitialiser</button>
+      <div class="flex gap-3 pt-2">
+        <button type="submit" class="px-5 py-2 bg-cbrs-green hover:bg-cbrs-green-hover text-white font-semibold rounded-lg transition-colors text-sm">Enregistrer</button>
+        <button type="button" onclick="resetSettings()" class="px-5 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors text-sm">Réinitialiser</button>
       </div>
     </form>
   </section>
@@ -200,11 +185,7 @@ function logout() {
 }
 
 function toast(message, type = 'success') {
-  const colors = {
-    success: 'bg-green-50 border-green-200 text-green-800',
-    error: 'bg-red-50 border-red-200 text-red-800',
-    info: 'bg-blue-50 border-blue-200 text-blue-800'
-  };
+  const colors = { success: 'bg-green-50 border-green-200 text-green-800', error: 'bg-red-50 border-red-200 text-red-800', info: 'bg-blue-50 border-blue-200 text-blue-800' };
   const el = document.createElement('div');
   el.className = `toast px-4 py-2 rounded-lg border text-sm font-medium ${colors[type]}`;
   el.textContent = message;
@@ -212,13 +193,8 @@ function toast(message, type = 'success') {
   setTimeout(() => el.remove(), 3500);
 }
 
-function getLS(key, fallback) {
-  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
-  catch (e) { return fallback; }
-}
-function setLS(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
-}
+function getLS(key, fallback) { try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; } }
+function setLS(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
 
 async function loadServerData() {
   try {
@@ -233,25 +209,13 @@ async function loadServerData() {
     SERVER_DATA.settings = setRes.settings || {};
     SERVER_DATA.gallery = galRes.photos || [];
   } catch (e) {
-    console.error('Failed to load server data', e);
     toast('Impossible de charger les données du serveur', 'error');
   }
 }
 
-function effectiveFlash() {
-  const override = getLS('cbrs-flash-info', null);
-  return override || SERVER_DATA.flash;
-}
-
-function effectiveSettings() {
-  const override = getLS('cbrs-settings', null);
-  return override || SERVER_DATA.settings;
-}
-
-function effectiveGallery() {
-  const local = getLS('cbrs-gallery', []);
-  return [...local, ...SERVER_DATA.gallery];
-}
+function effectiveFlash() { return getLS('cbrs-flash-info', null) || SERVER_DATA.flash; }
+function effectiveSettings() { return getLS('cbrs-settings', null) || SERVER_DATA.settings; }
+function effectiveGallery() { return [...getLS('cbrs-gallery', []), ...SERVER_DATA.gallery]; }
 
 function renderFlash() {
   const flash = effectiveFlash();
@@ -261,8 +225,7 @@ function renderFlash() {
   document.getElementById('flash-message').value = flash.message || '';
   document.getElementById('flash-cta-label').value = flash.cta_label || '';
   document.getElementById('flash-cta-url').value = flash.cta_url || '';
-  const savedAt = getLS('cbrs-flash-info-saved-at', null);
-  document.getElementById('flash-saved-at').textContent = savedAt ? `Sauvegardé ${new Date(savedAt).toLocaleString('fr-FR')}` : '';
+  document.getElementById('flash-saved-at').textContent = getLS('cbrs-flash-info-saved-at', null) ? `Sauvegardé ${new Date(getLS('cbrs-flash-info-saved-at')).toLocaleString('fr-FR')}` : '';
 }
 
 function renderSettings() {
@@ -276,13 +239,9 @@ function renderSettings() {
 }
 
 function renderActivities(filter = '') {
-  const container = document.getElementById('activities-list');
-  const filtered = SERVER_DATA.activities.filter(a => {
-    if (!filter) return true;
-    return a.name.toLowerCase().includes(filter.toLowerCase()) ||
-           (a.category || '').toLowerCase().includes(filter.toLowerCase());
-  });
+  const filtered = SERVER_DATA.activities.filter(a => !filter || a.name.toLowerCase().includes(filter.toLowerCase()) || (a.category||'').toLowerCase().includes(filter.toLowerCase()));
   document.getElementById('activities-count').textContent = `${filtered.length} / ${SERVER_DATA.activities.length} activités`;
+  const container = document.getElementById('activities-list');
   container.innerHTML = '';
   filtered.forEach(act => {
     const overrides = getLS('cbrs-activities', {});
@@ -291,19 +250,17 @@ function renderActivities(filter = '') {
     card.className = 'border border-gray-200 rounded-xl p-4 hover:border-cbrs-blue transition-colors';
     card.innerHTML = `
       <div class="flex items-start gap-3">
-        <div class="w-12 h-12 bg-cbrs-gray-100 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-          <img src="${act.logo}" alt="${act.name}" class="w-10 h-10 object-contain" onerror="this.style.display='none'"/>
+        <div class="w-10 h-10 bg-cbrs-gray-100 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
+          <img src="${act.logo}" alt="" class="w-8 h-8 object-contain" onerror="this.style.display='none'"/>
         </div>
         <div class="flex-1 min-w-0">
           <div class="flex items-center justify-between gap-2">
-            <h3 class="font-bold text-cbrs-text">${act.name}</h3>
+            <h3 class="font-semibold text-sm">${act.name}</h3>
             <button onclick="editActivity('${act.id}')" class="text-xs px-3 py-1 bg-cbrs-blue hover:bg-cbrs-blue-light text-white rounded-lg transition-colors">Éditer</button>
           </div>
           <p class="text-xs text-gray-500 mt-0.5 line-clamp-2">${local.short_description || act.short_description}</p>
-          <div class="text-[10px] text-gray-400 mt-1">${act.schedule && act.schedule.length ? act.schedule.map(s => s.day).join(' · ') : 'Pas de créneau'}</div>
         </div>
-      </div>
-    `;
+      </div>`;
     container.appendChild(card);
   });
 }
@@ -318,28 +275,26 @@ function editActivity(id) {
   if (newDesc === null) return;
   overrides[id] = { ...local, short_description: newDesc };
   setLS('cbrs-activities', overrides);
-  toast(`Activité "${act.name}" mise à jour`, 'success');
+  toast(`"${act.name}" mis à jour`);
   renderActivities(document.getElementById('activity-search').value);
 }
 
 function renderGallery() {
-  const grid = document.getElementById('gallery-grid');
   const photos = effectiveGallery();
+  const grid = document.getElementById('gallery-grid');
   document.getElementById('gallery-count').textContent = photos.length;
   grid.innerHTML = '';
-  if (photos.length === 0) {
-    grid.innerHTML = '<p class="col-span-full text-center text-sm text-gray-500 py-8">Aucune photo. Ajoutez-en via le bouton ci-dessus.</p>';
+  if (!photos.length) {
+    grid.innerHTML = '<p class="col-span-full text-center text-xs text-gray-500 py-8">Aucune photo.</p>';
     return;
   }
   photos.slice(0, 80).forEach((p, i) => {
-    const src = p.url || p.dataUrl;
     const isLocal = !!p.dataUrl;
     const card = document.createElement('div');
     card.className = 'relative group';
     card.innerHTML = `
-      <img src="${src}" alt="" class="photo-thumb w-full rounded-lg border border-gray-200" loading="lazy"/>
-      ${isLocal ? `<button onclick="removePhoto(${i})" class="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity">×</button>` : ''}
-    `;
+      <img src="${p.dataUrl || p.url || 'photos/' + p.filename}" alt="" class="photo-thumb w-full rounded-lg border border-gray-200" loading="lazy"/>
+      ${isLocal ? `<button onclick="removePhoto(${i})" class="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity">×</button>` : ''}`;
     grid.appendChild(card);
   });
 }
@@ -367,24 +322,9 @@ document.getElementById('photo-input').addEventListener('change', async function
   status.textContent = `Traitement de ${files.length} photo(s)…`;
   const local = getLS('cbrs-gallery', []);
   for (const file of files) {
-    if (file.size > 2 * 1024 * 1024) {
-      status.textContent += ` [${file.name}: ignoré (> 2 Mo)]`;
-      continue;
-    }
-    const dataUrl = await new Promise((resolve) => {
-      const r = new FileReader();
-      r.onload = () => resolve(r.result);
-      r.readAsDataURL(file);
-    });
-    local.push({
-      filename: file.name,
-      dataUrl,
-      year: String(new Date().getFullYear()),
-      category: 'vie',
-      caption: file.name.replace(/\.[^.]+$/, ''),
-      sort_order: local.length,
-      addedAt: new Date().toISOString()
-    });
+    if (file.size > 2 * 1024 * 1024) { status.textContent += ` [${file.name}: > 2 Mo]`; continue; }
+    const dataUrl = await new Promise(r => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(file); });
+    local.push({ filename: file.name, dataUrl, year: String(new Date().getFullYear()), category: 'vie', caption: file.name.replace(/\.[^.]+$/, ''), sort_order: local.length, addedAt: new Date().toISOString() });
   }
   setLS('cbrs-gallery', local);
   status.textContent = `${files.length} photo(s) ajoutée(s).`;
@@ -394,16 +334,15 @@ document.getElementById('photo-input').addEventListener('change', async function
 
 document.getElementById('flash-form').addEventListener('submit', function(e) {
   e.preventDefault();
-  const flash = {
+  setLS('cbrs-flash-info', {
     enabled: document.getElementById('flash-enabled').checked ? 1 : 0,
     title: document.getElementById('flash-title').value,
     message: document.getElementById('flash-message').value,
     cta_label: document.getElementById('flash-cta-label').value,
     cta_url: document.getElementById('flash-cta-url').value
-  };
-  setLS('cbrs-flash-info', flash);
+  });
   setLS('cbrs-flash-info-saved-at', new Date().toISOString());
-  toast('Flash info enregistré', 'success');
+  toast('Flash info enregistré');
   renderFlash();
 });
 
@@ -417,70 +356,49 @@ function resetFlashInfo() {
 
 document.getElementById('settings-form').addEventListener('submit', function(e) {
   e.preventDefault();
-  const s = {
+  setLS('cbrs-settings', {
     club_name: document.getElementById('set-name').value,
     contact_email: document.getElementById('set-email').value,
     contact_phone: document.getElementById('set-phone').value,
     members_count: document.getElementById('set-members').value,
     activities_count: document.getElementById('set-activities').value,
     founded_year: document.getElementById('set-founded').value
-  };
-  setLS('cbrs-settings', s);
-  toast('Paramètres enregistrés', 'success');
+  });
+  toast('Paramètres enregistrés');
 });
 
 function resetSettings() {
-  if (!confirm('Réinitialiser les paramètres ?')) return;
+  if (!confirm('Réinitialiser ?')) return;
   localStorage.removeItem('cbrs-settings');
   renderSettings();
   toast('Paramètres réinitialisés', 'info');
 }
 
-document.getElementById('activity-search').addEventListener('input', function(e) {
-  renderActivities(e.target.value);
-});
+document.getElementById('activity-search').addEventListener('input', function(e) { renderActivities(e.target.value); });
 
 function showTab(tab) {
   document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => {
-    b.classList.remove('tab-active');
-  });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-active'));
   document.getElementById('section-' + tab).classList.add('active');
   const btn = document.querySelector(`.tab-btn[data-tab="${tab}"]`);
   if (btn) btn.classList.add('tab-active');
 }
 
 function applyRoleRestrictions(role) {
-  document.querySelectorAll('[data-role="admin"]').forEach(btn => {
-    if (role !== 'admin') {
-      btn.style.display = 'none';
-    }
-  });
-  if (role === 'formateur') {
-    showTab('activities');
-  } else {
-    showTab('flash');
-  }
+  document.querySelectorAll('[data-role="admin"]').forEach(btn => { btn.style.display = role !== 'admin' ? 'none' : ''; });
+  showTab(role === 'formateur' ? 'activities' : 'flash');
 }
 
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => showTab(btn.dataset.tab));
-});
-
+document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => showTab(btn.dataset.tab)));
 </script>
 <script src="auth.js"></script>
 <script>
 (async function init() {
-  if (!CBRS_AUTH.isLoggedIn()) {
-    window.location.href = 'connexion.html';
-    return;
-  }
+  if (!CBRS_AUTH.isLoggedIn()) { window.location.href = 'connexion.html'; return; }
   CURRENT_USER = CBRS_AUTH.getAuth();
-  document.getElementById('user-name').textContent = CURRENT_USER.name;
-  document.getElementById('user-role').textContent = CURRENT_USER.role;
-
+  document.getElementById('user-name-label').textContent = CURRENT_USER.name;
+  document.getElementById('user-role-label').textContent = `(${CURRENT_USER.role})`;
   await loadServerData();
-
   applyRoleRestrictions(CURRENT_USER.role);
   renderFlash();
   renderSettings();
@@ -488,5 +406,4 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   renderGallery();
 })();
 </script>
-
 </body></html>
