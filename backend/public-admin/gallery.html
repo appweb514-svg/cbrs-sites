@@ -1,0 +1,55 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Galerie photo CBRS</title><link rel="stylesheet" href="admin.css"><style>.upload-zone{border:2px dashed #ccc;border-radius:12px;padding:2rem;text-align:center;cursor:pointer;transition:.2s;margin-bottom:1.5rem}.upload-zone:hover,.upload-zone.dragover{border-color:#58a01a;background:#f0f7e8}.grid-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem}.card-photo{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08);position:relative}.card-photo img{width:100%;height:140px;object-fit:cover;display:block}.card-photo .body{padding:.5rem .75rem .75rem}.card-photo select,.card-photo input{font-size:.75rem;width:100%;margin-bottom:4px;padding:3px 6px;border:1px solid #ddd;border-radius:6px}.card-photo .actions{display:flex;gap:4px;margin-top:4px}.card-photo .actions button{flex:1;font-size:.7rem;padding:4px}.card-photo .badge{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.6);color:#fff;font-size:.65rem;padding:2px 8px;border-radius:20px}.upload-form{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}.upload-form input[type=file]{flex:1;min-width:200px}.upload-form select{min-width:100px}</style></head><body><div data-nav></div><main class="wrap"><h1>Galerie photo</h1><p class="muted" data-user></p><form class="card" id="uploadForm" enctype="multipart/form-data"><h2>Ajouter une photo</h2><div class="upload-zone" id="dropZone">Cliquez ou glissez-déposez une photo ici</div><input type="file" id="fileInput" accept="image/*" hidden><div class="upload-form"><select id="uploadYear"><option>2026</option><option>2025</option><option>2024</option><option selected>2023</option></select><select id="uploadCat"><option value="sport">Sport</option><option value="sortie">Sortie</option><option value="vie">Vie du club</option></select><input id="uploadCaption" placeholder="Légende (optionnelle)" style="flex:1;min-width:150px"><button class="green" id="uploadBtn" disabled>Uploader</button></div></form><div class="card"><div class="flex" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem"><span id="count" class="muted">0 photos</span><div><label class="muted" style="font-size:.85rem">Filtrer : </label><select id="filterCat"><option value="">Toutes catégories</option><option value="sport">Sport</option><option value="sortie">Sortie</option><option value="vie">Vie du club</option></select></div></div><div class="grid-gallery" id="galleryGrid">Chargement…</div></div></main><script src="admin.js"></script><script>
+me().then(load);
+let photos = [];
+async function load() {
+  const r = await fetch('/api/admin/gallery');
+  if (!r.ok) return;
+  const d = await r.json();
+  photos = d.photos;
+  render();
+}
+function render() {
+  const cat = document.getElementById('filterCat').value;
+  const grid = document.getElementById('galleryGrid');
+  const filtered = cat ? photos.filter(p => p.category === cat) : photos;
+  document.getElementById('count').textContent = filtered.length + ' photo' + (filtered.length > 1 ? 's' : '');
+  grid.innerHTML = filtered.map(p => `<div class="card-photo" data-id="${p.id}"><img src="/photos/${p.filename}" alt="" loading="lazy"><span class="badge">${p.year}</span><div class="body"><select class="ed-year" data-id="${p.id}"><option${p.year==='2026'?' selected':''}>2026</option><option${p.year==='2025'?' selected':''}>2025</option><option${p.year==='2024'?' selected':''}>2024</option><option${p.year==='2023'?' selected':''}>2023</option></select><select class="ed-cat" data-id="${p.id}"><option value="sport"${p.category==='sport'?' selected':''}>Sport</option><option value="sortie"${p.category==='sortie'?' selected':''}>Sortie</option><option value="vie"${p.category==='vie'?' selected':''}>Vie du club</option></select><input class="ed-caption" data-id="${p.id}" value="${(p.caption||'').replace(/"/g,'&quot;')}" placeholder="Légende"><div class="actions"><button class="ed-save" data-id="${p.id}">💾</button><button class="ed-del" data-id="${p.id}">🗑️</button></div></div></div>`).join('');
+}
+document.getElementById('dropZone').onclick = () => document.getElementById('fileInput').click();
+document.getElementById('dropZone').ondragover = e => { e.preventDefault(); document.getElementById('dropZone').classList.add('dragover') };
+document.getElementById('dropZone').ondragleave = () => document.getElementById('dropZone').classList.remove('dragover');
+document.getElementById('dropZone').ondrop = e => { e.preventDefault(); document.getElementById('dropZone').classList.remove('dragover'); const f = e.dataTransfer.files[0]; if (f) { document.getElementById('fileInput').files = e.dataTransfer.files; document.getElementById('uploadBtn').disabled = false; } };
+document.getElementById('fileInput').onchange = () => document.getElementById('uploadBtn').disabled = !document.getElementById('fileInput').files.length;
+document.getElementById('uploadBtn').onclick = async () => {
+  const fd = new FormData();
+  fd.append('photo', document.getElementById('fileInput').files[0]);
+  fd.append('year', document.getElementById('uploadYear').value);
+  fd.append('category', document.getElementById('uploadCat').value);
+  fd.append('caption', document.getElementById('uploadCaption').value);
+  const r = await fetch('/api/admin/gallery', { method: 'POST', body: fd });
+  if (!r.ok) return alert('Erreur upload');
+  document.getElementById('fileInput').value = ''; document.getElementById('uploadBtn').disabled = true; document.getElementById('uploadCaption').value = '';
+  load();
+};
+document.getElementById('galleryGrid').addEventListener('click', async e => {
+  const id = e.target.dataset.id;
+  if (e.target.classList.contains('ed-del')) {
+    if (!confirm('Supprimer cette photo ?')) return;
+    const r = await fetch('/api/admin/gallery/' + id, { method: 'DELETE' });
+    if (!r.ok) return alert('Erreur');
+    load();
+  }
+  if (e.target.classList.contains('ed-save')) {
+    const card = e.target.closest('.card-photo');
+    const body = {
+      year: card.querySelector('.ed-year').value,
+      category: card.querySelector('.ed-cat').value,
+      caption: card.querySelector('.ed-caption').value
+    };
+    const r = await fetch('/api/admin/gallery/' + id, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    if (!r.ok) return alert('Erreur');
+    load();
+  }
+});
+document.getElementById('filterCat').onchange = render;
+</script></body></html>

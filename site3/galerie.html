@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Galerie Photos - CBRS Club du Beauvaisis de la Retraite Sportive</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style data-purpose="custom-fonts">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .font-serif-italic { font-family: 'Playfair Display', serif; font-style: italic; }
+  </style>
+<style>
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+  .gallery-item { border-radius: 0.75rem; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: box-shadow 0.2s; cursor: pointer; }
+  .gallery-item:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.14); }
+  .gallery-item img { width: 100%; height: 200px; object-fit: cover; display: block; transition: transform 0.3s ease; }
+  .gallery-item:hover img { transform: scale(1.04); }
+  .gallery-item figcaption { padding: 0.6rem 1rem 0.8rem; font-size: 0.85rem; color: #4b5563; font-weight: 500; }
+  .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; padding: 1rem; }
+  .lightbox.active { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 85vh; border-radius: 0.5rem; box-shadow: 0 8px 40px rgba(0,0,0,0.6); object-fit: contain; }
+  .lightbox-close { position: fixed; top: 1.25rem; right: 1.5rem; color: white; font-size: 2.5rem; line-height: 1; cursor: pointer; background: none; border: none; font-weight: 300; }
+  .lightbox-caption { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.65); color: white; padding: 0.4rem 1.2rem; border-radius: 2rem; font-size: 0.9rem; white-space: nowrap; }
+  .sidebar { transition: width 0.3s ease; }
+  .sidebar.collapsed { width: 4rem; }
+  .sidebar.collapsed .sidebar-logo-text, .sidebar.collapsed .sidebar-label, .sidebar.collapsed .sidebar-quote, .sidebar.collapsed .sidebar-divider { display: none; }
+  .sidebar.collapsed .sidebar-link { justify-content: center; padding: 0.75rem 0; margin-right: 0; border-radius: 0; }
+  .sidebar.collapsed .sidebar-link svg { margin-right: 0; }
+  .sidebar.collapsed .sidebar-logo { padding: 0.5rem; }
+  .sidebar.collapsed .sidebar-logo img { width: 2.5rem; height: 2.5rem; }
+  .sidebar.collapsed .sidebar-toggle { justify-content: center; }
+</style>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'cbrs-blue': '#0a3273', 'cbrs-blue-light': '#1e4b99', 'cbrs-green': '#58a01a',
+            'cbrs-green-hover': '#4a8716', 'cbrs-teal': '#145c75', 'cbrs-gray-100': '#f8f9fa',
+            'cbrs-gray-200': '#e9ecef', 'cbrs-text': '#333333', 'cbrs-text-light': '#666666',
+          },
+          boxShadow: {
+            'card': '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)',
+            'card-hover': '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
+          }
+        }
+      }
+    }
+  </script>
+
+<style id="accessibility-style">
+  .accessibility-fab{position:fixed;right:1rem;bottom:1rem;z-index:60;border:0;border-radius:999px;background:#0a3273;color:#fff;padding:.8rem 1rem;font-weight:700;box-shadow:0 10px 25px rgba(0,0,0,.2);cursor:pointer}
+  .accessibility-panel{position:fixed;right:1rem;bottom:4.5rem;z-index:60;width:min(20rem,calc(100vw - 2rem));background:#fff;color:#111827;border:1px solid #d1d5db;border-radius:1rem;box-shadow:0 20px 45px rgba(0,0,0,.22);padding:1rem;display:none}
+  .accessibility-panel.open{display:block}
+  .accessibility-panel h2{font-size:1.1rem;font-weight:800;margin:0 0 .75rem;color:#0a3273}
+  .accessibility-panel button{width:100%;text-align:left;margin:.25rem 0;padding:.7rem .8rem;border-radius:.75rem;border:1px solid #d1d5db;background:#f9fafb;color:#111827;font-weight:650;cursor:pointer}
+  .accessibility-panel button[aria-pressed="true"]{background:#0a3273;color:#fff;border-color:#0a3273}
+  .accessibility-panel .close{background:#eef2ff;text-align:center;color:#0a3273}
+  html.a11y-large{font-size:118%}
+  html.a11y-large body{line-height:1.7}
+  html.a11y-contrast body{background:#fff!important;color:#000!important}
+  html.a11y-contrast main,html.a11y-contrast section,html.a11y-contrast article,html.a11y-contrast footer,html.a11y-contrast .bg-white{background:#fff!important;color:#000!important}
+  html.a11y-contrast .bg-cbrs-blue,html.a11y-contrast .bg-cbrs-teal,html.a11y-contrast aside{background:#001b44!important;color:#fff!important}
+  html.a11y-contrast a{color:#003f9e!important;text-decoration:underline;text-underline-offset:3px}
+  html.a11y-contrast aside a,html.a11y-contrast .bg-cbrs-blue a,html.a11y-contrast .bg-cbrs-teal a{color:#fff!important}
+  html.a11y-contrast button,html.a11y-contrast .accessibility-fab{outline:2px solid #000}
+  html.a11y-links a{text-decoration:underline!important;text-underline-offset:4px}
+  html.a11y-motion *,html.a11y-motion *::before,html.a11y-motion *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  html.a11y-readable body{font-family:Arial,Helvetica,sans-serif!important;letter-spacing:.02em}
+  @media (max-width:768px){.accessibility-fab{right:.75rem;bottom:.75rem}.accessibility-panel{right:.75rem;bottom:4.25rem}}
+</style>
+
+</head>
+<body class="bg-gray-50 text-cbrs-text antialiased flex min-h-screen">
+<aside id="sidebar" class="sidebar w-64 bg-cbrs-blue text-white flex-shrink-0 hidden md:flex flex-col sticky top-0 h-screen overflow-y-auto overflow-x-hidden">
+<div class="sidebar-logo p-3 bg-white flex items-center justify-center">
+  <img src="logo-cbrs.png" alt="CBRS" class="w-full h-auto object-contain"/>
+</div>
+<button onclick="toggleSidebar()" class="sidebar-toggle flex items-center gap-2 px-4 py-2 text-white/60 hover:text-white text-xs border-b border-white/10">
+  <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/></svg>
+  <span class="sidebar-label">Réduire</span>
+</button>
+<nav class="flex-1 py-4 space-y-1">
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="index.html">
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <span class="sidebar-label">Accueil</span>
+  </a>
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="activites.html">
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <span class="sidebar-label">Activités</span>
+  </a>
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="planning.html">
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <span class="sidebar-label">Planning</span>
+  </a>
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="formation.html">
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <span class="sidebar-label">Formation</span>
+  </a>
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="sorties-voyages.html">
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.858 15.355-5.858 21.213 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <span class="sidebar-label">Sorties - Voyages</span>
+  </a>
+  <a class="sidebar-link flex items-center px-4 py-2.5 bg-cbrs-green text-white font-medium rounded-r-full mr-4 transition-colors" href="galerie.html">
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <span class="sidebar-label">Galerie photo</span>
+  </a>
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="liens-utiles.html">
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <span class="sidebar-label">Liens utiles</span>
+  </a>
+  <div class="sidebar-divider border-t border-white/10 my-4 mx-4"></div>
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="adhesion.html">
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <span class="sidebar-label">Adhérer</span>
+  </a>
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="contact.html">
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <span class="sidebar-label">Contact</span>
+  </a>
+</nav>
+<div class="sidebar-quote p-4 mt-auto border-t border-white/10">
+  <div class="w-6 h-0.5 bg-cbrs-green mb-3"></div>
+  <p class="text-sm font-bold leading-tight"><span class="text-cbrs-green">Le sport</span><br/>au service<br/>du bien-être<br/>et du lien<br/>social</p>
+</div>
+</aside>
+<main class="flex-1 overflow-x-hidden relative">
+
+
+<section class="relative h-[260px] bg-cbrs-blue overflow-hidden flex items-center">
+  <div class="absolute inset-0 bg-gradient-to-r from-cbrs-blue/90 to-cbrs-blue-light/70"></div>
+  <div class="relative z-10 px-8 md:px-16 max-w-4xl">
+    <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight mb-3">Galerie <span class="text-cbrs-green font-serif-italic">photos</span></h1>
+    <p class="text-base text-white/90 max-w-xl">Revivez les moments forts de la vie du club — sorties, activités sportives, rencontres et bonne humeur partagée.</p>
+  </div>
+</section>
+
+<section class="max-w-7xl mx-auto px-6 pt-8 pb-4 space-y-3">
+  <div class="flex flex-wrap gap-3 justify-center">
+    <button onclick="filterGallery('all')" id="btn-all" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-cbrs-green bg-cbrs-green text-white transition-colors">Toutes</button>
+    <button onclick="filterGallery('sport')" id="btn-sport" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-gray-300 text-gray-700 hover:border-cbrs-green hover:text-cbrs-green transition-colors">Sport</button>
+    <button onclick="filterGallery('sortie')" id="btn-sortie" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-gray-300 text-gray-700 hover:border-cbrs-green hover:text-cbrs-green transition-colors">Sorties & Voyages</button>
+    <button onclick="filterGallery('vie')" id="btn-vie" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-gray-300 text-gray-700 hover:border-cbrs-green hover:text-cbrs-green transition-colors">Vie du Club</button>
+  </div>
+  <div class="flex flex-wrap gap-2 justify-center">
+    <button onclick="filterYear('all')" id="year-all" class="year-btn px-4 py-1.5 rounded-full text-xs font-semibold border border-cbrs-blue bg-cbrs-blue text-white transition-colors">Toutes les annees</button>
+    <button onclick="filterYear('2026')" id="year-2026" class="year-btn px-4 py-1.5 rounded-full text-xs font-semibold border border-gray-300 text-gray-600 hover:border-cbrs-blue hover:text-cbrs-blue transition-colors">2026</button>
+    <button onclick="filterYear('2025')" id="year-2025" class="year-btn px-4 py-1.5 rounded-full text-xs font-semibold border border-gray-300 text-gray-600 hover:border-cbrs-blue hover:text-cbrs-blue transition-colors">2025</button>
+    <button onclick="filterYear('2024')" id="year-2024" class="year-btn px-4 py-1.5 rounded-full text-xs font-semibold border border-gray-300 text-gray-600 hover:border-cbrs-blue hover:text-cbrs-blue transition-colors">2024</button>
+    <button onclick="filterYear('2023')" id="year-2023" class="year-btn px-4 py-1.5 rounded-full text-xs font-semibold border border-gray-300 text-gray-600 hover:border-cbrs-blue hover:text-cbrs-blue transition-colors">2023</button>
+  </div>
+</section>
+
+<section class="max-w-7xl mx-auto px-6 py-8">
+  <div class="gallery-grid" id="gallery">
+    <figure class="gallery-item" data-cat="sport" data-year="2024" onclick="openLightbox('../assets/gallery-marche.jpg','Marche nordique – Sortie en foret')">
+      <img src="../assets/gallery-marche.jpg" alt="Marche nordique en foret"/><figcaption>Marche nordique – Sortie en foret</figcaption>
+    </figure>
+    <figure class="gallery-item" data-cat="sport" data-year="2024" onclick="openLightbox('../assets/gallery-taichi.jpg','Tai Chi – Seance en plein air')">
+      <img src="../assets/gallery-taichi.jpg" alt="Seance de Tai Chi"/><figcaption>Tai Chi – Seance en plein air</figcaption>
+    </figure>
+    <figure class="gallery-item" data-cat="sport" data-year="2024" onclick="openLightbox('../assets/gallery-raquettes.jpg','Randonnee raquettes – Sortie hivernale')">
+      <img src="../assets/gallery-raquettes.jpg" alt="Randonnee raquettes"/><figcaption>Randonnee raquettes – Sortie hivernale</figcaption>
+    </figure>
+    <figure class="gallery-item" data-cat="sortie" data-year="2024" onclick="openLightbox('../assets/gallery-sortie-senlis.png','Sortie culturelle a Senlis')">
+      <img src="../assets/gallery-sortie-senlis.png" alt="Sortie a Senlis"/><figcaption>Sortie culturelle a Senlis</figcaption>
+    </figure>
+    <figure class="gallery-item" data-cat="sport" data-year="2024" onclick="openLightbox('../assets-premium/real-gym-group.jpg','Gym douce – Cours collectif')">
+      <img src="../assets-premium/real-gym-group.jpg" alt="Gym douce en groupe"/><figcaption>Gym douce – Cours collectif</figcaption>
+    </figure>
+    <figure class="gallery-item" data-cat="sport" data-year="2024" onclick="openLightbox('../assets-premium/real-danse.jpg','Danse – Atelier hebdomadaire')">
+      <img src="../assets-premium/real-danse.jpg" alt="Cours de danse"/><figcaption>Danse – Atelier hebdomadaire</figcaption>
+    </figure>
+    <figure class="gallery-item" data-cat="sport" data-year="2024" onclick="openLightbox('../assets-premium/real-tennis-table.jpg','Tennis de table – Tournoi amical')">
+      <img src="../assets-premium/real-tennis-table.jpg" alt="Tennis de table"/><figcaption>Tennis de table – Tournoi amical</figcaption>
+    </figure>
+    <figure class="gallery-item" data-cat="sortie" data-year="2024" onclick="openLightbox('../assets-premium/real-sortie-senlis.png','Visite guidee – Centre historique de Senlis')">
+      <img src="../assets-premium/real-sortie-senlis.png" alt="Visite de Senlis"/><figcaption>Visite guidee – Centre historique de Senlis</figcaption>
+    </figure>
+    <figure class="gallery-item" data-cat="vie" data-year="2024" onclick="openLightbox('../assets-premium/real-memoire.jpg','Atelier memoire – Stimulation cognitive')">
+      <img src="../assets-premium/real-memoire.jpg" alt="Atelier memoire"/><figcaption>Atelier memoire – Stimulation cognitive</figcaption>
+    </figure>
+    <figure class="gallery-item" data-cat="sport" data-year="2024" onclick="openLightbox('../assets/randonnees-beauvaisis.jpg','Randonnee – Beauvaisis')">
+      <img src="../assets/randonnees-beauvaisis.jpg" alt="Randonnee dans le Beauvaisis"/><figcaption>Randonnee – Beauvaisis</figcaption>
+    </figure>
+    <figure class="gallery-item" data-cat="sport" data-year="2024" onclick="openLightbox('../assets-premium/velo.png','Sortie velo – Balade en groupe')">
+      <img src="../assets-premium/velo.png" alt="Sortie velo"/><figcaption>Sortie velo – Balade en groupe</figcaption>
+    </figure>
+    <figure class="gallery-item" data-cat="vie" data-year="2024" onclick="openLightbox('../assets-premium/active-seniors-park.png','Vie du club – Rencontre conviviale')">
+      <img src="../assets-premium/active-seniors-park.png" alt="Vie du club"/><figcaption>Vie du club – Rencontre conviviale</figcaption>
+    </figure>
+  </div>
+  <p id="no-results" class="hidden text-center text-gray-400 py-16 text-lg">Aucune photo dans cette catégorie.</p>
+</section>
+
+<section class="bg-cbrs-gray-100 py-12">
+  <div class="max-w-xl mx-auto px-6 text-center">
+    <h2 class="text-2xl font-bold text-cbrs-blue mb-3">Rejoignez l'aventure !</h2>
+    <p class="text-gray-600 mb-5">Partagez ces moments avec nous. Adhérez au CBRS et participez à toutes nos activités.</p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="adhesion.html" class="bg-cbrs-green hover:bg-cbrs-green-hover text-white font-semibold py-2.5 px-7 rounded-full transition-colors text-sm">Adhérer au club</a>
+      <a href="activites.html" class="bg-white text-cbrs-blue font-semibold py-2.5 px-7 rounded-full hover:bg-gray-100 transition-colors border border-gray-200 text-sm">Voir nos activités</a>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-white border-t border-gray-200">
+<div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+  <div class="lg:col-span-2">
+    <div class="flex items-center gap-3 mb-3">
+      <img src="logo-cbrs.png" alt="CBRS" class="w-8 h-8 object-contain"/>
+      <div class="text-xs text-gray-600 font-medium leading-tight">Club du Beauvaisis<br/>de la Retraite Sportive</div>
+    </div>
+    <p class="text-xs text-gray-500 mb-2 max-w-xs">Association loi 1901 affiliée à la Fédération Française de la Retraite Sportive (FFRS).</p>
+    <a class="text-xs text-cbrs-blue hover:underline" href="contact.html">Mentions légales</a>
+  </div>
+  <div>
+    <h4 class="font-bold text-gray-900 mb-3 text-sm">Activités</h4>
+    <ul class="space-y-1.5 text-xs text-gray-600">
+      <li><a class="hover:text-cbrs-blue" href="activites.html">Toutes les activités</a></li>
+      <li><a class="hover:text-cbrs-blue" href="formation.html">Formation</a></li>
+      <li><a class="hover:text-cbrs-blue" href="sorties-voyages.html">Sorties & Voyages</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4 class="font-bold text-gray-900 mb-3 text-sm">Infos pratiques</h4>
+    <ul class="space-y-1.5 text-xs text-gray-600">
+      <li><a class="hover:text-cbrs-blue" href="planning.html">Planning</a></li>
+      <li><a class="hover:text-cbrs-blue" href="adhesion.html">Inscriptions</a></li>
+      <li><a class="hover:text-cbrs-blue" href="contact.html">Contact</a></li>
+      <li><a class="hover:text-cbrs-blue" href="liens-utiles.html">Liens utiles</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4 class="font-bold text-gray-900 mb-3 text-sm">Multimédia</h4>
+    <ul class="space-y-1.5 text-xs text-gray-600">
+      <li><a class="hover:text-cbrs-blue" href="galerie.html">Galerie photo</a></li>
+      <li><a class="hover:text-cbrs-blue" href="galerie.html">Vidéos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="border-t border-gray-100 py-4 text-center text-xs text-gray-400">2026 &copy; CBRS — Club du Beauvaisis de la Retraite Sportive</div>
+</footer>
+</main>
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">×</button>
+  <img id="lightbox-img" src="" alt=""/>
+  <span class="lightbox-caption" id="lightbox-caption"></span>
+</div>
+<script>
+  function openLightbox(src, caption) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox-caption').textContent = caption;
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+  let currentCat = 'all';
+  let currentYear = 'all';
+  function applyFilters() {
+    const items = document.querySelectorAll('.gallery-item');
+    let visible = 0;
+    items.forEach(function(item) {
+      const catMatch = currentCat === 'all' || item.dataset.cat === currentCat;
+      const yearMatch = currentYear === 'all' || item.dataset.year === currentYear;
+      if (catMatch && yearMatch) { item.style.display = ''; visible++; }
+      else { item.style.display = 'none'; }
+    });
+    document.getElementById('no-results').classList.toggle('hidden', visible > 0);
+  }
+  function filterGallery(cat) {
+    currentCat = cat;
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
+      btn.classList.remove('bg-cbrs-green', 'text-white', 'border-cbrs-green');
+      btn.classList.add('border-gray-300', 'text-gray-700');
+    });
+    var active = document.getElementById('btn-' + cat);
+    if (active) { active.classList.add('bg-cbrs-green', 'text-white', 'border-cbrs-green'); active.classList.remove('border-gray-300', 'text-gray-700'); }
+    applyFilters();
+  }
+  function filterYear(year) {
+    currentYear = year;
+    document.querySelectorAll('.year-btn').forEach(function(btn) {
+      btn.classList.remove('bg-cbrs-blue', 'text-white', 'border-cbrs-blue');
+      btn.classList.add('border-gray-300', 'text-gray-600');
+    });
+    var active = document.getElementById('year-' + year);
+    if (active) { active.classList.add('bg-cbrs-blue', 'text-white', 'border-cbrs-blue'); active.classList.remove('border-gray-300', 'text-gray-600'); }
+    applyFilters();
+  }
+  let sidebarCollapsed = false;
+  function toggleSidebar() {
+    const s = document.getElementById('sidebar');
+    sidebarCollapsed = !sidebarCollapsed;
+    s.classList.toggle('collapsed', sidebarCollapsed);
+    const btn = s.querySelector('.sidebar-toggle span');
+    if (btn) btn.textContent = sidebarCollapsed ? 'Ouvrir' : 'Réduire';
+  }
+
+const scrapedPhotos = [
+  {
+    "file": "photo_001.jpg",
+    "year": "2023",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_002.jpg",
+    "year": "2023",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_003.jpg",
+    "year": "2023",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_004.jpg",
+    "year": "2023",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_005.jpg",
+    "year": "2023",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_006.jpg",
+    "year": "2023",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_007.jpg",
+    "year": "2023",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_008.jpg",
+    "year": "2023",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_009.jpg",
+    "year": "2023",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_010.jpg",
+    "year": "2023",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_011.jpg",
+    "year": "2023",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_012.jpg",
+    "year": "2023",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_013.jpg",
+    "year": "2023",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_014.jpg",
+    "year": "2023",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_015.jpg",
+    "year": "2023",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_016.jpg",
+    "year": "2023",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_017.jpg",
+    "year": "2023",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_018.jpg",
+    "year": "2023",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_019.jpg",
+    "year": "2023",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_020.jpg",
+    "year": "2023",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_021.jpg",
+    "year": "2023",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_022.jpg",
+    "year": "2023",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_023.jpg",
+    "year": "2023",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_024.jpg",
+    "year": "2023",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_025.jpg",
+    "year": "2023",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_026.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_027.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_028.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_029.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_030.jpg",
+    "year": "2024",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_031.jpg",
+    "year": "2024",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_032.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_033.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_034.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_035.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_036.jpg",
+    "year": "2024",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_037.jpg",
+    "year": "2024",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_038.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_039.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_040.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_041.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_042.jpg",
+    "year": "2024",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_043.jpg",
+    "year": "2024",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_044.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_045.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_046.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_047.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_048.jpg",
+    "year": "2024",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_049.jpg",
+    "year": "2024",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_050.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_051.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_052.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_053.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_054.jpg",
+    "year": "2024",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_055.jpg",
+    "year": "2024",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_056.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_057.jpg",
+    "year": "2024",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_058.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_059.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_060.jpg",
+    "year": "2025",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_061.jpg",
+    "year": "2025",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_062.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_063.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_064.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_065.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_066.jpg",
+    "year": "2025",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_067.jpg",
+    "year": "2025",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_068.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_069.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_070.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_071.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_072.jpg",
+    "year": "2025",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_073.jpg",
+    "year": "2025",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_074.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_075.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_076.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_077.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_078.jpg",
+    "year": "2025",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_079.jpg",
+    "year": "2025",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_080.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_081.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_082.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_083.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_084.jpg",
+    "year": "2025",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_085.jpg",
+    "year": "2025",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_086.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_087.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_088.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_089.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_090.jpg",
+    "year": "2025",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_091.jpg",
+    "year": "2025",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_092.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_093.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_094.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_095.jpg",
+    "year": "2025",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_096.jpg",
+    "year": "2026",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_097.jpg",
+    "year": "2026",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_098.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_099.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_100.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_101.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_102.jpg",
+    "year": "2026",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_103.jpg",
+    "year": "2026",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_104.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_105.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_106.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_107.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_108.jpg",
+    "year": "2026",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_109.jpg",
+    "year": "2026",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_110.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_111.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_112.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_113.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_114.jpg",
+    "year": "2026",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_115.jpg",
+    "year": "2026",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_116.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_117.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_118.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_121.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_124.jpg",
+    "year": "2026",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_125.jpg",
+    "year": "2026",
+    "cat": "sport"
+  },
+  {
+    "file": "photo_126.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_127.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_128.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_130.jpg",
+    "year": "2026",
+    "cat": "sortie"
+  },
+  {
+    "file": "photo_131.jpg",
+    "year": "2026",
+    "cat": "vie"
+  },
+  {
+    "file": "photo_133.jpg",
+    "year": "2026",
+    "cat": "sport"
+  }
+];
+
+function loadScrapedPhotos() {
+  const gallery = document.getElementById('gallery');
+  fetch('/api/public/gallery').then(r => r.ok && r.json()).then(data => {
+    if (data && data.photos && data.photos.length) {
+      data.photos.forEach(function(p) {
+        const fig = document.createElement('figure');
+        fig.className = 'gallery-item';
+        fig.setAttribute('data-cat', p.category);
+        fig.setAttribute('data-year', p.year);
+        fig.onclick = function() { openLightbox('photos/' + p.filename, p.caption || 'CBRS ' + p.year); };
+        fig.innerHTML = '<img src="photos/' + p.filename + '" alt="" loading="lazy"/><figcaption>' + (p.caption || 'CBRS ' + p.year) + '</figcaption>';
+        gallery.appendChild(fig);
+      });
+      return;
+    }
+    fallback();
+  }).catch(function() { fallback(); });
+  function fallback() {
+    scrapedPhotos.forEach(function(p) {
+      const fig = document.createElement('figure');
+      fig.className = 'gallery-item';
+      fig.setAttribute('data-cat', p.cat);
+      fig.setAttribute('data-year', p.year);
+      fig.onclick = function() { openLightbox('photos/' + p.file, 'CBRS ' + p.year); };
+      fig.innerHTML = '<img src="photos/' + p.file + '" alt="" loading="lazy"/><figcaption>CBRS ' + p.year + '</figcaption>';
+      gallery.appendChild(fig);
+    });
+  }
+}
+document.addEventListener('DOMContentLoaded', loadScrapedPhotos);
+
+</script>
+
+<div class="accessibility-panel" id="accessibility-panel" aria-labelledby="accessibility-title">
+  <h2 id="accessibility-title">Options d’accessibilité</h2>
+  <button type="button" data-a11y-toggle="a11y-large" aria-pressed="false">Agrandir le texte</button>
+  <button type="button" data-a11y-toggle="a11y-contrast" aria-pressed="false">Contraste renforcé</button>
+  <button type="button" data-a11y-toggle="a11y-links" aria-pressed="false">Souligner les liens</button>
+  <button type="button" data-a11y-toggle="a11y-motion" aria-pressed="false">Réduire les animations</button>
+  <button type="button" data-a11y-toggle="a11y-readable" aria-pressed="false">Police plus lisible</button>
+  <button type="button" class="close" onclick="resetAccessibility()">Réinitialiser</button>
+</div>
+<button type="button" class="accessibility-fab" onclick="toggleAccessibilityPanel()" aria-controls="accessibility-panel" aria-expanded="false">Accessibilité</button>
+<script id="accessibility-script">
+(function(){
+  const key = 'cbrs-accessibility';
+  const toggles = ['a11y-large','a11y-contrast','a11y-links','a11y-motion','a11y-readable'];
+  function saved(){ try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { return []; } }
+  function save(active){ localStorage.setItem(key, JSON.stringify(active)); }
+  function apply(){
+    const active = saved();
+    toggles.forEach(cls => document.documentElement.classList.toggle(cls, active.includes(cls)));
+    document.querySelectorAll('[data-a11y-toggle]').forEach(btn => btn.setAttribute('aria-pressed', String(active.includes(btn.dataset.a11yToggle))));
+  }
+  window.toggleAccessibilityPanel = function(){
+    const panel = document.getElementById('accessibility-panel');
+    const btn = document.querySelector('.accessibility-fab');
+    const open = !panel.classList.contains('open');
+    panel.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+  };
+  window.resetAccessibility = function(){ save([]); apply(); };
+  document.addEventListener('click', function(e){
+    const btn = e.target.closest('[data-a11y-toggle]');
+    if (!btn) return;
+    const cls = btn.dataset.a11yToggle;
+    const active = new Set(saved());
+    active.has(cls) ? active.delete(cls) : active.add(cls);
+    save([...active]); apply();
+  });
+  apply();
+})();
+</script>
+
+</body></html>
