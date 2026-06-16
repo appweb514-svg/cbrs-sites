@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact - CBRS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            cbrs: {
+              blue: '#1e3a8a', lightBlue: '#f0f4f8', accentBlue: '#3b82f6',
+              green: '#4ade80', darkGreen: '#22c55e', gray: '#6b7280',
+              lightGray: '#f9fafb', dark: '#111827'
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .card-shadow { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); }
+    #mobileMenu { display:none; } #mobileMenu.open { display:block; }
+    .line-clamp-2 { display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden; }
+  </style>
+</head>
+<body class="font-sans text-gray-800 bg-white">
+<header class="bg-white shadow-sm sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-20">
+<div class="flex-shrink-0 flex items-center gap-3">
+<div class="text-cbrs-blue text-4xl font-extrabold flex items-center">
+<i class="fa-solid fa-person-running text-cbrs-darkGreen mr-1"></i> CBRS</div>
+<div class="text-xs font-semibold leading-tight text-cbrs-blue border-l border-gray-300 pl-3">Club du Beauvaisis<br/>de la Retraite Sportive</div>
+</div>
+<nav class="hidden md:flex space-x-6 lg:space-x-8 text-sm font-medium text-gray-700">
+<a class="hover:text-cbrs-blue transition-colors" href="contact.html">Nous connaître</a>
+<a class="hover:text-cbrs-blue transition-colors" href="activites.html">Nos activités</a>
+<a class="hover:text-cbrs-blue transition-colors" href="planning.html">Planning</a>
+<a class="hover:text-cbrs-blue transition-colors" href="contact.html">Actualités</a>
+<a class="hover:text-cbrs-blue transition-colors" href="planning.html">Événements</a>
+<a class="hover:text-cbrs-blue transition-colors" href="contact.html#adhesion">Nous rejoindre</a>
+<a class="text-cbrs-blue font-bold" href="contact.html">Contact</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-gray-500 hover:text-cbrs-blue p-2 rounded-full border border-gray-200"><i class="fa-solid fa-search"></i></button>
+<a class="bg-cbrs-darkGreen hover:bg-green-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-colors shadow-md hidden sm:inline-block" href="contact.html#adhesion">ADHÉRER AU CLUB</a>
+<button class="md:hidden text-gray-700 text-2xl p-2" onclick="document.getElementById('mobileMenu').classList.toggle('open')"><i class="fa-solid fa-bars"></i></button>
+</div>
+</div>
+</div>
+<div id="mobileMenu" class="md:hidden bg-white border-t px-4 pb-4 space-y-2 text-sm font-medium">
+<a class="block py-2" href="contact.html">Nous connaître</a>
+<a class="block py-2" href="activites.html">Nos activités</a>
+<a class="block py-2" href="planning.html">Planning</a>
+<a class="block py-2" href="contact.html">Actualités</a>
+<a class="block py-2" href="planning.html">Événements</a>
+<a class="block py-2" href="contact.html#adhesion">Nous rejoindre</a>
+<a class="block py-2 text-cbrs-blue font-bold" href="contact.html">Contact</a>
+<a class="block py-2 bg-cbrs-darkGreen text-white text-center rounded-full mt-2 py-3" href="contact.html#adhesion">ADHÉRER AU CLUB</a>
+</div>
+</header>
+
+<!-- Page Hero -->
+<section class="bg-cbrs-blue py-20">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+<h1 class="text-4xl md:text-5xl font-extrabold mb-4">Contactez-nous</h1>
+<p class="text-xl text-blue-100 max-w-2xl mx-auto">Nous sommes à votre écoute pour toute question</p>
+</div>
+</section>
+
+<!-- Contact Content -->
+<main class="bg-cbrs-lightGray py-16">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+<!-- Contact Form -->
+<div class="lg:col-span-2">
+<div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+<h2 class="text-2xl font-bold text-cbrs-dark mb-6">Envoyez-nous un message</h2>
+<form class="space-y-5">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+<div>
+<label class="block text-sm font-semibold text-gray-700 mb-1">Prénom</label>
+<input type="text" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-cbrs-accentBlue focus:border-transparent outline-none text-sm" placeholder="Votre prénom"/>
+</div>
+<div>
+<label class="block text-sm font-semibold text-gray-700 mb-1">Nom</label>
+<input type="text" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-cbrs-accentBlue focus:border-transparent outline-none text-sm" placeholder="Votre nom"/>
+</div>
+</div>
+<div>
+<label class="block text-sm font-semibold text-gray-700 mb-1">Email</label>
+<input type="email" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-cbrs-accentBlue focus:border-transparent outline-none text-sm" placeholder="votre@email.fr"/>
+</div>
+<div>
+<label class="block text-sm font-semibold text-gray-700 mb-1">Sujet</label>
+<select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-cbrs-accentBlue focus:border-transparent outline-none text-sm text-gray-600">
+<option value="">Choisir un sujet...</option>
+<option>Adhésion au club</option>
+<option>Information sur une activité</option>
+<option>Inscription à une séance d'essai</option>
+<option>Question générale</option>
+<option>Autre</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-semibold text-gray-700 mb-1">Message</label>
+<textarea rows="5" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-cbrs-accentBlue focus:border-transparent outline-none text-sm resize-none" placeholder="Votre message..."></textarea>
+</div>
+<button type="submit" class="bg-cbrs-darkGreen hover:bg-green-600 text-white px-8 py-3 rounded-full font-semibold transition-colors shadow-md">
+<i class="fa-solid fa-paper-plane mr-2"></i>Envoyer le message
+</button>
+</form>
+</div>
+</div>
+
+<!-- Sidebar Info -->
+<div class="space-y-6">
+<!-- Contact Info Card -->
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+<h3 class="font-bold text-cbrs-blue text-sm tracking-wider uppercase mb-4">Nos Coordonnées</h3>
+<div class="space-y-4">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-full bg-cbrs-blue text-white flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-location-dot"></i></div>
+<div><p class="font-semibold text-sm text-cbrs-dark">Adresse</p><p class="text-gray-600 text-sm">3 rue de l'Industrie<br/>60000 Beauvais</p></div>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-full bg-cbrs-darkGreen text-white flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-phone"></i></div>
+<div><p class="font-semibold text-sm text-cbrs-dark">Téléphone</p><p class="text-gray-600 text-sm">03 60 36 17 47</p></div>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-full bg-cbrs-accentBlue text-white flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-envelope"></i></div>
+<div><p class="font-semibold text-sm text-cbrs-dark">Email</p><p class="text-gray-600 text-sm">cbrs@cbrs60.fr</p></div>
+</div>
+</div>
+</div>
+
+<!-- Opening Hours -->
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+<h3 class="font-bold text-cbrs-blue text-sm tracking-wider uppercase mb-4"><i class="fa-regular fa-clock mr-2"></i>Horaires d'Ouverture</h3>
+<div class="space-y-2 text-sm">
+<div class="flex justify-between py-1 border-b border-gray-50"><span class="text-gray-600">Lundi</span><span class="font-semibold text-cbrs-dark">09h00 - 12h00 / 14h00 - 18h00</span></div>
+<div class="flex justify-between py-1 border-b border-gray-50"><span class="text-gray-600">Mardi</span><span class="font-semibold text-cbrs-dark">09h00 - 12h00 / 14h00 - 18h00</span></div>
+<div class="flex justify-between py-1 border-b border-gray-50"><span class="text-gray-600">Mercredi</span><span class="font-semibold text-cbrs-dark">09h00 - 12h00 / 14h00 - 18h00</span></div>
+<div class="flex justify-between py-1 border-b border-gray-50"><span class="text-gray-600">Jeudi</span><span class="font-semibold text-cbrs-dark">09h00 - 12h00 / 14h00 - 18h00</span></div>
+<div class="flex justify-between py-1 border-b border-gray-50"><span class="text-gray-600">Vendredi</span><span class="font-semibold text-cbrs-dark">09h00 - 12h00</span></div>
+<div class="flex justify-between py-1"><span class="text-gray-600">Samedi - Dimanche</span><span class="font-semibold text-gray-400">Fermé</span></div>
+</div>
+</div>
+
+<!-- Social Media -->
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+<h3 class="font-bold text-cbrs-blue text-sm tracking-wider uppercase mb-4">Suivez-nous</h3>
+<div class="flex gap-3">
+<a class="w-10 h-10 rounded-full bg-blue-50 text-cbrs-blue flex items-center justify-center hover:bg-cbrs-blue hover:text-white transition-colors" href="#"><i class="fa-brands fa-facebook text-lg"></i></a>
+<a class="w-10 h-10 rounded-full bg-pink-50 text-pink-500 flex items-center justify-center hover:bg-pink-500 hover:text-white transition-colors" href="#"><i class="fa-brands fa-instagram text-lg"></i></a>
+<a class="w-10 h-10 rounded-full bg-red-50 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-colors" href="#"><i class="fa-brands fa-youtube text-lg"></i></a>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Membership Section -->
+<div id="adhesion" class="mt-16">
+<div class="bg-gradient-to-r from-cbrs-blue to-cbrs-accentBlue rounded-2xl overflow-hidden text-white">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
+<div class="p-8 lg:p-12">
+<h2 class="text-3xl font-extrabold mb-4">Adhérez au CBRS</h2>
+<p class="text-blue-100 mb-6">Rejoignez notre communauté de plus de 300 adhérents et profitez de +40 activités, de sorties conviviales et d'un encadrement qualifié.</p>
+<div class="bg-white/10 rounded-xl p-6 mb-6">
+<div class="flex items-baseline gap-2 mb-2">
+<span class="text-4xl font-extrabold">20€</span>
+<span class="text-blue-100">/an</span>
+</div>
+<ul class="space-y-2 text-sm text-blue-100">
+<li class="flex items-center gap-2"><i class="fa-solid fa-check text-cbrs-green"></i> Accès à toutes les activités</li>
+<li class="flex items-center gap-2"><i class="fa-solid fa-check text-cbrs-green"></i> 2 séances d'essai gratuites</li>
+<li class="flex items-center gap-2"><i class="fa-solid fa-check text-cbrs-green"></i> Sorties et événements</li>
+<li class="flex items-center gap-2"><i class="fa-solid fa-check text-cbrs-green"></i> Assurance RC incluse</li>
+</ul>
+</div>
+<a class="inline-block bg-cbrs-darkGreen hover:bg-green-600 text-white px-6 py-3 rounded-full font-semibold transition-colors shadow-lg" href="contact.html">
+<i class="fa-solid fa-user-plus mr-2"></i>Demander un formulaire d'adhésion
+</a>
+</div>
+<div class="bg-white/5 p-8 lg:p-12 flex flex-col justify-center">
+<h3 class="font-bold text-lg mb-4">Comment adhérer ?</h3>
+<div class="space-y-4">
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-cbrs-darkGreen text-white flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
+<p class="text-blue-100 text-sm">Téléchargez ou demandez le formulaire d'adhésion</p>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-cbrs-darkGreen text-white flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
+<p class="text-blue-100 text-sm">Remplissez et retournez-le au siège social</p>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-cbrs-darkGreen text-white flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
+<p class="text-blue-100 text-sm">Rejoignez-nous pour vos premières séances !</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<!-- BEGIN: Footer -->
+<footer class="bg-white pt-24 pb-8 border-t border-gray-200">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 mb-12">
+<div class="lg:col-span-2">
+<div class="flex items-center gap-2 mb-4">
+<div class="text-cbrs-blue text-3xl font-extrabold flex items-center"><i class="fa-solid fa-person-running text-cbrs-darkGreen mr-1"></i> CBRS</div>
+<div class="text-[10px] font-semibold leading-tight text-gray-500 border-l border-gray-300 pl-2">Club du Beauvaisis<br/>de la Retraite Sportive</div>
+</div>
+</div>
+<div><h4 class="font-bold text-gray-900 mb-4 text-sm">Le Club</h4>
+<ul class="space-y-2 text-sm text-gray-600"><li><a class="hover:text-cbrs-blue" href="contact.html">Qui sommes-nous ?</a></li><li><a class="hover:text-cbrs-blue" href="contact.html">Nos valeurs</a></li><li><a class="hover:text-cbrs-blue" href="contact.html">L'équipe</a></li></ul></div>
+<div><h4 class="font-bold text-gray-900 mb-4 text-sm">Activités</h4>
+<ul class="space-y-2 text-sm text-gray-600"><li><a class="hover:text-cbrs-blue" href="activites.html">Toutes les activités</a></li><li><a class="hover:text-cbrs-blue" href="activites.html">Niveaux &amp; tarifs</a></li><li><a class="hover:text-cbrs-blue" href="activites.html">Encadrement</a></li></ul></div>
+<div><h4 class="font-bold text-gray-900 mb-4 text-sm">Infos pratiques</h4>
+<ul class="space-y-2 text-sm text-gray-600"><li><a class="hover:text-cbrs-blue" href="planning.html">Planning</a></li><li><a class="hover:text-cbrs-blue" href="contact.html#adhesion">Inscriptions</a></li><li><a class="hover:text-cbrs-blue" href="planning.html">Documents utiles</a></li></ul></div>
+<div class="lg:col-span-1"><h4 class="font-bold text-gray-900 mb-4 text-sm">Nous suivre</h4>
+<div class="flex gap-4"><a class="text-cbrs-blue hover:text-blue-800 text-xl" href="#"><i class="fa-brands fa-facebook"></i></a><a class="text-cbrs-blue hover:text-blue-800 text-xl" href="#"><i class="fa-brands fa-instagram"></i></a><a class="text-cbrs-blue hover:text-blue-800 text-xl" href="#"><i class="fa-brands fa-youtube"></i></a></div>
+<h4 class="font-bold text-gray-900 mt-6 mb-3 text-sm">Nous contacter</h4>
+<ul class="space-y-2 text-xs text-gray-600">
+<li class="flex items-center gap-2"><i class="fa-solid fa-phone text-cbrs-blue"></i> 03 60 36 17 47</li>
+<li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-cbrs-blue"></i> cbrs@cbrs60.fr</li>
+<li class="flex items-start gap-2"><i class="fa-solid fa-location-dot text-cbrs-blue mt-1"></i> <span>3 rue de l'Industrie<br/>60000 Beauvais</span></li>
+</ul></div>
+</div>
+<div class="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+<div>© 2024 CBRS - Club du Beauvaisis de la Retraite Sportive</div>
+<div class="flex gap-4"><a class="hover:text-gray-900" href="contact.html">Mentions légales</a><a class="hover:text-gray-900" href="contact.html">Politique de confidentialité</a><a class="hover:text-gray-900" href="contact.html">Accessibilité</a></div>
+<div>Site réalisé avec <i class="fa-solid fa-heart text-gray-400 mx-1"></i></div>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Activités - CBRS Accessible</title>
+    <meta name="description" content="Découvrez toutes les activités du CBRS : randonnée, gym, vélo, tai-chi et plus encore. Variante accessible avec contrastes élevés, taille de texte ajustable, lecteur vocal.">
+    <link rel="stylesheet" href="premium.css">
+    <style>
+      :root{ --icon-bg: var(--blue-dark); --icon-fg: white; }
+      .a11y-widget-fixed {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.2rem;
+        z-index: 90;
+      }
+      .a11y-toggle-btn {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        border: 0;
+        background: var(--icon-bg);
+        color: var(--icon-fg);
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+        transition: transform .25s var(--ease), box-shadow .25s;
+      }
+      .a11y-toggle-btn:hover { transform: scale(1.08); }
+      .a11y-toggle-btn svg { width: 26px; height: 26px; fill: currentColor; }
+      .a11y-panel {
+        position: absolute;
+        bottom: calc(100% + .7rem);
+        right: 0;
+        width: min(88vw, 260px);
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 1rem;
+        box-shadow: var(--shadow);
+        display: none;
+        gap: .6rem;
+      }
+      .a11y-panel.open { display: grid; }
+      .a11y-panel button {
+        width: 100%;
+        text-align: left;
+        padding: .6rem .8rem;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: transparent;
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+        transition: background .2s;
+      }
+      .a11y-panel button:hover { background: var(--sage); }
+      .a11y-panel button[aria-pressed="true"] { background: var(--sage); border-color: var(--green); }
+      .a11y-sep { height: 1px; background: var(--line); margin: .3rem 0; }
+
+      /* Activities page specifics */
+      .activities-intro { max-width: 680px; margin: 0 auto 2.5rem; text-align: center; }
+      .activities-intro h1 { margin-bottom: .5rem; }
+      .activities-intro p { color: var(--muted); font-size: 1.05rem; }
+      .category-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .6rem;
+        justify-content: center;
+        margin-bottom: 2.5rem;
+      }
+      .category-nav button {
+        padding: .5rem 1.2rem;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: transparent;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: .9rem;
+        transition: background .2s, border-color .2s;
+      }
+      .category-nav button:hover { background: var(--sage); }
+      .category-nav button[aria-pressed="true"] { background: var(--sage); border-color: var(--green); }
+      .activity-detail-card {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 0;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: transform .25s var(--ease);
+      }
+      .activity-detail-card:hover { transform: translateY(-2px); }
+      .activity-detail-card img {
+        width: 100%;
+        height: 100%;
+        min-height: 220px;
+        object-fit: cover;
+        display: block;
+      }
+      .activity-detail-body {
+        padding: 1.6rem 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: .8rem;
+      }
+      .activity-detail-body h3 { margin: 0; font-size: 1.2rem; }
+      .activity-detail-body p { margin: 0; color: var(--muted); line-height: 1.6; }
+      .activity-meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .8rem;
+        margin-top: .3rem;
+      }
+      .activity-meta-row span {
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+        font-size: .85rem;
+        color: var(--muted);
+        background: var(--sage);
+        padding: .3rem .7rem;
+        border-radius: 999px;
+      }
+      .activity-meta-row span svg { width: 14px; height: 14px; flex-shrink: 0; }
+      .activity-detail-actions { display: flex; gap: .6rem; margin-top: .4rem; }
+
+      .full-grid { display: flex; flex-direction: column; gap: 2rem; }
+
+      @media (max-width: 700px) {
+        .activity-detail-card { grid-template-columns: 1fr; }
+        .activity-detail-card img { min-height: 180px; max-height: 220px; }
+      }
+    </style>
+  </head>
+  <body class="variant-accessible">
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <!-- Accessibility Widget -->
+    <div class="a11y-widget-fixed">
+      <div class="a11y-panel" id="a11y-panel" role="menu">
+        <button data-font-plus role="menuitem">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M12 3v18"/></svg>
+          Agrandir le texte
+        </button>
+        <button data-font-minus role="menuitem">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18"/></svg>
+          Réduire le texte
+        </button>
+        <div class="a11y-sep"></div>
+        <button data-contrast aria-pressed="false" role="menuitem">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20V2z"/></svg>
+          Contraste élevé
+        </button>
+        <div class="a11y-sep"></div>
+        <button data-listen role="menuitem">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          Lire cette page
+        </button>
+        <button data-auto-read aria-pressed="false" role="menuitem">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16v12H4z"/><path d="M8 20h8"/></svg>
+          Lecture auto
+        </button>
+      </div>
+      <button class="a11y-toggle-btn" aria-label="Options d'accessibilité" aria-expanded="false" aria-controls="a11y-panel" id="a11y-toggle">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-2V4a8 8 0 0 1 0 16z"/></svg>
+      </button>
+    </div>
+
+    <!-- Header -->
+    <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M17 2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 10l5 3 8-6 3 4-9 8-6-3-5 9-4-2 6-11c.5-1 1.2-1.7 2-2Z"/></svg></span><span><strong>CBRS</strong><span>Retraite sportive &amp; accessible</span></span></a><button class="menu-toggle" type="button">Menu</button><nav class="main-nav"><a href="activities.html" aria-current="page">Activités</a><a href="index.html#planning">Planning</a><a href="gallery.html">Photos</a><a href="index.html#inscription">Inscriptions</a><a href="index.html#contact">Contact</a></nav><div class="header-actions"><a class="btn" href="index.html#inscription">S'inscrire</a></div></div></header>
+
+    <main id="contenu">
+      <!-- Page Title -->
+      <section class="section">
+        <div class="activities-intro">
+          <p class="eyebrow">Nos activités</p>
+          <h1>Toutes nos activités CBRS</h1>
+          <p>Découvrez l'ensemble des activités proposées par le Club du Beauvaisis de la Retraite Sportive. Des pratiques variées, accessibles et bienveillantes pour tous les niveaux.</p>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="category-nav" role="toolbar" aria-label="Filtrer par catégorie">
+          <button aria-pressed="true" data-filter="all">Toutes</button>
+          <button aria-pressed="false" data-filter="randonnee">Randonnée</button>
+          <button aria-pressed="false" data-filter="gym">Gym</button>
+          <button aria-pressed="false" data-filter="velo">Vélo</button>
+          <button aria-pressed="false" data-filter="club">Vie du club</button>
+        </div>
+
+        <!-- Activity Cards -->
+        <div class="full-grid" id="activities-grid">
+
+          <!-- Marche nordique -->
+          <article class="activity-detail-card" data-category="randonnee">
+            <img src="../../assets-premium/real-tennis-table.jpg" alt="Groupe de marche nordique en pleine nature" loading="lazy">
+            <div class="activity-detail-body">
+              <div class="icon-row"><span class="icon">MN</span><span class="badge">Facile</span></div>
+              <h3>Marche nordique &amp; randonnée</h3>
+              <p>Plein air, équilibre, endurance douce. Nos sorties en pleine nature vous permettent de maintenir une bonne condition physique tout en profitant du cadre agréable du Beauvaisis.</p>
+              <div class="activity-meta-row">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  Lundi / sorties ponctuelles
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  Bénéfice : cardio doux, équilibre
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  Durée : 1h à 1h30
+                </span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Gymnastique -->
+          <article class="activity-detail-card" data-category="gym">
+            <img src="../../assets-premium/real-gym-group.jpg" alt="Séance de gymnastique douce en groupe" loading="lazy">
+            <div class="activity-detail-body">
+              <div class="icon-row"><span class="icon">GY</span><span class="badge">Tous niveaux</span></div>
+              <h3>Gymnastique &amp; gym aquatique</h3>
+              <p>Mobilité, posture et respiration. Nos séances de gymnastique douce et d'aquagym sont adaptées à chaque participant, dans le respect de vos capacités.</p>
+              <div class="activity-meta-row">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  Mercredi / Piscine Félix Faure
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  Bénéfice : souplesse, respiration
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  Durée : 1h
+                </span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Tai-chi -->
+          <article class="activity-detail-card" data-category="gym">
+            <img src="../../assets-premium/real-memoire.jpg" alt="Atelier mémoire et tai-chi en groupe" loading="lazy">
+            <div class="activity-detail-body">
+              <div class="icon-row"><span class="icon">TC</span><span class="badge">Doux</span></div>
+              <h3>Tai-chi &amp; atelier mémoire</h3>
+              <p>Concentration, équilibre et confiance. Le tai-chi développe la souplesse et la sérénité, tandis que l'atelier mémoire entretient vos capacités cognitives.</p>
+              <div class="activity-meta-row">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  Séances calmes / Mardi &amp; Jeudi
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  Bénéfice : coordination, sérénité
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  Durée : 45 min à 1h
+                </span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Vélo -->
+          <article class="activity-detail-card" data-category="velo">
+            <img src="../../assets-premium/real-sortie-senlis.png" alt="Sortie vélo collective à Senlis" loading="lazy">
+            <div class="activity-detail-body">
+              <div class="icon-row"><span class="icon">V</span><span class="badge">Modéré</span></div>
+              <h3>Vélo &amp; sorties vélo</h3>
+              <p>Sorties collectives et découvertes à vélo. Parcourez les chemins du Beauvaisis et des alentours dans une ambiance conviviale et sécurisée.</p>
+              <div class="activity-meta-row">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  Vendredi / Dimanche
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  Bénéfice : cardio, convivialité
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  Durée : 1h30 à 2h
+                </span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Sorties & Voyages -->
+          <article class="activity-detail-card" data-category="club">
+            <img src="../../assets-premium/real-gym-group.jpg" alt="Sortie et voyage du club CBRS" loading="lazy">
+            <div class="activity-detail-body">
+              <div class="icon-row"><span class="icon">SV</span><span class="badge">Tous</span></div>
+              <h3>Sorties &amp; voyages</h3>
+              <p>Découvertes, randonnées organisées et voyages de quelques jours. Le club organise régulièrement des sorties culturelles et sportives dans toute la France.</p>
+              <div class="activity-meta-row">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  Plusieurs fois par saison
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  Bénéfice : découverte, lien social
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  Variable (journée à plusieurs jours)
+                </span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Course d'orientation -->
+          <article class="activity-detail-card" data-category="randonnee">
+            <img src="../../assets-premium/real-tennis-table.jpg" alt="Activité course d'orientation" loading="lazy">
+            <div class="activity-detail-body">
+              <div class="icon-row"><span class="icon">CO</span><span class="badge">Modéré</span></div>
+              <h3>Course d'orientation</h3>
+              <p>Activité mentale et physique combinée. Apprenez à lire une carte et à vous repérer en forêt, tout en vous dépensant à votre rythme.</p>
+              <div class="activity-meta-row">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  Environ 2 fois par mois
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  Bénéfice : repérage, concentration
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  Durée : 1h à 1h30
+                </span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Danse -->
+          <article class="activity-detail-card" data-category="gym">
+            <img src="../../assets-premium/real-danse.jpg" alt="Séance de danse de salon" loading="lazy">
+            <div class="activity-detail-body">
+              <div class="icon-row"><span class="icon">DA</span><span class="badge">Tous niveaux</span></div>
+              <h3>Danse de salon</h3>
+              <p>Rythme, équilibre et plaisir en couple ou en solo. Apprenez les bases de la valse, du cha-cha-cha et autres danses dans une ambiance festive.</p>
+              <div class="activity-meta-row">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  Mercredi soir
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  Bénéfice : coordination, joie
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  Durée : 1h30
+                </span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Pétanque -->
+          <article class="activity-detail-card" data-category="club">
+            <img src="../../assets-premium/real-gym-group.jpg" alt="Partie de pétanque entre adhérents" loading="lazy">
+            <div class="activity-detail-body">
+              <div class="icon-row"><span class="icon">PÉ</span><span class="badge">Facile</span></div>
+              <h3>Pétanque</h3>
+              <p>Sport convivial par excellence. Réunissez-vous entre adhérents pour des parties amicales dans un esprit de détente et de partage.</p>
+              <div class="activity-meta-row">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  Samedi / Créneaux libres
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  Bénéfice : précision, socialisation
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  Durée : variable
+                </span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Randonnée en snowshoes -->
+          <article class="activity-detail-card" data-category="randonnee">
+            <img src="../../assets-premium/real-tennis-table.jpg" alt="Randonnée en raquettes" loading="lazy">
+            <div class="activity-detail-body">
+              <div class="icon-row"><span class="icon">RS</span><span class="badge">Modéré</span></div>
+              <h3>Randonnée en raquettes</h3>
+              <p>Découvrez le plaisir de la marche en hiver. Des sorties en raquettes à neige organisées pour profiter des paysages enneigés du Beauvaisis.</p>
+              <div class="activity-meta-row">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  Saison hivernale / Ponctuel
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  Bénéfice : cardio, endurance
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  Durée : 1h30 à 2h
+                </span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <p class="sr-status" aria-live="polite" id="filter-status"></p>
+      </section>
+
+      <!-- Permanence / Info -->
+      <section class="section">
+        <div class="section-head"><div><p class="eyebrow">Infos pratiques</p><h2>Conditions &amp; inscription</h2></div></div>
+        <div class="reasons">
+          <article class="reason-card"><strong>01</strong><h3>Adhésion</h3><p>Cotisation annuelle de 25 €. Accès à toutes les activités du club.</p></article>
+          <article class="reason-card"><strong>02</strong><h3>Inscriptions</h3><p>Permanence au bureau du club, tous les mercredis de 9h à 11h30.</p></article>
+          <article class="reason-card"><strong>03</strong><h3>Contact</h3><p>Téléphone : 03 60 36 17 47 · Email : cbrs@cbrs60.fr</p></article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">CBRS - Accessible</footer>
+    <div class="lightbox" role="dialog" aria-modal="true" hidden><button class="lightbox-close" type="button">×</button><figure><img src="" alt=""><figcaption></figcaption></figure></div>
+    <script src="../premium.js"></script>
+    <script>
+      /* A11y widget toggle */
+      const toggle = document.getElementById('a11y-toggle');
+      const panel  = document.getElementById('a11y-panel');
+      toggle.addEventListener('click', () => {
+        const open = panel.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open);
+      });
+      document.addEventListener('click', e => {
+        if (!e.target.closest('.a11y-widget-fixed')) {
+          panel.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      /* Category filter */
+      const filterBtns = document.querySelectorAll('.category-nav button');
+      const cards = document.querySelectorAll('.activity-detail-card');
+      const filterStatus = document.getElementById('filter-status');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cat = btn.dataset.filter;
+          filterBtns.forEach(b => b.setAttribute('aria-pressed', b === btn));
+          let count = 0;
+          cards.forEach(card => {
+            const show = cat === 'all' || card.dataset.category === cat;
+            card.style.display = show ? '' : 'none';
+            if (show) count++;
+          });
+          filterStatus.textContent = count + ' activité' + (count > 1 ? 's' : '') + ' affichée' + (count > 1 ? 's' : '');
+        });
+      });
+    </script>
+  </body>
+</html>

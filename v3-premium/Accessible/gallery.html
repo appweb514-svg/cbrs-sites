@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Photos - CBRS Accessible</title>
+    <meta name="description" content="Galerie photos des activités du CBRS : randonnée, gym, vélo, vie du club. Variante accessible avec contrastes élevés, taille de texte ajustable, lecteur vocal.">
+    <link rel="stylesheet" href="premium.css">
+    <style>
+      :root{ --icon-bg: var(--blue-dark); --icon-fg: white; }
+      .a11y-widget-fixed {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.2rem;
+        z-index: 90;
+      }
+      .a11y-toggle-btn {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        border: 0;
+        background: var(--icon-bg);
+        color: var(--icon-fg);
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+        transition: transform .25s var(--ease), box-shadow .25s;
+      }
+      .a11y-toggle-btn:hover { transform: scale(1.08); }
+      .a11y-toggle-btn svg { width: 26px; height: 26px; fill: currentColor; }
+      .a11y-panel {
+        position: absolute;
+        bottom: calc(100% + .7rem);
+        right: 0;
+        width: min(88vw, 260px);
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 1rem;
+        box-shadow: var(--shadow);
+        display: none;
+        gap: .6rem;
+      }
+      .a11y-panel.open { display: grid; }
+      .a11y-panel button {
+        width: 100%;
+        text-align: left;
+        padding: .6rem .8rem;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: transparent;
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+        transition: background .2s;
+      }
+      .a11y-panel button:hover { background: var(--sage); }
+      .a11y-panel button[aria-pressed="true"] { background: var(--sage); border-color: var(--green); }
+      .a11y-sep { height: 1px; background: var(--line); margin: .3rem 0; }
+
+      /* Gallery page specifics */
+      .gallery-intro { max-width: 680px; margin: 0 auto 2.5rem; text-align: center; }
+      .gallery-intro h1 { margin-bottom: .5rem; }
+      .gallery-intro p { color: var(--muted); font-size: 1.05rem; }
+      .gallery-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .6rem;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+      .gallery-filters button {
+        padding: .5rem 1.2rem;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: transparent;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: .9rem;
+        transition: background .2s, border-color .2s;
+      }
+      .gallery-filters button:hover { background: var(--sage); }
+      .gallery-filters button[aria-pressed="true"] { background: var(--sage); border-color: var(--green); }
+      .gallery-photo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.2rem;
+      }
+      .gallery-item {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: transform .25s var(--ease), box-shadow .25s;
+        cursor: pointer;
+      }
+      .gallery-item:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+      .gallery-item img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        display: block;
+        transition: transform .3s ease;
+      }
+      .gallery-item:hover img { transform: scale(1.03); }
+      .gallery-item figcaption {
+        padding: .8rem 1rem;
+        font-size: .9rem;
+        color: var(--muted);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .gallery-item figcaption .cat-badge {
+        font-size: .75rem;
+        padding: .2rem .6rem;
+        background: var(--sage);
+        border-radius: 999px;
+        font-weight: 600;
+      }
+      .gallery-empty {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--muted);
+        font-size: 1.05rem;
+        display: none;
+      }
+      .gallery-empty.visible { display: block; }
+      .gallery-counter {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: var(--muted);
+        font-size: .9rem;
+      }
+    </style>
+  </head>
+  <body class="variant-accessible">
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <!-- Accessibility Widget -->
+    <div class="a11y-widget-fixed">
+      <div class="a11y-panel" id="a11y-panel" role="menu">
+        <button data-font-plus role="menuitem">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M12 3v18"/></svg>
+          Agrandir le texte
+        </button>
+        <button data-font-minus role="menuitem">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18"/></svg>
+          Réduire le texte
+        </button>
+        <div class="a11y-sep"></div>
+        <button data-contrast aria-pressed="false" role="menuitem">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20V2z"/></svg>
+          Contraste élevé
+        </button>
+        <div class="a11y-sep"></div>
+        <button data-listen role="menuitem">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          Lire cette page
+        </button>
+        <button data-auto-read aria-pressed="false" role="menuitem">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16v12H4z"/><path d="M8 20h8"/></svg>
+          Lecture auto
+        </button>
+      </div>
+      <button class="a11y-toggle-btn" aria-label="Options d'accessibilité" aria-expanded="false" aria-controls="a11y-panel" id="a11y-toggle">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-2V4a8 8 0 0 1 0 16z"/></svg>
+      </button>
+    </div>
+
+    <!-- Header -->
+    <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M17 2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 10l5 3 8-6 3 4-9 8-6-3-5 9-4-2 6-11c.5-1 1.2-1.7 2-2Z"/></svg></span><span><strong>CBRS</strong><span>Retraite sportive &amp; accessible</span></span></a><button class="menu-toggle" type="button">Menu</button><nav class="main-nav"><a href="activities.html">Activités</a><a href="index.html#planning">Planning</a><a href="gallery.html" aria-current="page">Photos</a><a href="index.html#inscription">Inscriptions</a><a href="index.html#contact">Contact</a></nav><div class="header-actions"><a class="btn" href="index.html#inscription">S'inscrire</a></div></div></header>
+
+    <main id="contenu">
+      <!-- Page Title -->
+      <section class="section">
+        <div class="gallery-intro">
+          <p class="eyebrow">Galerie photos</p>
+          <h1>Souvenirs des activités CBRS</h1>
+          <p>Retrouvez les moments forts de nos activités en images. Randonnée, gym, vélo, vie du club… nos adhérents partagent leurs meilleurs souvenirs.</p>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="gallery-filters" role="toolbar" aria-label="Filtrer les photos par catégorie">
+          <button aria-pressed="true" data-filter="all">Toutes</button>
+          <button aria-pressed="false" data-filter="randonnee">Randonnée</button>
+          <button aria-pressed="false" data-filter="gym">Gym</button>
+          <button aria-pressed="false" data-filter="velo">Vélo</button>
+          <button aria-pressed="false" data-filter="club">Vie du club</button>
+        </div>
+
+        <p class="gallery-counter" id="gallery-counter">12 photos</p>
+
+        <!-- Photo Grid -->
+        <div class="gallery-photo-grid" id="gallery-grid">
+
+          <!-- Randonnée -->
+          <figure class="gallery-item" data-category="randonnee" data-gallery data-caption="Randonnée en montagne">
+            <img src="../../assets-premium/real-tennis-table.jpg" alt="Randonnée en montagne avec des seniors actifs" loading="lazy">
+            <figcaption>
+              <span>Randonnée en montagne</span>
+              <span class="cat-badge">Randonnée</span>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item" data-category="randonnee" data-gallery data-caption="Marche nordique">
+            <img src="../../assets-premium/real-gym-group.jpg" alt="Groupe en marche nordique dans la forêt" loading="lazy">
+            <figcaption>
+              <span>Marche nordique</span>
+              <span class="cat-badge">Randonnée</span>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item" data-category="randonnee" data-gallery data-caption="Sortie en forêt">
+            <img src="../../assets-premium/real-sortie-senlis.png" alt="Sortie en forêt du Beauvaisis" loading="lazy">
+            <figcaption>
+              <span>Sortie en forêt</span>
+              <span class="cat-badge">Randonnée</span>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item" data-category="randonnee" data-gallery data-caption="Randonnée hivernale">
+            <img src="../../assets-premium/real-tennis-table.jpg" alt="Randonnée hivernale en raquettes" loading="lazy">
+            <figcaption>
+              <span>Randonnée hivernale</span>
+              <span class="cat-badge">Randonnée</span>
+            </figcaption>
+          </figure>
+
+          <!-- Gym -->
+          <figure class="gallery-item" data-category="gym" data-gallery data-caption="Gymnastique douce">
+            <img src="../../assets-premium/real-gym-group.jpg" alt="Séance de gymnastique douce en groupe" loading="lazy">
+            <figcaption>
+              <span>Gymnastique douce</span>
+              <span class="cat-badge">Gym</span>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item" data-category="gym" data-gallery data-caption="Aquagym">
+            <img src="../../assets-premium/real-gym-group.jpg" alt="Séance d'aquagym à la piscine" loading="lazy">
+            <figcaption>
+              <span>Aquagym</span>
+              <span class="cat-badge">Gym</span>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item" data-category="gym" data-gallery data-caption="Tai-chi">
+            <img src="../../assets-premium/real-memoire.jpg" alt="Atelier tai-chi en plein air" loading="lazy">
+            <figcaption>
+              <span>Tai-chi</span>
+              <span class="cat-badge">Gym</span>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item" data-category="gym" data-gallery data-caption="Danse de salon">
+            <img src="../../assets-premium/real-danse.jpg" alt="Cours de danse de salon" loading="lazy">
+            <figcaption>
+              <span>Danse de salon</span>
+              <span class="cat-badge">Gym</span>
+            </figcaption>
+          </figure>
+
+          <!-- Vélo -->
+          <figure class="gallery-item" data-category="velo" data-gallery data-caption="Sortie vélo à Senlis">
+            <img src="../../assets-premium/real-sortie-senlis.png" alt="Sortie vélo collective à Senlis" loading="lazy">
+            <figcaption>
+              <span>Sortie vélo à Senlis</span>
+              <span class="cat-badge">Vélo</span>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item" data-category="velo" data-gallery data-caption="Tour vélo">
+            <img src="../../assets-premium/real-sortie-senlis.png" alt="Tour vélo à travers le Beauvaisis" loading="lazy">
+            <figcaption>
+              <span>Tour vélo</span>
+              <span class="cat-badge">Vélo</span>
+            </figcaption>
+          </figure>
+
+          <!-- Vie du club -->
+          <figure class="gallery-item" data-category="club" data-gallery data-caption="Vie du club">
+            <img src="../../assets-premium/real-gym-group.jpg" alt="Adhérents réunis lors d'un événement du club" loading="lazy">
+            <figcaption>
+              <span>Vie du club</span>
+              <span class="cat-badge">Vie du club</span>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item" data-category="club" data-gallery data-caption="Sortie du club">
+            <img src="../../assets-premium/real-memoire.jpg" alt="Sortie collective du club CBRS" loading="lazy">
+            <figcaption>
+              <span>Sortie du club</span>
+              <span class="cat-badge">Vie du club</span>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item" data-category="club" data-gallery data-caption="Pétanque entre adhérents">
+            <img src="../../assets-premium/real-gym-group.jpg" alt="Partie de pétanque entre adhérents" loading="lazy">
+            <figcaption>
+              <span>Pétanque</span>
+              <span class="cat-badge">Vie du club</span>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item" data-category="club" data-gallery data-caption="Repas du club">
+            <img src="../../assets-premium/real-danse.jpg" alt="Repas convivial du club CBRS" loading="lazy">
+            <figcaption>
+              <span>Repas du club</span>
+              <span class="cat-badge">Vie du club</span>
+            </figcaption>
+          </figure>
+
+        </div>
+
+        <div class="gallery-empty" id="gallery-empty">
+          Aucune photo dans cette catégorie.
+        </div>
+
+        <p class="sr-status" aria-live="polite" id="filter-status"></p>
+      </section>
+    </main>
+
+    <footer class="footer">CBRS - Accessible</footer>
+    <div class="lightbox" role="dialog" aria-modal="true" hidden><button class="lightbox-close" type="button">×</button><figure><img src="" alt=""><figcaption></figcaption></figure></div>
+    <script src="../premium.js"></script>
+    <script>
+      /* A11y widget toggle */
+      const toggle = document.getElementById('a11y-toggle');
+      const panel  = document.getElementById('a11y-panel');
+      toggle.addEventListener('click', () => {
+        const open = panel.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open);
+      });
+      document.addEventListener('click', e => {
+        if (!e.target.closest('.a11y-widget-fixed')) {
+          panel.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      /* Gallery filter */
+      const filterBtns = document.querySelectorAll('.gallery-filters button');
+      const items = document.querySelectorAll('.gallery-item');
+      const counter = document.getElementById('gallery-counter');
+      const emptyMsg = document.getElementById('gallery-empty');
+      const filterStatus = document.getElementById('filter-status');
+
+      function updateGallery(cat) {
+        let count = 0;
+        items.forEach(item => {
+          const show = cat === 'all' || item.dataset.category === cat;
+          item.style.display = show ? '' : 'none';
+          if (show) count++;
+        });
+        counter.textContent = count + ' photo' + (count > 1 ? 's' : '');
+        emptyMsg.classList.toggle('visible', count === 0);
+        filterStatus.textContent = count + ' photo' + (count > 1 ? 's' : '') + ' affichée' + (count > 1 ? 's' : '');
+      }
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cat = btn.dataset.filter;
+          filterBtns.forEach(b => b.setAttribute('aria-pressed', b === btn));
+          updateGallery(cat);
+        });
+      });
+
+      /* Lightbox for gallery items */
+      const lightbox = document.querySelector('.lightbox');
+      const lightboxImg = lightbox.querySelector('img');
+      const lightboxFigcaption = lightbox.querySelector('figcaption');
+      const lightboxClose = lightbox.querySelector('.lightbox-close');
+
+      items.forEach(item => {
+        item.addEventListener('click', () => {
+          const img = item.querySelector('img');
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt;
+          lightboxFigcaption.textContent = item.dataset.caption || '';
+          lightbox.hidden = false;
+          lightboxClose.focus();
+        });
+      });
+
+      lightboxClose.addEventListener('click', () => { lightbox.hidden = true; });
+      lightbox.addEventListener('click', e => {
+        if (e.target === lightbox) lightbox.hidden = true;
+      });
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && !lightbox.hidden) lightbox.hidden = true;
+      });
+    </script>
+  </body>
+</html>

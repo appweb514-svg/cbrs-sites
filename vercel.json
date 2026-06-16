@@ -1,5 +1,7 @@
 {
   "buildCommand": null,
-  "outputDirectory": "site3",
-  "framework": null
+  "outputDirectory": ".",
+  "framework": null,
+  "cleanUrls": false,
+  "trailingSlash": true
 }

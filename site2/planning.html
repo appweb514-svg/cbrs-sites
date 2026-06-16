@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Planning - CBRS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            cbrs: {
+              blue: '#1e3a8a', lightBlue: '#f0f4f8', accentBlue: '#3b82f6',
+              green: '#4ade80', darkGreen: '#22c55e', gray: '#6b7280',
+              lightGray: '#f9fafb', dark: '#111827'
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .card-shadow { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); }
+    #mobileMenu { display:none; } #mobileMenu.open { display:block; }
+    .day-tab.active { background: #1e3a8a; color: white; }
+    .activity-row:hover { background: #f0f4f8; }
+  </style>
+</head>
+<body class="font-sans text-gray-800 bg-white">
+<header class="bg-white shadow-sm sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-20">
+<div class="flex-shrink-0 flex items-center gap-3">
+<div class="text-cbrs-blue text-4xl font-extrabold flex items-center">
+<i class="fa-solid fa-person-running text-cbrs-darkGreen mr-1"></i> CBRS</div>
+<div class="text-xs font-semibold leading-tight text-cbrs-blue border-l border-gray-300 pl-3">Club du Beauvaisis<br/>de la Retraite Sportive</div>
+</div>
+<nav class="hidden md:flex space-x-6 lg:space-x-8 text-sm font-medium text-gray-700">
+<a class="hover:text-cbrs-blue transition-colors" href="contact.html">Nous connaître</a>
+<a class="hover:text-cbrs-blue transition-colors" href="activites.html">Nos activités</a>
+<a class="text-cbrs-blue font-bold" href="planning.html">Planning</a>
+<a class="hover:text-cbrs-blue transition-colors" href="contact.html">Actualités</a>
+<a class="hover:text-cbrs-blue transition-colors" href="planning.html">Événements</a>
+<a class="hover:text-cbrs-blue transition-colors" href="contact.html#adhesion">Nous rejoindre</a>
+<a class="hover:text-cbrs-blue transition-colors" href="contact.html">Contact</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-gray-500 hover:text-cbrs-blue p-2 rounded-full border border-gray-200"><i class="fa-solid fa-search"></i></button>
+<a class="bg-cbrs-darkGreen hover:bg-green-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-colors shadow-md hidden sm:inline-block" href="contact.html#adhesion">ADHÉRER AU CLUB</a>
+<button class="md:hidden text-gray-700 text-2xl p-2" onclick="document.getElementById('mobileMenu').classList.toggle('open')"><i class="fa-solid fa-bars"></i></button>
+</div>
+</div>
+</div>
+<div id="mobileMenu" class="md:hidden bg-white border-t px-4 pb-4 space-y-2 text-sm font-medium">
+<a class="block py-2" href="contact.html">Nous connaître</a>
+<a class="block py-2" href="activites.html">Nos activités</a>
+<a class="block py-2 text-cbrs-blue font-bold" href="planning.html">Planning</a>
+<a class="block py-2" href="contact.html">Actualités</a>
+<a class="block py-2" href="planning.html">Événements</a>
+<a class="block py-2" href="contact.html#adhesion">Nous rejoindre</a>
+<a class="block py-2" href="contact.html">Contact</a>
+<a class="block py-2 bg-cbrs-darkGreen text-white text-center rounded-full mt-2 py-3" href="contact.html#adhesion">ADHÉRER AU CLUB</a>
+</div>
+</header>
+
+<!-- Page Hero -->
+<section class="bg-cbrs-blue py-20">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+<h1 class="text-4xl md:text-5xl font-extrabold mb-4">Planning Hebdomadaire</h1>
+<p class="text-xl text-blue-100 max-w-2xl mx-auto">Retrouvez toutes nos activités de la semaine avec horaires et lieux</p>
+</div>
+</section>
+
+<!-- Calendar Grid -->
+<main class="bg-cbrs-lightGray py-16">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+<!-- Week Navigation -->
+<div class="bg-white rounded-xl shadow-sm p-4 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+<button class="flex items-center gap-2 text-cbrs-blue font-semibold hover:underline"><i class="fa-solid fa-chevron-left"></i> Semaine précédente</button>
+<div class="flex items-center gap-3">
+<i class="fa-regular fa-calendar text-cbrs-blue text-xl"></i>
+<span class="font-bold text-cbrs-dark text-lg">16 - 22 Juin 2025</span>
+</div>
+<button class="flex items-center gap-2 text-cbrs-blue font-semibold hover:underline">Semaine suivante <i class="fa-solid fa-chevron-right"></i></button>
+</div>
+
+<!-- Day Tabs (Mobile) -->
+<div class="flex overflow-x-auto gap-2 mb-6 lg:hidden">
+<button class="day-tab active px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap">Lundi</button>
+<button class="day-tab bg-gray-100 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap">Mardi</button>
+<button class="day-tab bg-gray-100 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap">Mercredi</button>
+<button class="day-tab bg-gray-100 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap">Jeudi</button>
+<button class="day-tab bg-gray-100 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap">Vendredi</button>
+<button class="day-tab bg-gray-100 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap">Samedi</button>
+</div>
+
+<!-- Full Week Grid (Desktop) -->
+<div class="hidden lg:grid grid-cols-5 gap-4">
+
+<!-- Lundi -->
+<div class="bg-white rounded-xl shadow-sm overflow-hidden">
+<div class="bg-cbrs-blue text-white p-3 text-center"><h3 class="font-bold">Lundi</h3></div>
+<div class="p-3 space-y-3">
+<div class="border-l-4 border-cbrs-darkGreen pl-3 py-2"><p class="text-xs text-gray-500">09h30 - 11h00</p><p class="font-bold text-sm text-cbrs-dark">Randonnée</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Bois de Hez</p><span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-md font-medium">Niv. 2</span></div>
+<div class="border-l-4 border-cbrs-accentBlue pl-3 py-2"><p class="text-xs text-gray-500">14h00 - 15h00</p><p class="font-bold text-sm text-cbrs-dark">Aquagym</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Piscine Aquaspace</p><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-md font-medium">Places dispo.</span></div>
+<div class="border-l-4 border-purple-500 pl-3 py-2"><p class="text-xs text-gray-500">15h30 - 17h00</p><p class="font-bold text-sm text-cbrs-dark">Tai Chi Chuan</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Complexe Marissel</p><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-md font-medium">Places dispo.</span></div>
+<div class="border-l-4 border-orange-500 pl-3 py-2"><p class="text-xs text-gray-500">17h30 - 19h00</p><p class="font-bold text-sm text-cbrs-dark">Pétanque</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Boulodrome Beauvais</p><span class="bg-green-50 text-cbrs-darkGreen text-xs px-2 py-0.5 rounded-md font-medium">Libre</span></div>
+</div></div>
+
+<!-- Mardi -->
+<div class="bg-white rounded-xl shadow-sm overflow-hidden">
+<div class="bg-cbrs-accentBlue text-white p-3 text-center"><h3 class="font-bold">Mardi</h3></div>
+<div class="p-3 space-y-3">
+<div class="border-l-4 border-cbrs-darkGreen pl-3 py-2"><p class="text-xs text-gray-500">09h00 - 10h30</p><p class="font-bold text-sm text-cbrs-dark">Cyclotourisme</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Départ parking Espace</p><span class="bg-blue-100 text-cbrs-blue text-xs px-2 py-0.5 rounded-md font-medium">Extérieur</span></div>
+<div class="border-l-4 border-purple-500 pl-3 py-2"><p class="text-xs text-gray-500">14h00 - 15h15</p><p class="font-bold text-sm text-cbrs-dark">Yoga</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Salle des fêtes</p><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-md font-medium">Places dispo.</span></div>
+<div class="border-l-4 border-orange-500 pl-3 py-2"><p class="text-xs text-gray-500">15h00 - 17h00</p><p class="font-bold text-sm text-cbrs-dark">Jeux de Cartes</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Salle polyvalente</p><span class="bg-green-50 text-cbrs-darkGreen text-xs px-2 py-0.5 rounded-md font-medium">Libre</span></div>
+</div></div>
+
+<!-- Mercredi -->
+<div class="bg-white rounded-xl shadow-sm overflow-hidden">
+<div class="bg-cbrs-blue text-white p-3 text-center"><h3 class="font-bold">Mercredi</h3></div>
+<div class="p-3 space-y-3">
+<div class="border-l-4 border-cbrs-accentBlue pl-3 py-2"><p class="text-xs text-gray-500">09h30 - 10h30</p><p class="font-bold text-sm text-cbrs-dark">Aquagym</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Piscine Aquaspace</p><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-md font-medium">Places dispo.</span></div>
+<div class="border-l-4 border-cbrs-darkGreen pl-3 py-2"><p class="text-xs text-gray-500">10h00 - 12h00</p><p class="font-bold text-sm text-cbrs-dark">Marche Nordique</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Forêt de Hez</p><span class="bg-blue-100 text-cbrs-blue text-xs px-2 py-0.5 rounded-md font-medium">Extérieur</span></div>
+<div class="border-l-4 border-purple-500 pl-3 py-2"><p class="text-xs text-gray-500">14h30 - 15h30</p><p class="font-bold text-sm text-cbrs-dark">Gym Douce</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Complexe Marissel</p><span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-md font-medium">Niv. 1</span></div>
+</div></div>
+
+<!-- Jeudi -->
+<div class="bg-white rounded-xl shadow-sm overflow-hidden">
+<div class="bg-cbrs-accentBlue text-white p-3 text-center"><h3 class="font-bold">Jeudi</h3></div>
+<div class="p-3 space-y-3">
+<div class="border-l-4 border-cbrs-darkGreen pl-3 py-2"><p class="text-xs text-gray-500">09h30 - 11h00</p><p class="font-bold text-sm text-cbrs-dark">Randonnée</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Plan d'eau du Canada</p><span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-md font-medium">Niv. 1</span></div>
+<div class="border-l-4 border-orange-500 pl-3 py-2"><p class="text-xs text-gray-500">14h00 - 15h30</p><p class="font-bold text-sm text-cbrs-dark">Pétanque</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Boulodrome Beauvais</p><span class="bg-green-50 text-cbrs-darkGreen text-xs px-2 py-0.5 rounded-md font-medium">Libre</span></div>
+<div class="border-l-4 border-purple-500 pl-3 py-2"><p class="text-xs text-gray-500">16h00 - 17h30</p><p class="font-bold text-sm text-cbrs-dark">Tai Chi Chuan</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Complexe Marissel</p><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-md font-medium">Places dispo.</span></div>
+</div></div>
+
+<!-- Vendredi -->
+<div class="bg-white rounded-xl shadow-sm overflow-hidden">
+<div class="bg-cbrs-darkGreen text-white p-3 text-center"><h3 class="font-bold">Vendredi</h3></div>
+<div class="p-3 space-y-3">
+<div class="border-l-4 border-cbrs-accentBlue pl-3 py-2"><p class="text-xs text-gray-500">09h00 - 10h00</p><p class="font-bold text-sm text-cbrs-dark">Aquagym</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Piscine Aquaspace</p><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-md font-medium">Places dispo.</span></div>
+<div class="border-l-4 border-purple-500 pl-3 py-2"><p class="text-xs text-gray-500">10h30 - 11h45</p><p class="font-bold text-sm text-cbrs-dark">Yoga</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Salle des fêtes</p><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-md font-medium">Places dispo.</span></div>
+<div class="border-l-4 border-cbrs-darkGreen pl-3 py-2"><p class="text-xs text-gray-500">14h00 - 15h30</p><p class="font-bold text-sm text-cbrs-dark">Randonnée</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Saint-Germain-lepinay</p><span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-md font-medium">Niv. 2</span></div>
+</div></div>
+
+<!-- Samedi -->
+<div class="bg-white rounded-xl shadow-sm overflow-hidden">
+<div class="bg-orange-500 text-white p-3 text-center"><h3 class="font-bold">Samedi</h3></div>
+<div class="p-3 space-y-3">
+<div class="border-l-4 border-cbrs-darkGreen pl-3 py-2"><p class="text-xs text-gray-500">09h00 - 12h00</p><p class="font-bold text-sm text-cbrs-dark">Randonnée</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Varieurs - Thérondels</p><span class="bg-orange-100 text-orange-800 text-xs px-2 py-0.5 rounded-md font-medium">Longue</span></div>
+<div class="border-l-4 border-cbrs-darkGreen pl-3 py-2"><p class="text-xs text-gray-500">10h00 - 11h30</p><p class="font-bold text-sm text-cbrs-dark">Cyclotourisme</p><p class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>Boulers - Saint-Paul</p><span class="bg-blue-100 text-cbrs-blue text-xs px-2 py-0.5 rounded-md font-medium">Extérieur</span></div>
+</div></div>
+</div>
+
+<!-- Legend -->
+<div class="mt-8 bg-white rounded-xl shadow-sm p-6">
+<h3 class="font-bold text-cbrs-blue text-sm tracking-wider uppercase mb-4"><i class="fa-solid fa-circle-info mr-2"></i>Légende</h3>
+<div class="flex flex-wrap gap-4 text-sm">
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-cbrs-darkGreen"></span><span class="text-gray-600">Randonnée / Cyclotourisme / Marche Nordique</span></div>
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-cbrs-accentBlue"></span><span class="text-gray-600">Aquagym</span></div>
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-purple-500"></span><span class="text-gray-600">Tai Chi / Yoga / Gym Douce</span></div>
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-orange-500"></span><span class="text-gray-600">Pétanque / Jeux de Cartes</span></div>
+</div>
+<div class="flex flex-wrap gap-4 text-sm mt-4 pt-4 border-t border-gray-100">
+<div class="flex items-center gap-2"><span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-md font-medium">Niv. 1</span><span class="text-gray-600">Facile</span></div>
+<div class="flex items-center gap-2"><span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-md font-medium">Niv. 2</span><span class="text-gray-600">Intermédiaire</span></div>
+<div class="flex items-center gap-2"><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-md font-medium">Places dispo.</span><span class="text-gray-600">Inscription requise</span></div>
+<div class="flex items-center gap-2"><span class="bg-green-50 text-cbrs-darkGreen border border-green-200 text-xs px-2 py-0.5 rounded-md font-medium">Libre</span><span class="text-gray-600">Sans inscription</span></div>
+</div>
+</div>
+
+</div>
+</main>
+
+<!-- CTA Banner -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mb-12 relative z-20 mt-0">
+<div class="bg-cbrs-blue rounded-2xl shadow-xl overflow-hidden text-white flex flex-col md:flex-row items-center justify-between p-8">
+<div class="flex items-center gap-6 mb-6 md:mb-0">
+<div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-cbrs-darkGreen text-2xl shadow-inner flex-shrink-0"><i class="fa-regular fa-heart"></i></div>
+<div><h2 class="text-2xl md:text-3xl font-bold mb-1">Prêt à nous rejoindre ?</h2><p class="text-blue-100">2 séances d'essai gratuites pour découvrir le CBRS !</p></div>
+</div>
+<a class="bg-cbrs-darkGreen hover:bg-green-600 text-white px-6 py-3 rounded-full font-semibold transition-colors shadow-lg" href="contact.html#adhesion">ADHÉRER AU CLUB</a>
+</div>
+</div>
+
+<!-- BEGIN: Footer -->
+<footer class="bg-white pt-24 pb-8 border-t border-gray-200">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 mb-12">
+<div class="lg:col-span-2">
+<div class="flex items-center gap-2 mb-4">
+<div class="text-cbrs-blue text-3xl font-extrabold flex items-center"><i class="fa-solid fa-person-running text-cbrs-darkGreen mr-1"></i> CBRS</div>
+<div class="text-[10px] font-semibold leading-tight text-gray-500 border-l border-gray-300 pl-2">Club du Beauvaisis<br/>de la Retraite Sportive</div>
+</div>
+</div>
+<div><h4 class="font-bold text-gray-900 mb-4 text-sm">Le Club</h4>
+<ul class="space-y-2 text-sm text-gray-600"><li><a class="hover:text-cbrs-blue" href="contact.html">Qui sommes-nous ?</a></li><li><a class="hover:text-cbrs-blue" href="contact.html">Nos valeurs</a></li><li><a class="hover:text-cbrs-blue" href="contact.html">L'équipe</a></li></ul></div>
+<div><h4 class="font-bold text-gray-900 mb-4 text-sm">Activités</h4>
+<ul class="space-y-2 text-sm text-gray-600"><li><a class="hover:text-cbrs-blue" href="activites.html">Toutes les activités</a></li><li><a class="hover:text-cbrs-blue" href="activites.html">Niveaux &amp; tarifs</a></li><li><a class="hover:text-cbrs-blue" href="activites.html">Encadrement</a></li></ul></div>
+<div><h4 class="font-bold text-gray-900 mb-4 text-sm">Infos pratiques</h4>
+<ul class="space-y-2 text-sm text-gray-600"><li><a class="hover:text-cbrs-blue" href="planning.html">Planning</a></li><li><a class="hover:text-cbrs-blue" href="contact.html#adhesion">Inscriptions</a></li><li><a class="hover:text-cbrs-blue" href="planning.html">Documents utiles</a></li></ul></div>
+<div class="lg:col-span-1"><h4 class="font-bold text-gray-900 mb-4 text-sm">Nous suivre</h4>
+<div class="flex gap-4"><a class="text-cbrs-blue hover:text-blue-800 text-xl" href="#"><i class="fa-brands fa-facebook"></i></a><a class="text-cbrs-blue hover:text-blue-800 text-xl" href="#"><i class="fa-brands fa-instagram"></i></a><a class="text-cbrs-blue hover:text-blue-800 text-xl" href="#"><i class="fa-brands fa-youtube"></i></a></div>
+<h4 class="font-bold text-gray-900 mt-6 mb-3 text-sm">Nous contacter</h4>
+<ul class="space-y-2 text-xs text-gray-600">
+<li class="flex items-center gap-2"><i class="fa-solid fa-phone text-cbrs-blue"></i> 03 60 36 17 47</li>
+<li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-cbrs-blue"></i> cbrs@cbrs60.fr</li>
+<li class="flex items-start gap-2"><i class="fa-solid fa-location-dot text-cbrs-blue mt-1"></i> <span>3 rue de l'Industrie<br/>60000 Beauvais</span></li>
+</ul></div>
+</div>
+<div class="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+<div>© 2024 CBRS - Club du Beauvaisis de la Retraite Sportive</div>
+<div class="flex gap-4"><a class="hover:text-gray-900" href="contact.html">Mentions légales</a><a class="hover:text-gray-900" href="contact.html">Politique de confidentialité</a><a class="hover:text-gray-900" href="contact.html">Accessibilité</a></div>
+<div>Site réalisé avec <i class="fa-solid fa-heart text-gray-400 mx-1"></i></div>
+</div>
+</div>
+</footer>
+</body></html>

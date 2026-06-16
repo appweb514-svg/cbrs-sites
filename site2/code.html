@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CBRS - Club du Beauvaisis de la Retraite Sportive</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            cbrs: {
+              blue: '#1e3a8a', // Dark blue
+              lightBlue: '#f0f4f8', // Very light blue background
+              accentBlue: '#3b82f6', // Bright blue
+              green: '#4ade80', // vibrant green
+              darkGreen: '#22c55e', // darker green for hover
+              gray: '#6b7280',
+              lightGray: '#f9fafb',
+              dark: '#111827'
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-utilities">
+    /* Custom utility classes */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      height: 600px;
+    }
+    .hero-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .overlay-gradient {
+      background: linear-gradient(to right, rgba(17, 24, 39, 0.8) 0%, rgba(17, 24, 39, 0.4) 50%, rgba(17, 24, 39, 0.1) 100%);
+    }
+    .card-shadow {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="font-sans text-gray-800 bg-white">
+<!-- BEGIN: Main Header -->
+<header class="bg-white shadow-sm sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-20">
+<!-- Logo -->
+<div class="flex-shrink-0 flex items-center gap-3">
+<div class="text-cbrs-blue text-4xl font-extrabold flex items-center">
+<i class="fa-solid fa-person-running text-cbrs-darkGreen mr-1"></i> CBRS
+          </div>
+<div class="text-xs font-semibold leading-tight text-cbrs-blue border-l border-gray-300 pl-3">
+            Club du Beauvaisis<br/>de la Retraite Sportive
+          </div>
+</div>
+<!-- Navigation -->
+<nav class="hidden md:flex space-x-6 lg:space-x-8 text-sm font-medium text-gray-700">
+<a class="hover:text-cbrs-blue transition-colors" href="contact.html">Nous connaître</a>
+<a class="hover:text-cbrs-blue transition-colors" href="activites.html">Nos activités</a>
+<a class="hover:text-cbrs-blue transition-colors" href="planning.html">Planning</a>
+<a class="hover:text-cbrs-blue transition-colors" href="contact.html">Actualités</a>
+<a class="hover:text-cbrs-blue transition-colors" href="planning.html">Événements</a>
+<a class="hover:text-cbrs-blue transition-colors" href="contact.html#adhesion">Nous rejoindre</a>
+<a class="hover:text-cbrs-blue transition-colors" href="contact.html">Contact</a>
+</nav>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<button class="text-gray-500 hover:text-cbrs-blue p-2 rounded-full border border-gray-200">
+<i class="fa-solid fa-search"></i>
+</button>
+<a class="bg-cbrs-darkGreen hover:bg-green-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-colors shadow-md" href="contact.html#adhesion">
+            ADHÉRER AU CLUB
+          </a>
+</div>
+</div>
+</div>
+</header>
+<!-- END: Main Header -->
+<!-- BEGIN: Hero Section -->
+<section class="relative">
+<div class="hero-grid relative">
+<img alt="Hiking" class="object-cover h-full w-full" src="../assets/randonnees-beauvaisis.jpg"/>
+<img alt="Cycling" class="object-cover h-full w-full" src="../assets-premium/sortie-velo.png"/>
+<img alt="Aquagym" class="object-cover h-full w-full" src="../assets/gallery-taichi.jpg"/>
+<img alt="Tai Chi" class="object-cover h-full w-full" src="../assets/gallery-taichi.jpg"/>
+<img alt="Petanque" class="object-cover h-full w-full" src="../assets/gallery-marche.jpg"/>
+<!-- Overlay -->
+<div class="absolute inset-0 overlay-gradient flex items-center">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+<div class="max-w-2xl text-white">
+<h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-4 tracking-tight">
+              Vivre pleinement<br/>chaque instant
+            </h1>
+<p class="text-xl md:text-2xl font-medium mb-8 text-gray-200">
+              Plus de 40 activités pour bouger, partager<br/>et tisser des liens.
+            </p>
+<div class="flex flex-wrap gap-4">
+<a class="bg-cbrs-darkGreen hover:bg-green-600 text-white px-6 py-3 rounded-full font-semibold transition-colors shadow-lg" href="activites.html">
+                DÉCOUVRIR NOS ACTIVITÉS
+              </a>
+<a class="bg-transparent border-2 border-white hover:bg-white hover:text-cbrs-dark px-6 py-3 rounded-full font-semibold transition-colors flex items-center gap-2" href="contact.html">
+                EN SAVOIR PLUS SUR LE CBRS <i class="fa-solid fa-arrow-right"></i>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature Bar -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative -mt-12 z-10">
+<div class="bg-white rounded-xl shadow-lg p-6 flex flex-wrap md:flex-nowrap justify-between items-center divide-y md:divide-y-0 md:divide-x divide-gray-100">
+<div class="flex items-center gap-4 p-4 w-full md:w-1/4">
+<div class="w-12 h-12 rounded-full bg-cbrs-blue text-white flex items-center justify-center flex-shrink-0 text-xl">
+<i class="fa-solid fa-users"></i>
+</div>
+<div>
+<p class="font-semibold text-sm leading-tight text-cbrs-dark">+ de 40 activités adaptées à chacun</p>
+</div>
+</div>
+<div class="flex items-center gap-4 p-4 w-full md:w-1/4">
+<div class="w-12 h-12 rounded-full bg-cbrs-darkGreen text-white flex items-center justify-center flex-shrink-0 text-xl">
+<i class="fa-regular fa-heart"></i>
+</div>
+<div>
+<p class="font-semibold text-sm leading-tight text-cbrs-dark">Ambiance conviviale et bienveillante</p>
+</div>
+</div>
+<div class="flex items-center gap-4 p-4 w-full md:w-1/4">
+<div class="w-12 h-12 rounded-full bg-cbrs-blue text-white flex items-center justify-center flex-shrink-0 text-xl">
+<i class="fa-solid fa-medal"></i>
+</div>
+<div>
+<p class="font-semibold text-sm leading-tight text-cbrs-dark">Encadrement qualifié et passionné</p>
+</div>
+</div>
+<div class="flex items-center gap-4 p-4 w-full md:w-1/4">
+<div class="w-12 h-12 rounded-full bg-cbrs-darkGreen text-white flex items-center justify-center flex-shrink-0 text-xl">
+<i class="fa-solid fa-user-check"></i>
+</div>
+<div>
+<p class="font-semibold text-sm leading-tight text-cbrs-dark">Ouvert à tous les retraités</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Hero Section -->
+<!-- BEGIN: Main Content -->
+<main class="bg-cbrs-lightGray pt-24 pb-16">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+<!-- Activities Section -->
+<section>
+<div class="flex flex-col md:flex-row justify-between items-end mb-8">
+<div class="max-w-md">
+<h2 class="text-sm font-bold text-cbrs-accentBlue tracking-wider uppercase mb-2">NOS ACTIVITÉS</h2>
+<h3 class="text-3xl font-bold text-cbrs-dark leading-tight">Il y en a pour<br/>tous les goûts</h3>
+</div>
+<a class="text-cbrs-blue font-semibold hover:underline mt-4 md:mt-0 flex items-center gap-2" href="activites.html">
+            Voir toutes les activités <i class="fa-solid fa-arrow-right"></i>
+</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 relative">
+<!-- Activity Card 1 -->
+<div class="bg-white rounded-xl overflow-hidden card-shadow group cursor-pointer hover:shadow-xl transition-shadow relative">
+<div class="h-40 overflow-hidden relative">
+<img alt="Randonnée" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="../assets/randonnees-beauvaisis.jpg"/>
+<div class="absolute -bottom-6 left-4 w-12 h-12 bg-cbrs-darkGreen rounded-full border-4 border-white flex items-center justify-center text-white text-xl z-10">
+<i class="fa-solid fa-person-hiking"></i>
+</div>
+</div>
+<div class="p-6 pt-10">
+<h4 class="font-bold text-lg mb-2 text-cbrs-dark">Randonnée</h4>
+<p class="text-sm text-gray-600">Profitez de la nature en toute convivialité</p>
+</div>
+</div>
+<!-- Activity Card 2 -->
+<div class="bg-white rounded-xl overflow-hidden card-shadow group cursor-pointer hover:shadow-xl transition-shadow relative">
+<div class="h-40 overflow-hidden relative">
+<img alt="Cyclotourisme" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="../assets-premium/sortie-velo.png"/>
+<div class="absolute -bottom-6 left-4 w-12 h-12 bg-cbrs-darkGreen rounded-full border-4 border-white flex items-center justify-center text-white text-xl z-10">
+<i class="fa-solid fa-bicycle"></i>
+</div>
+</div>
+<div class="p-6 pt-10">
+<h4 class="font-bold text-lg mb-2 text-cbrs-dark">Cyclotourisme</h4>
+<p class="text-sm text-gray-600">Parcourez la région à votre rythme</p>
+</div>
+</div>
+<!-- Activity Card 3 -->
+<div class="bg-white rounded-xl overflow-hidden card-shadow group cursor-pointer hover:shadow-xl transition-shadow relative">
+<div class="h-40 overflow-hidden relative">
+<img alt="Aquagym" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="../assets/gallery-taichi.jpg"/>
+<div class="absolute -bottom-6 left-4 w-12 h-12 bg-cbrs-accentBlue rounded-full border-4 border-white flex items-center justify-center text-white text-xl z-10">
+<i class="fa-solid fa-water"></i>
+</div>
+</div>
+<div class="p-6 pt-10">
+<h4 class="font-bold text-lg mb-2 text-cbrs-dark">Aquagym</h4>
+<p class="text-sm text-gray-600">Restez en forme en douceur</p>
+</div>
+</div>
+<!-- Activity Card 4 -->
+<div class="bg-white rounded-xl overflow-hidden card-shadow group cursor-pointer hover:shadow-xl transition-shadow relative">
+<div class="h-40 overflow-hidden relative">
+<img alt="Tai Chi Chuan" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="../assets/gallery-taichi.jpg"/>
+<div class="absolute -bottom-6 left-4 w-12 h-12 bg-purple-500 rounded-full border-4 border-white flex items-center justify-center text-white text-xl z-10">
+<i class="fa-solid fa-yin-yang"></i>
+</div>
+</div>
+<div class="p-6 pt-10">
+<h4 class="font-bold text-lg mb-2 text-cbrs-dark">Tai Chi Chuan</h4>
+<p class="text-sm text-gray-600">Équilibre du corps et de l'esprit</p>
+</div>
+</div>
+<!-- Activity Card 5 -->
+<div class="bg-white rounded-xl overflow-hidden card-shadow group cursor-pointer hover:shadow-xl transition-shadow relative">
+<div class="h-40 overflow-hidden relative">
+<img alt="Pétanque" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="../assets/gallery-marche.jpg"/>
+<div class="absolute -bottom-6 left-4 w-12 h-12 bg-orange-500 rounded-full border-4 border-white flex items-center justify-center text-white text-xl z-10">
+<i class="fa-solid fa-bowling-ball"></i>
+</div>
+</div>
+<div class="p-6 pt-10">
+<h4 class="font-bold text-lg mb-2 text-cbrs-dark">Pétanque</h4>
+<p class="text-sm text-gray-600">Un moment de partage et de détente</p>
+</div>
+</div>
+<!-- Carousel Arrow (Decorative) -->
+<button class="absolute -right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center text-gray-500 hover:text-cbrs-blue hidden lg:flex">
+<i class="fa-solid fa-chevron-right"></i>
+</button>
+</div>
+</section>
+<!-- Dashboard Layout Section -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Weekly Agenda -->
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 lg:col-span-1">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-cbrs-blue">
+<i class="fa-regular fa-calendar-alt text-xl"></i>
+</div>
+<h3 class="font-bold text-cbrs-blue text-sm tracking-wider uppercase">AGENDA DE LA SEMAINE</h3>
+</div>
+<!-- Days Header -->
+<div class="flex justify-between mb-6 text-center text-sm">
+<div class="bg-cbrs-blue text-white rounded-lg px-2 py-1 w-12">
+<div class="text-xs">Lun</div>
+<div class="font-bold">13</div>
+</div>
+<div class="px-2 py-1 w-12 text-gray-500">
+<div class="text-xs">Mar</div>
+<div class="font-semibold text-cbrs-dark">14</div>
+</div>
+<div class="px-2 py-1 w-12 text-gray-500">
+<div class="text-xs">Mer</div>
+<div class="font-semibold text-cbrs-dark">15</div>
+</div>
+<div class="px-2 py-1 w-12 text-gray-500">
+<div class="text-xs">Jeu</div>
+<div class="font-semibold text-cbrs-dark">16</div>
+</div>
+<div class="px-2 py-1 w-12 text-gray-500">
+<div class="text-xs">Ven</div>
+<div class="font-semibold text-cbrs-dark">17</div>
+</div>
+<div class="px-2 py-1 w-12 text-gray-500">
+<div class="text-xs">Sam</div>
+<div class="font-semibold text-cbrs-dark">18</div>
+</div>
+<div class="px-2 py-1 w-12 text-gray-500">
+<div class="text-xs">Dim</div>
+<div class="font-semibold text-cbrs-dark">19</div>
+</div>
+</div>
+<!-- Schedule List -->
+<div class="space-y-4 mb-6">
+<div class="flex items-start justify-between text-sm py-2 border-b border-gray-50">
+<div class="flex gap-4">
+<span class="text-gray-500 w-24">09h30 - 11h00</span>
+<span class="font-semibold text-cbrs-dark w-24">Randonnée</span>
+<span class="text-gray-500 truncate w-32">Bois de Hez</span>
+</div>
+<span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-md font-medium whitespace-nowrap">Niv. 2</span>
+</div>
+<div class="flex items-start justify-between text-sm py-2 border-b border-gray-50">
+<div class="flex gap-4">
+<span class="text-gray-500 w-24">14h00 - 15h00</span>
+<span class="font-semibold text-cbrs-dark w-24">Aquagym</span>
+<span class="text-gray-500 truncate w-32">Piscine Aquaspace</span>
+</div>
+<span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-md font-medium whitespace-nowrap">Places dispo.</span>
+</div>
+<div class="flex items-start justify-between text-sm py-2 border-b border-gray-50">
+<div class="flex gap-4">
+<span class="text-gray-500 w-24">15h30 - 17h00</span>
+<span class="font-semibold text-cbrs-dark w-24">Tai Chi Chuan</span>
+<span class="text-gray-500 truncate w-32">Complexe sportif de Marissel</span>
+</div>
+<span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-md font-medium whitespace-nowrap">Places dispo.</span>
+</div>
+<div class="flex items-start justify-between text-sm py-2">
+<div class="flex gap-4">
+<span class="text-gray-500 w-24">17h30 - 19h00</span>
+<span class="font-semibold text-cbrs-dark w-24">Pétanque</span>
+<span class="text-gray-500 truncate w-32">Boulodrome de Beauvais</span>
+</div>
+<span class="bg-green-50 text-cbrs-darkGreen border border-green-200 text-xs px-2 py-1 rounded-md font-medium whitespace-nowrap">Libre d'accès</span>
+</div>
+</div>
+<a class="block w-full text-center border border-cbrs-blue text-cbrs-blue hover:bg-blue-50 py-2.5 rounded-full text-sm font-semibold transition-colors" href="contact.html#adhesion">
+            VOIR LE PLANNING COMPLET <i class="fa-solid fa-arrow-right ml-1"></i>
+</a>
+</div>
+<!-- Featured Testimonial Banner -->
+<div class="lg:col-span-1 rounded-2xl overflow-hidden relative">
+<img alt="Happy Members" class="absolute inset-0 w-full h-full object-cover" src="../assets-premium/real-gym-group.jpg"/>
+<div class="absolute inset-0 bg-black/20"></div>
+<div class="relative h-full flex items-end p-6">
+<div class="bg-white rounded-xl p-6 shadow-lg">
+<div class="text-cbrs-darkGreen text-2xl mb-2"><i class="fa-solid fa-quote-left"></i></div>
+<p class="text-lg font-semibold text-cbrs-dark mb-4 leading-tight">Au CBRS, on trouve bien plus qu'un club, on y trouve une seconde famille.</p>
+<div class="flex items-center gap-3">
+<img alt="Françoise L." class="w-10 h-10 rounded-full" src="../assets/gallery-marche.jpg"/>
+<div>
+<p class="font-bold text-sm text-cbrs-dark">Françoise L.</p>
+<p class="text-xs text-gray-500">Adhérente depuis 2017</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Next Event & Small Testimonials -->
+<div class="lg:col-span-1 flex flex-col gap-6">
+<!-- Next Event -->
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col h-1/2">
+<div class="p-6 flex-grow">
+<div class="flex items-center gap-2 mb-4 text-gray-500">
+<i class="fa-regular fa-calendar text-lg"></i>
+<h3 class="font-bold text-sm tracking-wider uppercase">PROCHAIN ÉVÉNEMENT</h3>
+</div>
+<div class="flex gap-4">
+<div class="text-center">
+<div class="text-3xl font-extrabold text-cbrs-dark leading-none">23</div>
+<div class="text-xs font-bold text-gray-500 uppercase mt-1">JUIN</div>
+</div>
+<div>
+<h4 class="font-bold text-cbrs-dark mb-2">Journée conviviale au plan d'eau du Canada</h4>
+<p class="text-sm text-gray-600 mb-4 text-balance">Pique-nique, activités et bonne humeur au programme !</p>
+<a class="inline-block bg-cbrs-darkGreen hover:bg-green-600 text-white px-4 py-2 rounded-full text-sm font-semibold transition-colors" href="contact.html#adhesion">
+                    JE PARTICIPE
+                  </a>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 px-6 py-3 border-t border-gray-100 flex justify-between items-center">
+<a class="text-cbrs-blue text-sm font-semibold hover:underline" href="planning.html">Voir tous les événements <i class="fa-solid fa-arrow-right ml-1"></i></a>
+</div>
+</div>
+<!-- Bottom Right Image (Decorative matching original layout) -->
+<div class="bg-white rounded-2xl overflow-hidden h-1/2">
+<img alt="Landscape" class="w-full h-full object-cover" src="../assets/gallery-raquettes.jpg"/>
+</div>
+</div>
+</section>
+<!-- Bottom Info Sections -->
+<section class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+<!-- News Section -->
+<div class="lg:col-span-2">
+<div class="flex justify-between items-end mb-6">
+<h3 class="font-bold text-cbrs-blue text-sm tracking-wider uppercase">ACTUALITÉS DU CLUB</h3>
+<a class="text-cbrs-blue text-sm font-semibold hover:underline flex items-center gap-1" href="contact.html">Voir toutes les actualités <i class="fa-solid fa-arrow-right"></i></a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<!-- News Card 1 -->
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group cursor-pointer">
+<div class="relative h-32 overflow-hidden">
+<img alt="News 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="../assets/randonnees-beauvaisis.jpg"/>
+<span class="absolute top-2 left-2 bg-white text-xs font-bold px-2 py-1 rounded shadow-sm text-gray-700">SORTIE</span>
+</div>
+<div class="p-4">
+<h4 class="font-bold text-sm text-cbrs-dark mb-1 line-clamp-2 leading-tight">Séjour randonnée dans le Cantal</h4>
+<p class="text-xs text-gray-500 mt-2">Du 10 au 14 juin 2024</p>
+</div>
+</div>
+<!-- News Card 2 -->
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group cursor-pointer">
+<div class="relative h-32 overflow-hidden">
+<img alt="News 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="../assets-premium/real-sortie-senlis.png"/>
+<span class="absolute top-2 left-2 bg-white text-xs font-bold px-2 py-1 rounded shadow-sm text-gray-700">ÉVÉNEMENT</span>
+</div>
+<div class="p-4">
+<h4 class="font-bold text-sm text-cbrs-dark mb-1 line-clamp-2 leading-tight">Journée conviviale au plan d'eau du Canada</h4>
+<p class="text-xs text-gray-500 mt-2">Dimanche 23 juin 2024</p>
+</div>
+</div>
+<!-- News Card 3 -->
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group cursor-pointer">
+<div class="relative h-32 overflow-hidden">
+<img alt="News 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="../assets-premium/real-gym-group.jpg"/>
+<span class="absolute top-2 left-2 bg-white text-xs font-bold px-2 py-1 rounded shadow-sm text-gray-700">ACTUALITÉ</span>
+</div>
+<div class="p-4">
+<h4 class="font-bold text-sm text-cbrs-dark mb-1 line-clamp-2 leading-tight">Assemblée générale annuelle</h4>
+<p class="text-xs text-gray-500 mt-2">Vendredi 28 juin 2024</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Volunteer Profile -->
+<div class="bg-green-50 rounded-2xl p-6 border border-green-100 lg:col-span-1">
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-bold text-cbrs-darkGreen text-sm tracking-wider uppercase leading-tight">ILS S'ENGAGENT POUR VOUS</h3>
+</div>
+<a class="text-cbrs-darkGreen text-sm font-semibold hover:underline flex items-center gap-1 mb-4" href="activites.html">Voir tous nos animateurs <i class="fa-solid fa-arrow-right"></i></a>
+<div class="flex gap-4">
+<img alt="Pierre M." class="w-20 h-20 rounded-lg object-cover" src="../assets-premium/real-gym-group.jpg"/>
+<div>
+<h4 class="font-bold text-lg text-cbrs-dark leading-tight">Pierre M.</h4>
+<p class="text-sm text-gray-600 mb-2">Animateur randonnée</p>
+</div>
+</div>
+<p class="text-sm text-gray-600 mt-3 italic line-clamp-3">"Passionné de nature et de partage, Pierre vous accompagne sur les plus beaux sentiers du Beauvaisis."</p>
+<div class="flex gap-3 mt-4 text-cbrs-darkGreen">
+<i class="fa-solid fa-person-hiking text-lg"></i>
+<i class="fa-solid fa-map-location-dot text-lg"></i>
+<i class="fa-regular fa-heart text-lg ml-auto"></i>
+</div>
+</div>
+<!-- Testimonials -->
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 lg:col-span-1 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-bold text-cbrs-blue text-sm tracking-wider uppercase">TÉMOIGNAGES</h3>
+</div>
+<a class="text-cbrs-blue text-sm font-semibold hover:underline flex items-center gap-1 mb-4" href="contact.html">Voir tous les témoignages <i class="fa-solid fa-arrow-right"></i></a>
+<div class="text-cbrs-darkGreen text-2xl mb-2"><i class="fa-solid fa-quote-left"></i></div>
+<p class="text-sm font-medium text-gray-700 mb-6 italic">"Depuis que j'ai rejoint le CBRS, j'ai retrouvé une vraie dynamique et surtout de belles amitiés."</p>
+</div>
+<div class="flex justify-between items-end mt-auto">
+<div class="flex items-center gap-3">
+<img alt="Monique D." class="w-10 h-10 rounded-full" src="../assets/gallery-marche.jpg"/>
+<div>
+<p class="font-bold text-sm text-cbrs-dark">Monique D.</p>
+<p class="text-xs text-gray-500">Adhérente depuis 2019</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="w-6 h-6 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-cbrs-blue"><i class="fa-solid fa-chevron-left text-xs"></i></button>
+<button class="w-6 h-6 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-cbrs-blue"><i class="fa-solid fa-chevron-right text-xs"></i></button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- END: Main Content -->
+<!-- BEGIN: CTA Banner -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mb-12 relative z-20">
+<div class="bg-cbrs-blue rounded-2xl shadow-xl overflow-hidden text-white flex flex-col md:flex-row items-center justify-between p-8">
+<div class="flex items-center gap-6 mb-6 md:mb-0">
+<div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-cbrs-darkGreen text-2xl shadow-inner flex-shrink-0">
+<i class="fa-regular fa-heart"></i>
+</div>
+<div>
+<h2 class="text-2xl md:text-3xl font-bold mb-1">Prêt à nous rejoindre ?</h2>
+<p class="text-blue-100">Venez vivre l'expérience CBRS et profitez d'une retraite active et épanouie !</p>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="bg-cbrs-darkGreen hover:bg-green-600 text-white px-6 py-3 rounded-full font-semibold transition-colors text-center shadow-lg whitespace-nowrap" href="contact.html#adhesion">
+          ADHÉRER AU CLUB
+        </a>
+<a class="bg-transparent border-2 border-white hover:bg-white hover:text-cbrs-blue px-6 py-3 rounded-full font-semibold transition-colors text-center whitespace-nowrap" href="planning.html">
+          NOUS CONTACTER
+        </a>
+</div>
+<div class="hidden lg:flex gap-6 mt-6 md:mt-0 opacity-80 text-sm">
+<div class="flex items-center gap-2">
+<i class="fa-regular fa-clock"></i>
+<span>Essai gratuit<br/>2 séances offertes</span>
+</div>
+<div class="flex items-center gap-2 border-l border-white/20 pl-6">
+<i class="fa-solid fa-leaf"></i>
+<span>Sans compétition<br/>Chacun à son rythme</span>
+</div>
+<div class="flex items-center gap-2 border-l border-white/20 pl-6">
+<i class="fa-solid fa-hands-holding-circle"></i>
+<span>Convivialité<br/>Partage &amp; plaisir</span>
+</div>
+</div>
+</div>
+</div>
+<!-- END: CTA Banner -->
+<!-- BEGIN: Footer -->
+<footer class="bg-white pt-24 pb-8 border-t border-gray-200">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 mb-12">
+<!-- Footer Logo -->
+<div class="lg:col-span-2">
+<div class="flex items-center gap-2 mb-4">
+<div class="text-cbrs-blue text-3xl font-extrabold flex items-center">
+<i class="fa-solid fa-person-running text-cbrs-darkGreen mr-1"></i> CBRS
+            </div>
+<div class="text-[10px] font-semibold leading-tight text-gray-500 border-l border-gray-300 pl-2">
+              Club du Beauvaisis<br/>de la Retraite Sportive
+            </div>
+</div>
+</div>
+<!-- Links Columns -->
+<div>
+<h4 class="font-bold text-gray-900 mb-4 text-sm">Le Club</h4>
+<ul class="space-y-2 text-sm text-gray-600">
+<li><a class="hover:text-cbrs-blue" href="contact.html">Qui sommes-nous ?</a></li>
+<li><a class="hover:text-cbrs-blue" href="contact.html">Nos valeurs</a></li>
+<li><a class="hover:text-cbrs-blue" href="contact.html">L'équipe</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-gray-900 mb-4 text-sm">Activités</h4>
+<ul class="space-y-2 text-sm text-gray-600">
+<li><a class="hover:text-cbrs-blue" href="activites.html">Toutes les activités</a></li>
+<li><a class="hover:text-cbrs-blue" href="activites.html">Niveaux &amp; tarifs</a></li>
+<li><a class="hover:text-cbrs-blue" href="activites.html">Encadrement</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-gray-900 mb-4 text-sm">Infos pratiques</h4>
+<ul class="space-y-2 text-sm text-gray-600">
+<li><a class="hover:text-cbrs-blue" href="planning.html">Planning</a></li>
+<li><a class="hover:text-cbrs-blue" href="contact.html#adhesion">Inscriptions</a></li>
+<li><a class="hover:text-cbrs-blue" href="planning.html">Documents utiles</a></li>
+</ul>
+</div>
+<div class="lg:col-span-1">
+<h4 class="font-bold text-gray-900 mb-4 text-sm">Nous suivre</h4>
+<div class="flex gap-4">
+<a class="text-cbrs-blue hover:text-blue-800 text-xl" href="#"><i class="fa-brands fa-facebook"></i></a>
+<a class="text-cbrs-blue hover:text-blue-800 text-xl" href="#"><i class="fa-brands fa-instagram"></i></a>
+<a class="text-cbrs-blue hover:text-blue-800 text-xl" href="#"><i class="fa-brands fa-youtube"></i></a>
+</div>
+<h4 class="font-bold text-gray-900 mt-6 mb-3 text-sm">Nous contacter</h4>
+<ul class="space-y-2 text-xs text-gray-600">
+<li class="flex items-center gap-2"><i class="fa-solid fa-phone text-cbrs-blue"></i> 03 60 36 17 47</li>
+<li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-cbrs-blue"></i> cbrs@cbrs60.fr</li>
+<li class="flex items-start gap-2"><i class="fa-solid fa-location-dot text-cbrs-blue mt-1"></i> <span>Siège social : 3 rue de l'Industrie<br/>60000 Beauvais</span></li>
+</ul>
+</div>
+</div>
+<!-- Footer Bottom -->
+<div class="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+<div>
+          © 2024 CBRS - Club du Beauvaisis de la Retraite Sportive
+        </div>
+<div class="flex gap-4">
+<a class="hover:text-gray-900" href="contact.html">Mentions légales</a>
+<a class="hover:text-gray-900" href="contact.html">Politique de confidentialité</a>
+<a class="hover:text-gray-900" href="contact.html">Accessibilité</a>
+</div>
+<div>
+          Site réalisé avec <i class="fa-solid fa-heart text-gray-400 mx-1"></i>
+</div>
+</div>
+</div>
+</footer>
+<!-- END: Footer -->
+</body></html>

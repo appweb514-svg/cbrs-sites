@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CBRS - Club du Beauvaisis de la Retraite Sportive</title>
+    <meta
+      name="description"
+      content="Club du Beauvaisis de la Retraite Sportive : activités sportives adaptées aux retraités, sorties, inscriptions et vie du club."
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <header class="site-header" aria-label="En-tête CBRS">
+      <a class="nav-brand" href="#accueil" aria-label="Accueil CBRS">
+        <svg viewBox="0 0 120 82" aria-hidden="true" focusable="false">
+          <path class="runner" d="M62 15c7 0 13 4 13 10 0 7-6 12-13 12s-13-5-13-12c0-6 6-10 13-10Zm-9 29 11 6 18-10 7 11-22 13-17-9-18 18-10-8 20-22c3-3 7-3 11 1Zm19-5 12-16 12 7-14 19-10-10Z"></path>
+          <path class="dot" d="M87 8a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"></path>
+        </svg>
+        <div class="nav-brand-text">
+          <strong>CBRS</strong>
+          <span>Club du Beauvaisis de la Retraite Sportive</span>
+        </div>
+      </a>
+
+      <nav class="main-nav" aria-label="Navigation principale">
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+          Menu
+        </button>
+        <ul id="navigation">
+          <li><a class="active" href="#accueil">Accueil</a></li>
+          <li><a href="#presentation">Présentation</a></li>
+          <li><a href="#activites">Activités</a></li>
+          <li><a href="#agenda">Planning</a></li>
+          <li><a href="#inscriptions">Inscriptions</a></li>
+          <li><a href="#vie-club">Vie du Club</a></li>
+          <li><a href="#photos">Photos</a></li>
+          <li><a href="#voyages">Voyages/Sorties</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a class="account" href="#inscriptions">Mon Compte</a>
+          <form class="site-search" role="search">
+            <label class="sr-only" for="site-search">Rechercher dans le site</label>
+            <input id="site-search" name="q" type="search" placeholder="Recherche" autocomplete="off">
+            <button type="submit" aria-label="Lancer la recherche">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 14 15.5l.3.3v.7l5 5 1.5-1.5-5.3-5Zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14Z"></path></svg>
+            </button>
+            <p class="search-status" aria-live="polite"></p>
+          </form>
+          <div class="a11y-widget">
+            <button class="a11y-toggle" type="button" aria-expanded="false" aria-controls="a11y-panel" aria-label="Options d'accessibilité">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm3.5 6.5h-2v5.5h-1v-3h-1v3h-1v-5.5h-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1Z"/></svg>
+            </button>
+            <div id="a11y-panel" class="a11y-panel" role="menu" hidden>
+              <p class="a11y-panel-title">Accessibilité</p>
+              <button type="button" role="menuitem" data-a11y="contrast">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18V4a8 8 0 1 1 0 16Z"/></svg>
+                Contraste élevé
+              </button>
+              <button type="button" role="menuitem" data-a11y="listen">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3Zm13.5 3A4.5 4.5 0 0 0 14 8.5v7a4.5 4.5 0 0 0 2.5-3.5ZM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23Z"/></svg>
+                Écouter cette page
+              </button>
+              <button type="button" role="menuitem" data-a11y="autoplay">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7Z"/></svg>
+                Lecture auto
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="contenu">
+      <section class="flash-strip" aria-labelledby="flash-title">
+        <div class="flash-label">
+          <span aria-hidden="true"></span>
+          <h2 id="flash-title">Info flash</h2>
+        </div>
+        <div class="flash-items">
+          <p class="flash-item">Permanence fermée les jeudis 16 et 23 avril.</p>
+          <p class="flash-item">Vacances de Pâques : créneaux tennis de table, pickleball et badminton maintenus selon planning.</p>
+          <p class="flash-item">Tir à l'arc : séance au gymnase Jean Moulin le jeudi.</p>
+        </div>
+      </section>
+
+      <section id="accueil" class="hero" aria-labelledby="hero-title">
+        <div class="hero-image" role="img" aria-label="Retraités pratiquant marche, sports de raquette et tai chi"></div>
+        <h1 id="hero-title" class="sr-only">Active, connectée, heureuse, votre retraite sportive.</h1>
+      </section>
+
+      <section class="event-card" aria-label="Prochain événement">
+        <div class="event-copy">
+          <p>Prochain Événement</p>
+          <h2>Journée plein air au plan d'eau du Canada - 27 mai 2026</h2>
+          <a class="event-link" href="#agenda">Voir le planning</a>
+        </div>
+        <div class="event-actions" aria-hidden="true">
+          <svg class="pin" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+            <path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"></path>
+          </svg>
+          <img src="assets/map-preview.jpg" alt="">
+        </div>
+      </section>
+
+      <section id="activites" class="section activities" aria-labelledby="activities-title">
+        <h2 id="activities-title">Nos activités</h2>
+        <div class="activity-grid">
+          <article id="marche" class="activity-card">
+            <div class="activity-icon blue" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm-2 4.6-2.3 4.1-3.4 1.1.7 2.1 4.2-1.4 2-3.4 1.5 2.3-1.1 7.1 2.3.4 1.3-8.2-2-3 .9-2.8 2.1 2 2.7.9.7-2.1-2.2-.8-3-2.8H11l-4 2.1.9 2.1L10 9.6Z"/></svg>
+            </div>
+            <h3>Marche Nordique &amp; Rando</h3>
+            <p>Marche Nordique à grand rythme, randonnée douce et sorties hebdomadaires.</p>
+            <a href="#marche">En savoir plus +</a>
+          </article>
+
+          <article id="raquettes" class="activity-card">
+            <div class="activity-icon green" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M6.6 3.5a4.8 4.8 0 0 1 6.8 6.8L9.7 14 3 7.3l3.6-3.8Zm8.9 8.3 5 5a2.7 2.7 0 0 1-3.8 3.8l-5-5 3.8-3.8Zm-1.2-1.5 1.4-1.4 1.4 1.4-1.4 1.4-1.4-1.4Z"/></svg>
+            </div>
+            <h3>Pickleball &amp; Tennis</h3>
+            <p>Pickleball, tennis adapté, tennis de table et créneaux pendant les vacances.</p>
+            <a href="#raquettes">En savoir plus +</a>
+          </article>
+
+          <article id="gym" class="activity-card">
+            <div class="activity-icon aqua" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 18c2 0 2-1 4-1s2 1 4 1 2-1 4-1 2 1 4 1v2c-2 0-2-1-4-1s-2 1-4 1-2-1-4-1-2 1-4 1v-2Zm.5-4.4A7.7 7.7 0 0 1 12 4a7.7 7.7 0 0 1 7.5 9.6c-1.3-.2-2-.8-3.5-.8-2 0-2.7 1-4 1s-2-1-4-1c-1.5 0-2.2.6-3.5.8ZM12 6.2a5.6 5.6 0 0 0-5.4 5c.4-.1.8-.2 1.4-.2 2 0 2.7 1 4 1s2-1 4-1c.6 0 1 .1 1.4.2a5.6 5.6 0 0 0-5.4-5Z"/></svg>
+            </div>
+            <h3>Gymnastique Aquatique</h3>
+            <p>Aquagym, gymnastique douce et séances encadrées pour garder la forme.</p>
+            <a href="#gym">En savoir plus +</a>
+          </article>
+
+          <article id="tir" class="activity-card">
+            <div class="activity-icon charcoal" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M14.4 2.7 19 7.3l-9.8 9.8H4.6v-4.6l9.8-9.8Zm1.4 15.5h3.4V22h-3.4v-3.8ZM5.6 18.3h3.8V22H5.6v-3.7Zm10-11.8-8.8 8.8v.6h.6l8.8-8.8-.6-.6Z"/></svg>
+            </div>
+            <h3>Tir à l'arc</h3>
+            <p>Convient aux archers débutants et confirmés. Créneau du jeudi à Jean Moulin.</p>
+            <a href="#tir">En savoir plus +</a>
+          </article>
+
+          <article id="memoire" class="activity-card">
+            <div class="activity-icon teal" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3a4 4 0 0 0-4 4v4H6a3 3 0 1 0 0 6h2v1a4 4 0 0 0 8 0v-1h2a3 3 0 1 0 0-6h-2V7a4 4 0 0 0-4-4Zm-2 8V7a2 2 0 1 1 4 0v4h-4Zm0 2h4v5a2 2 0 1 1-4 0v-5Z"/></svg>
+            </div>
+            <h3>Atelier Mémoire</h3>
+            <p>Exercices collectifs pour entretenir mémoire, attention et lien social.</p>
+            <a href="#memoire">En savoir plus +</a>
+          </article>
+
+          <article id="danses" class="activity-card">
+            <div class="activity-icon sand" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm10 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM7 8l4 3-1.1 1.7L8 11.3V20H6V8h1Zm10 0h1v12h-2v-8.7l-1.9 1.4L13 11l4-3Z"/></svg>
+            </div>
+            <h3>Danses</h3>
+            <p>Danses des seniors, activités culturelles, convivialité et rencontres.</p>
+            <a href="#danses">En savoir plus +</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="home-links" aria-label="Liens rapides CBRS">
+        <div>
+          <h2>Liens et ressources</h2>
+          <p>Liens utiles, fédération, CORERS Hauts-de-France et CODERS de l'Oise.</p>
+        </div>
+        <div>
+          <h2>Documents officiels (Statuts)</h2>
+          <p>Statuts, procédure d'inscription, animateurs et plannings d'activités.</p>
+        </div>
+        <div>
+          <h2>Actualités FFRS</h2>
+          <p>CBRS - Club du Beauvaisis de la Retraite Sportive.</p>
+        </div>
+        <div>
+          <h2>Contact</h2>
+          <div class="socials" aria-label="Réseaux sociaux">
+            <span>×</span>
+            <span>f</span>
+            <span>◎</span>
+            <span>▶</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="presentation" class="section presentation" aria-labelledby="presentation-title">
+        <div>
+          <p class="eyebrow">Club sportif adapté aux retraités</p>
+          <h2 id="presentation-title">Plus de 1 200 adhérents pour la saison 2025-2026</h2>
+          <p>
+            Le C.B.R.S. est membre de la Fédération Française de Retraite Sportive. Il est affilié au CORERS
+            Hauts-de-France et au CODERS de l'Oise.
+          </p>
+        </div>
+        <div class="quick-links" aria-label="Accès rapides">
+          <a href="#vie-club">Vie du club</a>
+          <a href="#inscriptions">Inscription 2025/2026</a>
+          <a href="#marche">Marche nordique</a>
+          <a href="#documents">Documents officiels</a>
+        </div>
+      </section>
+
+      <section id="agenda" class="section planning-section" aria-labelledby="agenda-title">
+        <div class="planning-head">
+          <div>
+            <p class="eyebrow">Planning</p>
+            <h2 id="agenda-title">Une semaine claire, sans stress numérique</h2>
+            <p>Vue semaine par défaut, vue mois disponible. Planning hors vacances scolaires, selon informations CBRS 2025/2026.</p>
+          </div>
+          <div class="planning-switch" aria-label="Changer la vue du planning">
+            <button class="active" type="button" data-planning-view="week">Semaine</button>
+            <button type="button" data-planning-view="month">Mois</button>
+          </div>
+        </div>
+        <div class="planning-dashboard">
+          <div class="planning-board">
+            <div class="planning-toolbar">
+              <strong data-planning-title>Planning de la semaine</strong>
+              <span>Hors vacances scolaires</span>
+            </div>
+            <div class="planning-calendar" data-planning-calendar></div>
+          </div>
+          <aside class="agenda-panel">
+            <div>
+              <p class="eyebrow">Agenda</p>
+              <h3>À noter</h3>
+            </div>
+            <div class="agenda-list">
+              <article>
+                <time datetime="2026-04-23">Jeu. 23 avr.</time>
+                <div>
+                  <strong>Permanence fermée</strong>
+                  <span>09h00 - 11h30 · Bureau CBRS</span>
+                </div>
+              </article>
+              <article>
+                <time datetime="2026-04-22">Mer. 22 avr.</time>
+                <div>
+                  <strong>Activités vacances</strong>
+                  <span>9h30 - 11h30 · Félix Faure</span>
+                </div>
+              </article>
+              <article>
+                <time datetime="2026-05-27">Mer. 27 mai</time>
+                <div>
+                  <strong>Journée plein air</strong>
+                  <span>Plan d'eau du Canada · accueil 9h</span>
+                </div>
+              </article>
+            </div>
+            <a class="planning-source" href="assets/planning-original.png" target="_blank" aria-label="Voir le planning original CBRS 2025/2026">
+              <img src="assets/planning-original.png" alt="Planning original CBRS 2025/2026">
+              <span>Voir le planning original</span>
+            </a>
+          </aside>
+        </div>
+      </section>
+
+      <section id="vie-club" class="section news" aria-labelledby="news-title">
+        <h2 id="news-title">Actualités du club</h2>
+        <div class="news-grid">
+          <article>
+            <p class="date">17/03/2026</p>
+            <h3>Changement de message aquagym</h3>
+            <p>Les lundis 23 et 30 mars 2026, il n'y aura pas de séance d'aquagym à la piscine Bellier.</p>
+          </article>
+          <article>
+            <p class="date">Vacances de Pâques</p>
+            <h3>Tennis de table, pickleball et badminton</h3>
+            <p>Créneaux à Briard, Coubertin et Félix Faure pendant les vacances, selon les horaires du club.</p>
+          </article>
+          <article>
+            <p class="date">20/10/2025</p>
+            <h3>Tir à l'arc</h3>
+            <p>À partir du 6 novembre, l'activité se déroule au gymnase Jean Moulin le jeudi.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="documents" class="section documents" aria-labelledby="documents-title">
+        <div class="section-heading">
+          <p class="eyebrow">Espace documents</p>
+          <h2 id="documents-title">Tout préparer sans chercher partout</h2>
+        </div>
+        <div class="document-grid">
+          <article class="document-card">
+            <span>01</span>
+            <h3>Inscriptions</h3>
+            <p>Procédure d'inscription, fiche saison 2025-2026 et pièces à fournir.</p>
+            <a href="#inscriptions">Voir les inscriptions</a>
+          </article>
+          <article class="document-card">
+            <span>02</span>
+            <h3>Plannings</h3>
+            <p>Horaires des activités, créneaux vacances et changements de salle.</p>
+            <a href="#agenda">Voir l'agenda</a>
+          </article>
+          <article class="document-card">
+            <span>03</span>
+            <h3>Animateurs</h3>
+            <p>Liste des responsables d'activités et informations de contact utiles.</p>
+            <a href="#activites">Voir les activités</a>
+          </article>
+          <article class="document-card">
+            <span>04</span>
+            <h3>Statuts</h3>
+            <p>Documents officiels, instances dirigeantes et liens fédéraux.</p>
+            <a href="#contact">Voir les ressources</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="inscriptions" class="section split" aria-labelledby="inscriptions-title">
+        <div>
+          <h2 id="inscriptions-title">Inscriptions et documents</h2>
+          <p>
+            Retrouvez la procédure d'inscription, les statuts, les documents officiels, les animateurs et les
+            plannings d'activités dans un espace clair pour préparer la saison.
+          </p>
+        </div>
+        <ul>
+          <li>Procédure d'inscription</li>
+          <li>Planning des activités</li>
+          <li>Objet, statuts et instances dirigeantes</li>
+          <li>Vos animateurs</li>
+        </ul>
+      </section>
+
+      <section id="photos" class="section gallery" aria-labelledby="gallery-title">
+        <div class="section-heading gallery-heading">
+          <div>
+            <p class="eyebrow">Photos</p>
+            <h2 id="gallery-title">Galerie du club</h2>
+          </div>
+          <div class="gallery-filters" aria-label="Filtres photos">
+            <button class="active" type="button" data-filter="all">Toutes</button>
+            <button type="button" data-filter="2026">2026</button>
+            <button type="button" data-filter="activites">Activités</button>
+            <button type="button" data-filter="sorties">Sorties</button>
+          </div>
+        </div>
+        <div class="gallery-grid">
+          <button class="gallery-item large" type="button" data-gallery-item data-filter-values="2026 activites marche" data-image="assets/gallery-marche.jpg" data-title="Marche nordique" data-meta="Activités - 2026">
+            <img src="assets/gallery-marche.jpg" alt="Groupe de marche nordique">
+            <span>Marche nordique</span>
+          </button>
+          <button class="gallery-item" type="button" data-gallery-item data-filter-values="2026 activites raquettes" data-image="assets/gallery-raquettes.jpg" data-title="Pickleball et tennis" data-meta="Activités - 2026">
+            <img src="assets/gallery-raquettes.jpg" alt="Séance de pickleball">
+            <span>Pickleball et tennis</span>
+          </button>
+          <button class="gallery-item" type="button" data-gallery-item data-filter-values="2026 activites tai-chi" data-image="assets/gallery-taichi.jpg" data-title="Tai chi en extérieur" data-meta="Activités - 2026">
+            <img src="assets/gallery-taichi.jpg" alt="Tai chi pratiqué dans un parc">
+            <span>Tai chi</span>
+          </button>
+          <button class="gallery-item tall" type="button" data-gallery-item data-filter-values="2026 sorties senlis" data-image="assets/gallery-sortie-senlis.png" data-title="Sortie interclubs Senlis" data-meta="Sorties - 2026">
+            <img src="assets/gallery-sortie-senlis.png" alt="Affiche de la sortie interclubs à Senlis">
+            <span>Sortie Senlis</span>
+          </button>
+        </div>
+      </section>
+
+      <section id="voyages" class="section outings" aria-labelledby="outings-title">
+        <div class="outing-copy">
+          <p class="eyebrow">Voyages / Sorties</p>
+          <h2 id="outings-title">Rester actif, ensemble</h2>
+          <p>
+            Sorties, randonnées, journée plein air au plan d'eau du Canada et covoiturage organisé par le club.
+            Pour la journée du 27 mai 2026, privilégiez le passage par le CBRS afin de prévoir le covoiturage.
+          </p>
+        </div>
+        <img src="assets/randonnees-beauvaisis.jpg" alt="Flyer des randonnées en Beauvaisis 2026">
+      </section>
+    </main>
+
+    <footer id="contact" class="site-footer">
+      <div>
+        <h2>Liens et ressources</h2>
+        <p>Fédération Française de Retraite Sportive, CORERS Hauts-de-France, CODERS de l'Oise.</p>
+      </div>
+      <div>
+        <h2>Documents officiels</h2>
+        <p>Statuts, inscriptions, plannings et informations pratiques.</p>
+      </div>
+      <div>
+        <h2>Contact</h2>
+        <p>CBRS - Club du Beauvaisis de la Retraite Sportive</p>
+        <div class="socials" aria-label="Réseaux sociaux">
+          <span>×</span>
+          <span>f</span>
+          <span>◎</span>
+          <span>▶</span>
+        </div>
+      </div>
+    </footer>
+
+    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Lecteur photo" hidden>
+      <button class="lightbox-close" type="button" aria-label="Fermer la galerie">×</button>
+      <button class="lightbox-prev" type="button" aria-label="Photo précédente">‹</button>
+      <figure>
+        <img src="" alt="">
+        <figcaption>
+          <strong></strong>
+          <span></span>
+        </figcaption>
+      </figure>
+      <button class="lightbox-next" type="button" aria-label="Photo suivante">›</button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
