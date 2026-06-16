@@ -28,7 +28,36 @@
   .sidebar.collapsed .sidebar-logo { padding: 0.5rem; }
   .sidebar.collapsed .sidebar-logo img { width: 2.5rem; height: 2.5rem; }
   .sidebar.collapsed .sidebar-toggle { justify-content: center; }
+  #sidebar { position: relative; }
+  #sidebar::after {
+    content: '';
+    position: absolute;
+    top: 0; right: -24px;
+    width: 48px; height: 100%;
+    background: rgba(255,255,255,0.08);
+    clip-path: ellipse(50% 100% at 0% 50%);
+    pointer-events: none;
+    z-index: 10;
+  }
 </style>
+
+<style>
+  .header-wave { position: relative; }
+  .header-wave::after {
+    content: '';
+    display: block;
+    height: 48px;
+    background: #f9fafb;
+    clip-path: url(#header-wave-clip);
+  }
+</style>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <clipPath id="header-wave-clip" clipPathUnits="objectBoundingBox">
+      <path d="M0,0 C0.25,0.6 0.5,1 1,0.6 L1,0 L0,0 Z"/>
+    </clipPath>
+  </defs>
+</svg>
 
 <style id="accessibility-style">
   .accessibility-fab{position:fixed;right:1rem;bottom:1rem;z-index:60;border:0;border-radius:999px;background:#0a3273;color:#fff;padding:.8rem 1rem;font-weight:700;box-shadow:0 10px 25px rgba(0,0,0,.2);cursor:pointer}
@@ -119,13 +148,11 @@
     <p class="text-base text-white/90 max-w-xl">Les partenaires et organismes liés au CBRS.</p>
   </div>
 </section>
+<div class="header-wave"></div>
 
 <section class="max-w-5xl mx-auto px-6 py-12">
   <p class="text-sm text-gray-500 text-center mb-8 max-w-lg mx-auto">Sites partenaires, organismes de tutelle et ressources utiles pour les adhérents du CBRS.</p>
 
-  <div class="text-center mb-8">
-    <span class="inline-block px-5 py-1.5 bg-cbrs-gray-100 text-cbrs-blue text-xs font-semibold rounded-full">Fédéral & Régional</span>
-  </div>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
     <a href="https://www.ffrs-retraite-sportive.fr" target="_blank" class="bg-white rounded-2xl shadow-card p-6 hover:shadow-card-hover transition-all duration-200 group relative border-l-4 border-cbrs-blue">
       <span class="absolute top-2 right-2 text-gray-300 group-hover:text-gray-400 transition-colors">
@@ -172,12 +199,6 @@
       </div>
       <p class="text-xs text-gray-500 leading-relaxed">Comité Régional de la Retraite Sportive des Hauts-de-France. Coordonne les actions au niveau régional.</p>
     </a>
-  </div>
-
-  <div class="text-center mb-8">
-    <span class="inline-block px-5 py-1.5 bg-cbrs-gray-100 text-cbrs-blue text-xs font-semibold rounded-full">Local</span>
-  </div>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
     <a href="https://www.beauvaisis.fr" target="_blank" class="bg-white rounded-2xl shadow-card p-5 hover:shadow-card-hover transition-all duration-200 group flex items-start gap-4 relative">
       <span class="absolute top-3 right-3 text-gray-300 group-hover:text-gray-400 transition-colors">
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
@@ -238,12 +259,6 @@
         <p class="text-xs text-gray-500">Fédération Française de la Randonnée Pédestre — référentiel pour les sorties randonnée du CBRS.</p>
       </div>
     </a>
-  </div>
-
-  <div class="text-center mb-8">
-    <span class="inline-block px-5 py-1.5 bg-cbrs-gray-100 text-cbrs-blue text-xs font-semibold rounded-full">National</span>
-  </div>
-  <div class="max-w-md mx-auto">
     <a href="https://www.sports.gouv.fr" target="_blank" class="bg-white rounded-2xl shadow-card p-5 hover:shadow-card-hover transition-all duration-200 group flex items-start gap-4 relative">
       <span class="absolute top-3 right-3 text-gray-300 group-hover:text-gray-400 transition-colors">
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>

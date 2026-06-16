@@ -35,7 +35,37 @@
   .sidebar.collapsed .sidebar-logo { padding: 0.5rem; }
   .sidebar.collapsed .sidebar-logo img { width: 2.5rem; height: 2.5rem; }
   .sidebar.collapsed .sidebar-toggle { justify-content: center; }
+  #sidebar { position: relative; }
+  #sidebar::after {
+    content: '';
+    position: absolute;
+    top: 0; right: -24px;
+    width: 48px; height: 100%;
+    background: rgba(255,255,255,0.08);
+    clip-path: ellipse(50% 100% at 0% 50%);
+    pointer-events: none;
+    z-index: 10;
+  }
 </style>
+
+<style>
+  .header-wave { position: relative; }
+  .header-wave::after {
+    content: '';
+    display: block;
+    height: 48px;
+    background: #f9fafb;
+    clip-path: url(#header-wave-clip);
+  }
+</style>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <clipPath id="header-wave-clip" clipPathUnits="objectBoundingBox">
+      <path d="M0,0 C0.25,0.6 0.5,1 1,0.6 L1,0 L0,0 Z"/>
+    </clipPath>
+  </defs>
+</svg>
+
 <style id="accessibility-style">
   .accessibility-fab{position:fixed;right:1rem;bottom:1rem;z-index:60;border:0;border-radius:999px;background:#0a3273;color:#fff;padding:.8rem 1rem;font-weight:700;box-shadow:0 10px 25px rgba(0,0,0,.2);cursor:pointer}
   .accessibility-panel{position:fixed;right:1rem;bottom:4.5rem;z-index:60;width:min(20rem,calc(100vw - 2rem));background:#fff;color:#111827;border:1px solid #d1d5db;border-radius:1rem;box-shadow:0 20px 45px rgba(0,0,0,.22);padding:1rem;display:none}
@@ -129,6 +159,7 @@
     <p class="text-base text-white/90 max-w-xl">Retrouvez ici le planning officiel du CBRS pour la saison 2025-2026.</p>
   </div>
 </section>
+<div class="header-wave"></div>
 
 <!-- Loading -->
 <div id="planning-loading" class="max-w-6xl mx-auto px-6 py-10 text-center">
