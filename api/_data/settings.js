@@ -2,7 +2,7 @@ const settings = {
   club_name: 'CBRS — Club du Beauvaisis de la Retraite Sportive',
   club_acronym: 'CBRS',
   contact_email: 'contact@cbrs-beauvaisis.fr',
-  contact_phone: '03 44 XX XX XX',
+  contact_phone: '',
   ffrs_member: '1',
   coders_member: '1',
   founded_year: '1977',

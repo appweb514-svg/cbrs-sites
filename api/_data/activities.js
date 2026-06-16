@@ -12,7 +12,7 @@ const activities = [
       "Certificat médical demandé pour la première séance"
     ],
     animators: [
-      { name: 'Patrick L.', phone: '', email: '', role: 'Animateur' }
+      { name: 'Patrick L.' email: '', role: 'Animateur' }
     ],
     schedule: [
       { day: 'Vendredi', time: 'Voir planning', location: 'Piscine Bellier' }
@@ -32,7 +32,7 @@ const activities = [
       "Gobelet et eau apportés par chacun"
     ],
     animators: [
-      { name: 'Michel B.', phone: '', email: '', role: 'Animateur' }
+      { name: 'Michel B.' email: '', role: 'Animateur' }
     ],
     schedule: [
       { day: 'Mardi', time: '14h00', location: "Plan d'eau" },
@@ -53,7 +53,7 @@ const activities = [
       "Gilet jaune recommandé"
     ],
     animators: [
-      { name: 'Jean-Pierre M.', phone: '', email: '', role: 'Animateur' }
+      { name: 'Jean-Pierre M.' email: '', role: 'Animateur' }
     ],
     schedule: [
       { day: 'Jeudi', time: '9h00', location: 'Place Hachette' }
@@ -73,7 +73,7 @@ const activities = [
       "10 places par séance"
     ],
     animators: [
-      { name: 'Sylvie D.', phone: '', email: '', role: 'Animatrice' }
+      { name: 'Sylvie D.' email: '', role: 'Animatrice' }
     ],
     schedule: [
       { day: 'Jeudi', time: '13h30', location: 'Salle Jean Moulin' }
@@ -93,7 +93,7 @@ const activities = [
       "Possibilité de prêt de balles"
     ],
     animators: [
-      { name: 'Bernard V.', phone: '', email: '', role: 'Animateur' }
+      { name: 'Bernard V.' email: '', role: 'Animateur' }
     ],
     schedule: [
       { day: 'Lundi', time: '14h00', location: 'Salle Carnot' }
@@ -113,7 +113,7 @@ const activities = [
       "Chaussures de sport propres"
     ],
     animators: [
-      { name: 'Christophe P.', phone: '', email: '', role: 'Animateur' }
+      { name: 'Christophe P.' email: '', role: 'Animateur' }
     ],
     schedule: [
       { day: 'Mercredi', time: '14h00', location: 'Gymnase Buzanval' }
@@ -133,7 +133,7 @@ const activities = [
       "Vêtements adaptés à la météo"
     ],
     animators: [
-      { name: 'Alain R.', phone: '', email: '', role: 'Animateur' }
+      { name: 'Alain R.' email: '', role: 'Animateur' }
     ],
     schedule: [
       { day: 'Jeudi', time: 'Après-midi', location: 'Variable' },
@@ -154,7 +154,7 @@ const activities = [
       "Tenue sportive confortable"
     ],
     animators: [
-      { name: 'Françoise L.', phone: '', email: '', role: 'Animatrice' }
+      { name: 'Françoise L.' email: '', role: 'Animatrice' }
     ],
     schedule: [
       { day: 'Mardi', time: '8h30', location: 'Stade Brisson' }
@@ -174,7 +174,7 @@ const activities = [
       "Tenue souple et chaussures propres"
     ],
     animators: [
-      { name: 'Marie-Hélène G.', phone: '', email: '', role: 'Animatrice' }
+      { name: 'Marie-Hélène G.' email: '', role: 'Animatrice' }
     ],
     schedule: [
       { day: 'Lundi', time: '9h30', location: 'Salle Carnot' }
@@ -194,7 +194,7 @@ const activities = [
       "Eau recommandée"
     ],
     animators: [
-      { name: 'Daniel H.', phone: '', email: '', role: 'Animateur' }
+      { name: 'Daniel H.' email: '', role: 'Animateur' }
     ],
     schedule: [
       { day: 'Mardi', time: '10h00', location: 'Gymnase municipal' }
@@ -214,7 +214,7 @@ const activities = [
       "Eau recommandée"
     ],
     animators: [
-      { name: 'Yves T.', phone: '', email: '', role: 'Animateur' }
+      { name: 'Yves T.' email: '', role: 'Animateur' }
     ],
     schedule: [
       { day: 'Mercredi', time: '9h00', location: 'Salle Beauvoir' }
@@ -233,7 +233,7 @@ const activities = [
       "Adhésion à la FFE recommandée pour les échecs"
     ],
     animators: [
-      { name: 'Pierre L.', phone: '', email: '', role: 'Animateur' }
+      { name: 'Pierre L.' email: '', role: 'Animateur' }
     ],
     schedule: [
       { day: 'Lundi', time: '14h00', location: 'Salle de réunion' }
@@ -252,7 +252,7 @@ const activities = [
       "Goûter partagé (chacun apporte)"
     ],
     animators: [
-      { name: 'Gérard S.', phone: '', email: '', role: 'Animateur' }
+      { name: 'Gérard S.' email: '', role: 'Animateur' }
     ],
     schedule: [
       { day: 'Jeudi', time: '14h00', location: 'Salle de réunion' }
@@ -272,7 +272,7 @@ const activities = [
       "Tenue souple"
     ],
     animators: [
-      { name: 'Claudine M.', phone: '', email: '', role: 'Animatrice' }
+      { name: 'Claudine M.' email: '', role: 'Animatrice' }
     ],
     schedule: [
       { day: 'Mardi', time: '14h30', location: 'Salle des fêtes' }
@@ -291,7 +291,7 @@ const activities = [
       "Goûter partagé"
     ],
     animators: [
-      { name: 'Dr Anne-Sophie R.', phone: '', email: '', role: 'Animatrice' }
+      { name: 'Dr Anne-Sophie R.' email: '', role: 'Animatrice' }
     ],
     schedule: [
       { day: 'Mercredi', time: '14h00', location: 'Maison des associations' }
