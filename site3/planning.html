@@ -5,27 +5,27 @@
 <title>Planning - CBRS Club du Beauvaisis de la Retraite Sportive</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <style data-purpose="custom-fonts">
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap');
-    body { font-family: 'Inter', sans-serif; }
-    .font-serif-italic { font-family: 'Playfair Display', serif; font-style: italic; }
-  </style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap');
+  body { font-family: 'Inter', sans-serif; }
+  .font-serif-italic { font-family: 'Playfair Display', serif; font-style: italic; }
+</style>
 <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'cbrs-blue': '#0a3273', 'cbrs-blue-light': '#1e4b99', 'cbrs-green': '#58a01a',
-            'cbrs-green-hover': '#4a8716', 'cbrs-teal': '#145c75', 'cbrs-gray-100': '#f8f9fa',
-            'cbrs-gray-200': '#e9ecef', 'cbrs-text': '#333333', 'cbrs-text-light': '#666666',
-          },
-          boxShadow: {
-            'card': '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)',
-            'card-hover': '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
-          }
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'cbrs-blue': '#0a3273', 'cbrs-blue-light': '#1e4b99', 'cbrs-green': '#58a01a',
+          'cbrs-green-hover': '#4a8716', 'cbrs-teal': '#145c75', 'cbrs-gray-100': '#f8f9fa',
+          'cbrs-gray-200': '#e9ecef', 'cbrs-text': '#333333', 'cbrs-text-light': '#666666',
+        },
+        boxShadow: {
+          'card': '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)',
+          'card-hover': '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
         }
       }
     }
-  </script>
+  }
+</script>
 <style>
   .sidebar { transition: width 0.3s ease; }
   .sidebar.collapsed { width: 4rem; }
@@ -35,9 +35,7 @@
   .sidebar.collapsed .sidebar-logo { padding: 0.5rem; }
   .sidebar.collapsed .sidebar-logo img { width: 2.5rem; height: 2.5rem; }
   .sidebar.collapsed .sidebar-toggle { justify-content: center; }
-  .pdf-viewer { width: 100%; height: 80vh; border: none; border-radius: 0.75rem; }
 </style>
-
 <style id="accessibility-style">
   .accessibility-fab{position:fixed;right:1rem;bottom:1rem;z-index:60;border:0;border-radius:999px;background:#0a3273;color:#fff;padding:.8rem 1rem;font-weight:700;box-shadow:0 10px 25px rgba(0,0,0,.2);cursor:pointer}
   .accessibility-panel{position:fixed;right:1rem;bottom:4.5rem;z-index:60;width:min(20rem,calc(100vw - 2rem));background:#fff;color:#111827;border:1px solid #d1d5db;border-radius:1rem;box-shadow:0 20px 45px rgba(0,0,0,.22);padding:1rem;display:none}
@@ -59,9 +57,10 @@
   html.a11y-readable body{font-family:Arial,Helvetica,sans-serif!important;letter-spacing:.02em}
   @media (max-width:768px){.accessibility-fab{right:.75rem;bottom:.75rem}.accessibility-panel{right:.75rem;bottom:4.25rem}}
 </style>
-
 </head>
 <body class="bg-gray-50 text-cbrs-text antialiased flex min-h-screen">
+
+<!-- SIDEBAR -->
 <aside id="sidebar" class="sidebar w-64 bg-cbrs-blue text-gray-900 flex-shrink-0 hidden md:flex flex-col sticky top-0 h-screen overflow-y-auto overflow-x-hidden">
 <div class="sidebar-logo p-3 bg-white flex items-center justify-center">
   <img src="logo-cbrs.png" alt="CBRS" class="w-full h-auto object-contain"/>
@@ -72,40 +71,40 @@
 </button>
 <nav class="flex-1 py-4 space-y-1">
   <a class="sidebar-link flex items-center px-4 py-2.5 text-gray-900/80 hover:text-gray-900 hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="index.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
     <span class="sidebar-label">Accueil</span>
   </a>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-gray-900/80 hover:text-gray-900 hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="activites.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
     <span class="sidebar-label">Activités</span>
   </a>
   <a class="sidebar-link flex items-center px-4 py-2.5 bg-cbrs-green text-gray-900 font-medium rounded-r-full mr-4 transition-colors" href="planning.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
     <span class="sidebar-label">Planning</span>
   </a>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-gray-900/80 hover:text-gray-900 hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="formation.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
     <span class="sidebar-label">Formation</span>
   </a>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-gray-900/80 hover:text-gray-900 hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="sorties-voyages.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.858 15.355-5.858 21.213 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.858 15.355-5.858 21.213 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
     <span class="sidebar-label">Sorties - Voyages</span>
   </a>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-gray-900/80 hover:text-gray-900 hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="galerie.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
     <span class="sidebar-label">Galerie photo</span>
   </a>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-gray-900/80 hover:text-gray-900 hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="liens-utiles.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
     <span class="sidebar-label">Liens utiles</span>
   </a>
   <div class="sidebar-divider border-t border-white/10 my-4 mx-4"></div>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-gray-900/80 hover:text-gray-900 hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="adhesion.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
     <span class="sidebar-label">Adhérer</span>
   </a>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-gray-900/80 hover:text-gray-900 hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="contact.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
     <span class="sidebar-label">Contact</span>
   </a>
   <a data-auth-link="1" class="sidebar-link flex items-center px-4 py-2.5 text-gray-900/80 hover:text-gray-900 hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="connexion.html">
@@ -118,24 +117,27 @@
   <p class="text-sm font-bold leading-tight"><span class="text-cbrs-green">Le sport</span><br/>au service<br/>du bien-être<br/>et du lien<br/>social</p>
 </div>
 </aside>
+
+<!-- MAIN CONTENT -->
 <main class="flex-1 overflow-x-hidden relative">
 
-
+<!-- Hero -->
 <section class="relative h-[260px] bg-cbrs-blue overflow-hidden flex items-center">
   <div class="absolute inset-0 bg-gradient-to-r from-cbrs-blue/90 to-cbrs-blue-light/70"></div>
   <div class="relative z-10 px-8 md:px-16 max-w-4xl">
     <h1 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight mb-3">Planning des <span class="text-cbrs-green font-serif-italic">activités</span></h1>
-    <p class="text-base text-gray-900/90 max-w-xl">Retrouvez ici le planning officiel du CBRS. Téléchargez le PDF pour consulter l'ensemble des créneaux.</p>
+    <p class="text-base text-gray-900/90 max-w-xl">Retrouvez ici le planning officiel du CBRS pour la saison 2025-2026.</p>
   </div>
 </section>
 
-<section class="max-w-6xl mx-auto px-6 py-12">
+<!-- Planning image + download -->
+<section class="max-w-6xl mx-auto px-6 py-10">
   <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
     <div>
       <h2 class="text-2xl font-bold text-cbrs-blue">Planning officiel <span class="font-serif-italic">2025-2026</span></h2>
       <p class="text-sm text-gray-500 mt-1">Toutes les activités, jours, horaires et lieux</p>
     </div>
-    <a href="planning-original.png" download
+    <a href="assets/planning-original.png" download
        class="inline-flex items-center gap-2 bg-cbrs-green hover:bg-cbrs-green-hover text-gray-900 font-semibold px-5 py-2.5 rounded-full transition-colors text-sm">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
       Télécharger le planning
@@ -148,23 +150,98 @@
       Planning officiel CBRS — Cliquez pour zoomer
     </div>
     <div class="p-4 flex justify-center bg-gray-50/50">
-      <img src="planning-original.png" alt="Planning officiel CBRS"
+      <img src="assets/planning-original.png" alt="Planning officiel CBRS 2025-2026"
            class="rounded-xl shadow-sm max-w-full cursor-zoom-in"
            style="max-height:70vh;object-fit:contain;"
            onclick="window.open(this.src,'_blank')"/>
     </div>
   </div>
+</section>
 
-  <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+<!-- Tableau des activités -->
+<section class="max-w-6xl mx-auto px-6 pb-10">
+  <h2 class="text-xl font-bold text-cbrs-blue mb-6">Détail des <span class="font-serif-italic">créneaux</span></h2>
+
+  <div class="bg-white rounded-2xl shadow-card overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="bg-cbrs-blue text-white">
+            <th class="text-left px-4 py-3 font-semibold">Activité</th>
+            <th class="text-left px-4 py-3 font-semibold">Type</th>
+            <th class="text-left px-4 py-3 font-semibold">Jour</th>
+            <th class="text-left px-4 py-3 font-semibold">Horaires</th>
+            <th class="text-left px-4 py-3 font-semibold">Lieu</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <!-- Aquagym -->
+          <tr class="hover:bg-gray-50"><td rowspan="2" class="px-4 py-3 font-semibold text-gray-900 align-top">Aquagym</td><td rowspan="2" class="px-4 py-3 align-top"><span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded-full">Sport</span></td><td class="px-4 py-3">Lundi</td><td class="px-4 py-3 text-gray-600">Voir planning</td><td class="px-4 py-3 text-gray-600">Piscine Bellier</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Vendredi</td><td class="px-4 py-3 text-gray-600">Voir planning</td><td class="px-4 py-3 text-gray-600">Piscine Bellier</td></tr>
+          <!-- Pétanque -->
+          <tr class="hover:bg-gray-50"><td rowspan="2" class="px-4 py-3 font-semibold text-gray-900 align-top">Pétanque</td><td rowspan="2" class="px-4 py-3 align-top"><span class="inline-block bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded-full">Plein air</span></td><td class="px-4 py-3">Lundi</td><td class="px-4 py-3 text-gray-600">14h00 – 16h00</td><td class="px-4 py-3 text-gray-600">Parc Kennedy</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Vendredi</td><td class="px-4 py-3 text-gray-600">14h00 – 16h00</td><td class="px-4 py-3 text-gray-600">Parc Kennedy</td></tr>
+          <!-- Cyclisme -->
+          <tr class="hover:bg-gray-50"><td rowspan="2" class="px-4 py-3 font-semibold text-gray-900 align-top">Cyclisme</td><td rowspan="2" class="px-4 py-3 align-top"><span class="inline-block bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded-full">Plein air</span></td><td class="px-4 py-3">Mercredi</td><td class="px-4 py-3 text-gray-600">13h30</td><td class="px-4 py-3 text-gray-600">Parking cimetière du Tilloy</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Vendredi</td><td class="px-4 py-3 text-gray-600">13h30</td><td class="px-4 py-3 text-gray-600">Parking Saint Quentin / Cimetière du Tilloy</td></tr>
+          <!-- Tir à l'arc -->
+          <tr class="hover:bg-gray-50"><td rowspan="2" class="px-4 py-3 font-semibold text-gray-900 align-top">Tir à l'arc</td><td rowspan="2" class="px-4 py-3 align-top"><span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded-full">Sport</span></td><td class="px-4 py-3">Mardi</td><td class="px-4 py-3 text-gray-600">9h30 – 11h00</td><td class="px-4 py-3 text-gray-600">Parc Marcel Dassault</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Vendredi</td><td class="px-4 py-3 text-gray-600">9h30 – 11h00</td><td class="px-4 py-3 text-gray-600">Parc Marcel Dassault</td></tr>
+          <!-- Tennis de Table -->
+          <tr class="hover:bg-gray-50"><td rowspan="4" class="px-4 py-3 font-semibold text-gray-900 align-top">Tennis de Table</td><td rowspan="4" class="px-4 py-3 align-top"><span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded-full">Sport</span></td><td class="px-4 py-3">Lundi</td><td class="px-4 py-3 text-gray-600">10h00 – 12h00</td><td class="px-4 py-3 text-gray-600">Gymnase Briard</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Mardi</td><td class="px-4 py-3 text-gray-600">9h00 – 12h00</td><td class="px-4 py-3 text-gray-600">Gymnase Briard</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Mercredi</td><td class="px-4 py-3 text-gray-600">9h00 – 12h00</td><td class="px-4 py-3 text-gray-600">Gymnase Briard</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Jeudi</td><td class="px-4 py-3 text-gray-600">14h00 – 17h00</td><td class="px-4 py-3 text-gray-600">Gymnase Goincourt</td></tr>
+          <!-- Tennis -->
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-semibold text-gray-900">Tennis</td><td class="px-4 py-3"><span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded-full">Sport</span></td><td class="px-4 py-3" colspan="1">—</td><td class="px-4 py-3 text-gray-600">Voir planning</td><td class="px-4 py-3 text-gray-600">Complexe sportif de Beauvais</td></tr>
+          <!-- Randonnée -->
+          <tr class="hover:bg-gray-50"><td rowspan="3" class="px-4 py-3 font-semibold text-gray-900 align-top">Randonnée</td><td rowspan="3" class="px-4 py-3 align-top"><span class="inline-block bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded-full">Plein air</span></td><td class="px-4 py-3">Jeudi</td><td class="px-4 py-3 text-gray-600">9h30 (été) / 14h10 (hiver)</td><td class="px-4 py-3 text-gray-600">Plan d'eau du Canada</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Jeudi</td><td class="px-4 py-3 text-gray-600">14h00</td><td class="px-4 py-3 text-gray-600">Bois du Parc Saint Quentin</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Jeudi</td><td class="px-4 py-3 text-gray-600">Après-midi (variable)</td><td class="px-4 py-3 text-gray-600">Randonnées externes</td></tr>
+          <!-- Marche Nordique -->
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-semibold text-gray-900">Marche Nordique</td><td class="px-4 py-3"><span class="inline-block bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded-full">Plein air</span></td><td class="px-4 py-3">Mercredi</td><td class="px-4 py-3 text-gray-600">9h30 – 11h00</td><td class="px-4 py-3 text-gray-600">Plan d'eau du Canada</td></tr>
+          <!-- Gymnastique -->
+          <tr class="hover:bg-gray-50"><td rowspan="3" class="px-4 py-3 font-semibold text-gray-900 align-top">Gymnastique</td><td rowspan="3" class="px-4 py-3 align-top"><span class="inline-block bg-purple-100 text-purple-800 text-xs font-medium px-2 py-0.5 rounded-full">Remise en forme</span></td><td class="px-4 py-3">Lundi</td><td class="px-4 py-3 text-gray-600">9h30</td><td class="px-4 py-3 text-gray-600">Salle Carnot</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Mardi</td><td class="px-4 py-3 text-gray-600">Voir planning</td><td class="px-4 py-3 text-gray-600">Salle Coubertin</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Vendredi</td><td class="px-4 py-3 text-gray-600">Voir planning</td><td class="px-4 py-3 text-gray-600">Salle Coubertin</td></tr>
+          <!-- Pickleball -->
+          <tr class="hover:bg-gray-50"><td rowspan="2" class="px-4 py-3 font-semibold text-gray-900 align-top">Pickleball</td><td rowspan="2" class="px-4 py-3 align-top"><span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded-full">Sport</span></td><td class="px-4 py-3">Mercredi</td><td class="px-4 py-3 text-gray-600">11h00 – 13h00</td><td class="px-4 py-3 text-gray-600">Coubertin Plateau</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Jeudi</td><td class="px-4 py-3 text-gray-600">11h00 – 13h00</td><td class="px-4 py-3 text-gray-600">Gymnase R Briard, St Just</td></tr>
+          <!-- Tai Chi Chuan -->
+          <tr class="hover:bg-gray-50"><td rowspan="2" class="px-4 py-3 font-semibold text-gray-900 align-top">Tai Chi Chuan</td><td rowspan="2" class="px-4 py-3 align-top"><span class="inline-block bg-orange-100 text-orange-800 text-xs font-medium px-2 py-0.5 rounded-full">Bien-être</span></td><td class="px-4 py-3">Lundi</td><td class="px-4 py-3 text-gray-600">10h00 – 11h00</td><td class="px-4 py-3 text-gray-600">Coubertin Plateau</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Vendredi</td><td class="px-4 py-3 text-gray-600">11h15 – 12h15</td><td class="px-4 py-3 text-gray-600">Coubertin Plateau</td></tr>
+          <!-- Échecs / Bridge -->
+          <tr class="hover:bg-gray-50"><td rowspan="2" class="px-4 py-3 font-semibold text-gray-900 align-top">Échecs / Bridge</td><td rowspan="2" class="px-4 py-3 align-top"><span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-0.5 rounded-full">Loisir</span></td><td class="px-4 py-3">Lundi</td><td class="px-4 py-3 text-gray-600">14h00 – 17h00</td><td class="px-4 py-3 text-gray-600">Salle de réunion CBRS</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Jeudi</td><td class="px-4 py-3 text-gray-600">14h00 – 17h00</td><td class="px-4 py-3 text-gray-600">Salle de réunion CBRS</td></tr>
+          <!-- Jeux de Cartes -->
+          <tr class="hover:bg-gray-50"><td rowspan="3" class="px-4 py-3 font-semibold text-gray-900 align-top">Jeux de Cartes</td><td rowspan="3" class="px-4 py-3 align-top"><span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-0.5 rounded-full">Loisir</span></td><td class="px-4 py-3">Lundi</td><td class="px-4 py-3 text-gray-600">13h30 – 17h15</td><td class="px-4 py-3 text-gray-600">Salle Boibessot</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Mardi</td><td class="px-4 py-3 text-gray-600">13h30 – 17h15</td><td class="px-4 py-3 text-gray-600">Salle Boibessot</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Jeudi</td><td class="px-4 py-3 text-gray-600">13h30 – 17h15</td><td class="px-4 py-3 text-gray-600">Salle Boibessot</td></tr>
+          <!-- Danse -->
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-semibold text-gray-900">Danse</td><td class="px-4 py-3"><span class="inline-block bg-orange-100 text-orange-800 text-xs font-medium px-2 py-0.5 rounded-full">Bien-être</span></td><td class="px-4 py-3">—</td><td class="px-4 py-3 text-gray-600">Voir planning</td><td class="px-4 py-3 text-gray-600">Salle de danse – Beauvais</td></tr>
+          <!-- Atelier Mémoire -->
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-semibold text-gray-900">Atelier Mémoire</td><td class="px-4 py-3"><span class="inline-block bg-pink-100 text-pink-800 text-xs font-medium px-2 py-0.5 rounded-full">Cognitif</span></td><td class="px-4 py-3">Mercredi</td><td class="px-4 py-3 text-gray-600">Voir planning</td><td class="px-4 py-3 text-gray-600">Salle de réunion CBRS</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Légende + Contact -->
+<section class="max-w-6xl mx-auto px-6 pb-10">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
     <div class="bg-white rounded-xl shadow-card p-5">
       <h3 class="font-bold text-cbrs-blue mb-3 flex items-center gap-2">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         Légende
       </h3>
       <div class="space-y-2">
-        <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-cbrs-green inline-block"></span>Activité sportive</span>
-        <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-cbrs-blue inline-block"></span>Activité culturelle / loisir</span>
-        <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-yellow-400 inline-block"></span>Sortie / voyage</span>
+        <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-blue-500 inline-block"></span> Sport</span>
+        <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span> Plein air</span>
+        <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-purple-500 inline-block"></span> Remise en forme</span>
+        <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-orange-500 inline-block"></span> Bien-être</span>
+        <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span> Loisir</span>
+        <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-pink-500 inline-block"></span> Cognitif</span>
       </div>
     </div>
     <div class="bg-white rounded-xl shadow-card p-5">
@@ -173,11 +250,21 @@
         Contact
       </h3>
       <p class="text-gray-600">Pour toute information : <strong class="text-gray-900">03 60 36 17 47</strong></p>
-      <p class="text-gray-600 mt-1">Sorties & Voyages : Martine — <strong class="text-gray-900">06 32 11 90 29</strong></p>
+      <p class="text-gray-600 mt-1">Sorties & Voyages : <strong class="text-gray-900">Martine — 06 32 11 90 29</strong></p>
+    </div>
+    <div class="bg-white rounded-xl shadow-card p-5">
+      <h3 class="font-bold text-cbrs-blue mb-3 flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        Informations
+      </h3>
+      <p class="text-gray-600">Planning hors vacances scolaires</p>
+      <p class="text-gray-600 mt-1">Adhésion : <strong class="text-gray-900">20 € / an</strong></p>
+      <p class="text-gray-600 mt-1">2 séances d'essai offertes</p>
     </div>
   </div>
 </section>
 
+<!-- CTA -->
 <section class="bg-white border-y border-gray-100 py-12">
   <div class="max-w-7xl mx-auto px-6 text-center">
     <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Envie de nous rejoindre ?</h2>
@@ -186,6 +273,7 @@
   </div>
 </section>
 
+<!-- Footer -->
 <footer class="bg-white border-t border-gray-200">
 <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
   <div class="lg:col-span-2">
@@ -210,7 +298,7 @@
       <li><a class="hover:text-cbrs-blue" href="planning.html">Planning</a></li>
       <li><a class="hover:text-cbrs-blue" href="adhesion.html">Inscriptions</a></li>
       <li><a class="hover:text-cbrs-blue" href="contact.html">Contact</a></li>
-      <li><a data-auth-link="1" class="hover:text-cbrs-blue" href="connexion.html" data-auth-label>Connexion</a></li>
+      <li><a data-auth-link="1" class="hover:text-cbrs-blue" href="connexion.html">Connexion</a></li>
       <li><a class="hover:text-cbrs-blue" href="liens-utiles.html">Liens utiles</a></li>
     </ul>
   </div>
@@ -224,7 +312,10 @@
 </div>
 <div class="border-t border-gray-100 py-4 text-center text-xs text-gray-400">2026 &copy; CBRS — Club du Beauvaisis de la Retraite Sportive</div>
 </footer>
+
 </main>
+
+<!-- Sidebar toggle script -->
 <script>
 let sidebarCollapsed = false;
 function toggleSidebar() {
@@ -236,8 +327,9 @@ function toggleSidebar() {
 }
 </script>
 
+<!-- Accessibility -->
 <div class="accessibility-panel" id="accessibility-panel" aria-labelledby="accessibility-title">
-  <h2 id="accessibility-title">Options d’accessibilité</h2>
+  <h2 id="accessibility-title">Options d'accessibilité</h2>
   <button type="button" data-a11y-toggle="a11y-large" aria-pressed="false">Agrandir le texte</button>
   <button type="button" data-a11y-toggle="a11y-contrast" aria-pressed="false">Contraste renforcé</button>
   <button type="button" data-a11y-toggle="a11y-links" aria-pressed="false">Souligner les liens</button>
@@ -276,6 +368,5 @@ function toggleSidebar() {
   apply();
 })();
 </script>
-
 <script src="auth.js"></script>
 </body></html>
