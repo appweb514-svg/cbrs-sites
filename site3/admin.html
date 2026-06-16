@@ -67,6 +67,7 @@
   <nav class="flex flex-wrap gap-2 mb-6" id="tabs-nav">
     <button data-tab="flash" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg bg-white border border-gray-200 hover:border-cbrs-blue transition-colors">Flash info</button>
     <button data-tab="activities" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg bg-white border border-gray-200 hover:border-cbrs-blue transition-colors">Activités</button>
+    <button data-tab="planning" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg bg-white border border-gray-200 hover:border-cbrs-blue transition-colors">Planning</button>
     <button data-tab="gallery" data-role="admin" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg bg-white border border-gray-200 hover:border-cbrs-blue transition-colors">Galerie photo</button>
     <button data-tab="settings" data-role="admin" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg bg-white border border-gray-200 hover:border-cbrs-blue transition-colors">Paramètres</button>
   </nav>
@@ -117,6 +118,18 @@
     </div>
     <input type="text" id="activity-search" placeholder="Rechercher…" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none mb-4">
     <div id="activities-list" class="space-y-3"></div>
+  </section>
+
+  <section id="section-planning" class="admin-section bg-white rounded-2xl shadow-card p-6">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h2 class="text-lg font-bold mb-1">Planning</h2>
+        <p class="text-sm text-gray-500">Gérez les créneaux du planning hebdomadaire.</p>
+      </div>
+      <span id="planning-count" class="text-xs text-gray-500"></span>
+    </div>
+    <input type="text" id="planning-search" placeholder="Rechercher une activité…" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-cbrs-green focus:border-cbrs-green outline-none mb-4">
+    <div id="planning-list" class="space-y-3"></div>
   </section>
 
   <section id="section-gallery" class="admin-section bg-white rounded-2xl shadow-card p-6">
@@ -177,7 +190,7 @@
 
 <script>
 let CURRENT_USER = null;
-let SERVER_DATA = { flash: null, activities: [], settings: {}, gallery: [] };
+let SERVER_DATA = { flash: null, activities: [], planning: [], settings: {}, gallery: [] };
 
 function logout() {
   localStorage.removeItem('cbrs-auth');
@@ -198,14 +211,16 @@ function setLS(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
 
 async function loadServerData() {
   try {
-    const [flashRes, actRes, setRes, galRes] = await Promise.all([
+    const [flashRes, actRes, planRes, setRes, galRes] = await Promise.all([
       fetch('/api/public/flash-info').then(r => r.json()),
       fetch('/api/public/activities').then(r => r.json()),
+      fetch('/api/public/planning').then(r => r.json()),
       fetch('/api/public/settings').then(r => r.json()),
       fetch('/api/public/gallery').then(r => r.json())
     ]);
     SERVER_DATA.flash = flashRes.flash;
     SERVER_DATA.activities = actRes.activities || [];
+    SERVER_DATA.planning = planRes.activities || [];
     SERVER_DATA.settings = setRes.settings || {};
     SERVER_DATA.gallery = galRes.photos || [];
   } catch (e) {
@@ -216,6 +231,7 @@ async function loadServerData() {
 function effectiveFlash() { return getLS('cbrs-flash-info', null) || SERVER_DATA.flash; }
 function effectiveSettings() { return getLS('cbrs-settings', null) || SERVER_DATA.settings; }
 function effectiveGallery() { return [...getLS('cbrs-gallery', []), ...SERVER_DATA.gallery]; }
+function effectivePlanning() { return getLS('cbrs-planning', null) || SERVER_DATA.planning; }
 
 function renderFlash() {
   const flash = effectiveFlash();
@@ -374,7 +390,131 @@ function resetSettings() {
   toast('Paramètres réinitialisés', 'info');
 }
 
+function renderPlanning(filter = '') {
+  const activities = effectivePlanning();
+  const filtered = activities.filter(a => !filter || a.name.toLowerCase().includes(filter.toLowerCase()) || (a.categoryLabel || '').toLowerCase().includes(filter.toLowerCase()));
+  document.getElementById('planning-count').textContent = `${filtered.length} / ${activities.length} activités`;
+  const container = document.getElementById('planning-list');
+  container.innerHTML = '';
+  const colorMap = { blue: 'bg-blue-100 text-blue-800', green: 'bg-green-100 text-green-800', purple: 'bg-purple-100 text-purple-800', orange: 'bg-orange-100 text-orange-800', yellow: 'bg-yellow-100 text-yellow-800', pink: 'bg-pink-100 text-pink-800' };
+  filtered.forEach(act => {
+    const badge = colorMap[act.categoryColor] || 'bg-gray-100 text-gray-800';
+    const card = document.createElement('div');
+    card.className = 'border border-gray-200 rounded-xl p-4 hover:border-cbrs-blue transition-colors';
+    card.id = 'planning-card-' + act.id;
+    const slotsHtml = (act.slots || []).map(s =>
+      `<span class="inline-flex items-center gap-1 text-xs bg-gray-100 rounded-full px-2 py-0.5"><strong>${s.day}</strong> ${s.time} — ${s.location}</span>`
+    ).join(' ');
+    card.innerHTML = `
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-1.5">
+            <span class="inline-block text-xs font-medium px-2 py-0.5 rounded-full ${badge}">${act.categoryLabel}</span>
+            <h3 class="font-semibold text-sm">${act.name}</h3>
+          </div>
+          <div class="flex flex-wrap gap-1.5">${slotsHtml || '<span class="text-xs text-gray-400">Aucun créneau</span>'}</div>
+        </div>
+        <button onclick="editPlanningActivity('${act.id}')" class="text-xs px-3 py-1 bg-cbrs-blue hover:bg-cbrs-blue-light text-white rounded-lg transition-colors flex-shrink-0">Éditer</button>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+function editPlanningActivity(id) {
+  const activities = effectivePlanning();
+  const act = activities.find(a => a.id === id);
+  if (!act) return;
+  const colorMap = { blue: 'bg-blue-100 text-blue-800', green: 'bg-green-100 text-green-800', purple: 'bg-purple-100 text-purple-800', orange: 'bg-orange-100 text-orange-800', yellow: 'bg-yellow-100 text-yellow-800', pink: 'bg-pink-100 text-pink-800' };
+  const badge = colorMap[act.categoryColor] || 'bg-gray-100 text-gray-800';
+  const categories = [
+    { value: 'sport', label: 'Sport', color: 'blue' },
+    { value: 'plein-air', label: 'Plein air', color: 'green' },
+    { value: 'remise-en-forme', label: 'Remise en forme', color: 'purple' },
+    { value: 'bien-etre', label: 'Bien-être', color: 'orange' },
+    { value: 'loisir', label: 'Loisir', color: 'yellow' },
+    { value: 'cognitif', label: 'Cognitif', color: 'pink' }
+  ];
+  const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche', '—'];
+  const card = document.getElementById('planning-card-' + id);
+  const origHtml = card.innerHTML;
+  const catOptions = categories.map(c => `<option value="${c.value}" ${c.value === act.category ? 'selected' : ''}>${c.label}</option>`).join('');
+  const dayOptions = days.map(d => `<option value="${d}">${d}</option>`).join('');
+  const slotsForm = (act.slots || []).map((s, i) => `
+    <div class="flex items-center gap-2 planning-slot-row" data-index="${i}">
+      <select class="planning-slot-day px-2 py-1 border border-gray-300 rounded text-xs">${dayOptions.replace('value="'+s.day+'"', 'value="'+s.day+'" selected')}</select>
+      <input type="text" class="planning-slot-time px-2 py-1 border border-gray-300 rounded text-xs flex-1" placeholder="Ex: 10h00 – 12h00" value="${s.time}">
+      <input type="text" class="planning-slot-location px-2 py-1 border border-gray-300 rounded text-xs flex-1" placeholder="Lieu" value="${s.location}">
+      <button onclick="this.closest('.planning-slot-row').remove()" class="text-red-500 hover:text-red-700 text-xs flex-shrink-0" title="Supprimer">✕</button>
+    </div>
+  `).join('');
+  card.innerHTML = `
+    <div class="space-y-3">
+      <div class="flex items-center gap-2">
+        <span class="inline-block text-xs font-medium px-2 py-0.5 rounded-full ${badge}">${act.categoryLabel}</span>
+        <input type="text" id="plan-edit-name-${id}" value="${act.name}" class="flex-1 px-2 py-1 border border-gray-300 rounded text-sm font-semibold">
+        <select id="plan-edit-cat-${id}" class="px-2 py-1 border border-gray-300 rounded text-xs">${catOptions}</select>
+      </div>
+      <div class="space-y-2" id="plan-edit-slots-${id}">${slotsForm}</div>
+      <div class="flex items-center gap-2">
+        <button onclick="addPlanningSlot('${id}')" class="text-xs text-cbrs-blue hover:underline">+ Ajouter un créneau</button>
+      </div>
+      <div class="flex items-center gap-2 pt-1">
+        <button onclick="savePlanningActivity('${id}')" class="px-4 py-1.5 bg-cbrs-green hover:bg-cbrs-green-hover text-white font-semibold rounded-lg transition-colors text-xs">Enregistrer</button>
+        <button onclick="cancelPlanningEdit('${id}')" class="px-4 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors text-xs">Annuler</button>
+      </div>
+    </div>`;
+}
+
+function addPlanningSlot(id) {
+  const container = document.getElementById('plan-edit-slots-' + id);
+  const idx = container.children.length;
+  const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche', '—'];
+  const dayOptions = days.map(d => `<option value="${d}">${d}</option>`).join('');
+  const row = document.createElement('div');
+  row.className = 'flex items-center gap-2 planning-slot-row';
+  row.dataset.index = idx;
+  row.innerHTML = `
+    <select class="planning-slot-day px-2 py-1 border border-gray-300 rounded text-xs">${dayOptions}</select>
+    <input type="text" class="planning-slot-time px-2 py-1 border border-gray-300 rounded text-xs flex-1" placeholder="Ex: 10h00 – 12h00" value="">
+    <input type="text" class="planning-slot-location px-2 py-1 border border-gray-300 rounded text-xs flex-1" placeholder="Lieu" value="">
+    <button onclick="this.closest('.planning-slot-row').remove()" class="text-red-500 hover:text-red-700 text-xs flex-shrink-0" title="Supprimer">✕</button>
+  `;
+  container.appendChild(row);
+}
+
+function savePlanningActivity(id) {
+  const name = document.getElementById('plan-edit-name-' + id).value.trim();
+  const catVal = document.getElementById('plan-edit-cat-' + id).value;
+  const categories = [
+    { value: 'sport', label: 'Sport', color: 'blue' },
+    { value: 'plein-air', label: 'Plein air', color: 'green' },
+    { value: 'remise-en-forme', label: 'Remise en forme', color: 'purple' },
+    { value: 'bien-etre', label: 'Bien-être', color: 'orange' },
+    { value: 'loisir', label: 'Loisir', color: 'yellow' },
+    { value: 'cognitif', label: 'Cognitif', color: 'pink' }
+  ];
+  const cat = categories.find(c => c.value === catVal) || categories[0];
+  const slotRows = document.querySelectorAll('#plan-edit-slots-' + id + ' .planning-slot-row');
+  const slots = Array.from(slotRows).map(row => ({
+    day: row.querySelector('.planning-slot-day').value,
+    time: row.querySelector('.planning-slot-time').value.trim(),
+    location: row.querySelector('.planning-slot-location').value.trim()
+  })).filter(s => s.day || s.time || s.location);
+  const activities = effectivePlanning();
+  const idx = activities.findIndex(a => a.id === id);
+  if (idx === -1) return;
+  activities[idx] = { ...activities[idx], name, category: cat.value, categoryLabel: cat.label, categoryColor: cat.color, slots };
+  setLS('cbrs-planning', activities);
+  toast(`"${name}" enregistré`);
+  renderPlanning(document.getElementById('planning-search').value);
+}
+
+function cancelPlanningEdit(id) {
+  renderPlanning(document.getElementById('planning-search').value);
+}
+
 document.getElementById('activity-search').addEventListener('input', function(e) { renderActivities(e.target.value); });
+document.getElementById('planning-search').addEventListener('input', function(e) { renderPlanning(e.target.value); });
 
 function showTab(tab) {
   document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
@@ -404,6 +544,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click
   renderSettings();
   renderActivities();
   renderGallery();
+  renderPlanning();
 })();
 </script>
 </body></html>

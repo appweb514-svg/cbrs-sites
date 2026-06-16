@@ -130,11 +130,27 @@
   </div>
 </section>
 
-<!-- Planning image + download -->
+<!-- Loading -->
+<div id="planning-loading" class="max-w-6xl mx-auto px-6 py-10 text-center">
+  <div class="animate-pulse space-y-4">
+    <div class="h-6 bg-gray-200 rounded w-48 mx-auto"></div>
+    <div class="h-4 bg-gray-200 rounded w-32 mx-auto"></div>
+    <div class="space-y-3 mt-6">
+      <div class="h-20 bg-gray-100 rounded-xl"></div>
+      <div class="h-20 bg-gray-100 rounded-xl"></div>
+      <div class="h-20 bg-gray-100 rounded-xl"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Planning Content (hidden until loaded) -->
+<div id="planning-content" class="hidden">
+
+<!-- Weekly Calendar View -->
 <section class="max-w-6xl mx-auto px-6 py-10">
   <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
     <div>
-      <h2 class="text-2xl font-bold text-cbrs-blue">Planning officiel <span class="font-serif-italic">2025-2026</span></h2>
+      <h2 class="text-2xl font-bold text-cbrs-blue">Planning <span class="font-serif-italic">hebdomadaire</span></h2>
       <p class="text-sm text-gray-500 mt-1">Toutes les activités, jours, horaires et lieux</p>
     </div>
     <a href="assets/planning-original.png" download
@@ -144,92 +160,12 @@
     </a>
   </div>
 
-  <div class="bg-white rounded-2xl shadow-card overflow-hidden">
-    <div class="bg-gray-50 px-4 py-2 border-b border-gray-200 flex items-center gap-2 text-xs text-gray-500">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-      Planning officiel CBRS — Cliquez pour zoomer
-    </div>
-    <div class="p-4 flex justify-center bg-gray-50/50">
-      <img src="assets/planning-original.png" alt="Planning officiel CBRS 2025-2026"
-           class="rounded-xl shadow-sm max-w-full cursor-zoom-in"
-           style="max-height:70vh;object-fit:contain;"
-           onclick="window.open(this.src,'_blank')"/>
-    </div>
-  </div>
+  <div id="week-calendar" class="space-y-6"></div>
 </section>
 
-<!-- Tableau des activités -->
+<!-- Légende + Informations -->
 <section class="max-w-6xl mx-auto px-6 pb-10">
-  <h2 class="text-xl font-bold text-cbrs-blue mb-6">Détail des <span class="font-serif-italic">créneaux</span></h2>
-
-  <div class="bg-white rounded-2xl shadow-card overflow-hidden">
-    <div class="overflow-x-auto">
-      <table class="w-full text-sm">
-        <thead>
-          <tr class="bg-cbrs-blue text-white">
-            <th class="text-left px-4 py-3 font-semibold">Activité</th>
-            <th class="text-left px-4 py-3 font-semibold">Type</th>
-            <th class="text-left px-4 py-3 font-semibold">Jour</th>
-            <th class="text-left px-4 py-3 font-semibold">Horaires</th>
-            <th class="text-left px-4 py-3 font-semibold">Lieu</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100">
-          <!-- Aquagym -->
-          <tr class="hover:bg-gray-50"><td rowspan="2" class="px-4 py-3 font-semibold text-gray-900 align-top">Aquagym</td><td rowspan="2" class="px-4 py-3 align-top"><span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded-full">Sport</span></td><td class="px-4 py-3">Lundi</td><td class="px-4 py-3 text-gray-600">Voir planning</td><td class="px-4 py-3 text-gray-600">Piscine Bellier</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Vendredi</td><td class="px-4 py-3 text-gray-600">Voir planning</td><td class="px-4 py-3 text-gray-600">Piscine Bellier</td></tr>
-          <!-- Pétanque -->
-          <tr class="hover:bg-gray-50"><td rowspan="2" class="px-4 py-3 font-semibold text-gray-900 align-top">Pétanque</td><td rowspan="2" class="px-4 py-3 align-top"><span class="inline-block bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded-full">Plein air</span></td><td class="px-4 py-3">Lundi</td><td class="px-4 py-3 text-gray-600">14h00 – 16h00</td><td class="px-4 py-3 text-gray-600">Parc Kennedy</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Vendredi</td><td class="px-4 py-3 text-gray-600">14h00 – 16h00</td><td class="px-4 py-3 text-gray-600">Parc Kennedy</td></tr>
-          <!-- Cyclisme -->
-          <tr class="hover:bg-gray-50"><td rowspan="2" class="px-4 py-3 font-semibold text-gray-900 align-top">Cyclisme</td><td rowspan="2" class="px-4 py-3 align-top"><span class="inline-block bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded-full">Plein air</span></td><td class="px-4 py-3">Mercredi</td><td class="px-4 py-3 text-gray-600">13h30</td><td class="px-4 py-3 text-gray-600">Parking cimetière du Tilloy</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Vendredi</td><td class="px-4 py-3 text-gray-600">13h30</td><td class="px-4 py-3 text-gray-600">Parking Saint Quentin / Cimetière du Tilloy</td></tr>
-          <!-- Tir à l'arc -->
-          <tr class="hover:bg-gray-50"><td rowspan="2" class="px-4 py-3 font-semibold text-gray-900 align-top">Tir à l'arc</td><td rowspan="2" class="px-4 py-3 align-top"><span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded-full">Sport</span></td><td class="px-4 py-3">Mardi</td><td class="px-4 py-3 text-gray-600">9h30 – 11h00</td><td class="px-4 py-3 text-gray-600">Parc Marcel Dassault</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Vendredi</td><td class="px-4 py-3 text-gray-600">9h30 – 11h00</td><td class="px-4 py-3 text-gray-600">Parc Marcel Dassault</td></tr>
-          <!-- Tennis de Table -->
-          <tr class="hover:bg-gray-50"><td rowspan="4" class="px-4 py-3 font-semibold text-gray-900 align-top">Tennis de Table</td><td rowspan="4" class="px-4 py-3 align-top"><span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded-full">Sport</span></td><td class="px-4 py-3">Lundi</td><td class="px-4 py-3 text-gray-600">10h00 – 12h00</td><td class="px-4 py-3 text-gray-600">Gymnase Briard</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Mardi</td><td class="px-4 py-3 text-gray-600">9h00 – 12h00</td><td class="px-4 py-3 text-gray-600">Gymnase Briard</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Mercredi</td><td class="px-4 py-3 text-gray-600">9h00 – 12h00</td><td class="px-4 py-3 text-gray-600">Gymnase Briard</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Jeudi</td><td class="px-4 py-3 text-gray-600">14h00 – 17h00</td><td class="px-4 py-3 text-gray-600">Gymnase Goincourt</td></tr>
-          <!-- Tennis -->
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-semibold text-gray-900">Tennis</td><td class="px-4 py-3"><span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded-full">Sport</span></td><td class="px-4 py-3" colspan="1">—</td><td class="px-4 py-3 text-gray-600">Voir planning</td><td class="px-4 py-3 text-gray-600">Complexe sportif de Beauvais</td></tr>
-          <!-- Randonnée -->
-          <tr class="hover:bg-gray-50"><td rowspan="3" class="px-4 py-3 font-semibold text-gray-900 align-top">Randonnée</td><td rowspan="3" class="px-4 py-3 align-top"><span class="inline-block bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded-full">Plein air</span></td><td class="px-4 py-3">Jeudi</td><td class="px-4 py-3 text-gray-600">9h30 (été) / 14h10 (hiver)</td><td class="px-4 py-3 text-gray-600">Plan d'eau du Canada</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Jeudi</td><td class="px-4 py-3 text-gray-600">14h00</td><td class="px-4 py-3 text-gray-600">Bois du Parc Saint Quentin</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Jeudi</td><td class="px-4 py-3 text-gray-600">Après-midi (variable)</td><td class="px-4 py-3 text-gray-600">Randonnées externes</td></tr>
-          <!-- Marche Nordique -->
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-semibold text-gray-900">Marche Nordique</td><td class="px-4 py-3"><span class="inline-block bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded-full">Plein air</span></td><td class="px-4 py-3">Mercredi</td><td class="px-4 py-3 text-gray-600">9h30 – 11h00</td><td class="px-4 py-3 text-gray-600">Plan d'eau du Canada</td></tr>
-          <!-- Gymnastique -->
-          <tr class="hover:bg-gray-50"><td rowspan="3" class="px-4 py-3 font-semibold text-gray-900 align-top">Gymnastique</td><td rowspan="3" class="px-4 py-3 align-top"><span class="inline-block bg-purple-100 text-purple-800 text-xs font-medium px-2 py-0.5 rounded-full">Remise en forme</span></td><td class="px-4 py-3">Lundi</td><td class="px-4 py-3 text-gray-600">9h30</td><td class="px-4 py-3 text-gray-600">Salle Carnot</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Mardi</td><td class="px-4 py-3 text-gray-600">Voir planning</td><td class="px-4 py-3 text-gray-600">Salle Coubertin</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Vendredi</td><td class="px-4 py-3 text-gray-600">Voir planning</td><td class="px-4 py-3 text-gray-600">Salle Coubertin</td></tr>
-          <!-- Pickleball -->
-          <tr class="hover:bg-gray-50"><td rowspan="2" class="px-4 py-3 font-semibold text-gray-900 align-top">Pickleball</td><td rowspan="2" class="px-4 py-3 align-top"><span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded-full">Sport</span></td><td class="px-4 py-3">Mercredi</td><td class="px-4 py-3 text-gray-600">11h00 – 13h00</td><td class="px-4 py-3 text-gray-600">Coubertin Plateau</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Jeudi</td><td class="px-4 py-3 text-gray-600">11h00 – 13h00</td><td class="px-4 py-3 text-gray-600">Gymnase R Briard, St Just</td></tr>
-          <!-- Tai Chi Chuan -->
-          <tr class="hover:bg-gray-50"><td rowspan="2" class="px-4 py-3 font-semibold text-gray-900 align-top">Tai Chi Chuan</td><td rowspan="2" class="px-4 py-3 align-top"><span class="inline-block bg-orange-100 text-orange-800 text-xs font-medium px-2 py-0.5 rounded-full">Bien-être</span></td><td class="px-4 py-3">Lundi</td><td class="px-4 py-3 text-gray-600">10h00 – 11h00</td><td class="px-4 py-3 text-gray-600">Coubertin Plateau</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Vendredi</td><td class="px-4 py-3 text-gray-600">11h15 – 12h15</td><td class="px-4 py-3 text-gray-600">Coubertin Plateau</td></tr>
-          <!-- Échecs / Bridge -->
-          <tr class="hover:bg-gray-50"><td rowspan="2" class="px-4 py-3 font-semibold text-gray-900 align-top">Échecs / Bridge</td><td rowspan="2" class="px-4 py-3 align-top"><span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-0.5 rounded-full">Loisir</span></td><td class="px-4 py-3">Lundi</td><td class="px-4 py-3 text-gray-600">14h00 – 17h00</td><td class="px-4 py-3 text-gray-600">Salle de réunion CBRS</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Jeudi</td><td class="px-4 py-3 text-gray-600">14h00 – 17h00</td><td class="px-4 py-3 text-gray-600">Salle de réunion CBRS</td></tr>
-          <!-- Jeux de Cartes -->
-          <tr class="hover:bg-gray-50"><td rowspan="3" class="px-4 py-3 font-semibold text-gray-900 align-top">Jeux de Cartes</td><td rowspan="3" class="px-4 py-3 align-top"><span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-0.5 rounded-full">Loisir</span></td><td class="px-4 py-3">Lundi</td><td class="px-4 py-3 text-gray-600">13h30 – 17h15</td><td class="px-4 py-3 text-gray-600">Salle Boibessot</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Mardi</td><td class="px-4 py-3 text-gray-600">13h30 – 17h15</td><td class="px-4 py-3 text-gray-600">Salle Boibessot</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Jeudi</td><td class="px-4 py-3 text-gray-600">13h30 – 17h15</td><td class="px-4 py-3 text-gray-600">Salle Boibessot</td></tr>
-          <!-- Danse -->
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-semibold text-gray-900">Danse</td><td class="px-4 py-3"><span class="inline-block bg-orange-100 text-orange-800 text-xs font-medium px-2 py-0.5 rounded-full">Bien-être</span></td><td class="px-4 py-3">—</td><td class="px-4 py-3 text-gray-600">Voir planning</td><td class="px-4 py-3 text-gray-600">Salle de danse – Beauvais</td></tr>
-          <!-- Atelier Mémoire -->
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-semibold text-gray-900">Atelier Mémoire</td><td class="px-4 py-3"><span class="inline-block bg-pink-100 text-pink-800 text-xs font-medium px-2 py-0.5 rounded-full">Cognitif</span></td><td class="px-4 py-3">Mercredi</td><td class="px-4 py-3 text-gray-600">Voir planning</td><td class="px-4 py-3 text-gray-600">Salle de réunion CBRS</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- Légende + Contact -->
-<section class="max-w-6xl mx-auto px-6 pb-10">
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
     <div class="bg-white rounded-xl shadow-card p-5">
       <h3 class="font-bold text-cbrs-blue mb-3 flex items-center gap-2">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -246,14 +182,6 @@
     </div>
     <div class="bg-white rounded-xl shadow-card p-5">
       <h3 class="font-bold text-cbrs-blue mb-3 flex items-center gap-2">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-        Contact
-      </h3>
-      <p class="text-gray-600">Pour toute information : <strong class="text-gray-900">03 60 36 17 47</strong></p>
-      <p class="text-gray-600 mt-1">Sorties & Voyages : <strong class="text-gray-900">Martine — 06 32 11 90 29</strong></p>
-    </div>
-    <div class="bg-white rounded-xl shadow-card p-5">
-      <h3 class="font-bold text-cbrs-blue mb-3 flex items-center gap-2">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
         Informations
       </h3>
@@ -263,6 +191,29 @@
     </div>
   </div>
 </section>
+
+<!-- Collapsible original planning -->
+<section class="max-w-6xl mx-auto px-6 pb-10">
+  <details class="bg-white rounded-2xl shadow-card overflow-hidden">
+    <summary class="cursor-pointer px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
+      <div class="flex items-center gap-3">
+        <svg class="w-5 h-5 text-cbrs-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <span class="font-semibold text-cbrs-blue">Voir le planning original</span>
+      </div>
+      <svg class="w-5 h-5 text-gray-400 transition-transform details-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+    </summary>
+    <div class="px-6 pb-6">
+      <div class="bg-gray-50 rounded-xl p-4 flex justify-center">
+        <img src="assets/planning-original.png" alt="Planning officiel CBRS 2025-2026"
+             class="rounded-xl shadow-sm max-w-full cursor-zoom-in"
+             style="max-height:70vh;object-fit:contain;"
+             onclick="window.open(this.src,'_blank')"/>
+      </div>
+    </div>
+  </details>
+</section>
+
+</div><!-- /planning-content -->
 
 <!-- CTA -->
 <section class="bg-white border-y border-gray-100 py-12">
@@ -325,6 +276,180 @@ function toggleSidebar() {
   const btn = s.querySelector('.sidebar-toggle span');
   if (btn) btn.textContent = sidebarCollapsed ? 'Ouvrir' : 'Réduire';
 }
+</script>
+
+<!-- Planning Data & Render -->
+<script>
+const FALLBACK_ACTIVITIES = [
+  { id: 'aquagym', name: 'Aquagym', category: 'sport', categoryLabel: 'Sport', categoryColor: 'blue', slots: [{ day: 'Lundi', time: 'Voir planning', location: 'Piscine Bellier' }, { day: 'Vendredi', time: 'Voir planning', location: 'Piscine Bellier' }] },
+  { id: 'petanque', name: 'Pétanque', category: 'plein-air', categoryLabel: 'Plein air', categoryColor: 'green', slots: [{ day: 'Lundi', time: '14h00 – 16h00', location: 'Parc Kennedy' }, { day: 'Vendredi', time: '14h00 – 16h00', location: 'Parc Kennedy' }] },
+  { id: 'cyclisme', name: 'Cyclisme', category: 'plein-air', categoryLabel: 'Plein air', categoryColor: 'green', slots: [{ day: 'Mercredi', time: '13h30', location: 'Parking cimetière du Tilloy' }, { day: 'Vendredi', time: '13h30', location: 'Parking Saint Quentin / Cimetière du Tilloy' }] },
+  { id: 'tir-a-larc', name: "Tir à l'arc", category: 'sport', categoryLabel: 'Sport', categoryColor: 'blue', slots: [{ day: 'Mardi', time: '9h30 – 11h00', location: 'Parc Marcel Dassault' }, { day: 'Vendredi', time: '9h30 – 11h00', location: 'Parc Marcel Dassault' }] },
+  { id: 'tennis-de-table', name: 'Tennis de Table', category: 'sport', categoryLabel: 'Sport', categoryColor: 'blue', slots: [{ day: 'Lundi', time: '10h00 – 12h00', location: 'Gymnase Briard' }, { day: 'Mardi', time: '9h00 – 12h00', location: 'Gymnase Briard' }, { day: 'Mercredi', time: '9h00 – 12h00', location: 'Gymnase Briard' }, { day: 'Jeudi', time: '14h00 – 17h00', location: 'Gymnase Goincourt' }] },
+  { id: 'tennis', name: 'Tennis', category: 'sport', categoryLabel: 'Sport', categoryColor: 'blue', slots: [{ day: '—', time: 'Voir planning', location: 'Complexe sportif de Beauvais' }] },
+  { id: 'randonnee', name: 'Randonnée', category: 'plein-air', categoryLabel: 'Plein air', categoryColor: 'green', slots: [{ day: 'Jeudi', time: '9h30 (été) / 14h10 (hiver)', location: "Plan d'eau du Canada" }, { day: 'Jeudi', time: '14h00', location: 'Bois du Parc Saint Quentin' }, { day: 'Jeudi', time: 'Après-midi (variable)', location: 'Randonnées externes' }] },
+  { id: 'marche-nordique', name: 'Marche Nordique', category: 'plein-air', categoryLabel: 'Plein air', categoryColor: 'green', slots: [{ day: 'Mercredi', time: '9h30 – 11h00', location: "Plan d'eau du Canada" }] },
+  { id: 'gymnastique', name: 'Gymnastique', category: 'remise-en-forme', categoryLabel: 'Remise en forme', categoryColor: 'purple', slots: [{ day: 'Lundi', time: '9h30', location: 'Salle Carnot' }, { day: 'Mardi', time: 'Voir planning', location: 'Salle Coubertin' }, { day: 'Vendredi', time: 'Voir planning', location: 'Salle Coubertin' }] },
+  { id: 'pickleball', name: 'Pickleball', category: 'sport', categoryLabel: 'Sport', categoryColor: 'blue', slots: [{ day: 'Mercredi', time: '11h00 – 13h00', location: 'Coubertin Plateau' }, { day: 'Jeudi', time: '11h00 – 13h00', location: 'Gymnase R Briard, St Just' }] },
+  { id: 'tai-chi-chuan', name: 'Tai Chi Chuan', category: 'bien-etre', categoryLabel: 'Bien-être', categoryColor: 'orange', slots: [{ day: 'Lundi', time: '10h00 – 11h00', location: 'Coubertin Plateau' }, { day: 'Vendredi', time: '11h15 – 12h15', location: 'Coubertin Plateau' }] },
+  { id: 'echecs-bridge', name: 'Échecs / Bridge', category: 'loisir', categoryLabel: 'Loisir', categoryColor: 'yellow', slots: [{ day: 'Lundi', time: '14h00 – 17h00', location: 'Salle de réunion CBRS' }, { day: 'Jeudi', time: '14h00 – 17h00', location: 'Salle de réunion CBRS' }] },
+  { id: 'jeux-de-cartes', name: 'Jeux de Cartes', category: 'loisir', categoryLabel: 'Loisir', categoryColor: 'yellow', slots: [{ day: 'Lundi', time: '13h30 – 17h15', location: 'Salle Boibessot' }, { day: 'Mardi', time: '13h30 – 17h15', location: 'Salle Boibessot' }, { day: 'Jeudi', time: '13h30 – 17h15', location: 'Salle Boibessot' }] },
+  { id: 'danse', name: 'Danse', category: 'bien-etre', categoryLabel: 'Bien-être', categoryColor: 'orange', slots: [{ day: '—', time: 'Voir planning', location: 'Salle de danse – Beauvais' }] },
+  { id: 'atelier-memoire', name: 'Atelier Mémoire', category: 'cognitif', categoryLabel: 'Cognitif', categoryColor: 'pink', slots: [{ day: 'Mercredi', time: 'Voir planning', location: 'Salle de réunion CBRS' }] }
+];
+
+const CATEGORY_COLORS = {
+  blue:   { badge: 'bg-blue-100 text-blue-800',   dot: 'bg-blue-500',   border: 'border-l-blue-500' },
+  green:  { badge: 'bg-green-100 text-green-800', dot: 'bg-green-500',  border: 'border-l-green-500' },
+  purple: { badge: 'bg-purple-100 text-purple-800', dot: 'bg-purple-500', border: 'border-l-purple-500' },
+  orange: { badge: 'bg-orange-100 text-orange-800', dot: 'bg-orange-500', border: 'border-l-orange-500' },
+  yellow: { badge: 'bg-yellow-100 text-yellow-800', dot: 'bg-yellow-500', border: 'border-l-yellow-500' },
+  pink:   { badge: 'bg-pink-100 text-pink-800',   dot: 'bg-pink-500',   border: 'border-l-pink-500' }
+};
+
+const DAY_ORDER = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+
+function parseTimeSort(timeStr) {
+  if (!timeStr || timeStr === 'Voir planning' || timeStr === 'Après-midi (variable)') return 999;
+  const match = timeStr.match(/(\d{1,2})[h:](\d{0,2})/);
+  if (!match) return 999;
+  const h = parseInt(match[1], 10);
+  const m = match[2] ? parseInt(match[2], 10) : 0;
+  return h * 60 + m;
+}
+
+function groupByDay(activities) {
+  const grouped = {};
+  DAY_ORDER.forEach(d => grouped[d] = []);
+  activities.forEach(act => {
+    (act.slots || []).forEach(slot => {
+      if (slot.day && slot.day !== '—' && DAY_ORDER.includes(slot.day)) {
+        grouped[slot.day].push({ activity: act, slot });
+      }
+    });
+  });
+  Object.keys(grouped).forEach(day => {
+    grouped[day].sort((a, b) => parseTimeSort(a.slot.time) - parseTimeSort(b.slot.time));
+  });
+  return grouped;
+}
+
+function renderWeeklyCalendar(activities) {
+  const grouped = groupByDay(activities);
+  const container = document.getElementById('week-calendar');
+  container.innerHTML = '';
+
+  DAY_ORDER.forEach(day => {
+    const items = grouped[day];
+    if (!items.length) return;
+
+    const daySection = document.createElement('div');
+    daySection.className = 'bg-white rounded-2xl shadow-card overflow-hidden';
+
+    let slotsHtml = '';
+    items.forEach(({ activity: act, slot }) => {
+      const colors = CATEGORY_COLORS[act.categoryColor] || CATEGORY_COLORS.blue;
+      slotsHtml += `
+        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 py-3 px-4 border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors">
+          <div class="flex items-center gap-3 sm:w-56 flex-shrink-0">
+            <span class="inline-block text-[11px] font-semibold px-2.5 py-1 rounded-full ${colors.badge} whitespace-nowrap">${act.categoryLabel}</span>
+          </div>
+          <div class="flex-1 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 min-w-0">
+            <span class="font-semibold text-sm text-gray-900 truncate">${act.name}</span>
+            <span class="text-sm text-gray-500 whitespace-nowrap flex-shrink-0">${slot.time}</span>
+          </div>
+          <span class="text-xs text-gray-400 flex-shrink-0 sm:text-right">📍 ${slot.location}</span>
+        </div>`;
+    });
+
+    daySection.innerHTML = `
+      <div class="px-5 py-3.5 bg-cbrs-blue/5 border-b border-gray-100">
+        <h3 class="text-lg font-bold text-cbrs-blue uppercase tracking-wide">${day}</h3>
+        <p class="text-xs text-gray-500 mt-0.5">${items.length} activité${items.length > 1 ? 's' : ''}</p>
+      </div>
+      <div class="divide-y divide-gray-50">${slotsHtml}</div>`;
+    container.appendChild(daySection);
+  });
+
+  // Activities without a valid day (Tennis, Danse) go in a "Sur demande" section
+  const ungrouped = [];
+  activities.forEach(act => {
+    (act.slots || []).forEach(slot => {
+      if (!slot.day || slot.day === '—' || !DAY_ORDER.includes(slot.day)) {
+        ungrouped.push({ activity: act, slot });
+      }
+    });
+  });
+  if (ungrouped.length) {
+    const section = document.createElement('div');
+    section.className = 'bg-white rounded-2xl shadow-card overflow-hidden';
+    let slotsHtml = '';
+    ungrouped.forEach(({ activity: act, slot }) => {
+      const colors = CATEGORY_COLORS[act.categoryColor] || CATEGORY_COLORS.blue;
+      slotsHtml += `
+        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 py-3 px-4 border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors">
+          <div class="flex items-center gap-3 sm:w-56 flex-shrink-0">
+            <span class="inline-block text-[11px] font-semibold px-2.5 py-1 rounded-full ${colors.badge} whitespace-nowrap">${act.categoryLabel}</span>
+          </div>
+          <div class="flex-1 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 min-w-0">
+            <span class="font-semibold text-sm text-gray-900 truncate">${act.name}</span>
+            <span class="text-sm text-gray-500 whitespace-nowrap flex-shrink-0">${slot.time}</span>
+          </div>
+          <span class="text-xs text-gray-400 flex-shrink-0 sm:text-right">📍 ${slot.location}</span>
+        </div>`;
+    });
+    section.innerHTML = `
+      <div class="px-5 py-3.5 bg-gray-100 border-b border-gray-100">
+        <h3 class="text-lg font-bold text-gray-600 uppercase tracking-wide">Sur demande</h3>
+        <p class="text-xs text-gray-500 mt-0.5">Voir planning pour les horaires</p>
+      </div>
+      <div class="divide-y divide-gray-50">${slotsHtml}</div>`;
+    container.appendChild(section);
+  }
+}
+
+async function initPlanning() {
+  let activities = null;
+
+  // Try localStorage first (admin overrides)
+  try {
+    const ls = localStorage.getItem('cbrs-planning');
+    if (ls) activities = JSON.parse(ls);
+  } catch (e) { /* ignore */ }
+
+  // If no localStorage, try API
+  if (!activities) {
+    try {
+      const res = await fetch('/api/public/planning');
+      if (res.ok) {
+        const data = await res.json();
+        activities = data.activities || null;
+      }
+    } catch (e) { /* ignore */ }
+  }
+
+  // Fallback to hardcoded data
+  if (!activities || !activities.length) {
+    activities = FALLBACK_ACTIVITIES;
+  }
+
+  renderWeeklyCalendar(activities);
+  document.getElementById('planning-loading').classList.add('hidden');
+  document.getElementById('planning-content').classList.remove('hidden');
+}
+
+// Rotate chevron on details toggle
+document.addEventListener('DOMContentLoaded', function() {
+  const details = document.querySelector('details');
+  if (details) {
+    details.addEventListener('toggle', function() {
+      const icon = details.querySelector('.details-icon');
+      if (icon) icon.style.transform = details.open ? 'rotate(180deg)' : '';
+    });
+  }
+});
+
+initPlanning();
 </script>
 
 <!-- Accessibility -->
