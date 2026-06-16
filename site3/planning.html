@@ -339,12 +339,15 @@ function renderWeeklyCalendar(activities) {
   const container = document.getElementById('week-calendar');
   container.innerHTML = '';
 
+  // Determine today's day name for auto-open
+  const todayNames = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+  const todayName = todayNames[new Date().getDay()];
+
   DAY_ORDER.forEach(day => {
     const items = grouped[day];
     if (!items.length) return;
 
-    const daySection = document.createElement('div');
-    daySection.className = 'bg-white rounded-2xl shadow-card overflow-hidden';
+    const isOpen = (day === todayName) || (todayName === 'Dimanche' && day === 'Lundi') || (todayName === 'Samedi' && day === 'Lundi' && day === DAY_ORDER.find(d => grouped[d].length));
 
     let slotsHtml = '';
     items.forEach(({ activity: act, slot }) => {
@@ -362,13 +365,19 @@ function renderWeeklyCalendar(activities) {
         </div>`;
     });
 
-    daySection.innerHTML = `
-      <div class="px-5 py-3.5 bg-cbrs-blue/5 border-b border-gray-100">
-        <h3 class="text-lg font-bold text-cbrs-blue uppercase tracking-wide">${day}</h3>
-        <p class="text-xs text-gray-500 mt-0.5">${items.length} activité${items.length > 1 ? 's' : ''}</p>
-      </div>
+    const details = document.createElement('details');
+    details.className = 'bg-white rounded-2xl shadow-card overflow-hidden group';
+    if (isOpen) details.open = true;
+    details.innerHTML = `
+      <summary class="px-5 py-3.5 bg-cbrs-blue/5 border-b border-gray-100 cursor-pointer select-none flex items-center justify-between hover:bg-cbrs-blue/10 transition-colors list-none [&::-webkit-details-marker]:hidden">
+        <div>
+          <h3 class="text-lg font-bold text-cbrs-blue uppercase tracking-wide">${day}</h3>
+          <p class="text-xs text-gray-500 mt-0.5">${items.length} activité${items.length > 1 ? 's' : ''}</p>
+        </div>
+        <svg class="w-5 h-5 text-cbrs-blue transition-transform duration-200 group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </summary>
       <div class="divide-y divide-gray-50">${slotsHtml}</div>`;
-    container.appendChild(daySection);
+    container.appendChild(details);
   });
 
   // Activities without a valid day (Tennis, Danse) go in a "Sur demande" section
@@ -381,8 +390,6 @@ function renderWeeklyCalendar(activities) {
     });
   });
   if (ungrouped.length) {
-    const section = document.createElement('div');
-    section.className = 'bg-white rounded-2xl shadow-card overflow-hidden';
     let slotsHtml = '';
     ungrouped.forEach(({ activity: act, slot }) => {
       const colors = CATEGORY_COLORS[act.categoryColor] || CATEGORY_COLORS.blue;
@@ -398,13 +405,18 @@ function renderWeeklyCalendar(activities) {
           <span class="text-xs text-gray-400 flex-shrink-0 sm:text-right">📍 ${slot.location}</span>
         </div>`;
     });
-    section.innerHTML = `
-      <div class="px-5 py-3.5 bg-gray-100 border-b border-gray-100">
-        <h3 class="text-lg font-bold text-gray-600 uppercase tracking-wide">Sur demande</h3>
-        <p class="text-xs text-gray-500 mt-0.5">Voir planning pour les horaires</p>
-      </div>
+    const details = document.createElement('details');
+    details.className = 'bg-white rounded-2xl shadow-card overflow-hidden group';
+    details.innerHTML = `
+      <summary class="px-5 py-3.5 bg-gray-100 border-b border-gray-100 cursor-pointer select-none flex items-center justify-between hover:bg-gray-200/50 transition-colors list-none [&::-webkit-details-marker]:hidden">
+        <div>
+          <h3 class="text-lg font-bold text-gray-600 uppercase tracking-wide">Sur demande</h3>
+          <p class="text-xs text-gray-500 mt-0.5">Voir planning pour les horaires</p>
+        </div>
+        <svg class="w-5 h-5 text-gray-500 transition-transform duration-200 group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </summary>
       <div class="divide-y divide-gray-50">${slotsHtml}</div>`;
-    container.appendChild(section);
+    container.appendChild(details);
   }
 }
 
