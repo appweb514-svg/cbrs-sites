@@ -20,9 +20,14 @@
     }
   </script>
 <style>
-  .flash-info { transition: all 0.3s ease; }
-  #flash-edit-btn { opacity: 0.3; transition: opacity 0.2s; }
-  .flash-info:hover #flash-edit-btn { opacity: 1; }
+  .flash-scroll { display: flex; align-items: center; height: 24px; overflow: hidden; background: linear-gradient(90deg, #991b1b 0%, #b91c1c 50%, #dc2626 100%); }
+  .flash-scroll-label { flex-shrink: 0; font-size: 0.8rem; font-weight: 800; color: #fff; background: rgba(0,0,0,0.3); padding: 0 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; height: 100%; display: flex; align-items: center; animation: flash-pulse 1.8s ease-in-out infinite; }
+  .flash-scroll-label::after { content: ':'; margin-left: 0.1rem; }
+  .flash-scroll-track { flex: 1; overflow: hidden; white-space: nowrap; }
+  .flash-scroll-track>*{display:inline-block;animation:flash-marquee 12s linear infinite;padding-left:100%;}
+  .flash-scroll-text { font-size: 0.85rem; font-weight: 700; color: #fff; line-height: 24px; padding-left: 0.5rem; }
+  @keyframes flash-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+  @keyframes flash-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
   .sidebar { transition: width 0.3s ease; }
   .sidebar.collapsed { width: 4rem; }
   .sidebar.collapsed .sidebar-label,
@@ -35,9 +40,40 @@
   .sidebar.collapsed .sidebar-toggle { justify-content: center; }
 </style>
 
+<style>
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.3s;
+  }
+  ::view-transition-old(root) {
+    animation-name: fade-out;
+  }
+  ::view-transition-new(root) {
+    animation-name: fade-in;
+  }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+@keyframes fade-out {
+  to { opacity: 0; }
+}
+html {
+  view-transition-name: root;
+}
+</style>
+
+<style>
+  #mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, opacity 0.2s ease; opacity: 0; }
+  #mobile-menu.open { max-height: 500px; opacity: 1; }
+  /* keep hidden class as fallback */
+  #mobile-menu.hidden { display: none; }
+</style>
+
 <style id="accessibility-style">
-  .accessibility-fab{position:fixed;right:1rem;bottom:1rem;z-index:60;border:0;border-radius:999px;background:#0a3273;color:#fff;padding:.8rem 1rem;font-weight:700;box-shadow:0 10px 25px rgba(0,0,0,.2);cursor:pointer}
-  .accessibility-panel{position:fixed;right:1rem;bottom:4.5rem;z-index:60;width:min(20rem,calc(100vw - 2rem));background:#fff;color:#111827;border:1px solid #d1d5db;border-radius:1rem;box-shadow:0 20px 45px rgba(0,0,0,.22);padding:1rem;display:none}
+  .accessibility-fab{position:fixed;top:.5rem;right:.5rem;z-index:60;border:0;border-radius:.375rem;background:rgba(255,255,255,0.8);backdrop-filter:blur(4px);color:#6b7280;padding:.35rem .6rem;font-size:.7rem;font-weight:500;cursor:pointer;border:1px solid #e5e7eb;transition:all .15s ease;line-height:1}.accessibility-fab:hover{background:rgba(255,255,255,1);color:#374151;border-color:#d1d5db}
+  .accessibility-panel{position:fixed;top:3rem;right:.5rem;z-index:60;width:min(20rem,calc(100vw - 2rem));background:#fff;color:#111827;border:1px solid #d1d5db;border-radius:1rem;box-shadow:0 20px 45px rgba(0,0,0,.22);padding:1rem;display:none}
   .accessibility-panel.open{display:block}
   .accessibility-panel h2{font-size:1.1rem;font-weight:800;margin:0 0 .75rem;color:#0a3273}
   .accessibility-panel button{width:100%;text-align:left;margin:.25rem 0;padding:.7rem .8rem;border-radius:.75rem;border:1px solid #d1d5db;background:#f9fafb;color:#111827;font-weight:650;cursor:pointer}
@@ -54,31 +90,64 @@
   html.a11y-links a{text-decoration:underline!important;text-underline-offset:4px}
   html.a11y-motion *,html.a11y-motion *::before,html.a11y-motion *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   html.a11y-readable body{font-family:Arial,Helvetica,sans-serif!important;letter-spacing:.02em}
-  @media (max-width:768px){.accessibility-fab{right:.75rem;bottom:.75rem}.accessibility-panel{right:.75rem;bottom:4.25rem}}
+  @media (max-width:768px){.accessibility-fab{top:.35rem;right:.35rem}.accessibility-panel{right:.5rem;top:3rem}}
 </style>
 
 </head>
 <body class="bg-gray-50 text-cbrs-text antialiased flex min-h-screen">
 <a href="#contenu" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-white focus:text-cbrs-blue focus:px-4 focus:py-2 focus:rounded-lg focus:shadow">Aller au contenu</a>
 <header class="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 shadow-sm">
-  <div class="flex items-center justify-between px-4 py-3">
+  <div class="flex items-center gap-2 px-4 py-3">
+    <button onclick="toggleMobileMenu()" class="p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
     <a href="index.html" class="flex items-center gap-2 font-bold text-cbrs-blue"><img src="logo-cbrs.png" alt="CBRS" class="w-9 h-9 object-contain"/>CBRS</a>
-    <button onclick="toggleMobileMenu()" class="px-3 py-2 rounded-lg bg-cbrs-blue text-white text-sm font-semibold" aria-controls="mobile-menu" aria-expanded="false">Menu</button>
   </div>
-  <nav id="mobile-menu" class="hidden border-t border-gray-100 bg-white px-4 py-3 space-y-2 text-sm">
-    <a class="block py-2 text-cbrs-blue font-medium" href="index.html">Accueil</a>
-    <a class="block py-2 text-cbrs-blue font-medium" href="activites.html">Activités</a>
-    <a class="block py-2 text-cbrs-blue font-medium" href="planning.html">Planning</a>
-    <a class="block py-2 text-cbrs-blue font-medium" href="formation.html">Formation</a>
-    <a class="block py-2 text-cbrs-blue font-medium" href="sorties-voyages.html">Sorties - Voyages</a>
-    <a class="block py-2 text-cbrs-blue font-medium" href="galerie.html">Galerie photo</a>
-    <a class="block py-2 text-cbrs-blue font-medium" href="liens-utiles.html">Liens utiles</a>
-    <a class="block py-2 text-cbrs-green font-bold" href="adhesion.html">Adhérer</a>
-    <a class="block py-2 text-cbrs-blue font-medium" href="contact.html">Contact</a>
-    <a data-auth-link="1" class="block py-2 text-cbrs-blue font-medium" href="connexion.html" data-auth-label>Connexion</a>
+  <nav id="mobile-menu" class="hidden bg-cbrs-blue px-4 py-3 space-y-1 text-sm">
+    <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="index.html">
+      <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      <span>Accueil</span>
+    </a>
+    <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="activites.html">
+      <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      <span>Activités</span>
+    </a>
+    <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="planning.html">
+      <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      <span>Planning</span>
+    </a>
+    <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="formation.html">
+      <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      <span>Formation</span>
+    </a>
+    <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="sorties-voyages.html">
+      <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.858 15.355-5.858 21.213 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      <span>Sorties - Voyages</span>
+    </a>
+    <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="galerie.html">
+      <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      <span>Galerie photo</span>
+    </a>
+    <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="liens-utiles.html">
+      <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      <span>Liens utiles</span>
+    </a>
+    <div class="border-t border-white/10 my-2 mx-2"></div>
+    <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="adhesion.html">
+      <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      <span>Adhérer</span>
+    </a>
+    <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="contact.html">
+      <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      <span>Contact</span>
+    </a>
+    <a data-auth-link="1" class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="connexion.html">
+      <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
+      <span data-auth-label>Connexion</span>
+    </a>
   </nav>
 </header>
-<aside id="sidebar" class="sidebar w-64 bg-cbrs-blue text-white flex-shrink-0 hidden md:flex flex-col sticky top-0 h-screen overflow-y-auto overflow-x-hidden">
+<aside id="sidebar" class="sidebar w-52 bg-cbrs-blue text-white flex-shrink-0 hidden md:flex flex-col sticky top-0 h-screen overflow-y-auto overflow-x-hidden">
 <div class="sidebar-logo p-3 bg-white flex items-center justify-center">
   <img src="logo-cbrs.png" alt="CBRS" class="w-full h-auto object-contain"/>
 </div>
@@ -95,7 +164,7 @@
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Activités</span>
   </a>
-  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="#planning">
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="planning.html">
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Planning</span>
   </a>
@@ -152,49 +221,39 @@
   </div>
 </section>
 
-<div id="flash-info" class="flash-info relative bg-white border-b border-amber-200 px-4 md:px-10 py-4">
-  <div class="max-w-7xl mx-auto flex items-center gap-4 bg-amber-50 border border-amber-200 rounded-2xl px-4 py-3 shadow-sm">
-    <div class="shrink-0 w-14 h-14 rounded-2xl bg-white flex items-center justify-center border border-amber-200 overflow-hidden" aria-hidden="true">
-      <img src="Flash_info.png" alt="Flash info" class="w-full h-full object-contain p-1">
-    </div>
-    <div class="flex-1">
-      <p class="text-xs font-bold text-amber-700 uppercase tracking-wider">Flash info</p>
-      <p id="flash-text" class="text-sm md:text-base text-amber-950 font-medium">Inscriptions saison 2025-2026 ouvertes — contactez le club ou consultez la page adhésion.</p>
-    </div>
-    <a href="adhesion.html" class="hidden sm:inline-flex px-4 py-2 bg-cbrs-green text-white rounded-full text-sm font-semibold hover:bg-cbrs-green-hover">Adhérer</a>
-    <button onclick="closeFlash()" class="shrink-0 text-amber-500 hover:text-amber-700" aria-label="Masquer le flash info">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-    </button>
-  </div>
-</div>
-
-<section class="max-w-7xl mx-auto px-6 py-12">
-<div>
+<section class="bg-blue-50/50 py-12">
+<div class="max-w-7xl mx-auto px-6">
   <div class="flex justify-between items-end mb-6">
-    <h2 class="text-2xl md:text-3xl font-bold text-cbrs-text">Nos <span class="text-cbrs-blue font-serif-italic">activités</span> phares</h2>
-    <a class="text-cbrs-blue font-medium text-sm hover:underline flex items-center gap-1" href="activites.html">Toutes les activités <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></a>
+    <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Actualités & Vie du club</h2>
   </div>
-  <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
-    <a href="activite.html?id=07" class="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow flex flex-col h-full group">
-      <div class="relative h-28 rounded-t-xl overflow-hidden bg-white border-b border-cbrs-blue/10"><img alt="Randonnée" class="w-full h-full object-cover" src="07_randonnee.png"/></div>
-      <div class="p-3 flex-1 flex flex-col"><h3 class="font-semibold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors">Randonnée</h3><p class="text-[11px] text-gray-500 mt-auto">Profitez de la nature</p></div>
-    </a>
-    <a href="activite.html?id=03" class="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow flex flex-col h-full group">
-      <div class="relative h-28 rounded-t-xl overflow-hidden bg-white border-b border-cbrs-blue/10"><img alt="Cyclisme" class="w-full h-full object-cover" src="03_cyclisme.png"/></div>
-      <div class="p-3 flex-1 flex flex-col"><h3 class="font-semibold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors">Cyclisme</h3><p class="text-[11px] text-gray-500 mt-auto">Parcourez la région</p></div>
-    </a>
-    <a href="activite.html?id=01" class="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow flex flex-col h-full group">
-      <div class="relative h-28 rounded-t-xl overflow-hidden bg-white border-b border-cbrs-blue/10"><img alt="Aquagym" class="w-full h-full object-cover" src="01_aquagym.png"/></div>
-      <div class="p-3 flex-1 flex flex-col"><h3 class="font-semibold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors">Aquagym</h3><p class="text-[11px] text-gray-500 mt-auto">En forme en douceur</p></div>
-    </a>
-    <a href="activite.html?id=11" class="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow flex flex-col h-full group">
-      <div class="relative h-28 rounded-t-xl overflow-hidden bg-white border-b border-cbrs-blue/10"><img alt="Tai Chi" class="w-full h-full object-cover" src="11_tai_chi.png"/></div>
-      <div class="p-3 flex-1 flex flex-col"><h3 class="font-semibold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors">Tai Chi Chuan</h3><p class="text-[11px] text-gray-500 mt-auto">Équilibre & sérénité</p></div>
-    </a>
-    <a href="activite.html?id=02" class="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow flex flex-col h-full group">
-      <div class="relative h-28 rounded-t-xl overflow-hidden bg-white border-b border-cbrs-blue/10"><img alt="Pétanque" class="w-full h-full object-cover" src="02_petanque.png"/></div>
-      <div class="p-3 flex-1 flex flex-col"><h3 class="font-semibold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors">Pétanque</h3><p class="text-[11px] text-gray-500 mt-auto">Partage & détente</p></div>
-    </a>
+  <div id="flash-bar" class="flash-scroll" style="position:static;border-radius:0.5rem;margin-bottom:1.5rem;">
+    <span class="flash-scroll-label">Flash Info</span>
+    <div class="flash-scroll-track">
+      <span class="flash-scroll-text" id="flash-text">Inscriptions saison 2025-2026 ouvertes — contactez le club ou consultez la page adhésion.</span>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
+      <div class="relative h-44 overflow-hidden">
+        <img alt="Séjour randonnée" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="real-sortie-senlis.png"/>
+        <span class="absolute bottom-3 left-3 bg-white text-xs font-bold px-2 py-1 rounded uppercase tracking-wider text-gray-800">Sortie</span>
+      </div>
+      <div class="p-4"><p class="text-sm text-gray-500 mb-1">27 mai 2026</p><h3 class="font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors">Journée au Plan d'eau du Canada</h3><p class="text-sm text-gray-600 mt-2 line-clamp-2">Une belle journée conviviale rassemblant les adhérents autour d'activités variées sous le soleil.</p></div>
+    </article>
+    <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
+      <div class="relative h-44 overflow-hidden">
+        <img alt="Assemblée générale" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="real-gym-group.jpg"/>
+        <span class="absolute bottom-3 left-3 bg-white text-xs font-bold px-2 py-1 rounded uppercase tracking-wider text-gray-800">Club</span>
+      </div>
+      <div class="p-4"><p class="text-sm text-gray-500 mb-1">11 juin 2026</p><h3 class="font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors">Repas des bénévoles au Touquet</h3><p class="text-sm text-gray-600 mt-2 line-clamp-2">Un moment de reconnaissance pour tous les bénévoles qui font vivre le club tout au long de l'année.</p></div>
+    </article>
+    <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
+      <div class="relative h-44 overflow-hidden">
+        <img alt="Journée conviviale" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="gallery-marche.jpg"/>
+        <span class="absolute bottom-3 left-3 bg-white text-xs font-bold px-2 py-1 rounded uppercase tracking-wider text-gray-800">Événement</span>
+      </div>
+      <div class="p-4"><p class="text-sm text-gray-500 mb-1">15 avril 2024</p><h3 class="font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors">Journée Olympiades Seniors</h3><p class="text-sm text-gray-600 mt-2 line-clamp-2">Une journée sportive et ludique pour les seniors du Beauvaisis.</p></div>
+    </article>
   </div>
 </div>
 </section>
@@ -203,9 +262,8 @@
 <div class="max-w-7xl mx-auto">
   <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
     <div>
-      <p class="text-sm font-semibold text-cbrs-green uppercase tracking-wider mb-2">Cette semaine au CBRS</p>
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Planning <span class="text-cbrs-blue font-serif-italic">hebdomadaire</span></h2>
-      <p class="text-gray-600 mt-2">Les principaux rendez-vous de la semaine, avec horaires et lieux.</p>
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Cette semaine au <span class="text-cbrs-blue font-serif-italic">CBRS</span></h2>
+      <p class="text-gray-600 mt-2">Planning hebdomadaire — Les principaux rendez-vous de la semaine, avec horaires et lieux.</p>
     </div>
     <a href="planning.html" class="inline-flex justify-center px-6 py-3 bg-cbrs-blue text-white font-semibold rounded-full hover:bg-cbrs-blue-light transition-colors text-sm">Voir le planning complet</a>
   </div>
@@ -217,54 +275,58 @@
 <div class="max-w-7xl mx-auto">
   <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">Qui sommes-<span class="text-cbrs-blue font-serif-italic">nous</span> ?</h2>
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-    <div class="bg-white rounded-2xl shadow-card p-6 md:p-8">
-      <p class="text-gray-700 leading-relaxed mb-4">Le <strong>Club du Beauvaisis de la Retraite Sportive (CBRS)</strong> est une association loi 1901 affiliée à la Fédération Française de la Retraite Sportive (FFRS) et au CODERS de l'Oise.</p>
-      <p class="text-gray-700 leading-relaxed mb-4">Fondé en 1977, le CBRS compte aujourd'hui plus de <strong>1 200 adhérents</strong> pour la saison 2025-2026 et propose plus de <strong>40 activités</strong> sportives, culturelles et de loisirs.</p>
-      <p class="text-gray-700 leading-relaxed mb-6">Notre mission : permettre aux retraités de Beauvais et du Beauvaisis de pratiquer une activité physique adaptée dans un cadre convivial et bienveillant.</p>
-      <div class="flex gap-3">
-        <a href="formation.html" class="text-sm text-cbrs-green font-medium hover:underline">Découvrir la formation</a>
-        <a href="contact.html" class="text-sm text-cbrs-blue font-medium hover:underline">Nous contacter</a>
+    <div class="bg-white rounded-2xl shadow-card p-8 md:p-10">
+      <p class="text-gray-800 leading-[1.8] text-[15px] md:text-base mb-5">Le <strong class="text-cbrs-blue font-semibold">Club du Beauvaisis de la Retraite Sportive (CBRS)</strong> est une association loi&nbsp;1901 affiliée à la Fédération Française de la Retraite Sportive et au CODERS de l'Oise.</p>
+      <p class="text-gray-800 leading-[1.8] text-[15px] md:text-base mb-5">Fondé en <strong class="text-cbrs-green font-bold">1977</strong>, le CBRS compte aujourd'hui <strong class="text-cbrs-green font-bold">plus de 1&nbsp;200&nbsp;adhérents</strong> pour la saison 2025-2026 et propose <strong class="text-cbrs-green font-bold">plus de 40&nbsp;activités</strong> sportives, culturelles et de loisirs.</p>
+      <p class="text-gray-700 italic leading-[1.8] border-l-4 border-cbrs-teal pl-5 py-1 text-[15px] md:text-base bg-cbrs-teal/5 rounded-r-lg">&laquo;&nbsp;Notre mission : permettre aux retraités de Beauvais et du Beauvaisis de pratiquer une activité physique adaptée dans un cadre convivial et bienveillant.&nbsp;&raquo;</p>
+      <div class="mt-6 flex flex-wrap gap-3 text-sm text-gray-500">
+        <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cbrs-green"></span> Association loi 1901</span>
+        <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cbrs-blue"></span> Affiliée FFRS</span>
+        <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cbrs-teal"></span> 1 200+ adhérents</span>
       </div>
     </div>
-    <div class="bg-cbrs-teal rounded-2xl p-6 text-white relative overflow-hidden flex flex-col justify-between">
-      <div class="text-white/20 text-7xl font-serif leading-none absolute -top-3 -left-1">"</div>
-      <div class="relative z-10 mt-4"><p class="text-lg font-medium leading-relaxed mb-4">Au CBRS, on trouve bien plus qu'un club, on y trouve une seconde famille.</p></div>
-      <div class="relative z-10 flex items-center gap-3 mt-auto pt-4 border-t border-white/20">
-        <img alt="Françoise L." class="w-10 h-10 rounded-full object-cover border-2 border-white/50" src="gallery-marche.jpg"/>
-        <div><p class="font-semibold text-sm">Françoise L.</p><p class="text-xs text-white/80">Adhérente depuis 2017</p></div>
+    <div class="bg-gradient-to-br from-cbrs-teal to-cbrs-blue rounded-2xl p-8 text-white relative overflow-hidden shadow-lg flex flex-col justify-between min-h-[280px]">
+      <div class="text-white/8 text-[12rem] font-serif leading-none absolute -top-12 -right-6 select-none">"</div>
+      <div class="relative z-10 mt-2">
+        <svg class="w-8 h-8 text-white/40 mb-4" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+        <p class="text-lg leading-relaxed italic font-serif">&laquo;&nbsp;Au CBRS, on trouve bien plus qu'un club, on y trouve une seconde famille.&nbsp;&raquo;</p>
+      </div>
+      <div class="relative z-10 flex items-center gap-3 mt-auto pt-5 border-t border-white/20">
+        <div class="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center font-bold text-sm shrink-0 border-2 border-white/40">FL</div>
+        <div class="min-w-0"><p class="font-semibold text-sm truncate">Françoise L.</p><p class="text-xs text-white/70">Adhérente depuis 2017</p></div>
       </div>
     </div>
   </div>
 </div>
 </section>
 
-<section class="bg-blue-50/50 py-12">
-<div class="max-w-7xl mx-auto px-6">
+<section class="max-w-7xl mx-auto px-6 py-12">
+<div>
   <div class="flex justify-between items-end mb-6">
-    <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Actualités & Vie du club</h2>
+    <h2 class="text-2xl md:text-3xl font-bold text-cbrs-text">Nos <span class="text-cbrs-blue font-serif-italic">activités</span> phares</h2>
+    <a class="text-cbrs-blue font-medium text-sm hover:underline flex items-center gap-1" href="activites.html">Toutes les activités <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></a>
   </div>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
-      <div class="relative h-44 overflow-hidden">
-        <img alt="Séjour randonnée" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="real-sortie-senlis.png"/>
-        <span class="absolute bottom-3 left-3 bg-white text-[11px] font-bold px-2 py-1 rounded uppercase tracking-wider text-gray-800">Sortie</span>
-      </div>
-      <div class="p-4"><p class="text-xs text-gray-500 mb-1">27 mai 2026</p><h3 class="font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors">Journée au Plan d'eau du Canada</h3><p class="text-xs text-gray-600 mt-2 line-clamp-2">Une belle journée conviviale rassemblant les adhérents autour d'activités variées sous le soleil.</p></div>
-    </article>
-    <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
-      <div class="relative h-44 overflow-hidden">
-        <img alt="Assemblée générale" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="real-gym-group.jpg"/>
-        <span class="absolute bottom-3 left-3 bg-white text-[11px] font-bold px-2 py-1 rounded uppercase tracking-wider text-gray-800">Club</span>
-      </div>
-      <div class="p-4"><p class="text-xs text-gray-500 mb-1">11 juin 2026</p><h3 class="font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors">Repas des bénévoles au Touquet</h3><p class="text-xs text-gray-600 mt-2 line-clamp-2">Un moment de reconnaissance pour tous les bénévoles qui font vivre le club tout au long de l'année.</p></div>
-    </article>
-    <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
-      <div class="relative h-44 overflow-hidden">
-        <img alt="Journée conviviale" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="gallery-marche.jpg"/>
-        <span class="absolute bottom-3 left-3 bg-white text-[11px] font-bold px-2 py-1 rounded uppercase tracking-wider text-gray-800">Événement</span>
-      </div>
-      <div class="p-4"><p class="text-xs text-gray-500 mb-1">15 avril 2024</p><h3 class="font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors">Journée Olympiades Seniors</h3><p class="text-xs text-gray-600 mt-2 line-clamp-2">Une journée sportive et ludique pour les seniors du Beauvaisis.</p></div>
-    </article>
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+    <a href="activite.html?id=07" class="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow flex flex-col h-full group">
+      <div class="relative h-28 rounded-t-xl overflow-hidden bg-white border-b border-cbrs-blue/10"><img alt="Randonnée" class="w-full h-full object-cover" src="07_randonnee.png"/></div>
+      <div class="p-3 flex-1 flex flex-col"><h3 class="font-semibold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors">Randonnée</h3><p class="text-sm text-gray-500 mt-auto">Profitez de la nature</p></div>
+    </a>
+    <a href="activite.html?id=03" class="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow flex flex-col h-full group">
+      <div class="relative h-28 rounded-t-xl overflow-hidden bg-white border-b border-cbrs-blue/10"><img alt="Cyclisme" class="w-full h-full object-cover" src="03_cyclisme.png"/></div>
+      <div class="p-3 flex-1 flex flex-col"><h3 class="font-semibold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors">Cyclisme</h3><p class="text-sm text-gray-500 mt-auto">Parcourez la région</p></div>
+    </a>
+    <a href="activite.html?id=01" class="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow flex flex-col h-full group">
+      <div class="relative h-28 rounded-t-xl overflow-hidden bg-white border-b border-cbrs-blue/10"><img alt="Aquagym" class="w-full h-full object-cover" src="01_aquagym.png"/></div>
+      <div class="p-3 flex-1 flex flex-col"><h3 class="font-semibold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors">Aquagym</h3><p class="text-sm text-gray-500 mt-auto">En forme en douceur</p></div>
+    </a>
+    <a href="activite.html?id=11" class="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow flex flex-col h-full group">
+      <div class="relative h-28 rounded-t-xl overflow-hidden bg-white border-b border-cbrs-blue/10"><img alt="Tai Chi" class="w-full h-full object-cover" src="11_tai_chi.png"/></div>
+      <div class="p-3 flex-1 flex flex-col"><h3 class="font-semibold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors">Tai Chi Chuan</h3><p class="text-sm text-gray-500 mt-auto">Équilibre & sérénité</p></div>
+    </a>
+    <a href="activite.html?id=02" class="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow flex flex-col h-full group">
+      <div class="relative h-28 rounded-t-xl overflow-hidden bg-white border-b border-cbrs-blue/10"><img alt="Pétanque" class="w-full h-full object-cover" src="02_petanque.png"/></div>
+      <div class="p-3 flex-1 flex flex-col"><h3 class="font-semibold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors">Pétanque</h3><p class="text-sm text-gray-500 mt-auto">Partage & détente</p></div>
+    </a>
   </div>
 </div>
 </section>
@@ -274,14 +336,14 @@
   <div class="lg:col-span-2">
     <div class="flex items-center gap-3 mb-3">
       <img src="logo-cbrs.png" alt="CBRS" class="w-8 h-8 object-contain"/>
-      <div class="text-xs text-gray-600 font-medium leading-tight">Club du Beauvaisis<br/>de la Retraite Sportive</div>
+      <div class="text-sm text-gray-600 font-medium leading-tight">Club du Beauvaisis<br/>de la Retraite Sportive</div>
     </div>
-    <p class="text-xs text-gray-500 mb-2 max-w-xs">Association loi 1901 affiliée à la FFRS et au CODERS de l'Oise.</p>
-    <a class="text-xs text-cbrs-blue hover:underline" href="contact.html">Mentions légales</a>
+    <p class="text-sm text-gray-500 mb-2 max-w-xs">Association loi 1901 affiliée à la FFRS et au CODERS de l'Oise.</p>
+    <a class="text-sm text-cbrs-blue hover:underline" href="contact.html">Mentions légales</a>
   </div>
   <div>
     <h4 class="font-bold text-gray-900 mb-3 text-sm">Activités</h4>
-    <ul class="space-y-1.5 text-xs text-gray-600">
+    <ul class="space-y-1.5 text-sm text-gray-600">
       <li><a class="hover:text-cbrs-blue" href="activites.html">Toutes les activités</a></li>
       <li><a class="hover:text-cbrs-blue" href="formation.html">Formation</a></li>
       <li><a class="hover:text-cbrs-blue" href="sorties-voyages.html">Sorties & Voyages</a></li>
@@ -289,7 +351,7 @@
   </div>
   <div>
     <h4 class="font-bold text-gray-900 mb-3 text-sm">Infos pratiques</h4>
-    <ul class="space-y-1.5 text-xs text-gray-600">
+    <ul class="space-y-1.5 text-sm text-gray-600">
       <li><a class="hover:text-cbrs-blue" href="#planning">Planning</a></li>
       <li><a class="hover:text-cbrs-blue" href="adhesion.html">Inscriptions</a></li>
       <li><a class="hover:text-cbrs-blue" href="contact.html">Contact</a></li>
@@ -299,16 +361,23 @@
   </div>
   <div>
     <h4 class="font-bold text-gray-900 mb-3 text-sm">Multimédia</h4>
-    <ul class="space-y-1.5 text-xs text-gray-600">
+    <ul class="space-y-1.5 text-sm text-gray-600">
       <li><a class="hover:text-cbrs-blue" href="galerie.html">Galerie photo</a></li>
     </ul>
   </div>
 </div>
-<div class="border-t border-gray-100 py-4 text-center text-xs text-gray-400">2026 &copy; CBRS — Club du Beauvaisis de la Retraite Sportive</div>
+<div class="border-t border-gray-100 py-4 text-center text-sm text-gray-400">2026 &copy; CBRS — Club du Beauvaisis de la Retraite Sportive</div>
 </footer>
 </main>
 
 <script>
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  if (!menu) return;
+  menu.classList.remove('hidden');
+  menu.classList.toggle('open');
+}
+
 // Sidebar
 let sidebarCollapsed = false;
 function toggleSidebar() {
@@ -320,13 +389,6 @@ function toggleSidebar() {
 }
 
 // Flash Info
-function showFlash(msg) {
-  const el = document.getElementById('flash-info');
-  const txt = document.getElementById('flash-text');
-  if (msg) { txt.textContent = msg; el.classList.remove('hidden'); }
-  else el.classList.add('hidden');
-}
-function closeFlash() { document.getElementById('flash-info').classList.add('hidden'); }
 async function loadFlashInfo() {
   let flash = null;
   try {
@@ -340,12 +402,10 @@ async function loadFlashInfo() {
       flash = data.flash;
     }
   } catch (_) { return; }
-  if (!flash || !flash.enabled) return closeFlash();
-  document.querySelector('#flash-info .uppercase').textContent = flash.title || 'Flash info';
-  document.getElementById('flash-text').textContent = flash.message || '';
-  const cta = document.querySelector('#flash-info a');
-  if (cta) { cta.textContent = flash.cta_label || 'En savoir plus'; cta.href = flash.cta_url || 'adhesion.html'; }
-  document.getElementById('flash-info').classList.remove('hidden');
+  const bar = document.getElementById('flash-bar');
+  if (!flash || !flash.enabled) { bar.style.display = 'none'; return; }
+  const textEl = document.getElementById('flash-text');
+  if (textEl) textEl.textContent = flash.message || '';
 }
 loadFlashInfo();
 
@@ -381,12 +441,12 @@ function renderPlanning(days) {
   grid.innerHTML = '';
   days.forEach(d => {
     const col = document.createElement('div');
-    col.className = 'bg-white rounded-2xl border border-gray-200 shadow-card p-5';
-    col.innerHTML = '<h3 class="font-bold text-lg mb-4 text-cbrs-blue">'+d.day+'</h3>';
+    col.className = 'bg-white rounded-2xl border border-gray-200 shadow-card p-5 hover:shadow-lg hover:border-cbrs-teal/30 transition-all duration-200';
+    col.innerHTML = '<h3 class="font-bold text-lg mb-4 text-cbrs-blue flex items-center gap-2"><span class="w-1.5 h-6 rounded-full bg-cbrs-teal inline-block"></span>'+d.day+'</h3>';
     d.slots.forEach(s => {
       const row = document.createElement('div');
-      row.className = 'grid grid-cols-[1fr_auto] gap-x-3 gap-y-1 py-3 border-b border-gray-100 last:border-0';
-      row.innerHTML = '<span class="text-sm font-semibold text-gray-900">'+s.activity+'</span><span class="text-xs font-bold text-cbrs-green">'+s.time+'</span><span class="text-xs text-gray-500 col-span-2">'+s.location+'</span>';
+      row.className = 'grid grid-cols-[1fr_auto] gap-x-3 gap-y-1 py-3 px-2 -mx-2 rounded-lg border-b border-gray-100 last:border-0 hover:bg-cbrs-teal/5 transition-colors duration-150';
+      row.innerHTML = '<span class="text-sm font-semibold text-gray-900">'+s.activity+'</span><span class="text-xs font-bold text-cbrs-green bg-cbrs-green/10 px-2 py-0.5 rounded-full">'+s.time+'</span><span class="text-xs text-gray-500 col-span-2 flex items-center gap-1"><svg class="w-3 h-3 shrink-0 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>'+s.location+'</span>';
       col.appendChild(row);
     });
     grid.appendChild(col);
