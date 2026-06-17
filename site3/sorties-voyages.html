@@ -48,12 +48,11 @@
   </defs>
 </svg>
 
-<style>
 #mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, opacity 0.2s ease; opacity: 0; }
-#mobile-menu.open { max-height: 500px; opacity: 1; }
-/* keep hidden class as fallback */
-#mobile-menu.hidden { display: none; }
-</style>
+  #mobile-menu.open { max-height: 500px; opacity: 1; }
+  /* keep hidden class as fallback */
+  #mobile-menu.hidden { display: none; }
+
 
 <style id="accessibility-style">
   .accessibility-fab{position:fixed;right:1rem;bottom:1rem;z-index:60;border:0;border-radius:999px;background:#0a3273;color:#fff;padding:.8rem 1rem;font-weight:700;box-shadow:0 10px 25px rgba(0,0,0,.2);cursor:pointer}
@@ -75,14 +74,11 @@
   html.a11y-motion *,html.a11y-motion *::before,html.a11y-motion *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   html.a11y-readable body{font-family:Arial,Helvetica,sans-serif!important;letter-spacing:.02em}
   @media (max-width:768px){.accessibility-fab{right:.75rem;bottom:.75rem}.accessibility-panel{right:.75rem;bottom:4.25rem}}
-
 </style>
 
 </head>
 <body class="bg-gray-50 text-cbrs-text antialiased flex min-h-screen">
-<a href="#contenu" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-white focus:text-cbrs-blue focus:px-4 focus:py-2 focus:rounded-lg focus:shadow">Aller au contenu</a>
-
-<aside <header class="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+<header class="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 shadow-sm">
   <div class="flex items-center gap-2 px-4 py-3">
     <button onclick="toggleMobileMenu()" class="p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -133,7 +129,7 @@
     </a>
   </nav>
 </header>
-id="sidebar" class="sidebar w-52 bg-cbrs-blue text-white flex-shrink-0 hidden md:flex flex-col sticky top-0 h-screen overflow-y-auto overflow-x-hidden">
+<aside id="sidebar" class="sidebar w-52 bg-cbrs-blue text-white flex-shrink-0 hidden md:flex flex-col sticky top-0 h-screen overflow-y-auto overflow-x-hidden">
 <div class="sidebar-logo p-3 bg-white flex items-center justify-center">
   <img src="logo-cbrs.png" alt="CBRS" class="w-full h-auto object-contain"/>
 </div>
@@ -320,9 +316,6 @@ id="sidebar" class="sidebar w-52 bg-cbrs-blue text-white flex-shrink-0 hidden md
 </main>
 <script>
 let sidebarCollapsed = false;
-
-
-
 function toggleMobileMenu() {
   const menu = document.getElementById('mobile-menu');
   if (!menu) return;
