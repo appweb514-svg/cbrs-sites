@@ -78,6 +78,25 @@
 </style>
 </head>
 <body class="bg-gray-50 text-cbrs-text antialiased flex min-h-screen">
+<a href="#contenu" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-white focus:text-cbrs-blue focus:px-4 focus:py-2 focus:rounded-lg focus:shadow">Aller au contenu</a>
+<header class="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+  <div class="flex items-center justify-between px-4 py-3">
+    <a href="index.html" class="flex items-center gap-2 font-bold text-cbrs-blue"><img src="logo-cbrs.png" alt="CBRS" class="w-9 h-9 object-contain"/>CBRS</a>
+    <button onclick="toggleMobileMenu()" class="px-3 py-2 rounded-lg bg-cbrs-blue text-white text-sm font-semibold" aria-controls="mobile-menu" aria-expanded="false">Menu</button>
+  </div>
+  <nav id="mobile-menu" class="hidden border-t border-gray-100 bg-white px-4 py-3 space-y-2 text-sm">
+    <a class="block py-2 text-cbrs-blue font-medium" href="index.html">Accueil</a>
+    <a class="block py-2 text-cbrs-blue font-medium" href="activites.html">Activités</a>
+    <a class="block py-2 text-cbrs-blue font-medium" href="planning.html">Planning</a>
+    <a class="block py-2 text-cbrs-blue font-medium" href="formation.html">Formation</a>
+    <a class="block py-2 text-cbrs-blue font-medium" href="sorties-voyages.html">Sorties - Voyages</a>
+    <a class="block py-2 text-cbrs-blue font-medium" href="galerie.html">Galerie photo</a>
+    <a class="block py-2 text-cbrs-blue font-medium" href="liens-utiles.html">Liens utiles</a>
+    <a class="block py-2 text-cbrs-green font-bold" href="adhesion.html">Adhérer</a>
+    <a class="block py-2 text-cbrs-blue font-medium" href="contact.html">Contact</a>
+    <a data-auth-link="1" class="block py-2 text-cbrs-blue font-medium" href="connexion.html" data-auth-label>Connexion</a>
+  </nav>
+</header>
 
 <!-- SIDEBAR -->
 <aside id="sidebar" class="sidebar w-52 bg-cbrs-blue text-white flex-shrink-0 hidden md:flex flex-col sticky top-0 h-screen overflow-y-auto overflow-x-hidden">
@@ -138,7 +157,7 @@
 </aside>
 
 <!-- MAIN CONTENT -->
-<main class="flex-1 overflow-x-hidden relative">
+<main id="contenu" class="flex-1 overflow-x-hidden relative">
 
 <!-- Hero -->
 <section class="relative h-[260px] bg-cbrs-blue overflow-hidden flex items-center">
@@ -289,6 +308,16 @@
 <!-- Sidebar toggle script -->
 <script>
 let sidebarCollapsed = false;
+
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  const btn = document.querySelector('[aria-controls="mobile-menu"]');
+  const isOpen = !menu.classList.contains('hidden');
+  menu.classList.toggle('hidden', isOpen);
+  menu.classList.toggle('open', !isOpen);
+  if (btn) btn.setAttribute('aria-expanded', String(!isOpen));
+}
+
 function toggleSidebar() {
   const s = document.getElementById('sidebar');
   sidebarCollapsed = !sidebarCollapsed;
