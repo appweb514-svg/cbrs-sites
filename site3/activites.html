@@ -56,11 +56,11 @@
 </svg>
 
 <style>
-  #mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, opacity 0.2s ease; opacity: 0; }
-  #mobile-menu.open { max-height: 500px; opacity: 1; }
-  /* keep hidden class as fallback */
+  #mobile-menu { position: absolute; top: 100%; left: 0; right: 0; max-height: 0; overflow: hidden; overflow-y: auto; transition: max-height 0.3s ease; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.15); border-top: 1px solid rgba(255,255,255,0.1); }
+  #mobile-menu.open { max-height: 700px; }
   #mobile-menu.hidden { display: none; }
-
+  main { transition: padding-top 0.3s ease; }
+</style>
 
 <style id="accessibility-style">
   .accessibility-fab{position:fixed;right:1rem;bottom:1rem;z-index:60;border:0;border-radius:999px;background:#0a3273;color:#fff;padding:.8rem 1rem;font-weight:700;box-shadow:0 10px 25px rgba(0,0,0,.2);cursor:pointer}
@@ -200,9 +200,12 @@
 
 <section class="relative h-[260px] bg-cbrs-blue overflow-hidden flex items-center">
   <div class="absolute inset-0 bg-gradient-to-r from-cbrs-blue/90 to-cbrs-blue-light/70"></div>
-  <div class="relative z-10 px-8 md:px-16 max-w-4xl">
-    <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight mb-3">Nos <span class="text-cbrs-green font-serif-italic">activités</span></h1>
-    <p class="text-base text-white/90 max-w-xl">Le CBRS propose une large gamme d'activités sportives et de loisirs adaptées aux retraités actifs de Beauvais et du Beauvaisis.</p>
+  <div class="relative z-10 w-full px-8 md:px-16 flex items-center justify-between gap-8">
+    <div class="max-w-4xl">
+      <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight mb-3">Nos <span class="text-cbrs-green font-serif-italic">activités</span></h1>
+      <p class="text-base text-white/90 max-w-xl">Le CBRS propose une large gamme d'activités sportives et de loisirs adaptées aux retraités actifs de Beauvais et du Beauvaisis.</p>
+    </div>
+    <img src="logo-cbrs.png" alt="CBRS" class="hidden md:block w-60 h-60 object-contain shrink-0"/>
   </div>
 </section>
 <div class="header-wave"></div>
@@ -373,6 +376,21 @@
 </footer>
 </main>
 <script>
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  const main = document.getElementById('contenu');
+  if (!menu) return;
+  if (menu.classList.contains('open')) {
+    menu.classList.remove('open');
+    if (main) main.style.paddingTop = '';
+  } else {
+    menu.classList.remove('hidden');
+    const h = menu.scrollHeight;
+    menu.classList.add('open');
+    if (main) main.style.paddingTop = (h > 50 ? 64 + h : 664) + 'px';
+  }
+}
+
 let sidebarCollapsed = false;
 function toggleSidebar() {
   const s = document.getElementById('sidebar');

@@ -49,11 +49,11 @@
 </svg>
 
 <style>
-  #mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, opacity 0.2s ease; opacity: 0; }
-  #mobile-menu.open { max-height: 500px; opacity: 1; }
-  /* keep hidden class as fallback */
+  #mobile-menu { position: absolute; top: 100%; left: 0; right: 0; max-height: 0; overflow: hidden; overflow-y: auto; transition: max-height 0.3s ease; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.15); border-top: 1px solid rgba(255,255,255,0.1); }
+  #mobile-menu.open { max-height: 700px; }
   #mobile-menu.hidden { display: none; }
-
+  main { transition: padding-top 0.3s ease; }
+</style>
 
 <style id="accessibility-style">
   .accessibility-fab{position:fixed;right:1rem;bottom:1rem;z-index:60;border:0;border-radius:999px;background:#0a3273;color:#fff;padding:.8rem 1rem;font-weight:700;box-shadow:0 10px 25px rgba(0,0,0,.2);cursor:pointer}
@@ -561,7 +561,17 @@ if (activity) {
 
 function toggleMobileMenu() {
   const menu = document.getElementById('mobile-menu');
-  if (menu) menu.classList.toggle('hidden');
+  const main = document.getElementById('contenu');
+  if (!menu) return;
+  if (menu.classList.contains('open')) {
+    menu.classList.remove('open');
+    if (main) main.style.paddingTop = '';
+  } else {
+    menu.classList.remove('hidden');
+    const h = menu.scrollHeight;
+    menu.classList.add('open');
+    if (main) main.style.paddingTop = (h > 50 ? 64 + h : 664) + 'px';
+  }
 }
 
 // Sidebar toggle
