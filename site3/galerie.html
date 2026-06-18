@@ -161,22 +161,18 @@
   </div>
   <img src="logo-cbrs.png" alt="CBRS" class="hidden md:block absolute right-4 md:right-12 top-1/2 -translate-y-1/2 h-[160px] md:h-[200px] w-auto object-contain"/>
   <svg class="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none" style="height: 80px;">
-    <path fill="#f9fafb" d="M0,64 C360,120 720,0 1080,64 C1260,96 1380,80 1440,64 L1440,120 L0,120 Z"></path>
+    <defs>
+      <linearGradient id="hwg" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#0a3273"/>
+        <stop offset="100%" stop-color="#145c75"/>
+      </linearGradient>
+    </defs>
+    <path fill="url(#hwg)" d="M0,0 L208,0 L208,48 L0,48 Z"/>
+    <path fill="#f9fafb" d="M0,48 C70,18 138,30 208,48 C360,80 720,96 1080,64 C1260,64 1380,80 1440,64 L1440,120 L0,120 Z"/>
   </svg>
 </section>
 <div class="flex flex-row"><aside id="sidebar" class="sidebar w-52 text-white flex-shrink-0 hidden md:flex flex-col sticky top-0 z-20 overflow-y-auto overflow-x-hidden bg-gradient-to-b from-cbrs-blue via-cbrs-blue-light to-cbrs-teal">
-  <div class="relative w-full" style="height:60px;flex-shrink:0;">
-    <svg class="absolute top-0 left-0 w-full" viewBox="0 0 208 60" preserveAspectRatio="none" style="height:60px;">
-      <defs>
-        <linearGradient id="sidebar-wave-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#0a3273"/>
-          <stop offset="50%" stop-color="#1e4b99"/>
-          <stop offset="100%" stop-color="#145c75"/>
-        </linearGradient>
-      </defs>
-      <path fill="url(#sidebar-wave-grad)" d="M0,0 C52,0 104,30 156,30 C183,30 195,15 208,10 L208,0 L0,0 Z"/>
-    </svg>
-  </div>
+
 <button onclick="toggleSidebar()" class="sidebar-toggle flex items-center gap-2 px-4 py-2 text-white/60 hover:text-white text-xs border-b border-white/10">
   <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/></svg>
   <span class="sidebar-label">Réduire</span>
