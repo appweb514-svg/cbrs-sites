@@ -60,6 +60,21 @@
   #mobile-menu.open { max-height: 700px; }
   #mobile-menu.hidden { display: none; }
   main { transition: padding-top 0.3s ease; }
+  body::before {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 60vw;
+    height: 70vh;
+    background-image: url('logo-cbrs.png');
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-size: contain;
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 0;
+  }
 </style>
 
 <style id="accessibility-style">
