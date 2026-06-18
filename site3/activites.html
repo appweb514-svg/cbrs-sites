@@ -86,7 +86,7 @@
 </style>
 
 </head>
-<body class="bg-gray-50 text-cbrs-text antialiased flex min-h-screen"><div class="hidden md:block fixed top-0 left-0 w-52 h-80 bg-cbrs-blue z-30"></div>
+<body class="bg-gray-50 text-cbrs-text antialiased flex min-h-screen">
 <a href="#contenu" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-white focus:text-cbrs-blue focus:px-4 focus:py-2 focus:rounded-lg focus:shadow">Aller au contenu</a>
 
 <header class="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 shadow-sm">
@@ -141,6 +141,17 @@
   </nav>
 </header>
 
+<section class="relative min-h-[220px] md:min-h-[320px] bg-cbrs-blue overflow-hidden flex items-center justify-center">
+  <div class="absolute inset-0 bg-gradient-to-br from-cbrs-blue via-cbrs-blue-light to-cbrs-teal/80"></div>
+  <div class="relative z-10 w-full px-8 md:px-16 py-10 md:py-14">
+    <div class="text-center">
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3">Nos <span class="text-cbrs-green font-serif-italic">activités</span></h1>
+      <p class="text-sm md:text-base lg:text-lg text-white/90 max-w-2xl mx-auto">Le CBRS propose une large gamme d'activités sportives et de loisirs adaptées aux retraités actifs de Beauvais et du Beauvaisis.</p>
+    </div>
+  </div>
+  <img src="logo-cbrs.png" alt="CBRS" class="hidden md:block absolute right-4 md:right-12 top-1/2 -translate-y-1/2 h-[160px] md:h-[200px] w-auto object-contain"/>
+</section>
+<div class="header-wave"></div>
 <aside id="sidebar" class="sidebar w-52 text-white flex-shrink-0 hidden md:flex flex-col sticky top-80 h-[calc(100vh-20rem)] overflow-y-auto overflow-x-hidden bg-gradient-to-b from-cbrs-blue via-cbrs-blue to-cbrs-teal">
 <button onclick="toggleSidebar()" class="sidebar-toggle flex items-center gap-2 px-4 py-2 text-white/60 hover:text-white text-xs border-b border-white/10">
   <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/></svg>
@@ -195,17 +206,7 @@
 </div>
 </aside>
 <main id="contenu" class="flex-1 overflow-x-hidden relative ">
-<section class="relative min-h-[220px] md:min-h-[320px] bg-cbrs-blue overflow-hidden flex items-center justify-center">
-  <div class="absolute inset-0 bg-gradient-to-br from-cbrs-blue via-cbrs-blue-light to-cbrs-teal/80"></div>
-  <div class="relative z-10 w-full px-8 md:px-16 py-10 md:py-14">
-    <div class="text-center">
-      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3">Nos <span class="text-cbrs-green font-serif-italic">activités</span></h1>
-      <p class="text-sm md:text-base lg:text-lg text-white/90 max-w-2xl mx-auto">Le CBRS propose une large gamme d'activités sportives et de loisirs adaptées aux retraités actifs de Beauvais et du Beauvaisis.</p>
-    </div>
-  </div>
-  <img src="logo-cbrs.png" alt="CBRS" class="hidden md:block absolute right-4 md:right-12 top-1/2 -translate-y-1/2 h-[160px] md:h-[200px] w-auto object-contain"/>
-</section>
-<div class="header-wave"></div>
+
 
   </div>
 </section>
