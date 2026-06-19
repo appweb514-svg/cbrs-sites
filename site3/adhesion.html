@@ -5,7 +5,7 @@
 <title>Adhésion - CBRS Club du Beauvaisis de la Retraite Sportive</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <style data-purpose="custom-fonts">
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap');
     body { font-family: 'Inter', sans-serif; }
     .font-serif-italic { font-family: 'Playfair Display', serif; font-style: italic; }
   </style>
@@ -27,7 +27,12 @@
     }
   </script>
 <style>
-  .sidebar { transition: width 0.3s ease; }
+  .sidebar {
+    transition: width 0.3s ease;
+    scrollbar-width: none;
+    border-top-left-radius: 100% 1.5rem;
+  }
+  .sidebar::-webkit-scrollbar { display: none; }
   .sidebar.collapsed { width: 4rem; }
   .sidebar.collapsed .sidebar-logo-text, .sidebar.collapsed .sidebar-label, .sidebar.collapsed .sidebar-quote, .sidebar.collapsed .sidebar-divider { display: none; }
   .sidebar.collapsed .sidebar-link { justify-content: center; padding: 0.75rem 0; margin-right: 0; border-radius: 0; }
@@ -35,6 +40,12 @@
   .sidebar.collapsed .sidebar-logo { padding: 0.5rem; }
   .sidebar.collapsed .sidebar-logo img { width: 2.5rem; height: 2.5rem; }
   .sidebar.collapsed .sidebar-toggle { justify-content: center; }
+  body.sidebar-pinned .sidebar { border-top-left-radius: 0; }
+  .header-wave-svg { left: 13rem; width: calc(100% - 13rem); }
+  body.sidebar-collapsed .header-wave-svg { left: 4rem; width: calc(100% - 4rem); }
+  @media (max-width: 767px) {
+    .header-wave-svg { left: 0; width: 100%; }
+  }
 </style>
 
 <style>
@@ -87,8 +98,48 @@
   @media (max-width:768px){.accessibility-fab{right:.75rem;bottom:.75rem}.accessibility-panel{right:.75rem;bottom:4.25rem}}
 </style>
 
+<style id="header-design-options">
+  .header-title {
+    font-family: "Manrope", "Inter", sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  .sidebar {
+    background: linear-gradient(180deg, #173f70 0%, #1c5278 52%, #226b72 100%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 6px 0 24px rgba(10, 50, 115, 0.12);
+  }
+  .sidebar-toggle {
+    background: rgba(255, 255, 255, 0.055);
+    border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+  }
+  .sidebar-link {
+    border-left: 3px solid transparent;
+  }
+  .sidebar-link:hover {
+    background: rgba(255, 255, 255, 0.09) !important;
+    border-left-color: rgba(255, 255, 255, 0.22);
+  }
+  .sidebar-link.bg-cbrs-green {
+    background: linear-gradient(90deg, #579b28 0%, #70ad35 100%) !important;
+    border-left-color: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 5px 14px rgba(17, 55, 31, 0.16);
+  }
+  .sidebar-quote {
+    background: rgba(9, 41, 74, 0.16);
+    border-top-color: rgba(255, 255, 255, 0.12) !important;
+  }
+  body.wave-effect-disabled .header-wave-svg { display: none; }
+  @media (min-width: 768px) {
+    body.wave-effect-disabled > .flex.flex-1 { margin-top: 0 !important; }
+    body.wave-effect-disabled .sidebar { padding-top: 0 !important; border-radius: 0 !important; }
+    body.wave-effect-disabled #contenu { padding-top: 0 !important; }
+  }
+</style>
 </head>
-<body class="bg-gray-50 text-cbrs-text antialiased flex flex-col min-h-screen">
+<body class="wave-effect-disabled bg-gray-50 text-cbrs-text antialiased flex flex-col min-h-screen">
 <header class="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 shadow-sm">
   <div class="flex items-center gap-2 px-4 py-3">
     <button onclick="toggleMobileMenu()" class="p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
@@ -141,20 +192,21 @@
   </nav>
 </header>
 
-<section class="relative min-h-[220px] md:min-h-[320px] bg-cbrs-blue overflow-hidden flex items-center justify-center">
-  <div class="absolute inset-0 bg-gradient-to-br from-cbrs-blue via-cbrs-blue-light to-cbrs-teal/80"></div>
+<section class="relative min-h-[236px] md:min-h-[344px] bg-cbrs-blue overflow-hidden flex items-center justify-center">
+  <img src="assets-premium/header-membership.jpg" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover"/>
+  <div class="absolute inset-0 bg-gradient-to-br from-cbrs-blue/90 via-cbrs-blue-light/80 to-cbrs-teal/75"></div>
   <div class="relative z-10 w-full px-8 md:px-16 py-10 md:py-14">
-    <div class="text-center">
-      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3">Adhérer au <span class="text-cbrs-green font-serif-italic">CBRS</span></h1>
+    <div class="text-center md:pr-64">
+      <h1 class="header-title text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3">Adhérer au <span class="text-cbrs-green font-serif-italic">CBRS</span></h1>
       <p class="text-sm md:text-base lg:text-lg text-white/90 max-w-2xl mx-auto">Rejoignez le Club Beauvaisien de Retraités Sportifs et bénéficiez de toutes nos activités et avantages.</p>
     </div>
   </div>
-  <img src="logo-cbrs.png" alt="CBRS" class="hidden md:block absolute right-4 md:right-12 top-1/2 -translate-y-1/2 h-[160px] md:h-[200px] w-auto object-contain"/>
-  <svg class="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 80" preserveAspectRatio="none" style="height:80px;z-index:1">
-    <path fill="#f9fafb" d="M208,32 C380,64 560,8 740,28 C920,48 1100,16 1280,32 C1360,40 1400,36 1440,32 L1440,80 L208,80 Z"/>
+  <img src="logo-cbrs.png" alt="CBRS" class="hidden md:block absolute right-4 md:right-12 top-[44%] -translate-y-1/2 h-[160px] md:h-[200px] w-auto object-contain"/>
+  <svg class="header-wave-svg absolute bottom-0" viewBox="0 0 1440 80" preserveAspectRatio="none" style="height:80px;z-index:1">
+    <path fill="#f9fafb" d="M0,0 C100,0 130,24 240,24 C350,24 390,0 500,0 C610,0 650,24 760,24 C870,24 910,0 1020,0 C1130,0 1170,24 1280,24 C1370,24 1410,10 1440,6 L1440,80 L0,80 Z"/>
   </svg>
 </section>
-<div class="flex flex-row"><aside id="sidebar" class="sidebar w-52 text-white flex-shrink-0 hidden md:flex flex-col sticky top-0 z-20 overflow-y-auto overflow-x-hidden bg-gradient-to-b from-cbrs-blue via-cbrs-blue-light to-cbrs-teal">
+<div class="flex flex-1 flex-row md:-mt-20"><aside id="sidebar" class="sidebar w-52 pt-20 text-white flex-shrink-0 hidden md:flex flex-col sticky top-0 self-start h-screen z-20 overflow-y-auto overflow-x-hidden bg-gradient-to-b from-cbrs-blue via-cbrs-blue-light to-cbrs-teal">
 
 <button onclick="toggleSidebar()" class="sidebar-toggle flex items-center gap-2 px-4 py-2 text-white/60 hover:text-white text-xs border-b border-white/10">
   <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/></svg>
@@ -208,7 +260,7 @@
   <p class="text-sm font-bold leading-tight"><span class="text-cbrs-green">Le sport</span><br/>au service<br/>du bien-être<br/>et du lien<br/>social</p>
 </div>
 </aside>
-<main id="contenu" class="flex-1 overflow-x-hidden relative ">
+<main id="contenu" class="flex-1 overflow-x-hidden relative md:pt-20">
 <section id="adhesion" class="bg-cbrs-gray-100 py-12">
   <div class="max-w-[860px] mx-auto px-6">
     <div class="text-center mb-8">
@@ -332,9 +384,22 @@ function toggleSidebar() {
   const s = document.getElementById('sidebar');
   sidebarCollapsed = !sidebarCollapsed;
   s.classList.toggle('collapsed', sidebarCollapsed);
+  document.body.classList.toggle('sidebar-collapsed', sidebarCollapsed);
   const btn = s.querySelector('.sidebar-toggle span');
   if (btn) btn.textContent = sidebarCollapsed ? 'Ouvrir' : 'Réduire';
 }
+
+const desktopLayout = document.querySelector('body > .flex.flex-1');
+function syncStickySidebar() {
+  if (!desktopLayout) return;
+  document.body.classList.toggle(
+    'sidebar-pinned',
+    window.innerWidth >= 768 && desktopLayout.getBoundingClientRect().top <= 0
+  );
+}
+window.addEventListener('scroll', syncStickySidebar, { passive: true });
+window.addEventListener('resize', syncStickySidebar);
+syncStickySidebar();
 </script>
 
 <div class="accessibility-panel" id="accessibility-panel" aria-labelledby="accessibility-title">
