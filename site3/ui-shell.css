@@ -387,16 +387,56 @@ body.cbrs-ui .cbrs-activities-grid > a {
   min-width: 0;
 }
 
-body.cbrs-ui .cbrs-activities-grid > a > div:first-child {
-  width: 100%;
-  height: auto;
-  max-width: 7rem;
-  aspect-ratio: 1;
+body.cbrs-ui .cbrs-activity-card {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  flex-direction: column;
+  padding: .25rem;
+  border-radius: 2rem;
+  color: var(--cbrs-blue);
+  text-align: center;
+  transition: background-color .2s ease, transform .2s ease;
 }
 
-body.cbrs-ui .cbrs-activities-grid img {
+body.cbrs-ui .cbrs-activity-card:hover,
+body.cbrs-ui .cbrs-activity-card:focus-visible {
+  background: rgba(10, 50, 115, .045);
+  transform: translateY(-3px);
+}
+
+body.cbrs-ui .cbrs-activity-icon {
+  display: grid;
+  width: min(100%, 10rem);
+  place-items: center;
+  padding: .35rem;
+  border-radius: 2rem;
+  aspect-ratio: 1;
+  background: rgba(255, 255, 255, .72);
+  box-shadow: 0 12px 28px rgba(10, 50, 115, .08);
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+
+body.cbrs-ui .cbrs-activity-card:hover .cbrs-activity-icon,
+body.cbrs-ui .cbrs-activity-card:focus-visible .cbrs-activity-icon {
+  box-shadow: 0 16px 34px rgba(10, 50, 115, .16);
+  transform: scale(1.035);
+}
+
+body.cbrs-ui .cbrs-activity-icon img {
   object-fit: contain;
-  padding: .5rem;
+}
+
+body.cbrs-ui .cbrs-activity-tag {
+  display: inline-flex;
+  margin-top: .85rem;
+  padding: .35rem .75rem;
+  border-radius: 999px;
+  background: rgba(88, 160, 26, .13);
+  color: var(--cbrs-green-dark);
+  font-size: .75rem;
+  font-weight: 700;
+  line-height: 1.1;
 }
 
 @media (min-width: 640px) {
