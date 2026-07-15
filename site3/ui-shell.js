@@ -143,6 +143,27 @@
     });
   }
 
+  function setupSidebarToggle() {
+    const sidebar = document.getElementById('sidebar');
+    const button = sidebar && sidebar.querySelector('.sidebar-toggle');
+    if (!sidebar || !button) return;
+
+    function sync() {
+      const collapsed = sidebar.classList.contains('collapsed');
+      const label = collapsed ? 'Ouvrir la barre latérale' : 'Réduire la barre latérale';
+      button.setAttribute('aria-label', label);
+      button.setAttribute('title', label);
+      button.setAttribute('aria-controls', 'sidebar');
+      button.setAttribute('aria-expanded', String(!collapsed));
+    }
+
+    sync();
+    if (window.MutationObserver) {
+      const observer = new MutationObserver(sync);
+      observer.observe(sidebar, { attributes: true, attributeFilter: ['class'] });
+    }
+  }
+
   function setupGallery() {
     const items = document.querySelectorAll('.gallery-item');
     const lightbox = document.getElementById('lightbox');
@@ -284,6 +305,7 @@
 
   function init() {
     setupShell();
+    setupSidebarToggle();
     setupMobileMenu();
     setupGallery();
     setupFilters();
