@@ -43,7 +43,17 @@
     document.body.classList.add('cbrs-ui');
 
     const hero = document.querySelector('body > section.relative');
-    if (hero) hero.classList.add('cbrs-hero');
+    if (hero) {
+      hero.classList.add('cbrs-hero');
+      const logo = hero.querySelector('img[alt="CBRS"]');
+      if (logo && !logo.closest('.cbrs-logo-frame')) {
+        const frame = document.createElement('div');
+        frame.className = 'cbrs-logo-frame';
+        logo.className = 'cbrs-logo-image';
+        logo.parentNode.insertBefore(frame, logo);
+        frame.appendChild(logo);
+      }
+    }
 
     const layout = document.querySelector('body > .flex.flex-1');
     if (layout) layout.classList.add('cbrs-layout');
