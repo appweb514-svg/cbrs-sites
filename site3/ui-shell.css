@@ -12,6 +12,11 @@
   --cbrs-nav-shadow: 0 14px 32px rgba(10, 50, 115, .18);
   --cbrs-focus: 0 0 0 3px rgba(88, 160, 26, .42);
   --cbrs-hero-height: 344px;
+  --cbrs-sidebar-left: 24px;
+  --cbrs-sidebar-width: 216px;
+  --cbrs-sidebar-collapsed-width: 68px;
+  --cbrs-layout-gap: 18px;
+  --cbrs-content-offset: calc(var(--cbrs-sidebar-left) + var(--cbrs-sidebar-width) + var(--cbrs-layout-gap));
 }
 
 html {
@@ -37,11 +42,15 @@ body.cbrs-ui [tabindex="0"]:focus-visible {
 body.cbrs-ui > .cbrs-hero {
   position: relative;
   z-index: 1;
-  margin: 12px 12px 0;
+  margin: 12px 12px 0 var(--cbrs-content-offset);
   border: 1px solid rgba(255, 255, 255, .18);
   border-radius: var(--cbrs-shell-radius);
   box-shadow: var(--cbrs-shell-shadow);
   isolation: isolate;
+}
+
+body.cbrs-ui.sidebar-collapsed > .cbrs-hero {
+  margin-left: calc(var(--cbrs-sidebar-left) + var(--cbrs-sidebar-collapsed-width) + var(--cbrs-layout-gap));
 }
 
 body.cbrs-ui > .cbrs-hero .header-wave-svg {
@@ -92,7 +101,7 @@ body.cbrs-ui .cbrs-home-hero-bg {
 }
 
 body.cbrs-ui > .cbrs-layout {
-  gap: 18px;
+  gap: var(--cbrs-layout-gap);
   margin-top: 0 !important;
   padding-right: 16px;
   align-items: flex-start;
@@ -100,7 +109,7 @@ body.cbrs-ui > .cbrs-layout {
 
 body.cbrs-ui #sidebar.cbrs-sidebar {
   z-index: 20;
-  width: 216px;
+  width: var(--cbrs-sidebar-width);
   height: calc(100vh - 40px);
   margin: calc(-1 * var(--cbrs-hero-height) + 16px) 0 24px 24px;
   padding-top: 0 !important;
@@ -146,7 +155,7 @@ body.cbrs-ui #sidebar.cbrs-sidebar .sidebar-divider {
 }
 
 body.cbrs-ui #sidebar.cbrs-sidebar.collapsed {
-  width: 68px;
+  width: var(--cbrs-sidebar-collapsed-width);
 }
 
 body.cbrs-ui #sidebar.cbrs-sidebar.collapsed .sidebar-link {
@@ -276,6 +285,26 @@ body.cbrs-ui .cbrs-planning-zoom {
 body.cbrs-ui footer a:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  body.cbrs-ui > .cbrs-hero > .relative.z-10 {
+    padding-right: 1.25rem;
+    padding-left: 1.25rem;
+  }
+
+  body.cbrs-ui > .cbrs-hero > .relative.z-10 > .text-center {
+    padding-right: 9rem !important;
+  }
+
+  body.cbrs-ui > .cbrs-hero .header-title {
+    font-size: clamp(1.85rem, 4.4vw, 2.25rem);
+  }
+
+  body.cbrs-ui .cbrs-logo-frame {
+    right: 12px;
+    width: 150px;
+  }
 }
 
 @media (max-width: 767px) {

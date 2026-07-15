@@ -39,6 +39,23 @@
     });
   }
 
+  function syncHeroHeight() {
+    const hero = document.querySelector('body > .cbrs-hero');
+    if (!hero) return;
+
+    const update = function () {
+      document.documentElement.style.setProperty('--cbrs-hero-height', hero.offsetHeight + 'px');
+    };
+
+    update();
+    if (window.ResizeObserver) {
+      const observer = new ResizeObserver(update);
+      observer.observe(hero);
+    } else {
+      window.addEventListener('resize', update, { passive: true });
+    }
+  }
+
   function setupShell() {
     document.body.classList.add('cbrs-ui');
 
@@ -66,6 +83,8 @@
 
     const mobileHeader = document.querySelector('header.md\\:hidden');
     if (mobileHeader) mobileHeader.classList.add('cbrs-mobile-header');
+
+    syncHeroHeight();
 
     document.querySelectorAll('#sidebar .sidebar-link, #mobile-menu a').forEach(function (link) {
       if (!link.title) {
