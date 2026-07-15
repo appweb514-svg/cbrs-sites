@@ -23,14 +23,60 @@
   --cbrs-content-offset: calc(var(--cbrs-sidebar-left) + var(--cbrs-sidebar-width) + var(--cbrs-layout-gap));
 }
 
+@view-transition {
+  navigation: auto;
+}
+
 html {
   scroll-behavior: smooth;
+  view-transition-name: root;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: cbrs-page-out .22s ease both;
+  }
+
+  ::view-transition-new(root) {
+    animation: cbrs-page-in .38s cubic-bezier(.2, .75, .25, 1) both;
+  }
+}
+
+@keyframes cbrs-page-out {
+  to {
+    opacity: 0;
+    transform: translateY(-5px) scale(.998);
+  }
+}
+
+@keyframes cbrs-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(1.002);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes cbrs-page-fallback-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 body.cbrs-ui {
   background: var(--cbrs-surface);
   font-family: var(--cbrs-font-body);
   overflow-x: hidden;
+}
+
+body.cbrs-page-fallback {
+  animation: cbrs-page-fallback-enter .3s ease both;
 }
 
 body.cbrs-ui :where(h1, h2, h3, h4, h5, h6) {
@@ -505,6 +551,10 @@ body.cbrs-ui .cbrs-activity-tag {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  body.cbrs-page-fallback {
+    animation: none;
   }
 
   body.cbrs-ui *,

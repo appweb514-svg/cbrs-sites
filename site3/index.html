@@ -122,30 +122,6 @@
 </svg>
 
 <style>
-@media (prefers-reduced-motion: no-preference) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation-duration: 0.3s;
-  }
-  ::view-transition-old(root) {
-    animation-name: fade-out;
-  }
-  ::view-transition-new(root) {
-    animation-name: fade-in;
-  }
-}
-@keyframes fade-in {
-  from { opacity: 0; }
-}
-@keyframes fade-out {
-  to { opacity: 0; }
-}
-html {
-  view-transition-name: root;
-}
-</style>
-
-<style>
   #mobile-menu { position: absolute; top: 100%; left: 0; right: 0; max-height: 0; overflow: hidden; overflow-y: auto; transition: max-height 0.3s ease; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.15); border-top: 1px solid rgba(255,255,255,0.1); }
   #mobile-menu.open { max-height: 700px; }
   #mobile-menu.hidden { display: none; }

@@ -60,6 +60,12 @@
 
   function setupShell() {
     document.body.classList.add('cbrs-ui');
+    if (
+      typeof document.startViewTransition !== 'function'
+      && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      document.body.classList.add('cbrs-page-fallback');
+    }
 
     const hero = document.querySelector('body > section.relative');
     if (hero) {
