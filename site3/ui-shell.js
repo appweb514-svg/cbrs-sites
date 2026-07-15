@@ -214,65 +214,6 @@
     sync();
   }
 
-  function setupPlanningImage() {
-    const image = document.querySelector('img[onclick*="window.open"]');
-    if (!image || image.closest('a')) return;
-
-    const link = document.createElement('a');
-    link.href = image.currentSrc || image.src;
-    link.target = '_blank';
-    link.rel = 'noopener';
-    link.className = 'cbrs-planning-zoom';
-    link.setAttribute('aria-label', 'Agrandir le planning officiel');
-    image.removeAttribute('onclick');
-    image.parentNode.insertBefore(link, image);
-    link.appendChild(image);
-  }
-
-  function setupPlanningLightbox() {
-    const lightbox = document.getElementById('planning-lightbox');
-    const image = document.querySelector('[data-planning-original]');
-    const triggers = document.querySelectorAll('[data-planning-open], [data-planning-image-trigger]');
-    const close = lightbox && lightbox.querySelector('[data-planning-close]');
-    const download = lightbox && lightbox.querySelector('[data-planning-lightbox-download]');
-    if (!lightbox || !image || !triggers.length || !close) return;
-
-    const source = image.currentSrc || image.src;
-    const lightboxImage = lightbox.querySelector('[data-planning-lightbox-image]');
-    if (download) {
-      download.href = source;
-      download.download = 'planning-original.png';
-    }
-    if (lightboxImage) lightboxImage.src = source;
-
-    let lastFocus = null;
-    function setOpen(open) {
-      lightbox.hidden = !open;
-      lightbox.setAttribute('aria-hidden', String(!open));
-      document.body.classList.toggle('cbrs-modal-open', open);
-      if (open) close.focus();
-      else if (lastFocus) lastFocus.focus();
-    }
-
-    function closeOnBackdrop(event) {
-      if (event.target === lightbox) setOpen(false);
-    }
-
-    triggers.forEach(function (trigger) {
-      trigger.addEventListener('click', function () {
-        lastFocus = document.activeElement;
-        setOpen(true);
-      });
-    });
-    close.addEventListener('click', function () {
-      setOpen(false);
-    });
-    lightbox.addEventListener('click', closeOnBackdrop);
-    document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape' && !lightbox.hidden) setOpen(false);
-    });
-  }
-
   function setupMembershipForm() {
     const form = document.querySelector('form[onsubmit="return false;"]');
     if (!form) return;
@@ -346,8 +287,6 @@
     setupMobileMenu();
     setupGallery();
     setupFilters();
-    setupPlanningImage();
-    setupPlanningLightbox();
     setupMembershipForm();
     cleanupEditorialLinks();
   }

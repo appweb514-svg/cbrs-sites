@@ -289,11 +289,6 @@
       <h2 class="text-2xl font-bold text-cbrs-blue">Planning <span class="font-serif-italic">hebdomadaire</span></h2>
       <p class="text-sm text-gray-500 mt-1">Toutes les activités, jours, horaires et lieux</p>
     </div>
-    <a href="assets/planning-original.png" download
-       class="inline-flex items-center gap-2 bg-cbrs-green hover:bg-cbrs-green-hover text-gray-900 font-semibold px-5 py-2.5 rounded-full transition-colors text-sm">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-      Télécharger le planning
-    </a>
   </div>
 
   <div id="week-calendar" class="space-y-6"></div>
@@ -328,67 +323,7 @@
   </div>
 </section>
 
-<!-- Collapsible original planning -->
-<section class="max-w-6xl mx-auto px-6 pb-10">
-  <details class="bg-white rounded-2xl shadow-card overflow-hidden">
-    <summary class="cursor-pointer px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
-      <div class="flex items-center gap-3">
-        <svg class="w-5 h-5 text-cbrs-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-        <span class="font-semibold text-cbrs-blue">Voir le planning original</span>
-      </div>
-      <svg class="w-5 h-5 text-gray-400 transition-transform details-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-    </summary>
-    <div class="px-6 pb-6">
-      <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
-        <p class="text-sm text-gray-500">Cliquez sur l’aperçu pour le consulter en grand.</p>
-        <div class="flex flex-wrap items-center gap-2">
-          <button type="button" data-planning-open
-                  class="inline-flex items-center gap-2 rounded-full bg-cbrs-blue px-4 py-2 text-sm font-semibold text-white hover:bg-cbrs-blue-light"
-                  aria-label="Agrandir le planning original">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3m9 0h2a1 1 0 0 1 1 1v3m0 8v3a1 1 0 0 1-1 1h-3m-9 0H5a1 1 0 0 1-1-1v-3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
-            Agrandir
-          </button>
-          <a href="assets/planning-original.png" download="planning-original.png"
-             class="inline-flex items-center gap-2 rounded-full bg-cbrs-green px-4 py-2 text-sm font-semibold text-gray-900 hover:bg-cbrs-green-hover"
-             aria-label="Télécharger le planning original">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14a2 2 0 0 0 2-2v-2M3 17v2a2 2 0 0 0 2 2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
-            Télécharger
-          </a>
-        </div>
-      </div>
-      <div class="bg-gray-50 rounded-xl p-4 flex justify-center">
-        <button type="button" data-planning-image-trigger
-                class="cbrs-planning-image-trigger rounded-xl"
-                aria-label="Ouvrir le planning original en grand">
-          <img src="assets/planning-original.png" alt="Planning officiel CBRS 2025-2026"
-               data-planning-original
-               class="rounded-xl shadow-sm max-w-full"
-               style="max-height:70vh;object-fit:contain;"/>
-        </button>
-      </div>
-    </div>
-  </details>
-</section>
-
 </div><!-- /planning-content -->
-
-<div id="planning-lightbox" class="cbrs-planning-lightbox" hidden aria-hidden="true">
-  <div class="cbrs-planning-lightbox-panel" role="dialog" aria-modal="true" aria-labelledby="planning-lightbox-title">
-    <div class="flex items-center justify-between gap-4 mb-4">
-      <h2 id="planning-lightbox-title" class="text-lg font-bold text-cbrs-blue">Planning original</h2>
-      <button type="button" data-planning-close class="cbrs-planning-lightbox-close" aria-label="Fermer l’aperçu">&times;</button>
-    </div>
-    <img data-planning-lightbox-image src="assets/planning-original.png" alt="Planning officiel CBRS 2025-2026 agrandi"/>
-    <div class="flex flex-wrap items-center justify-between gap-3 mt-4">
-      <p class="text-sm text-gray-500">Utilisez le téléchargement pour conserver le document original.</p>
-      <a data-planning-lightbox-download href="assets/planning-original.png" download="planning-original.png"
-         class="inline-flex items-center gap-2 rounded-full bg-cbrs-green px-4 py-2 text-sm font-semibold text-gray-900 hover:bg-cbrs-green-hover">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14a2 2 0 0 0 2-2v-2M3 17v2a2 2 0 0 0 2 2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
-        Télécharger le planning
-      </a>
-    </div>
-  </div>
-</div>
 
 <!-- CTA -->
 <section class="bg-white border-y border-gray-100 py-12">
@@ -652,17 +587,6 @@ async function initPlanning() {
   document.getElementById('planning-loading').classList.add('hidden');
   document.getElementById('planning-content').classList.remove('hidden');
 }
-
-// Rotate chevron on details toggle
-document.addEventListener('DOMContentLoaded', function() {
-  const details = document.querySelector('details');
-  if (details) {
-    details.addEventListener('toggle', function() {
-      const icon = details.querySelector('.details-icon');
-      if (icon) icon.style.transform = details.open ? 'rotate(180deg)' : '';
-    });
-  }
-});
 
 initPlanning();
 </script>
