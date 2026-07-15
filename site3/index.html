@@ -20,14 +20,15 @@
     }
   </script>
 <style>
-  .flash-scroll { display: flex; align-items: center; height: 24px; overflow: hidden; background: linear-gradient(90deg, #991b1b 0%, #b91c1c 50%, #dc2626 100%); }
-  .flash-scroll-label { flex-shrink: 0; font-size: 0.8rem; font-weight: 800; color: #fff; background: rgba(0,0,0,0.3); padding: 0 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; height: 100%; display: flex; align-items: center; animation: flash-pulse 1.8s ease-in-out infinite; }
-  .flash-scroll-label::after { content: ':'; margin-left: 0.1rem; }
-  .flash-scroll-track { flex: 1; overflow: hidden; white-space: nowrap; }
-  .flash-scroll-track>*{display:inline-block;animation:flash-marquee 12s linear infinite;padding-left:100%;}
-  .flash-scroll-text { font-size: 0.85rem; font-weight: 700; color: #fff; line-height: 24px; padding-left: 0.5rem; }
-  @keyframes flash-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-  @keyframes flash-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+  .flash-scroll { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: stretch; min-height: 64px; margin-bottom: 1.5rem; overflow: hidden; border: 1px solid rgba(255,255,255,.42); border-radius: 18px; background: linear-gradient(115deg, #8f1d27 0%, #bd2931 56%, #df4438 100%); box-shadow: 0 12px 26px rgba(143,29,39,.2), inset 0 1px 0 rgba(255,255,255,.2); }
+  .flash-scroll-label { display: flex; align-items: center; gap: .6rem; min-height: 64px; padding: .5rem 1rem .5rem .65rem; color: #fff; background: linear-gradient(135deg, #0a3273, #145c75); border-right: 1px solid rgba(255,255,255,.22); font-size: .78rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; }
+  .flash-scroll-icon { display: grid; width: 3.15rem; height: 3.15rem; flex: 0 0 auto; place-items: center; filter: drop-shadow(0 4px 5px rgba(0,0,0,.24)); animation: flash-breathe 2.4s ease-in-out infinite; }
+  .flash-scroll-icon img { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .flash-scroll-label-text::after { content: ':'; margin-left: .12rem; }
+  .flash-scroll-track { display: flex; min-width: 0; align-items: center; padding: .7rem 1rem; overflow: hidden; }
+  .flash-scroll-track > * { display: block; }
+  .flash-scroll-text { color: #fff; font-size: clamp(.86rem, 1.45vw, 1rem); font-weight: 800; line-height: 1.35; }
+  @keyframes flash-breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
   .sidebar {
     transition: width 0.3s ease;
     scrollbar-width: none;
@@ -304,8 +305,11 @@ html {
   <div class="flex justify-between items-end mb-6">
     <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Actualités & Vie du club</h2>
   </div>
-  <div id="flash-bar" class="flash-scroll" style="position:static;border-radius:0.5rem;margin-bottom:1.5rem;">
-    <span class="flash-scroll-label">Flash Info</span>
+  <div id="flash-bar" class="flash-scroll">
+    <div class="flash-scroll-label">
+      <span class="flash-scroll-icon" aria-hidden="true"><img src="Flash_info.png" alt=""/></span>
+      <span class="flash-scroll-label-text">Flash Info</span>
+    </div>
     <div class="flash-scroll-track">
       <span class="flash-scroll-text" id="flash-text">Inscriptions saison 2025-2026 ouvertes — contactez le club ou consultez la page adhésion.</span>
     </div>

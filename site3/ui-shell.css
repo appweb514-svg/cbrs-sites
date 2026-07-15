@@ -255,13 +255,13 @@ body.cbrs-ui .accessibility-panel {
 }
 
 body.cbrs-ui .flash-scroll {
-  min-height: 28px;
+  min-height: 64px;
   height: auto;
-  border-radius: 10px;
+  border-radius: 18px;
 }
 
 body.cbrs-ui .flash-scroll-label {
-  min-height: 28px;
+  min-height: 64px;
 }
 
 body.cbrs-ui .flash-scroll-text {
@@ -456,24 +456,26 @@ body.cbrs-ui .cbrs-activity-tag {
   }
 
   body.cbrs-ui .flash-scroll {
-    display: block;
+    display: grid;
+    grid-template-columns: 1fr;
     overflow: hidden;
   }
 
   body.cbrs-ui .flash-scroll-label {
-    width: max-content;
-    padding: 0 .65rem;
+    min-height: 56px;
+    padding: .45rem .75rem;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .2);
   }
 
   body.cbrs-ui .flash-scroll-track {
-    padding: .35rem .65rem .45rem;
+    padding: .65rem .8rem .75rem;
     white-space: normal;
   }
 
   body.cbrs-ui .flash-scroll-track > * {
     display: block;
     padding: 0;
-    animation: none !important;
     transform: none !important;
   }
 
