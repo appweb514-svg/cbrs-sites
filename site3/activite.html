@@ -281,12 +281,22 @@
     </div>
   </div>
 
-  <div id="presentation-container" class="bg-white rounded-2xl shadow-card p-6 md:p-8 mb-8 hidden">
-    <h2 class="text-xl font-bold text-cbrs-text mb-4 flex items-center gap-2">
-      <svg class="w-5 h-5 text-cbrs-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-      Présentation
-    </h2>
-    <p id="activity-presentation" class="text-gray-700 leading-relaxed text-sm"></p>
+  <div id="presentation-container" class="bg-white rounded-2xl shadow-card mb-8 hidden overflow-hidden">
+    <div class="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr]">
+      <div class="p-6 md:p-8">
+        <h2 class="text-xl font-bold text-cbrs-text mb-4 flex items-center gap-2">
+          <svg class="w-5 h-5 text-cbrs-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Présentation
+        </h2>
+        <p id="activity-presentation" class="text-gray-700 leading-relaxed text-sm md:text-base"></p>
+      </div>
+      <div id="presentation-team" class="hidden bg-gradient-to-br from-cbrs-blue to-cbrs-teal p-6 md:p-8 text-white">
+        <p class="text-xs uppercase tracking-[0.18em] text-white/70">L’équipe qui vous accompagne</p>
+        <h3 class="mt-2 text-lg font-bold">Des bénévoles formés et disponibles</h3>
+        <div id="presentation-team-grid" class="grid grid-cols-3 gap-3 mt-5"></div>
+        <p id="presentation-team-caption" class="mt-4 text-xs leading-relaxed text-white/75"></p>
+      </div>
+    </div>
   </div>
 
   <div id="animators-container" class="bg-white rounded-2xl shadow-card p-6 md:p-8 mb-8 hidden">
@@ -294,7 +304,7 @@
       <svg class="w-5 h-5 text-cbrs-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/></svg>
       Nos animateurs
     </h2>
-    <div id="animators-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+    <div id="animators-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
   </div>
 
   <div class="bg-white rounded-2xl shadow-card p-6 md:p-8 mb-8">
@@ -320,11 +330,14 @@
     <div id="activity-info" class="space-y-2 text-sm text-gray-600"></div>
   </div>
 
-  <div class="text-center">
-    <a href="activites.html" class="inline-flex items-center gap-2 text-sm text-cbrs-blue font-medium hover:underline">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-      Retour aux activités
+  <div class="mt-10 pt-8 border-t border-cbrs-blue/10 text-center">
+    <a href="activites.html" class="group inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-2xl bg-cbrs-blue px-6 py-4 text-base font-bold text-white shadow-lg shadow-cbrs-blue/20 transition-all hover:-translate-y-1 hover:bg-cbrs-blue-light hover:shadow-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cbrs-blue/25">
+      <span class="grid h-9 w-9 place-items-center rounded-full bg-white/15 transition-transform group-hover:-translate-x-1">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+      </span>
+      <span>Retour aux activités</span>
     </a>
+    <p class="mt-3 text-xs text-gray-500">Choisissez une autre activité du club</p>
   </div>
   </div>
 
@@ -409,7 +422,15 @@ const activities = {
     presentation:'Seance de gymnastique en milieu aquatique animee par des bénévoles formes. Les exercices sont adaptes a chacun, permettant de travailler le cardio, le renforcement musculaire et la souplesse dans une eau chauffee.',
     schedule:[{day:'Lundi', time:'Voir planning', location:'Piscine Bellier'},{day:'Vendredi', time:'Voir planning', location:'Piscine Bellier'}],
     meetingPoint:'Piscine Bellier, Beauvais. Arrivée 15 min avant pour vous changer.',
-    animators:[{name:'Jacques'},{name:'Christian'},{name:'Elisabeth'},{name:'Germaine'},{name:'Pierre'},{name:'Florence'},{name:'Blandine'}],
+    animators:[
+      {name:'Jacques', photo:'assets-premium/formateurs/jacques.jpg'},
+      {name:'Christian'},
+      {name:'Elisabeth', photo:'assets-premium/formateurs/elisabeth.jpg'},
+      {name:'Germaine', photo:'assets-premium/formateurs/germaine.jpg'},
+      {name:'Pierre'},
+      {name:'Florence', photo:'assets-premium/formateurs/florence.jpg'},
+      {name:'Blandine', photo:'assets-premium/formateurs/blandine.jpg'}
+    ],
     info:['Materiel : maillot, bonnet, serviette','Niveau : debutant a confirme','Saison : septembre a juin']
   },
   '02': {
@@ -563,16 +584,33 @@ if (activity) {
     document.getElementById('activity-presentation').textContent = activity.presentation;
   }
 
+  const photoAnimators = (activity.animators || []).filter(function(a) { return a.photo; });
+  if (photoAnimators.length) {
+    const presentationTeam = document.getElementById('presentation-team');
+    const presentationTeamGrid = document.getElementById('presentation-team-grid');
+    const presentationTeamCaption = document.getElementById('presentation-team-caption');
+    presentationTeam.classList.remove('hidden');
+    presentationTeamGrid.innerHTML = photoAnimators.slice(0, 3).map(function(a) {
+      return '<figure class="group"><div class="aspect-square overflow-hidden rounded-2xl bg-white/15 ring-1 ring-white/25"><img src="'+a.photo+'" alt="Portrait de '+a.name+'" loading="lazy" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"/></div><figcaption class="mt-2 truncate text-center text-xs font-semibold text-white">'+a.name+'</figcaption></figure>';
+    }).join('');
+    presentationTeamCaption.textContent = photoAnimators.length > 3
+      ? photoAnimators.length + ' portraits disponibles dans la liste des animateurs.'
+      : 'Les autres référents sont affichés avec leur initiale lorsqu’aucun portrait n’est disponible.';
+  }
+
   if (activity.animators) {
     document.getElementById('animators-container').classList.remove('hidden');
     const grid = document.getElementById('animators-grid');
     const colors = ['bg-cbrs-blue','bg-cbrs-green','bg-cbrs-teal','bg-blue-500','bg-emerald-700','bg-amber-600','bg-gray-700','bg-cbrs-blue-light'];
     activity.animators.forEach(function(a, i) {
       const div = document.createElement('div');
-      div.className = 'flex items-center gap-3 p-3 bg-cbrs-gray-100 rounded-xl';
+      div.className = 'group flex items-center gap-3 p-3 bg-cbrs-gray-100 rounded-xl transition-colors hover:bg-cbrs-blue/5';
       const initial = (a.name || '?').charAt(0).toUpperCase();
       const color = colors[i % colors.length];
-      div.innerHTML = '<div class="w-10 h-10 rounded-full '+color+' text-white flex items-center justify-center font-bold text-sm shrink-0">'+initial+'</div><div><p class="font-semibold text-gray-900 text-sm">'+a.name+'</p>'+(a.phone ? '<p class="text-xs text-gray-500">'+a.phone+'</p>' : '')+'</div>';
+      const visual = a.photo
+        ? '<div class="w-12 h-12 rounded-2xl overflow-hidden bg-white ring-2 ring-white shadow-sm shrink-0"><img src="'+a.photo+'" alt="Portrait de '+a.name+'" loading="lazy" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/></div>'
+        : '<div class="w-12 h-12 rounded-2xl '+color+' text-white flex items-center justify-center font-bold text-base shrink-0">'+initial+'</div>';
+      div.innerHTML = visual + '<div class="min-w-0"><p class="font-semibold text-gray-900 text-sm leading-tight break-words">'+a.name+'</p>'+(a.phone ? '<p class="text-xs text-gray-500">'+a.phone+'</p>' : '')+'</div>';
       grid.appendChild(div);
     });
   }
