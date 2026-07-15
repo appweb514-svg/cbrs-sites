@@ -300,6 +300,56 @@ body.cbrs-ui footer a:hover {
   text-underline-offset: 3px;
 }
 
+body.cbrs-ui .cbrs-feature-grid {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+body.cbrs-ui .cbrs-feature-image {
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+body.cbrs-ui .cbrs-activities-grid {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+body.cbrs-ui .cbrs-activities-grid > a {
+  min-width: 0;
+}
+
+body.cbrs-ui .cbrs-activities-grid > a > div:first-child {
+  width: 100%;
+  height: auto;
+  max-width: 7rem;
+  aspect-ratio: 1;
+}
+
+body.cbrs-ui .cbrs-activities-grid img {
+  object-fit: contain;
+  padding: .5rem;
+}
+
+@media (min-width: 640px) {
+  body.cbrs-ui .cbrs-feature-grid,
+  body.cbrs-ui .cbrs-activities-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  body.cbrs-ui .cbrs-feature-grid,
+  body.cbrs-ui .cbrs-activities-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  body.cbrs-ui .cbrs-feature-grid,
+  body.cbrs-ui .cbrs-activities-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
 @media (min-width: 768px) and (max-width: 1023px) {
   body.cbrs-ui > .cbrs-hero > .relative.z-10 {
     padding-right: 1.25rem;
