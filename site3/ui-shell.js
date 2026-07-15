@@ -7,6 +7,8 @@
     'activites.html',
     'adhesion.html',
     'contact.html',
+    'mentions-legales.html',
+    'conditions-utilisation.html',
     'formation.html',
     'galerie.html',
     'liens-utiles.html',
@@ -264,13 +266,25 @@
   function cleanupEditorialLinks() {
     document.querySelectorAll('footer a').forEach(function (link) {
       const label = link.textContent.trim();
-      if (label === 'Vidéos' || label === 'Videos' || label === 'Mentions légales') {
+      if (label === 'Vidéos' || label === 'Videos') {
         const item = link.closest('li');
         if (item) item.remove();
         else link.remove();
       }
+      if (label === 'Mentions légales') link.href = 'mentions-legales.html';
       if (label === 'Inscriptions') link.textContent = 'Adhérer';
     });
+
+    const infoList = Array.from(document.querySelectorAll('footer ul')).find(function (list) {
+      return Array.from(list.querySelectorAll('a')).some(function (link) {
+        return link.getAttribute('href') === 'adhesion.html';
+      });
+    });
+    if (infoList && !infoList.querySelector('a[href="conditions-utilisation.html"]')) {
+      const item = document.createElement('li');
+      item.innerHTML = '<a class="hover:text-cbrs-blue" href="conditions-utilisation.html">Conditions d’utilisation</a>';
+      infoList.appendChild(item);
+    }
 
     document.querySelectorAll('#sidebar span, #mobile-menu span').forEach(function (node) {
       if (node.textContent.includes('Sorties - Voyages')) {
