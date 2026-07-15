@@ -16,6 +16,9 @@
   .gallery-item img { width: 100%; height: 200px; object-fit: cover; display: block; transition: transform 0.3s ease; }
   .gallery-item:hover img { transform: scale(1.04); }
   .gallery-item figcaption { padding: 0.6rem 1rem 0.8rem; font-size: 0.85rem; color: #4b5563; font-weight: 500; }
+  .activity-btn { border: 1px solid #d1d5db; border-radius: 999px; background: #fff; color: #4b5563; cursor: pointer; font-size: 0.75rem; font-weight: 600; padding: 0.35rem 0.75rem; transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
+  .activity-btn:hover, .activity-btn:focus-visible { border-color: #58a01a; color: #58a01a; outline: none; }
+  .activity-btn.active { border-color: #58a01a; background: #58a01a; color: #fff; }
   .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; padding: 1rem; }
   .lightbox.active { display: flex; }
   .lightbox img { max-width: 90vw; max-height: 85vh; border-radius: 0.5rem; box-shadow: 0 8px 40px rgba(0,0,0,0.6); object-fit: contain; }
@@ -274,10 +277,14 @@
 <main id="contenu" class="flex-1 overflow-x-hidden relative md:pt-20">
 <section class="max-w-7xl mx-auto px-6 pt-8 pb-4 space-y-3">
   <div class="flex flex-wrap gap-3 justify-center">
-    <button onclick="filterGallery('all')" id="btn-all" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-cbrs-green bg-cbrs-green text-white transition-colors">Toutes</button>
-    <button onclick="filterGallery('sport')" id="btn-sport" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-gray-300 text-gray-700 hover:border-cbrs-green hover:text-cbrs-green transition-colors">Sport</button>
+    <button onclick="filterGallery('all')" id="btn-all" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-cbrs-green bg-cbrs-green text-white transition-colors">Tous les contenus</button>
+    <button onclick="filterGallery('sport')" id="btn-sport" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-gray-300 text-gray-700 hover:border-cbrs-green hover:text-cbrs-green transition-colors">Activités sportives</button>
     <button onclick="filterGallery('sortie')" id="btn-sortie" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-gray-300 text-gray-700 hover:border-cbrs-green hover:text-cbrs-green transition-colors">Sorties & Voyages</button>
     <button onclick="filterGallery('vie')" id="btn-vie" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-gray-300 text-gray-700 hover:border-cbrs-green hover:text-cbrs-green transition-colors">Vie du Club</button>
+  </div>
+  <div class="mt-4 flex flex-col items-center gap-2 sm:flex-row sm:justify-center">
+    <span class="text-xs font-semibold uppercase tracking-wide text-gray-500">Activité</span>
+    <div id="activity-filters" class="flex flex-wrap justify-center gap-2" role="group" aria-label="Filtrer par activité"></div>
   </div>
   <div class="flex flex-wrap gap-2 justify-center">
     <button onclick="filterYear('all')" id="year-all" class="year-btn px-4 py-1.5 rounded-full text-xs font-semibold border border-cbrs-blue bg-cbrs-blue text-white transition-colors">Toutes les annees</button>
@@ -290,41 +297,17 @@
 
 <section class="max-w-7xl mx-auto px-6 py-8">
   <div class="gallery-grid" id="gallery">
-    <figure class="gallery-item" data-cat="sport" data-year="2024" onclick="openLightbox('gallery-marche.jpg','Marche nordique – Sortie en foret')">
-      <img src="assets/gallery-marche.jpg" alt="Marche nordique en foret"/><figcaption>Marche nordique – Sortie en foret</figcaption>
+    <figure class="gallery-item" data-cat="sport" data-activity="gymnastique" data-year="2024" onclick="openLightbox('assets-premium/real-gym-group.jpg','Gymnastique douce – Cours collectif')">
+      <img src="assets-premium/real-gym-group.jpg" alt="Cours collectif de gymnastique douce"/><figcaption>Gymnastique douce – Cours collectif</figcaption>
     </figure>
-    <figure class="gallery-item" data-cat="sport" data-year="2024" onclick="openLightbox('gallery-taichi.jpg','Tai Chi – Seance en plein air')">
-      <img src="assets/gallery-taichi.jpg" alt="Seance de Tai Chi"/><figcaption>Tai Chi – Seance en plein air</figcaption>
+    <figure class="gallery-item" data-cat="sport" data-activity="danse" data-year="2024" onclick="openLightbox('assets-premium/real-danse.jpg','Danse – Atelier hebdomadaire')">
+      <img src="assets-premium/real-danse.jpg" alt="Atelier de danse"/><figcaption>Danse – Atelier hebdomadaire</figcaption>
     </figure>
-    <figure class="gallery-item" data-cat="sport" data-year="2024" onclick="openLightbox('gallery-raquettes.jpg','Randonnee raquettes – Sortie hivernale')">
-      <img src="assets/gallery-raquettes.jpg" alt="Randonnee raquettes"/><figcaption>Randonnee raquettes – Sortie hivernale</figcaption>
+    <figure class="gallery-item" data-cat="sport" data-activity="tennis-de-table" data-year="2024" onclick="openLightbox('assets-premium/real-tennis-table.jpg','Tennis de table – Tournoi amical')">
+      <img src="assets-premium/real-tennis-table.jpg" alt="Tournoi de tennis de table"/><figcaption>Tennis de table – Tournoi amical</figcaption>
     </figure>
-    <figure class="gallery-item" data-cat="sortie" data-year="2024" onclick="openLightbox('gallery-sortie-senlis.png','Sortie culturelle a Senlis')">
-      <img src="assets/gallery-sortie-senlis.png" alt="Sortie a Senlis"/><figcaption>Sortie culturelle a Senlis</figcaption>
-    </figure>
-    <figure class="gallery-item" data-cat="sport" data-year="2024" onclick="openLightbox('real-gym-group.jpg','Gym douce – Cours collectif')">
-      <img src="real-gym-group.jpg" alt="Gym douce en groupe"/><figcaption>Gym douce – Cours collectif</figcaption>
-    </figure>
-    <figure class="gallery-item" data-cat="sport" data-year="2024" onclick="openLightbox('real-danse.jpg','Danse – Atelier hebdomadaire')">
-      <img src="real-danse.jpg" alt="Cours de danse"/><figcaption>Danse – Atelier hebdomadaire</figcaption>
-    </figure>
-    <figure class="gallery-item" data-cat="sport" data-year="2024" onclick="openLightbox('real-tennis-table.jpg','Tennis de table – Tournoi amical')">
-      <img src="real-tennis-table.jpg" alt="Tennis de table"/><figcaption>Tennis de table – Tournoi amical</figcaption>
-    </figure>
-    <figure class="gallery-item" data-cat="sortie" data-year="2024" onclick="openLightbox('real-sortie-senlis.png','Visite guidee – Centre historique de Senlis')">
-      <img src="real-sortie-senlis.png" alt="Visite de Senlis"/><figcaption>Visite guidee – Centre historique de Senlis</figcaption>
-    </figure>
-    <figure class="gallery-item" data-cat="vie" data-year="2024" onclick="openLightbox('real-memoire.jpg','Atelier memoire – Stimulation cognitive')">
-      <img src="real-memoire.jpg" alt="Atelier memoire"/><figcaption>Atelier memoire – Stimulation cognitive</figcaption>
-    </figure>
-    <figure class="gallery-item" data-cat="sport" data-year="2024" onclick="openLightbox('randonnees-beauvaisis.jpg','Randonnee – Beauvaisis')">
-      <img src="randonnees-beauvaisis.jpg" alt="Randonnee dans le Beauvaisis"/><figcaption>Randonnee – Beauvaisis</figcaption>
-    </figure>
-    <figure class="gallery-item" data-cat="sport" data-year="2024" onclick="openLightbox('velo.png','Sortie velo – Balade en groupe')">
-      <img src="velo.png" alt="Sortie velo"/><figcaption>Sortie velo – Balade en groupe</figcaption>
-    </figure>
-    <figure class="gallery-item" data-cat="vie" data-year="2024" onclick="openLightbox('active-seniors-park.png','Vie du club – Rencontre conviviale')">
-      <img src="active-seniors-park.png" alt="Vie du club"/><figcaption>Vie du club – Rencontre conviviale</figcaption>
+    <figure class="gallery-item" data-cat="vie" data-activity="atelier-memoire" data-year="2024" onclick="openLightbox('assets-premium/real-memoire.jpg','Atelier mémoire – Stimulation cognitive')">
+      <img src="assets-premium/real-memoire.jpg" alt="Atelier mémoire du club"/><figcaption>Atelier mémoire – Stimulation cognitive</figcaption>
     </figure>
   </div>
   <p id="no-results" class="hidden text-center text-gray-400 py-16 text-lg">Aucune photo dans cette catégorie.</p>
@@ -398,14 +381,82 @@
   }
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
   let currentCat = 'all';
+  let currentActivity = 'all';
   let currentYear = 'all';
+  const ACTIVITY_LABELS = {
+    'marche-nordique': 'Marche nordique',
+    'tai-chi': 'Tai Chi',
+    'randonnee': 'Randonnée',
+    'gymnastique': 'Gymnastique',
+    'tennis-de-table': 'Tennis de table',
+    'danse': 'Danse',
+    'cyclisme': 'Cyclisme',
+    'aquagym': 'Aquagym',
+    'petanque': 'Pétanque',
+    'tennis': 'Tennis',
+    'atelier-memoire': 'Atelier mémoire',
+    'autres-sport': 'Autres activités',
+    'autres-sorties': 'Autres sorties',
+    'vie-club': 'Vie du club',
+    'autres': 'Autres'
+  };
+  const ACTIVITY_ORDER = Object.keys(ACTIVITY_LABELS);
+
+  function normalizeText(value) {
+    return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
+  function inferActivity(caption, category) {
+    const text = normalizeText(caption);
+    const rules = [
+      ['marche-nordique', /marche nordique/],
+      ['tai-chi', /tai chi/],
+      ['randonnee', /randonnee|raquettes/],
+      ['gymnastique', /gym|gymnastique/],
+      ['tennis-de-table', /tennis de table|ping[ -]?pong/],
+      ['danse', /danse/],
+      ['cyclisme', /cyclisme|velo/],
+      ['aquagym', /aquagym/],
+      ['petanque', /petanque/],
+      ['tennis', /\btennis\b/],
+      ['atelier-memoire', /memoire/]
+    ];
+    const match = rules.find(function(rule) { return rule[1].test(text); });
+    if (match) return match[0];
+    if (category === 'sport') return 'autres-sport';
+    if (category === 'sortie') return 'autres-sorties';
+    if (category === 'vie') return 'vie-club';
+    return 'autres';
+  }
+
+  function refreshActivityFilters() {
+    const container = document.getElementById('activity-filters');
+    if (!container) return;
+    const available = new Set([...document.querySelectorAll('.gallery-item')].map(function(item) {
+      return item.dataset.activity;
+    }).filter(Boolean));
+    if (currentActivity !== 'all' && !available.has(currentActivity)) currentActivity = 'all';
+    container.innerHTML = '';
+    ['all'].concat(ACTIVITY_ORDER.filter(function(activity) { return available.has(activity); })).forEach(function(activity) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'activity-btn' + (activity === currentActivity ? ' active' : '');
+      button.dataset.activity = activity;
+      button.textContent = activity === 'all' ? 'Toutes les activités' : ACTIVITY_LABELS[activity];
+      button.setAttribute('aria-pressed', String(activity === currentActivity));
+      button.addEventListener('click', function() { filterActivity(activity); });
+      container.appendChild(button);
+    });
+  }
+
   function applyFilters() {
     const items = document.querySelectorAll('.gallery-item');
     let visible = 0;
     items.forEach(function(item) {
       const catMatch = currentCat === 'all' || item.dataset.cat === currentCat;
+      const activityMatch = currentActivity === 'all' || item.dataset.activity === currentActivity;
       const yearMatch = currentYear === 'all' || item.dataset.year === currentYear;
-      if (catMatch && yearMatch) { item.style.display = ''; visible++; }
+      if (catMatch && activityMatch && yearMatch) { item.style.display = ''; visible++; }
       else { item.style.display = 'none'; }
     });
     document.getElementById('no-results').classList.toggle('hidden', visible > 0);
@@ -418,6 +469,11 @@
     });
     var active = document.getElementById('btn-' + cat);
     if (active) { active.classList.add('bg-cbrs-green', 'text-white', 'border-cbrs-green'); active.classList.remove('border-gray-300', 'text-gray-700'); }
+    applyFilters();
+  }
+  function filterActivity(activity) {
+    currentActivity = activity;
+    refreshActivityFilters();
     applyFilters();
   }
   function filterYear(year) {
@@ -1108,12 +1164,22 @@ const scrapedPhotos = [
 function loadScrapedPhotos() {
   const gallery = document.getElementById('gallery');
 
-  function appendPhoto(src, cat, year, caption) {
+  function appendPhoto(src, cat, year, caption, activity) {
     const fig = document.createElement('figure');
     fig.className = 'gallery-item';
     fig.setAttribute('data-cat', cat);
+    fig.setAttribute('data-activity', activity || inferActivity(caption, cat));
     fig.setAttribute('data-year', year);
     fig.onclick = function() { openLightbox(src, caption); };
+    fig.tabIndex = 0;
+    fig.setAttribute('role', 'button');
+    fig.setAttribute('aria-label', 'Ouvrir : ' + caption);
+    fig.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        fig.click();
+      }
+    });
     fig.innerHTML = '<img src="' + src + '" alt="" loading="lazy"/><figcaption>' + caption + '</figcaption>';
     gallery.appendChild(fig);
   }
@@ -1124,32 +1190,39 @@ function loadScrapedPhotos() {
   fetch('/api/public/gallery').then(r => r.ok && r.json()).then(data => {
     if (local.length) {
       local.forEach(function(p) {
-        appendPhoto(p.dataUrl, p.category || 'vie', p.year || '2026', p.caption || p.filename);
+        appendPhoto(p.dataUrl, p.category || 'vie', p.year || '2026', p.caption || p.filename, p.activity);
       });
     }
     if (data && data.photos && data.photos.length) {
       data.photos.forEach(function(p) {
-        appendPhoto('photos/' + p.filename, p.category, p.year, p.caption || 'CBRS ' + p.year);
+        appendPhoto('photos/' + p.filename, p.category, p.year, p.caption || 'CBRS ' + p.year, p.activity);
       });
     } else if (!local.length) {
       fallback();
     }
+    refreshActivityFilters();
+    applyFilters();
   }).catch(function() {
     if (local.length) {
       local.forEach(function(p) {
-        appendPhoto(p.dataUrl, p.category || 'vie', p.year || '2026', p.caption || p.filename);
+        appendPhoto(p.dataUrl, p.category || 'vie', p.year || '2026', p.caption || p.filename, p.activity);
       });
     } else {
       fallback();
     }
+    refreshActivityFilters();
+    applyFilters();
   });
   function fallback() {
     scrapedPhotos.forEach(function(p) {
-      appendPhoto('photos/' + p.file, p.cat, p.year, 'CBRS ' + p.year);
+      appendPhoto('photos/' + p.file, p.cat, p.year, 'CBRS ' + p.year, p.activity);
     });
   }
 }
-document.addEventListener('DOMContentLoaded', loadScrapedPhotos);
+document.addEventListener('DOMContentLoaded', function() {
+  refreshActivityFilters();
+  loadScrapedPhotos();
+});
 
 </script>
 
