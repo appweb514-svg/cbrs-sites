@@ -334,6 +334,7 @@ body.cbrs-ui .cbrs-activity-icon {
   display: grid;
   width: min(100%, 10rem);
   place-items: center;
+  overflow: hidden;
   padding: .35rem;
   border-radius: 2rem;
   aspect-ratio: 1;
@@ -350,6 +351,14 @@ body.cbrs-ui .cbrs-activity-card:focus-visible .cbrs-activity-icon {
 
 body.cbrs-ui .cbrs-activity-icon img {
   object-fit: contain;
+  transform: scale(1);
+  transition: transform .45s cubic-bezier(.2, .75, .25, 1);
+  will-change: transform;
+}
+
+body.cbrs-ui .cbrs-activity-card:hover .cbrs-activity-icon img,
+body.cbrs-ui .cbrs-activity-card:focus-visible .cbrs-activity-icon img {
+  transform: scale(1.08);
 }
 
 body.cbrs-ui .cbrs-activity-tag {
@@ -362,6 +371,24 @@ body.cbrs-ui .cbrs-activity-tag {
   font-size: .75rem;
   font-weight: 700;
   line-height: 1.1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.cbrs-ui .cbrs-activity-card,
+  body.cbrs-ui .cbrs-activity-icon,
+  body.cbrs-ui .cbrs-activity-icon img {
+    transition-duration: .01ms;
+    animation-duration: .01ms;
+  }
+
+  body.cbrs-ui .cbrs-activity-card:hover,
+  body.cbrs-ui .cbrs-activity-card:focus-visible,
+  body.cbrs-ui .cbrs-activity-card:hover .cbrs-activity-icon,
+  body.cbrs-ui .cbrs-activity-card:focus-visible .cbrs-activity-icon,
+  body.cbrs-ui .cbrs-activity-card:hover .cbrs-activity-icon img,
+  body.cbrs-ui .cbrs-activity-card:focus-visible .cbrs-activity-icon img {
+    transform: none;
+  }
 }
 
 @media (min-width: 640px) {
