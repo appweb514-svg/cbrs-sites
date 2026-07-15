@@ -117,7 +117,7 @@ body.cbrs-ui #sidebar.cbrs-sidebar {
   border: 1px solid rgba(255, 255, 255, .16);
   border-radius: 26px;
   background: linear-gradient(165deg, var(--cbrs-blue) 0%, var(--cbrs-blue-light) 54%, var(--cbrs-teal) 100%) !important;
-  box-shadow: 0 0 0 6px var(--cbrs-surface), var(--cbrs-nav-shadow);
+  box-shadow: var(--cbrs-nav-shadow);
 }
 
 body.cbrs-ui #sidebar.cbrs-sidebar .sidebar-toggle {
