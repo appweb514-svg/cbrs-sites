@@ -1203,6 +1203,24 @@ body.cbrs-ui .cbrs-activity-tag {
     border-bottom-left-radius: 22px;
   }
 
+  body.cbrs-ui.cbrs-mobile-menu-open .cbrs-mobile-header {
+    position: relative !important;
+    inset: auto !important;
+    width: auto;
+    margin: 8px;
+  }
+
+  body.cbrs-ui.cbrs-mobile-menu-open .cbrs-mobile-header #mobile-menu:not(.hidden) {
+    position: relative !important;
+    inset: auto !important;
+    max-height: min(calc(100vh - 4.75rem), 700px) !important;
+    max-height: min(calc(100dvh - 4.75rem), 700px) !important;
+  }
+
+  body.cbrs-ui.cbrs-mobile-menu-open > .cbrs-hero {
+    margin-top: 0 !important;
+  }
+
   body.cbrs-ui .accessibility-fab {
     right: 12px !important;
     bottom: 12px !important;
