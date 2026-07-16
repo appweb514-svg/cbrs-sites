@@ -1092,13 +1092,13 @@ body.cbrs-ui .cbrs-activity-tag {
 
   body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero .cbrs-logo-frame {
     top: 50%;
-    right: clamp(1.5rem, 3vw, 3rem);
-    width: clamp(200px, 18vw, 230px);
+    right: clamp(1.25rem, 2vw, 2.25rem);
+    width: clamp(240px, 20vw, 285px);
     transform: translateY(-50%);
   }
 
   body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero > .relative.z-10 > .text-center {
-    padding-right: clamp(15rem, 24vw, 20rem) !important;
+    padding-right: clamp(18rem, 25vw, 22rem) !important;
   }
 }
 
