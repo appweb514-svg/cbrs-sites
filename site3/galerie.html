@@ -16,6 +16,28 @@
   .gallery-item img { width: 100%; height: 200px; object-fit: cover; display: block; transition: transform 0.3s ease; }
   .gallery-item:hover img { transform: scale(1.04); }
   .gallery-item figcaption { padding: 0.6rem 1rem 0.8rem; font-size: 0.85rem; color: #4b5563; font-weight: 500; }
+  .gallery-filter-panel { border: 1px solid rgba(10, 50, 115, 0.12); border-radius: 1.25rem; background: linear-gradient(180deg, #fff 0%, #f8fbff 100%); box-shadow: 0 12px 30px rgba(10, 50, 115, 0.08); padding: clamp(1rem, 2vw, 1.5rem); }
+  .gallery-filter-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+  .gallery-filter-kicker { color: #58a01a; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+  .gallery-filter-title { margin: 0.2rem 0 0; color: #0a3273; font-size: clamp(1.1rem, 2vw, 1.35rem); font-weight: 800; }
+  .gallery-filter-description { margin: 0.25rem 0 0; color: #64748b; font-size: 0.85rem; line-height: 1.45; }
+  .gallery-filter-reset { flex: 0 0 auto; border: 1px solid rgba(10, 50, 115, 0.18); border-radius: 999px; background: #fff; color: #0a3273; cursor: pointer; font-size: 0.78rem; font-weight: 700; padding: 0.55rem 0.85rem; transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
+  .gallery-filter-reset:hover, .gallery-filter-reset:focus-visible { border-color: #58a01a; background: #58a01a; color: #fff; outline: none; }
+  .gallery-filter-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; }
+  .gallery-filter-field { display: grid; gap: 0.35rem; min-width: 0; }
+  .gallery-filter-field > span { color: #475569; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
+  .gallery-filter-select { width: 100%; min-height: 2.75rem; border: 1px solid rgba(10, 50, 115, 0.18); border-radius: 0.8rem; background: #fff; color: #0a3273; cursor: pointer; font-size: 0.9rem; font-weight: 650; padding: 0.6rem 2.25rem 0.6rem 0.8rem; transition: border-color 0.2s, box-shadow 0.2s; }
+  .gallery-filter-select:hover, .gallery-filter-select:focus-visible { border-color: #58a01a; box-shadow: 0 0 0 3px rgba(88, 160, 26, 0.14); outline: none; }
+  .gallery-filter-summary { margin: 0.9rem 0 0; color: #64748b; font-size: 0.78rem; }
+  @media (max-width: 900px) and (min-width: 641px) {
+    .gallery-filter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .gallery-filter-field:last-child { grid-column: 1 / -1; }
+  }
+  @media (max-width: 640px) {
+    .gallery-filter-heading { align-items: flex-start; flex-direction: column; }
+    .gallery-filter-reset { align-self: flex-start; }
+    .gallery-filter-grid { grid-template-columns: 1fr; }
+  }
   .activity-btn { border: 1px solid #d1d5db; border-radius: 999px; background: #fff; color: #4b5563; cursor: pointer; font-size: 0.75rem; font-weight: 600; padding: 0.35rem 0.75rem; transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
   .activity-btn:hover, .activity-btn:focus-visible { border-color: #58a01a; color: #58a01a; outline: none; }
   .activity-btn.active { border-color: #58a01a; background: #58a01a; color: #fff; }
@@ -290,22 +312,41 @@
 </aside>
 <main id="contenu" class="flex-1 overflow-x-hidden relative md:pt-20">
 <section class="max-w-7xl mx-auto px-6 pt-8 pb-4 space-y-3">
-  <div class="flex flex-wrap gap-3 justify-center">
-    <button onclick="filterGallery('all')" id="btn-all" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-cbrs-green bg-cbrs-green text-white transition-colors">Tous les contenus</button>
-    <button onclick="filterGallery('sport')" id="btn-sport" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-gray-300 text-gray-700 hover:border-cbrs-green hover:text-cbrs-green transition-colors">Activités sportives</button>
-    <button onclick="filterGallery('sortie')" id="btn-sortie" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-gray-300 text-gray-700 hover:border-cbrs-green hover:text-cbrs-green transition-colors">Sorties & Voyages</button>
-    <button onclick="filterGallery('vie')" id="btn-vie" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold border border-gray-300 text-gray-700 hover:border-cbrs-green hover:text-cbrs-green transition-colors">Vie du Club</button>
-  </div>
-  <div class="mt-4 flex flex-col items-center gap-2 sm:flex-row sm:justify-center">
-    <span class="text-xs font-semibold uppercase tracking-wide text-gray-500">Activité</span>
-    <div id="activity-filters" class="flex flex-wrap justify-center gap-2" role="group" aria-label="Filtrer par activité"></div>
-  </div>
-  <div class="flex flex-wrap gap-2 justify-center">
-    <button onclick="filterYear('all')" id="year-all" class="year-btn px-4 py-1.5 rounded-full text-xs font-semibold border border-cbrs-blue bg-cbrs-blue text-white transition-colors">Toutes les annees</button>
-    <button onclick="filterYear('2026')" id="year-2026" class="year-btn px-4 py-1.5 rounded-full text-xs font-semibold border border-gray-300 text-gray-600 hover:border-cbrs-blue hover:text-cbrs-blue transition-colors">2026</button>
-    <button onclick="filterYear('2025')" id="year-2025" class="year-btn px-4 py-1.5 rounded-full text-xs font-semibold border border-gray-300 text-gray-600 hover:border-cbrs-blue hover:text-cbrs-blue transition-colors">2025</button>
-    <button onclick="filterYear('2024')" id="year-2024" class="year-btn px-4 py-1.5 rounded-full text-xs font-semibold border border-gray-300 text-gray-600 hover:border-cbrs-blue hover:text-cbrs-blue transition-colors">2024</button>
-    <button onclick="filterYear('2023')" id="year-2023" class="year-btn px-4 py-1.5 rounded-full text-xs font-semibold border border-gray-300 text-gray-600 hover:border-cbrs-blue hover:text-cbrs-blue transition-colors">2023</button>
+  <div class="gallery-filter-panel" aria-label="Filtres de la galerie">
+    <div class="gallery-filter-heading">
+      <div>
+        <span class="gallery-filter-kicker">Explorer la galerie</span>
+        <h2 class="gallery-filter-title">Filtrer les photos</h2>
+        <p class="gallery-filter-description">Regroupez le contenu par type, activité et année.</p>
+      </div>
+      <button type="button" class="gallery-filter-reset" onclick="resetGalleryFilters()">Réinitialiser</button>
+    </div>
+    <div class="gallery-filter-grid">
+      <label class="gallery-filter-field" for="gallery-category-filter">
+        <span>Contenu</span>
+        <select id="gallery-category-filter" class="gallery-filter-select" onchange="filterGallery(this.value)">
+          <option value="all">Tous les contenus</option>
+          <option value="sport">Activités sportives</option>
+          <option value="sortie">Sorties &amp; Voyages</option>
+          <option value="vie">Vie du Club</option>
+        </select>
+      </label>
+      <label class="gallery-filter-field" for="gallery-activity-filter">
+        <span id="activity-filter-label">Activité ou thème</span>
+        <select id="gallery-activity-filter" class="gallery-filter-select" onchange="filterActivity(this.value)" aria-label="Filtrer par activité ou thème"></select>
+      </label>
+      <label class="gallery-filter-field" for="gallery-year-filter">
+        <span>Année</span>
+        <select id="gallery-year-filter" class="gallery-filter-select" onchange="filterYear(this.value)">
+          <option value="all">Toutes les années</option>
+          <option value="2026">2026</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+        </select>
+      </label>
+    </div>
+    <p id="gallery-filter-summary" class="gallery-filter-summary" aria-live="polite"></p>
   </div>
 </section>
 
@@ -463,6 +504,12 @@
   let currentCat = 'all';
   let currentActivity = 'all';
   let currentYear = 'all';
+  const CATEGORY_LABELS = {
+    all: 'Tous les contenus',
+    sport: 'Activités sportives',
+    sortie: 'Sorties & Voyages',
+    vie: 'Vie du Club'
+  };
   const ACTIVITY_LABELS = {
     'marche-nordique': 'Marche nordique',
     'tai-chi': 'Tai Chi',
@@ -510,23 +557,37 @@
   }
 
   function refreshActivityFilters() {
-    const container = document.getElementById('activity-filters');
-    if (!container) return;
-    const available = new Set([...document.querySelectorAll('.gallery-item')].map(function(item) {
-      return item.dataset.activity;
-    }).filter(Boolean));
+    const select = document.getElementById('gallery-activity-filter');
+    const label = document.getElementById('activity-filter-label');
+    if (!select) return;
+    const available = new Set([...document.querySelectorAll('.gallery-item')]
+      .filter(function(item) { return currentCat === 'all' || item.dataset.cat === currentCat; })
+      .map(function(item) { return item.dataset.activity; })
+      .filter(Boolean));
     if (currentActivity !== 'all' && !available.has(currentActivity)) currentActivity = 'all';
-    container.innerHTML = '';
+    const allLabel = currentCat === 'sport'
+      ? 'Toutes les activités'
+      : currentCat === 'sortie'
+        ? 'Toutes les sorties'
+        : currentCat === 'vie'
+          ? 'Tous les thèmes'
+          : 'Tous les types';
+    const fieldLabel = currentCat === 'sport'
+      ? 'Activité sportive'
+      : currentCat === 'sortie'
+        ? 'Type de sortie'
+        : currentCat === 'vie'
+          ? 'Thème du club'
+          : 'Activité ou thème';
+    if (label) label.textContent = fieldLabel;
+    select.innerHTML = '';
     ['all'].concat(ACTIVITY_ORDER.filter(function(activity) { return available.has(activity); })).forEach(function(activity) {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'activity-btn' + (activity === currentActivity ? ' active' : '');
-      button.dataset.activity = activity;
-      button.textContent = activity === 'all' ? 'Toutes les activités' : ACTIVITY_LABELS[activity];
-      button.setAttribute('aria-pressed', String(activity === currentActivity));
-      button.addEventListener('click', function() { filterActivity(activity); });
-      container.appendChild(button);
+      const option = document.createElement('option');
+      option.value = activity;
+      option.textContent = activity === 'all' ? allLabel : (ACTIVITY_LABELS[activity] || activity);
+      select.appendChild(option);
     });
+    select.value = currentActivity;
   }
 
   function applyFilters() {
@@ -540,30 +601,44 @@
       else { item.style.display = 'none'; }
     });
     document.getElementById('no-results').classList.toggle('hidden', visible > 0);
+    const summary = document.getElementById('gallery-filter-summary');
+    if (summary) {
+      const selected = [];
+      if (currentCat !== 'all') selected.push(CATEGORY_LABELS[currentCat]);
+      if (currentActivity !== 'all') selected.push(ACTIVITY_LABELS[currentActivity] || currentActivity);
+      if (currentYear !== 'all') selected.push(currentYear);
+      const countLabel = visible === 1 ? 'photo affichée' : 'photos affichées';
+      summary.textContent = visible + ' ' + countLabel + (selected.length ? ' · ' + selected.join(' · ') : '');
+    }
   }
   function filterGallery(cat) {
     currentCat = cat;
-    document.querySelectorAll('.filter-btn').forEach(function(btn) {
-      btn.classList.remove('bg-cbrs-green', 'text-white', 'border-cbrs-green');
-      btn.classList.add('border-gray-300', 'text-gray-700');
-    });
-    var active = document.getElementById('btn-' + cat);
-    if (active) { active.classList.add('bg-cbrs-green', 'text-white', 'border-cbrs-green'); active.classList.remove('border-gray-300', 'text-gray-700'); }
+    const select = document.getElementById('gallery-category-filter');
+    if (select) select.value = currentCat;
+    refreshActivityFilters();
     applyFilters();
   }
   function filterActivity(activity) {
     currentActivity = activity;
-    refreshActivityFilters();
+    const select = document.getElementById('gallery-activity-filter');
+    if (select) select.value = currentActivity;
     applyFilters();
   }
   function filterYear(year) {
     currentYear = year;
-    document.querySelectorAll('.year-btn').forEach(function(btn) {
-      btn.classList.remove('bg-cbrs-blue', 'text-white', 'border-cbrs-blue');
-      btn.classList.add('border-gray-300', 'text-gray-600');
-    });
-    var active = document.getElementById('year-' + year);
-    if (active) { active.classList.add('bg-cbrs-blue', 'text-white', 'border-cbrs-blue'); active.classList.remove('border-gray-300', 'text-gray-600'); }
+    const select = document.getElementById('gallery-year-filter');
+    if (select) select.value = currentYear;
+    applyFilters();
+  }
+  function resetGalleryFilters() {
+    currentCat = 'all';
+    currentActivity = 'all';
+    currentYear = 'all';
+    const category = document.getElementById('gallery-category-filter');
+    const year = document.getElementById('gallery-year-filter');
+    if (category) category.value = currentCat;
+    if (year) year.value = currentYear;
+    refreshActivityFilters();
     applyFilters();
   }
   let sidebarCollapsed = false;
