@@ -16,10 +16,10 @@
   --cbrs-focus: 0 0 0 3px rgba(88, 160, 26, .42);
   --cbrs-shell-top: 12px;
   --cbrs-hero-height: 344px;
-  --cbrs-sidebar-left: 24px;
+  --cbrs-sidebar-left: 20px;
   --cbrs-sidebar-width: 216px;
   --cbrs-sidebar-collapsed-width: 68px;
-  --cbrs-layout-gap: 18px;
+  --cbrs-layout-gap: 20px;
   --cbrs-nav-inset: 12px;
   --cbrs-nav-gap: 4px;
   --cbrs-nav-row: 45px;
@@ -502,7 +502,7 @@ body.cbrs-ui.cbrs-mobile-menu-open {
 
 body.cbrs-ui #sidebar.cbrs-sidebar {
   border: 1px solid rgba(255, 255, 255, .12);
-  border-radius: var(--cbrs-shell-radius);
+  border-radius: var(--cbrs-shell-radius) !important;
   background-clip: padding-box;
   box-shadow: 0 18px 42px rgba(10, 50, 115, .2), inset 0 1px 0 rgba(255, 255, 255, .08);
 }
