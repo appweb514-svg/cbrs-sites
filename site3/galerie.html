@@ -51,14 +51,15 @@
   .lightbox-nav:disabled { opacity: 0.25; pointer-events: none; }
   .lightbox-prev { left: 1rem; }
   .lightbox-next { right: 1rem; }
-  .lightbox-counter { position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.65); color: white; padding: 0.35rem 0.85rem; border-radius: 999px; font-size: 0.85rem; font-weight: 700; }
-  .lightbox-caption { position: fixed; bottom: 1.5rem; left: 50%; max-width: min(80vw, 42rem); transform: translateX(-50%); background: rgba(0,0,0,0.65); color: white; padding: 0.4rem 1.2rem; border-radius: 2rem; font-size: 0.9rem; text-align: center; }
+  .lightbox-counter { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.65); color: white; padding: 0.35rem 0.85rem; border-radius: 999px; font-size: 0.85rem; font-weight: 700; }
+  .lightbox-caption { position: fixed; top: 1.5rem; left: 50%; max-width: min(80vw, 42rem); transform: translateX(-50%); background: rgba(0,0,0,0.65); color: white; padding: 0.4rem 1.2rem; border-radius: 2rem; font-size: 0.9rem; text-align: center; }
   @media (max-width: 640px) {
     .lightbox img { max-width: 94vw; max-height: 76vh; }
     .lightbox-nav { width: 2.75rem; height: 2.75rem; }
     .lightbox-prev { left: 0.5rem; }
     .lightbox-next { right: 0.5rem; }
-    .lightbox-caption { bottom: 1rem; max-width: 72vw; font-size: 0.8rem; }
+    .lightbox-caption { top: 1rem; max-width: 72vw; font-size: 0.8rem; }
+    .lightbox-counter { bottom: 1rem; }
   }
   .sidebar {
     transition: width 0.3s ease;
