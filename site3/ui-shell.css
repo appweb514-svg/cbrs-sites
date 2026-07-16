@@ -20,6 +20,9 @@
   --cbrs-sidebar-width: 216px;
   --cbrs-sidebar-collapsed-width: 68px;
   --cbrs-layout-gap: 18px;
+  --cbrs-nav-inset: 12px;
+  --cbrs-nav-gap: 4px;
+  --cbrs-nav-row: 45px;
   --cbrs-content-offset: calc(var(--cbrs-sidebar-left) + var(--cbrs-sidebar-width) + var(--cbrs-layout-gap));
 }
 
@@ -182,9 +185,9 @@ body.cbrs-ui #sidebar.cbrs-sidebar {
 }
 
 body.cbrs-ui #sidebar.cbrs-sidebar .sidebar-toggle {
-  min-height: 42px;
-  margin: 8px;
-  padding: 0 12px;
+  min-height: 44px;
+  margin: 10px var(--cbrs-nav-inset);
+  padding: 0 14px;
   border: 1px solid rgba(255, 255, 255, .12) !important;
   border-radius: var(--cbrs-item-radius);
   background: rgba(255, 255, 255, .06);
@@ -199,12 +202,17 @@ body.cbrs-ui #sidebar.cbrs-sidebar.collapsed .sidebar-toggle svg {
 }
 
 body.cbrs-ui #sidebar.cbrs-sidebar nav {
-  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cbrs-nav-gap);
+  padding: 8px 0 10px;
 }
 
 body.cbrs-ui #sidebar.cbrs-sidebar .sidebar-link {
-  min-height: 44px;
-  margin: 0 10px 4px !important;
+  min-height: var(--cbrs-nav-row);
+  margin: 0 var(--cbrs-nav-inset) !important;
+  padding-right: 14px;
+  padding-left: 14px;
   border: 0 !important;
   border-radius: var(--cbrs-item-radius) !important;
 }
@@ -220,7 +228,8 @@ body.cbrs-ui #sidebar.cbrs-sidebar .sidebar-link.bg-cbrs-green {
 }
 
 body.cbrs-ui #sidebar.cbrs-sidebar .sidebar-divider {
-  margin: 12px 22px !important;
+  width: auto;
+  margin: 8px 24px !important;
 }
 
 body.cbrs-ui #sidebar.cbrs-sidebar.collapsed {
@@ -228,7 +237,11 @@ body.cbrs-ui #sidebar.cbrs-sidebar.collapsed {
 }
 
 body.cbrs-ui #sidebar.cbrs-sidebar.collapsed .sidebar-link {
-  margin: 0 8px 4px !important;
+  margin: 0 8px !important;
+}
+
+body.cbrs-ui #sidebar.cbrs-sidebar .sidebar-quote {
+  padding: .8rem .9rem !important;
 }
 
 body.cbrs-ui #sidebar.cbrs-sidebar.collapsed .sidebar-toggle {
@@ -254,6 +267,25 @@ body.cbrs-ui .cbrs-mobile-header button[aria-controls="mobile-menu"] {
   min-width: 44px;
   min-height: 44px;
   border-radius: 12px;
+}
+
+body.cbrs-ui .cbrs-mobile-header > div {
+  min-height: 60px;
+  gap: .75rem !important;
+  padding: .5rem .8rem !important;
+}
+
+body.cbrs-ui .cbrs-mobile-header #mobile-menu {
+  display: grid;
+  gap: .35rem;
+  padding: .8rem !important;
+}
+
+body.cbrs-ui .cbrs-mobile-header #mobile-menu > a {
+  min-height: 48px;
+  margin: 0 !important;
+  padding: .75rem .9rem !important;
+  border-radius: var(--cbrs-item-radius) !important;
 }
 
 body.cbrs-ui .cbrs-mobile-header button[aria-expanded="true"] svg {
