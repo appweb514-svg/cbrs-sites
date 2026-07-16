@@ -649,6 +649,10 @@ body.cbrs-ui .cbrs-activity-tag {
     padding-left: 1.25rem;
   }
 
+  body.cbrs-ui > .cbrs-hero.cbrs-activity-hero > .relative.z-10 {
+    padding-right: clamp(9rem, 20vw, 11rem);
+  }
+
   body.cbrs-ui > .cbrs-hero > .relative.z-10 > .text-center {
     padding-right: clamp(9rem, 20vw, 13rem) !important;
   }
@@ -660,6 +664,13 @@ body.cbrs-ui .cbrs-activity-tag {
   body.cbrs-ui .cbrs-logo-frame {
     right: 12px;
     width: clamp(170px, 24vw, 210px);
+  }
+
+  body.cbrs-ui > .cbrs-hero.cbrs-activity-hero .cbrs-logo-frame {
+    top: .75rem;
+    right: .75rem;
+    width: clamp(132px, 18vw, 158px);
+    border-radius: 18px;
   }
 }
 
@@ -685,11 +696,19 @@ body.cbrs-ui .cbrs-activity-tag {
     border-radius: 18px;
   }
 
+  body.cbrs-ui > .cbrs-hero.cbrs-activity-hero {
+    min-height: 350px;
+  }
+
   body.cbrs-ui > .cbrs-hero > .relative.z-10 {
     padding-top: 7rem;
     padding-right: 1rem;
     padding-bottom: 2rem;
     padding-left: 1rem;
+  }
+
+  body.cbrs-ui > .cbrs-hero.cbrs-activity-hero .cbrs-logo-frame {
+    width: clamp(112px, 32vw, 136px);
   }
 
   body.cbrs-ui > .cbrs-hero > .relative.z-10 > .text-center {
