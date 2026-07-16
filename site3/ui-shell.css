@@ -275,10 +275,14 @@ body.cbrs-ui .cbrs-mobile-header > div {
   padding: .5rem .8rem !important;
 }
 
-body.cbrs-ui .cbrs-mobile-header #mobile-menu {
+body.cbrs-ui .cbrs-mobile-header #mobile-menu:not(.hidden) {
   display: grid;
   gap: .35rem;
   padding: .8rem !important;
+}
+
+body.cbrs-ui .cbrs-mobile-header #mobile-menu.hidden {
+  display: none !important;
 }
 
 body.cbrs-ui .cbrs-mobile-header #mobile-menu > a {
@@ -504,7 +508,9 @@ body.cbrs-ui #sidebar.cbrs-sidebar {
 }
 
 body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero .cbrs-logo-frame {
-  width: clamp(250px, 22vw, 300px);
+  top: auto;
+  bottom: 1rem;
+  width: clamp(180px, 20vw, 260px);
 }
 
 body.cbrs-ui .cbrs-cookie-banner,
@@ -1010,12 +1016,6 @@ body.cbrs-ui .cbrs-activity-tag {
   }
 }
 
-@media (min-width: 768px) {
-  body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero > .relative.z-10 > .text-center {
-    padding-right: clamp(15rem, 24vw, 18rem) !important;
-  }
-}
-
 @media (min-width: 1024px) {
   body.cbrs-ui .cbrs-feature-grid,
   body.cbrs-ui .cbrs-activities-grid {
@@ -1054,7 +1054,9 @@ body.cbrs-ui .cbrs-activity-tag {
   }
 
   body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero .cbrs-logo-frame {
-    width: clamp(210px, 28vw, 250px);
+    top: auto;
+    bottom: .75rem;
+    width: clamp(170px, 24vw, 210px);
   }
 
   body.cbrs-ui > .cbrs-hero.cbrs-activity-hero .cbrs-logo-frame {
@@ -1062,6 +1064,12 @@ body.cbrs-ui .cbrs-activity-tag {
     right: .75rem;
     width: clamp(132px, 18vw, 158px);
     border-radius: 18px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero > .relative.z-10 > .text-center {
+    padding-right: clamp(13rem, 25vw, 16rem) !important;
   }
 }
 
@@ -1178,9 +1186,14 @@ body.cbrs-ui .cbrs-activity-tag {
   }
 
   body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero .cbrs-logo-frame {
-    width: clamp(156px, 42vw, 190px);
-    top: .75rem;
+    width: clamp(118px, 36vw, 150px);
+    top: auto;
+    bottom: .75rem;
     right: .75rem;
+  }
+
+  body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero > .relative.z-10 > .text-center {
+    padding-right: 9rem !important;
   }
 
   body.cbrs-ui #mobile-menu {
