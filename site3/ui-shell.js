@@ -170,6 +170,111 @@
     }
   }
 
+  function setupAccessibilityPanel() {
+    const panel = document.getElementById('accessibility-panel');
+    if (!panel || panel.querySelector('[data-a11y-audio="read"]')) return;
+
+    const heading = panel.querySelector('h2');
+    if (heading && !panel.querySelector('.a11y-intro')) {
+      const intro = document.createElement('p');
+      intro.className = 'a11y-intro';
+      intro.textContent = 'Activez une aide puis réinitialisez les options à tout moment.';
+      heading.insertAdjacentElement('afterend', intro);
+    }
+
+    const audio = document.createElement('section');
+    audio.className = 'a11y-audio';
+    audio.innerHTML = [
+      '<div class="a11y-audio-heading"><span>Lecture audio</span><small>Voix française</small></div>',
+      '<p class="a11y-audio-description">Écoutez le contenu principal de la page avec la synthèse vocale de votre navigateur.</p>',
+      '<div class="a11y-audio-actions">',
+      '<button type="button" data-a11y-audio="read" aria-pressed="false" aria-label="Lire la page">',
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg><span>Lire la page</span>',
+      '</button>',
+      '<button type="button" data-a11y-audio="stop" aria-label="Arrêter la lecture" disabled>',
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h12v12H6z"></path></svg><span>Arrêter</span>',
+      '</button>',
+      '</div>',
+      '<p class="a11y-audio-status" aria-live="polite"></p>'
+    ].join('');
+
+    const close = panel.querySelector('.close');
+    panel.insertBefore(audio, close || null);
+
+    const read = audio.querySelector('[data-a11y-audio="read"]');
+    const stop = audio.querySelector('[data-a11y-audio="stop"]');
+    const status = audio.querySelector('.a11y-audio-status');
+    const supported = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+    let utterance = null;
+
+    function setState(state, message) {
+      const speaking = state === 'speaking' || state === 'paused';
+      read.setAttribute('aria-pressed', String(speaking));
+      read.setAttribute('aria-label', state === 'speaking' ? 'Mettre en pause la lecture' : state === 'paused' ? 'Reprendre la lecture' : 'Lire la page');
+      read.querySelector('span').textContent = state === 'speaking' ? 'Pause' : state === 'paused' ? 'Reprendre' : 'Lire la page';
+      read.querySelector('svg').innerHTML = state === 'speaking'
+        ? '<path d="M7 5h3v14H7zM14 5h3v14h-3z"></path>'
+        : '<path d="M8 5v14l11-7z"></path>';
+      stop.disabled = !speaking;
+      status.textContent = message || '';
+    }
+
+    function pageText() {
+      const main = document.querySelector('main#contenu, main');
+      if (!main) return '';
+      const clone = main.cloneNode(true);
+      clone.querySelectorAll('script, style, nav, .accessibility-panel, .accessibility-fab, button').forEach(function (node) {
+        node.remove();
+      });
+      return (clone.innerText || clone.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 7000);
+    }
+
+    function stopReading() {
+      if (supported) window.speechSynthesis.cancel();
+      utterance = null;
+      setState('idle', '');
+    }
+
+    read.addEventListener('click', function () {
+      if (!supported) {
+        setState('idle', 'La lecture audio n’est pas disponible dans ce navigateur.');
+        return;
+      }
+      if (window.speechSynthesis.speaking) {
+        if (window.speechSynthesis.paused) {
+          window.speechSynthesis.resume();
+          setState('speaking', 'Lecture en cours…');
+        } else {
+          window.speechSynthesis.pause();
+          setState('paused', 'Lecture en pause.');
+        }
+        return;
+      }
+      const text = pageText();
+      if (!text) {
+        setState('idle', 'Aucun contenu principal à lire.');
+        return;
+      }
+      utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'fr-FR';
+      utterance.rate = .95;
+      utterance.pitch = 1;
+      utterance.onstart = function () { setState('speaking', 'Lecture en cours…'); };
+      utterance.onend = function () { setState('idle', 'Lecture terminée.'); };
+      utterance.onerror = function () { setState('idle', 'La lecture audio a été interrompue.'); };
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utterance);
+    });
+
+    stop.addEventListener('click', stopReading);
+    if (!supported) {
+      read.disabled = true;
+      status.textContent = 'La lecture audio n’est pas disponible dans ce navigateur.';
+    } else {
+      setState('idle', '');
+    }
+  }
+
   function setupGallery() {
     const items = document.querySelectorAll('.gallery-item');
     const lightbox = document.getElementById('lightbox');
@@ -312,6 +417,7 @@
   function init() {
     setupShell();
     setupSidebarToggle();
+    setupAccessibilityPanel();
     setupMobileMenu();
     setupGallery();
     setupFilters();
