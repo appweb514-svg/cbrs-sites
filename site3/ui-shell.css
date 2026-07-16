@@ -508,9 +508,20 @@ body.cbrs-ui #sidebar.cbrs-sidebar {
 }
 
 body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero .cbrs-logo-frame {
-  top: auto;
-  bottom: 1rem;
-  width: clamp(180px, 20vw, 260px);
+  top: clamp(1rem, 2vw, 1.5rem);
+  right: clamp(1rem, 2.5vw, 2rem);
+  bottom: auto;
+  width: clamp(190px, 20vw, 220px);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero .cbrs-logo-image {
+  filter: drop-shadow(0 5px 8px rgba(0, 0, 0, .2));
 }
 
 body.cbrs-ui .cbrs-cookie-banner,
@@ -1054,9 +1065,10 @@ body.cbrs-ui .cbrs-activity-tag {
   }
 
   body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero .cbrs-logo-frame {
-    top: auto;
-    bottom: .75rem;
-    width: clamp(170px, 24vw, 210px);
+    top: 1rem;
+    right: 1rem;
+    bottom: auto;
+    width: clamp(140px, 20vw, 165px);
   }
 
   body.cbrs-ui > .cbrs-hero.cbrs-activity-hero .cbrs-logo-frame {
@@ -1186,14 +1198,24 @@ body.cbrs-ui .cbrs-activity-tag {
   }
 
   body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero .cbrs-logo-frame {
-    width: clamp(118px, 36vw, 150px);
-    top: auto;
-    bottom: .75rem;
+    top: .75rem;
     right: .75rem;
+    bottom: auto;
+    width: clamp(96px, 25vw, 116px);
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero > .relative.z-10 {
+    padding-top: 8.5rem;
   }
 
   body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero > .relative.z-10 > .text-center {
-    padding-right: 9rem !important;
+    padding-right: 0 !important;
   }
 
   body.cbrs-ui #mobile-menu {
