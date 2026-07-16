@@ -118,6 +118,7 @@
     function setOpen(open) {
       menu.classList.toggle('open', open);
       menu.classList.toggle('hidden', !open);
+      document.body.classList.toggle('cbrs-mobile-menu-open', open);
       button.setAttribute('aria-expanded', String(open));
       button.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
     }
@@ -147,6 +148,159 @@
         setOpen(false);
       });
     });
+  }
+
+  function setupCookieConsent() {
+    const consentKey = 'cbrs-cookie-consent-v1';
+    const externalFrames = Array.from(document.querySelectorAll('[data-cookie-src]'));
+    let stored = null;
+
+    try {
+      stored = JSON.parse(window.localStorage.getItem(consentKey) || 'null');
+    } catch (_) {
+      stored = null;
+    }
+
+    const root = document.createElement('div');
+    root.id = 'cbrs-cookie-consent';
+    root.innerHTML = [
+      '<section class="cbrs-cookie-banner" role="region" aria-label="Préférences de confidentialité">',
+      '<div class="cbrs-cookie-copy">',
+      '<p class="cbrs-cookie-eyebrow">Confidentialité</p>',
+      '<h2>Votre vie privée compte</h2>',
+      '<p>Le CBRS mémorise uniquement votre choix et bloque les cartes externes tant que vous ne les avez pas autorisées.</p>',
+      '<a href="mentions-legales.html#cookies">En savoir plus</a>',
+      '</div>',
+      '<div class="cbrs-cookie-actions">',
+      '<button type="button" data-cookie-action="reject" class="cbrs-cookie-button cbrs-cookie-button-secondary">Refuser</button>',
+      '<button type="button" data-cookie-action="customize" class="cbrs-cookie-button cbrs-cookie-button-quiet">Personnaliser</button>',
+      '<button type="button" data-cookie-action="accept" class="cbrs-cookie-button cbrs-cookie-button-primary">Tout accepter</button>',
+      '</div>',
+      '</section>',
+      '<section class="cbrs-cookie-dialog" hidden role="dialog" aria-modal="true" aria-labelledby="cbrs-cookie-title">',
+      '<div class="cbrs-cookie-dialog-card">',
+      '<div class="cbrs-cookie-dialog-header"><div><p class="cbrs-cookie-eyebrow">Vos choix</p><h2 id="cbrs-cookie-title">Gérer les cookies</h2></div><button type="button" class="cbrs-cookie-close" data-cookie-action="close" aria-label="Fermer">×</button></div>',
+      '<p class="cbrs-cookie-dialog-intro">Les éléments nécessaires restent actifs. Les contenus externes sont désactivés par défaut et peuvent être réactivés à tout moment.</p>',
+      '<div class="cbrs-cookie-options">',
+      '<div class="cbrs-cookie-option"><div><strong>Fonctionnement nécessaire</strong><small>Préférence de consentement et aides d’accessibilité.</small></div><span class="cbrs-cookie-status">Toujours actif</span></div>',
+      '<label class="cbrs-cookie-option cbrs-cookie-option-toggle"><span><strong>Cartes et contenus externes</strong><small>Charge les cartes OpenStreetMap sur les pages Contact et Activité.</small></span><input type="checkbox" data-cookie-toggle="external"><span class="cbrs-cookie-switch" aria-hidden="true"></span></label>',
+      '</div>',
+      '<p class="cbrs-cookie-note">Aucun outil de mesure d’audience ni publicité n’est activé dans cette version du site.</p>',
+      '<div class="cbrs-cookie-dialog-actions"><button type="button" data-cookie-action="close" class="cbrs-cookie-button cbrs-cookie-button-secondary">Annuler</button><button type="button" data-cookie-action="save" class="cbrs-cookie-button cbrs-cookie-button-primary">Enregistrer mes choix</button></div>',
+      '</div>',
+      '</section>',
+      '<button type="button" class="cbrs-cookie-manage" data-cookie-open hidden>Cookies</button>'
+    ].join('');
+    document.body.appendChild(root);
+
+    const banner = root.querySelector('.cbrs-cookie-banner');
+    const dialog = root.querySelector('.cbrs-cookie-dialog');
+    const toggle = root.querySelector('[data-cookie-toggle="external"]');
+    const manage = root.querySelector('.cbrs-cookie-manage');
+    let lastFocus = null;
+    let current = stored && stored.version === 1
+      ? { necessary: true, external: stored.external === true }
+      : { necessary: true, external: false };
+
+    function applyExternalConsent() {
+      externalFrames.forEach(function (frame, index) {
+        let placeholder = frame._cbrsCookiePlaceholder;
+        if (!placeholder) {
+          placeholder = document.createElement('div');
+          placeholder.className = 'cbrs-external-placeholder';
+          placeholder.innerHTML = '<strong>Carte externe désactivée</strong><span>Autorisez les contenus externes pour afficher la carte.</span><button type="button" class="cbrs-cookie-button cbrs-cookie-button-secondary">Autoriser les contenus externes</button>';
+          placeholder.querySelector('button').addEventListener('click', openPreferences);
+          frame.insertAdjacentElement('beforebegin', placeholder);
+          frame._cbrsCookiePlaceholder = placeholder;
+          frame.dataset.cookieIndex = String(index);
+        }
+
+        const enabled = current.external === true;
+        if (enabled) {
+          if (!frame.getAttribute('src')) frame.setAttribute('src', frame.dataset.cookieSrc);
+          frame.hidden = false;
+          frame.removeAttribute('aria-hidden');
+          placeholder.hidden = true;
+        } else {
+          frame.removeAttribute('src');
+          frame.hidden = true;
+          frame.setAttribute('aria-hidden', 'true');
+          placeholder.hidden = false;
+        }
+      });
+    }
+
+    function closeDialog(restoreFocus) {
+      dialog.hidden = true;
+      document.body.classList.remove('cbrs-cookie-dialog-open');
+      if (restoreFocus && lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    }
+
+    function openPreferences(event) {
+      if (event) event.preventDefault();
+      lastFocus = document.activeElement;
+      toggle.checked = current.external === true;
+      dialog.hidden = false;
+      document.body.classList.add('cbrs-cookie-dialog-open');
+      const close = dialog.querySelector('.cbrs-cookie-close');
+      if (close) close.focus();
+    }
+
+    function saveConsent(external) {
+      current = { necessary: true, external: external === true };
+      try {
+        window.localStorage.setItem(consentKey, JSON.stringify({
+          version: 1,
+          necessary: true,
+          external: current.external,
+          updatedAt: new Date().toISOString()
+        }));
+      } catch (_) {}
+      applyExternalConsent();
+      banner.hidden = true;
+      manage.hidden = false;
+      closeDialog(false);
+      window.dispatchEvent(new CustomEvent('cbrs-consent-change', { detail: current }));
+    }
+
+    root.querySelectorAll('[data-cookie-action="accept"]').forEach(function (button) {
+      button.addEventListener('click', function () { saveConsent(true); });
+    });
+    root.querySelectorAll('[data-cookie-action="reject"]').forEach(function (button) {
+      button.addEventListener('click', function () { saveConsent(false); });
+    });
+    root.querySelectorAll('[data-cookie-action="customize"], [data-cookie-open]').forEach(function (button) {
+      button.addEventListener('click', openPreferences);
+    });
+    root.querySelectorAll('[data-cookie-action="close"]').forEach(function (button) {
+      button.addEventListener('click', function () { closeDialog(true); });
+    });
+    const save = root.querySelector('[data-cookie-action="save"]');
+    if (save) save.addEventListener('click', function () { saveConsent(toggle.checked); });
+
+    document.querySelectorAll('[data-cookie-open]').forEach(function (button) {
+      if (!root.contains(button)) button.addEventListener('click', openPreferences);
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !dialog.hidden) closeDialog(true);
+    });
+
+    applyExternalConsent();
+    if (stored && stored.version === 1) {
+      banner.hidden = true;
+      manage.hidden = false;
+    } else {
+      banner.hidden = false;
+      manage.hidden = true;
+    }
+
+    window.CBRSConsent = {
+      open: openPreferences,
+      reset: function () {
+        try { window.localStorage.removeItem(consentKey); } catch (_) {}
+        window.location.reload();
+      }
+    };
   }
 
   function setupSidebarToggle() {
@@ -417,6 +571,7 @@
   function init() {
     setupShell();
     setupSidebarToggle();
+    setupCookieConsent();
     setupAccessibilityPanel();
     setupMobileMenu();
     setupGallery();

@@ -649,7 +649,7 @@ if (activity) {
   const route = 'https://www.openstreetmap.org/directions?to='+m.lat+'%2C'+m.lon+'#map=16/'+m.lat+'/'+m.lon;
   document.getElementById('route-link').href = route;
   document.getElementById('route-link-card').href = route;
-  document.getElementById('map-frame').src = 'https://www.openstreetmap.org/export/embed.html?bbox='+(m.lon-0.01)+'%2C'+(m.lat-0.006)+'%2C'+(m.lon+0.01)+'%2C'+(m.lat+0.006)+'&layer=mapnik&marker='+m.lat+'%2C'+m.lon;
+  document.getElementById('map-frame').dataset.cookieSrc = 'https://www.openstreetmap.org/export/embed.html?bbox='+(m.lon-0.01)+'%2C'+(m.lat-0.006)+'%2C'+(m.lon+0.01)+'%2C'+(m.lat+0.006)+'&layer=mapnik&marker='+m.lat+'%2C'+m.lon;
 } else {
   document.getElementById('activity-title').innerHTML = '<span class="text-cbrs-green font-serif-italic">Activité</span> introuvable';
   document.getElementById('activity-subtitle').textContent = 'Cette activité n’existe pas.';
