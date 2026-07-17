@@ -472,6 +472,15 @@ function groupByDay(activities) {
   return grouped;
 }
 
+function planningSlug(value) {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
 function renderWeeklyCalendar(activities) {
   const grouped = groupByDay(activities);
   const container = document.getElementById('week-calendar');
@@ -505,6 +514,7 @@ function renderWeeklyCalendar(activities) {
 
     const details = document.createElement('details');
     details.className = 'bg-white rounded-2xl shadow-card overflow-hidden group';
+    details.id = 'planning-' + planningSlug(day);
     if (isOpen) details.open = true;
     details.innerHTML = `
       <summary class="px-5 py-3.5 bg-cbrs-blue/5 border-b border-gray-100 cursor-pointer select-none flex items-center justify-between hover:bg-cbrs-blue/10 transition-colors list-none [&::-webkit-details-marker]:hidden">
@@ -545,6 +555,7 @@ function renderWeeklyCalendar(activities) {
     });
     const details = document.createElement('details');
     details.className = 'bg-white rounded-2xl shadow-card overflow-hidden group';
+    details.id = 'planning-sur-demande';
     details.innerHTML = `
       <summary class="px-5 py-3.5 bg-gray-100 border-b border-gray-100 cursor-pointer select-none flex items-center justify-between hover:bg-gray-200/50 transition-colors list-none [&::-webkit-details-marker]:hidden">
         <div>
@@ -586,6 +597,14 @@ async function initPlanning() {
   renderWeeklyCalendar(activities);
   document.getElementById('planning-loading').classList.add('hidden');
   document.getElementById('planning-content').classList.remove('hidden');
+  const targetId = window.location.hash.slice(1);
+  const target = targetId ? document.getElementById(targetId) : null;
+  if (target) {
+    if (target.tagName === 'DETAILS') target.open = true;
+    requestAnimationFrame(function() {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
 }
 
 initPlanning();

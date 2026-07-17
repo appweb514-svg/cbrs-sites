@@ -307,21 +307,6 @@
     <div id="animators-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
   </div>
 
-  <div class="bg-white rounded-2xl shadow-card p-6 md:p-8 mb-8">
-    <h2 class="text-xl font-bold text-cbrs-text mb-4 flex items-center gap-2">
-      <svg class="w-5 h-5 text-cbrs-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-      Horaires & Lieux
-    </h2>
-    <div id="activity-schedule" class="space-y-2 mb-6"></div>
-    <div id="meeting-point" class="hidden bg-cbrs-gray-100 rounded-xl p-4 mt-4">
-      <h3 class="text-sm font-bold text-gray-700 flex items-center gap-2 mb-2">
-        <svg class="w-4 h-4 text-cbrs-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-        Point de rendez-vous
-      </h3>
-      <p id="meeting-point-text" class="text-sm text-gray-600"></p>
-    </div>
-  </div>
-
   <div class="bg-cbrs-gray-100 rounded-2xl p-6 md:p-8 mb-8">
     <h2 class="text-xl font-bold text-cbrs-text mb-4 flex items-center gap-2">
       <svg class="w-5 h-5 text-cbrs-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
@@ -346,7 +331,6 @@
       <p class="text-sm font-semibold text-cbrs-green mb-1">Informations pratiques</p>
       <h2 class="text-2xl font-bold text-cbrs-text mb-5">Quand et qui contacter ?</h2>
 
-      <div id="practical-animators" class="mb-6"></div>
       <div id="practical-schedule" class="mb-6"></div>
       <div id="practical-place" class="mb-6"></div>
 
@@ -354,7 +338,7 @@
         <iframe id="map-frame" title="Carte du lieu de l'activité" class="w-full h-56" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
       <a id="route-link-card" class="block w-full text-center py-3 bg-cbrs-green hover:bg-cbrs-green-hover text-white font-semibold rounded-xl text-sm transition-colors" target="_blank" rel="noopener">Ouvrir l'itinéraire</a>
-      <a href="planning.html" class="block w-full text-center mt-2 py-3 bg-cbrs-blue/10 hover:bg-cbrs-blue/15 text-cbrs-blue font-semibold rounded-xl text-sm transition-colors">Voir le planning complet</a>
+      <a href="planning.html#planning-content" class="block w-full text-center mt-2 py-3 bg-cbrs-blue/10 hover:bg-cbrs-blue/15 text-cbrs-blue font-semibold rounded-xl text-sm transition-colors">Voir le planning complet</a>
     </div>
   </aside>
 </section>
@@ -615,19 +599,6 @@ if (activity) {
     });
   }
 
-  const scheduleContainer = document.getElementById('activity-schedule');
-  activity.schedule.forEach(function(s) {
-    const div = document.createElement('div');
-    div.className = 'flex justify-between items-center py-2 border-b border-gray-100 text-sm';
-    div.innerHTML = '<span class="font-medium text-gray-900">'+s.day+'</span><span class="text-cbrs-blue">'+s.time+'</span><span class="text-gray-500 text-xs">'+s.location+'</span>';
-    scheduleContainer.appendChild(div);
-  });
-
-  if (activity.meetingPoint) {
-    document.getElementById('meeting-point').classList.remove('hidden');
-    document.getElementById('meeting-point-text').textContent = activity.meetingPoint;
-  }
-
   const infoContainer = document.getElementById('activity-info');
   activity.info.forEach(function(i) {
     const div = document.createElement('div');
@@ -636,11 +607,25 @@ if (activity) {
     infoContainer.appendChild(div);
   });
 
-  const practicalAnimators = document.getElementById('practical-animators');
-  practicalAnimators.innerHTML = '<h3 class="text-sm font-bold text-gray-900 mb-2">Référents de l\'activité</h3><ul class="space-y-1 text-sm text-gray-700">'+(activity.animators || []).map(a => '<li><strong>'+a.name+'</strong></li>').join('')+'</ul>';
-
+  const planningSlug = function(value) {
+    return String(value || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+  };
+  const planningHref = function(day) {
+    const anchor = day && day !== 'Voir planning'
+      ? 'planning-' + planningSlug(day)
+      : 'planning-sur-demande';
+    return 'planning.html#' + anchor;
+  };
   const practicalSchedule = document.getElementById('practical-schedule');
-  practicalSchedule.innerHTML = '<h3 class="text-sm font-bold text-gray-900 mb-2">Horaires</h3><ul class="space-y-2 text-sm text-gray-700">'+activity.schedule.map(s => '<li class="flex gap-2"><span class="font-semibold min-w-20">'+s.day+'</span><span>'+s.time+' — '+s.location+'</span></li>').join('')+'</ul>';
+  practicalSchedule.innerHTML = '<h3 class="text-sm font-bold text-gray-900 mb-2">Horaires</h3><ul class="space-y-3 text-sm text-gray-700">'+activity.schedule.map(function(s) {
+    const time = s.time && s.time !== 'Voir planning' ? '<span>'+s.time+' · </span>' : '';
+    return '<li class="border-b border-gray-100 pb-3 last:border-0 last:pb-0"><div class="flex items-center justify-between gap-3"><span class="font-semibold text-gray-900">'+s.day+'</span><a href="'+planningHref(s.day)+'" class="inline-flex items-center gap-1 text-cbrs-blue hover:text-cbrs-blue-light font-semibold transition-colors" aria-label="Voir le planning pour '+s.day+'">Voir planning<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg></a></div><p class="mt-1 text-xs text-gray-500">'+time+s.location+'</p></li>';
+  }).join('')+'</ul>';
 
   const practicalPlace = document.getElementById('practical-place');
   practicalPlace.innerHTML = '<h3 class="text-sm font-bold text-gray-900 mb-2">Lieu</h3><p class="text-sm text-gray-700">'+(activity.meetingPoint || activity.schedule[0].location)+'</p>';
