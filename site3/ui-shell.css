@@ -164,6 +164,12 @@ body.cbrs-ui .cbrs-home-hero-bg {
   object-position: center 52%;
 }
 
+body.cbrs-ui .cbrs-outings-hero-bg {
+  object-position: center 26%;
+  transform: scale(1.06);
+  transform-origin: center center;
+}
+
 @media (min-width: 1024px) {
   body.cbrs-ui > .cbrs-hero > img.absolute.inset-0.object-cover {
     object-position: center 22%;
@@ -172,11 +178,21 @@ body.cbrs-ui .cbrs-home-hero-bg {
   body.cbrs-ui .cbrs-home-hero-bg {
     object-position: center 22%;
   }
+
+  body.cbrs-ui .cbrs-outings-hero-bg {
+    object-position: center 24%;
+    transform: scale(1.08);
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
   body.cbrs-ui > .cbrs-hero > img.absolute.inset-0.object-cover {
     object-position: center 28%;
+  }
+
+  body.cbrs-ui .cbrs-outings-hero-bg {
+    object-position: center 22%;
+    transform: scale(1.06);
   }
 }
 
