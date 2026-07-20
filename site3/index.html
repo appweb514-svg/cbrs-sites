@@ -44,9 +44,8 @@
     .flash-scroll-text { white-space: normal; }
     .flash-scroll-text[data-flash-clone] { display: none; }
   }
-  .cbrs-activity-showcase { position: relative; isolation: isolate; overflow: hidden; padding: clamp(2rem, 5vw, 4rem); border-radius: 28px; background: linear-gradient(105deg, rgba(10,50,115,.98), rgba(20,92,117,.94) 62%, rgba(10,50,115,.96)); box-shadow: 0 24px 55px rgba(10,50,115,.2); }
-  .cbrs-activity-showcase::before { content: ''; position: absolute; inset: 0; z-index: -2; background: linear-gradient(105deg, rgba(10,50,115,.94) 12%, rgba(10,50,115,.72) 52%, rgba(10,50,115,.4)), url('assets-premium/header-activities.jpg') center/cover; opacity: .88; }
-  .cbrs-activity-showcase::after { content: ''; position: absolute; inset: auto -10% -45% 42%; z-index: -1; height: 70%; border-radius: 50%; background: radial-gradient(circle, rgba(113,190,50,.28), transparent 68%); filter: blur(20px); pointer-events: none; }
+  .cbrs-activity-showcase { position: relative; isolation: isolate; overflow: hidden; padding: clamp(2rem, 5vw, 4rem); border-radius: 28px; background: linear-gradient(115deg, #0a3273, #1e4b99 60%, #0a3273); box-shadow: 0 24px 55px rgba(10,50,115,.2); }
+  .cbrs-activity-showcase::after { content: ''; position: absolute; inset: auto -10% -45% 42%; z-index: -1; height: 70%; border-radius: 50%; background: radial-gradient(circle, rgba(125,190,255,.18), transparent 68%); filter: blur(20px); pointer-events: none; }
   .cbrs-activity-showcase-inner { display: grid; grid-template-columns: minmax(220px, .78fr) minmax(0, 1.5fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: center; }
   .cbrs-activity-copy { max-width: 27rem; color: #fff; }
   .cbrs-activity-eyebrow { margin-bottom: .8rem; color: #b9e15d; font-size: .72rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
@@ -59,14 +58,15 @@
   .cbrs-activity-stat span { color: rgba(255,255,255,.62); font-size: .7rem; letter-spacing: .05em; text-transform: uppercase; }
   .cbrs-activity-cta { display: inline-flex; align-items: center; gap: .55rem; padding: .8rem 1.15rem; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; background: rgba(255,255,255,.1); color: #fff; font-size: .85rem; font-weight: 800; transition: background-color .2s, transform .2s, border-color .2s; }
   .cbrs-activity-cta:hover, .cbrs-activity-cta:focus-visible { border-color: #b9e15d; background: #58a01a; color: #fff; transform: translateY(-2px); outline: none; }
-  .cbrs-activity-rail { min-width: 0; overflow: hidden; padding: .75rem 0 1.15rem; mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+  .cbrs-activity-rail { min-width: 0; overflow-x: auto; overflow-y: hidden; padding: .75rem 0 1.15rem; cursor: grab; scrollbar-width: none; mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); touch-action: pan-y; }
+  .cbrs-activity-rail::-webkit-scrollbar { display: none; }
+  .cbrs-activity-rail.is-dragging { cursor: grabbing; }
   .cbrs-activity-track { display: flex; width: max-content; will-change: transform; animation: cbrs-activity-loop 38s linear infinite; }
   .cbrs-activity-track.is-paused { animation-play-state: paused; }
   .cbrs-activity-set { display: flex; flex: none; gap: 1rem; padding-right: 1rem; }
   .cbrs-activity-slide { position: relative; display: flex; flex: 0 0 clamp(12rem, 17vw, 15rem); min-height: 17rem; flex-direction: column; justify-content: space-between; padding: 1rem; overflow: hidden; border: 1px solid rgba(255,255,255,.52); border-radius: 22px; background: linear-gradient(150deg, rgba(255,255,255,.98), rgba(235,246,250,.9)); box-shadow: 0 16px 30px rgba(5,31,68,.22); color: #102f5f; transition: transform .3s ease, box-shadow .3s ease; }
   .cbrs-activity-slide::before { content: ''; position: absolute; top: -3rem; right: -2rem; width: 8rem; height: 8rem; border-radius: 50%; background: rgba(88,160,26,.16); }
   .cbrs-activity-slide:hover, .cbrs-activity-slide:focus-visible { box-shadow: 0 22px 38px rgba(5,31,68,.34); transform: translateY(-8px) rotate(-1deg); outline: none; }
-  .cbrs-activity-number { position: absolute; top: .9rem; right: 1rem; z-index: 1; color: rgba(10,50,115,.45); font-size: .68rem; font-weight: 800; letter-spacing: .08em; }
   .cbrs-activity-art { display: grid; min-height: 10rem; place-items: center; overflow: hidden; border-radius: 17px; background: linear-gradient(145deg, #edf6f5, #dce9f6); }
   .cbrs-activity-art img { width: 82%; height: 82%; object-fit: contain; transition: transform .45s ease; }
   .cbrs-activity-slide:hover .cbrs-activity-art img, .cbrs-activity-slide:focus-visible .cbrs-activity-art img { transform: scale(1.08) rotate(-3deg); }
@@ -75,8 +75,7 @@
   .cbrs-activity-slide-content small { display: block; margin-top: .25rem; color: #5e7897; font-size: .72rem; }
   .cbrs-activity-arrow { display: grid; width: 2.25rem; height: 2.25rem; flex: 0 0 auto; place-items: center; border-radius: 50%; background: #0a3273; color: #fff; font-size: 1.15rem; transition: background-color .2s, transform .2s; }
   .cbrs-activity-slide:hover .cbrs-activity-arrow, .cbrs-activity-slide:focus-visible .cbrs-activity-arrow { background: #58a01a; transform: rotate(-12deg); }
-  .cbrs-activity-controls { display: flex; align-items: center; gap: .7rem; margin-top: 1.2rem; color: rgba(255,255,255,.65); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
-  .cbrs-activity-controls::before { content: ''; width: 2rem; height: 2px; background: #72b42c; }
+  .cbrs-activity-controls { display: flex; align-items: center; justify-content: flex-end; margin-top: 1.2rem; }
   .cbrs-activity-toggle { display: grid; width: 2.25rem; height: 2.25rem; margin-left: auto; place-items: center; border: 1px solid rgba(255,255,255,.3); border-radius: 50%; background: rgba(255,255,255,.1); color: #fff; cursor: pointer; transition: background-color .2s, transform .2s; }
   .cbrs-activity-toggle:hover, .cbrs-activity-toggle:focus-visible { background: #58a01a; transform: scale(1.06); outline: none; }
   .cbrs-activity-toggle svg { width: 1rem; height: 1rem; fill: currentColor; }
@@ -442,53 +441,47 @@
         <div class="cbrs-activity-track">
           <div class="cbrs-activity-set">
             <a href="activite.html?id=07" class="cbrs-activity-slide" aria-label="Découvrir la Randonnée">
-              <span class="cbrs-activity-number">01 / 05</span>
               <span class="cbrs-activity-art"><img src="07_randonnee.png" alt="Randonnée"/></span>
               <span class="cbrs-activity-slide-content"><span><strong>Randonnée</strong><small>Grand air & liberté</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
             </a>
             <a href="activite.html?id=03" class="cbrs-activity-slide" aria-label="Découvrir le Cyclisme">
-              <span class="cbrs-activity-number">02 / 05</span>
               <span class="cbrs-activity-art"><img src="03_cyclisme.png" alt="Cyclisme"/></span>
               <span class="cbrs-activity-slide-content"><span><strong>Cyclisme</strong><small>Évasion & énergie</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
             </a>
             <a href="activite.html?id=01" class="cbrs-activity-slide" aria-label="Découvrir l'Aquagym">
-              <span class="cbrs-activity-number">03 / 05</span>
               <span class="cbrs-activity-art"><img src="01_aquagym.png" alt="Aquagym"/></span>
               <span class="cbrs-activity-slide-content"><span><strong>Aquagym</strong><small>Forme en douceur</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
             </a>
             <a href="activite.html?id=11" class="cbrs-activity-slide" aria-label="Découvrir le Tai Chi">
-              <span class="cbrs-activity-number">04 / 05</span>
               <span class="cbrs-activity-art"><img src="11_tai_chi.png" alt="Tai Chi Chuan"/></span>
               <span class="cbrs-activity-slide-content"><span><strong>Tai Chi</strong><small>Équilibre & sérénité</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
             </a>
             <a href="activite.html?id=02" class="cbrs-activity-slide" aria-label="Découvrir la Pétanque">
-              <span class="cbrs-activity-number">05 / 05</span>
               <span class="cbrs-activity-art"><img src="02_petanque.png" alt="Pétanque"/></span>
               <span class="cbrs-activity-slide-content"><span><strong>Pétanque</strong><small>Convivialité & détente</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
             </a>
           </div>
           <div class="cbrs-activity-set" aria-hidden="true">
             <a href="activite.html?id=07" class="cbrs-activity-slide" tabindex="-1">
-              <span class="cbrs-activity-number">01 / 05</span><span class="cbrs-activity-art"><img src="07_randonnee.png" alt=""/></span><span class="cbrs-activity-slide-content"><span><strong>Randonnée</strong><small>Grand air & liberté</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
+              <span class="cbrs-activity-art"><img src="07_randonnee.png" alt=""/></span><span class="cbrs-activity-slide-content"><span><strong>Randonnée</strong><small>Grand air & liberté</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
             </a>
             <a href="activite.html?id=03" class="cbrs-activity-slide" tabindex="-1">
-              <span class="cbrs-activity-number">02 / 05</span><span class="cbrs-activity-art"><img src="03_cyclisme.png" alt=""/></span><span class="cbrs-activity-slide-content"><span><strong>Cyclisme</strong><small>Évasion & énergie</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
+              <span class="cbrs-activity-art"><img src="03_cyclisme.png" alt=""/></span><span class="cbrs-activity-slide-content"><span><strong>Cyclisme</strong><small>Évasion & énergie</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
             </a>
             <a href="activite.html?id=01" class="cbrs-activity-slide" tabindex="-1">
-              <span class="cbrs-activity-number">03 / 05</span><span class="cbrs-activity-art"><img src="01_aquagym.png" alt=""/></span><span class="cbrs-activity-slide-content"><span><strong>Aquagym</strong><small>Forme en douceur</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
+              <span class="cbrs-activity-art"><img src="01_aquagym.png" alt=""/></span><span class="cbrs-activity-slide-content"><span><strong>Aquagym</strong><small>Forme en douceur</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
             </a>
             <a href="activite.html?id=11" class="cbrs-activity-slide" tabindex="-1">
-              <span class="cbrs-activity-number">04 / 05</span><span class="cbrs-activity-art"><img src="11_tai_chi.png" alt=""/></span><span class="cbrs-activity-slide-content"><span><strong>Tai Chi</strong><small>Équilibre & sérénité</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
+              <span class="cbrs-activity-art"><img src="11_tai_chi.png" alt=""/></span><span class="cbrs-activity-slide-content"><span><strong>Tai Chi</strong><small>Équilibre & sérénité</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
             </a>
             <a href="activite.html?id=02" class="cbrs-activity-slide" tabindex="-1">
-              <span class="cbrs-activity-number">05 / 05</span><span class="cbrs-activity-art"><img src="02_petanque.png" alt=""/></span><span class="cbrs-activity-slide-content"><span><strong>Pétanque</strong><small>Convivialité & détente</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
+              <span class="cbrs-activity-art"><img src="02_petanque.png" alt=""/></span><span class="cbrs-activity-slide-content"><span><strong>Pétanque</strong><small>Convivialité & détente</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
             </a>
           </div>
         </div>
       </div>
     </div>
     <div class="cbrs-activity-controls">
-      <span>Défilement continu</span>
       <button class="cbrs-activity-toggle" type="button" data-carousel-toggle aria-pressed="false" aria-label="Mettre en pause le défilement">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z"></path></svg>
         <span class="sr-only">Mettre en pause le défilement</span>
@@ -665,8 +658,9 @@ function setupActivityShowcase() {
   const showcase = document.querySelector('[data-activity-showcase]');
   if (!showcase) return;
   const track = showcase.querySelector('.cbrs-activity-track');
+  const rail = showcase.querySelector('.cbrs-activity-rail');
   const toggle = showcase.querySelector('[data-carousel-toggle]');
-  if (!track || !toggle) return;
+  if (!track || !rail || !toggle) return;
 
   function renderToggle(paused) {
     toggle.setAttribute('aria-pressed', String(paused));
@@ -681,6 +675,50 @@ function setupActivityShowcase() {
     track.classList.toggle('is-paused', paused);
     renderToggle(paused);
   });
+
+  let dragStartX = 0;
+  let dragStartScroll = 0;
+  let dragMoved = false;
+  let wasPlaying = false;
+
+  function endDrag() {
+    if (!rail.classList.contains('is-dragging')) return;
+    rail.classList.remove('is-dragging');
+    if (wasPlaying) {
+      track.classList.remove('is-paused');
+      renderToggle(false);
+    }
+  }
+
+  rail.addEventListener('pointerdown', function(event) {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    dragStartX = event.clientX;
+    dragStartScroll = rail.scrollLeft;
+    dragMoved = false;
+    wasPlaying = !track.classList.contains('is-paused');
+    rail.classList.add('is-dragging');
+    track.classList.add('is-paused');
+    if (wasPlaying) renderToggle(true);
+    rail.setPointerCapture(event.pointerId);
+  });
+
+  rail.addEventListener('pointermove', function(event) {
+    if (!rail.classList.contains('is-dragging')) return;
+    const delta = event.clientX - dragStartX;
+    if (Math.abs(delta) > 4) dragMoved = true;
+    if (dragMoved) event.preventDefault();
+    rail.scrollLeft = dragStartScroll - delta;
+  });
+
+  rail.addEventListener('pointerup', endDrag);
+  rail.addEventListener('pointercancel', endDrag);
+  rail.addEventListener('lostpointercapture', endDrag);
+  rail.addEventListener('click', function(event) {
+    if (!dragMoved) return;
+    event.preventDefault();
+    event.stopPropagation();
+    dragMoved = false;
+  }, true);
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     track.classList.add('is-paused');
