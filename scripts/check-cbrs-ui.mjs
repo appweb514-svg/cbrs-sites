@@ -10,3 +10,19 @@ for (const token of ['CBRS_OUTINGS', 'CBRS_EVENTS', 'fallbackImage', 'coordinate
 }
 
 console.log('PASS — contrat sorties/événements');
+
+for (const file of ['site3/sortie.html', 'site3/evenement.html']) {
+  assert(fs.existsSync(file), `${file} doit exister`);
+  const html = fs.readFileSync(file, 'utf8');
+  for (const token of [
+    'sorties-data.js',
+    'Informations à venir',
+    'sorties-voyages.html',
+    'data-cookie-src',
+    'mapLabel'
+  ]) {
+    assert(html.includes(token), `${file}: ${token} absent`);
+  }
+}
+
+console.log('PASS — gabarits sorties/événements');
