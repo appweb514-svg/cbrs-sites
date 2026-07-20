@@ -64,8 +64,8 @@
   .cbrs-activity-track { display: flex; width: max-content; will-change: transform; animation: cbrs-activity-loop 38s linear infinite; }
   .cbrs-activity-track.is-paused { animation-play-state: paused; }
   .cbrs-activity-set { display: flex; flex: none; gap: 1rem; padding-right: 1rem; }
-  .cbrs-activity-slide { position: relative; display: flex; flex: 0 0 clamp(12rem, 17vw, 15rem); min-height: 17rem; flex-direction: column; justify-content: space-between; padding: 1rem; overflow: hidden; border: 1px solid rgba(255,255,255,.52); border-radius: 22px; background: linear-gradient(150deg, rgba(255,255,255,.98), rgba(235,246,250,.9)); box-shadow: 0 16px 30px rgba(5,31,68,.22); color: #102f5f; transition: transform .3s ease, box-shadow .3s ease; }
-  .cbrs-activity-slide::before { content: ''; position: absolute; top: -3rem; right: -2rem; width: 8rem; height: 8rem; border-radius: 50%; background: rgba(88,160,26,.16); }
+  .cbrs-activity-slide { position: relative; display: flex; flex: 0 0 clamp(12rem, 17vw, 15rem); min-height: 17rem; flex-direction: column; justify-content: space-between; padding: 1rem; overflow: hidden; border: 1px solid rgba(255,255,255,.52); border-radius: 22px; background: linear-gradient(150deg, rgba(255,255,255,.98), rgba(235,246,250,.9)); box-shadow: 0 16px 30px rgba(5,31,68,.22); color: #102f5f; cursor: grab; transition: transform .3s ease, box-shadow .3s ease; }
+  .cbrs-activity-rail.is-dragging .cbrs-activity-slide { cursor: grabbing; }
   .cbrs-activity-slide:hover, .cbrs-activity-slide:focus-visible { box-shadow: 0 22px 38px rgba(5,31,68,.34); transform: translateY(-8px) rotate(-1deg); outline: none; }
   .cbrs-activity-art { display: grid; min-height: 10rem; place-items: center; overflow: hidden; border-radius: 17px; background: linear-gradient(145deg, #edf6f5, #dce9f6); }
   .cbrs-activity-art img { width: 82%; height: 82%; object-fit: contain; transition: transform .45s ease; }
@@ -431,13 +431,13 @@
         <h2 class="cbrs-activity-title" id="activity-showcase-title">Une activité pour <em>chaque envie.</em></h2>
         <p>Une énergie douce, un défi collectif ou une sortie au grand air : choisissez votre rythme et faites le plein de moments partagés.</p>
         <div class="cbrs-activity-stats" aria-label="Chiffres clés du CBRS">
-          <div class="cbrs-activity-stat"><strong>40+</strong><span>activités</span></div>
+          <div class="cbrs-activity-stat"><strong>15</strong><span>activités</span></div>
           <div class="cbrs-activity-stat"><strong>1977</strong><span>depuis</span></div>
           <div class="cbrs-activity-stat"><strong>1 200+</strong><span>adhérents</span></div>
         </div>
         <a class="cbrs-activity-cta" href="activites.html">Explorer les activités <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></a>
       </div>
-      <div class="cbrs-activity-rail" role="region" aria-label="Activités phares du CBRS">
+      <div class="cbrs-activity-rail" role="region" aria-label="Activités phares du CBRS — glisser pour faire défiler">
         <div class="cbrs-activity-track">
           <div class="cbrs-activity-set">
             <a href="activite.html?id=07" class="cbrs-activity-slide" aria-label="Découvrir la Randonnée">
