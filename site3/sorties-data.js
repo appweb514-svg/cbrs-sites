@@ -137,7 +137,7 @@
       coordinates: { lat: 50.52, lng: 1.59, bbox: '1.53%2C50.48%2C1.65%2C50.56' },
       date: '11 juin 2026',
       schedule: null,
-      status: 'Horaire à confirmer',
+      status: 'Événement passé',
       mapLabel: 'Le Touquet'
     },
     {
@@ -152,7 +152,7 @@
       coordinates: { lat: 49.445, lng: 2.10, bbox: '2.08%2C49.43%2C2.13%2C49.46' },
       date: '27 mai 2026',
       schedule: null,
-      status: 'Horaire à confirmer',
+      status: 'Événement passé',
       mapLabel: "Plan d'eau du Canada"
     },
     {

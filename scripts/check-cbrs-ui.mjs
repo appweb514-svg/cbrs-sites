@@ -40,3 +40,10 @@ for (const [file, token] of expectations) {
 }
 
 console.log('PASS — contenu UI/UX');
+
+const home = fs.readFileSync('site3/index.html', 'utf8');
+assert(home.includes('.cbrs-activity-art {'), 'cadre activité absent');
+assert(home.includes('background: #fff'), 'cadre blanc absent');
+assert(home.includes('width: clamp(6.8rem, 11vw, 9rem)'), 'logo Flash Info non agrandi');
+assert(home.includes('width: 6.2rem'), 'taille mobile Flash Info absente');
+console.log('PASS — accueil');
