@@ -26,3 +26,17 @@ for (const file of ['site3/sortie.html', 'site3/evenement.html']) {
 }
 
 console.log('PASS — gabarits sorties/événements');
+
+const expectations = [
+  ['site3/galerie.html', 'Revivez les moments qui nous rassemblent'],
+  ['site3/liens-utiles.html', 'Les partenaires et ressources qui accompagnent'],
+  ['site3/liens-utiles.html', 'Visiter le site'],
+  ['site3/contact.html', 'contact-panel-card'],
+  ['site3/sorties-voyages.html', 'Randonnées du jeudi']
+];
+
+for (const [file, token] of expectations) {
+  assert(fs.readFileSync(file, 'utf8').includes(token), `${file}: ${token} absent`);
+}
+
+console.log('PASS — contenu UI/UX');
