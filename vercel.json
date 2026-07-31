@@ -3,5 +3,51 @@
   "outputDirectory": ".",
   "framework": null,
   "cleanUrls": false,
-  "trailingSlash": true
+  "trailingSlash": true,
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/site3/index.html"
+    },
+    {
+      "source": "/old-version",
+      "destination": "/old-version/index.html"
+    },
+    {
+      "source": "/old-version/",
+      "destination": "/old-version/index.html"
+    },
+    {
+      "source": "/old-version/site1/:path*",
+      "destination": "/site1/:path*"
+    },
+    {
+      "source": "/old-version/site2/:path*",
+      "destination": "/site2/:path*"
+    },
+    {
+      "source": "/old-version/site3/:path*",
+      "destination": "/site3/:path*"
+    },
+    {
+      "source": "/old-version/site4/:path*",
+      "destination": "/site4/:path*"
+    },
+    {
+      "source": "/old-version/v3-premium/:path*",
+      "destination": "/v3-premium/:path*"
+    },
+    {
+      "source": "/old-version/assets/:path*",
+      "destination": "/assets/:path*"
+    },
+    {
+      "source": "/old-version/assets-premium/:path*",
+      "destination": "/assets-premium/:path*"
+    },
+    {
+      "source": "/old-version/logos_rectangulaires/:path*",
+      "destination": "/logos_rectangulaires/:path*"
+    }
+  ]
 }
