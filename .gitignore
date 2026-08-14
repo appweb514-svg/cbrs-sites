@@ -37,3 +37,10 @@ backend/uploads/
 .vercel
 fetched/
 .env*
+
+# Test artefacts
+.playwright-mcp/
+*.png.artifacts
+sortie-detail-baie-somme-full.png
+sortie-detail-deux-caps.png
+site3/planche-photos-commons.jpg

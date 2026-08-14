@@ -263,35 +263,42 @@
 </aside>
 <main id="contenu" class="flex-1 overflow-x-hidden relative md:pt-20">
 <section class="max-w-5xl mx-auto px-6 py-12">
-  <div class="bg-white rounded-2xl shadow-card p-6 md:p-8 mb-10">
-    <h2 class="text-2xl font-bold text-cbrs-text mb-4">Devenir animateur vous tente ?</h2>
-    <p class="text-gray-700 leading-relaxed mb-6">Voici le cheminement de la formation pour encadrer bénévolement une activité au sein du CBRS :</p>
-    <div class="space-y-6">
-      <div class="flex gap-4">
-        <div class="w-10 h-10 rounded-full bg-cbrs-green text-gray-900 flex items-center justify-center font-bold shrink-0">1</div>
-        <div>
-          <h3 class="font-bold text-gray-900">Connaître la FFRS</h3>
-          <p class="text-sm text-gray-600">La <strong>Fédération Française de la Retraite Sportive</strong> (FFRS) est l'organisme fédéral qui encadre et forme les animateurs.</p>
+  <div class="mb-10 rounded-3xl bg-white p-6 shadow-card md:p-8">
+    <div class="mb-8 max-w-3xl">
+      <p class="text-xs font-bold uppercase tracking-[.18em] text-cbrs-green">Parcours de formation</p>
+      <h2 class="mt-2 text-2xl font-bold tracking-tight text-cbrs-text md:text-3xl">Devenir animateur vous tente&nbsp;?</h2>
+      <p class="mt-3 text-base leading-relaxed text-gray-600">Voici le cheminement pour encadrer bénévolement une activité au sein du CBRS, étape après étape.</p>
+    </div>
+    <div class="relative space-y-4 md:space-y-5">
+      <div class="absolute bottom-8 left-5 top-8 w-px bg-gradient-to-b from-cbrs-green via-cbrs-blue to-cbrs-teal" aria-hidden="true"></div>
+      <article class="relative flex gap-4 rounded-2xl border border-gray-100 bg-cbrs-gray-100/70 p-4 md:gap-5 md:p-5">
+        <div class="z-10 grid h-10 w-10 flex-shrink-0 place-items-center rounded-2xl bg-cbrs-green font-bold text-white shadow-sm ring-4 ring-white">1</div>
+        <div class="min-w-0">
+          <p class="text-xs font-bold uppercase tracking-[.14em] text-cbrs-green">Première étape</p>
+          <h3 class="mt-1 text-lg font-bold text-gray-900">Connaître la FFRS</h3>
+          <p class="mt-2 text-sm leading-relaxed text-gray-600">La <strong>Fédération Française de la Retraite Sportive</strong> (FFRS) est l'organisme fédéral qui encadre et forme les animateurs.</p>
         </div>
-      </div>
-      <div class="flex gap-4">
-        <div class="w-10 h-10 rounded-full bg-cbrs-blue text-gray-900 flex items-center justify-center font-bold shrink-0">2</div>
-        <div>
-          <h3 class="font-bold text-gray-900">Formation Initiale des Animateurs (FIA)</h3>
-          <p class="text-sm text-gray-600">Première étape incontournable : la FIA vous forme aux bases de l'animation sportive bénévole (pédagogie, sécurité, connaissance de la fédération).</p>
-          <a href="docs/FFRS_Formation_FIA_Aout-2025.pdf" target="_blank" class="inline-flex items-center gap-1.5 text-sm text-cbrs-green font-medium hover:underline mt-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-            Télécharger la fiche FIA (PDF)
-          </a>
+      </article>
+      <article class="relative flex gap-4 rounded-2xl border border-cbrs-blue/10 bg-blue-50/60 p-4 md:gap-5 md:p-5">
+        <div class="z-10 grid h-10 w-10 flex-shrink-0 place-items-center rounded-2xl bg-cbrs-blue font-bold text-white shadow-sm ring-4 ring-white">2</div>
+        <div class="min-w-0">
+          <p class="text-xs font-bold uppercase tracking-[.14em] text-cbrs-blue">Le socle commun</p>
+          <h3 class="mt-1 text-lg font-bold text-gray-900">Formation Initiale des Animateurs (FIA)</h3>
+          <p class="mt-2 text-sm leading-relaxed text-gray-600">Première étape incontournable&nbsp;: la FIA vous forme aux bases de l'animation sportive bénévole (pédagogie, sécurité, connaissance de la fédération).</p>
+          <button type="button" onclick="openPdf('docs/FFRS_Formation_FIA_Aout-2025.pdf','Fiche FIA — Formation Initiale des Animateurs')" class="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-cbrs-blue shadow-sm ring-1 ring-cbrs-blue/15 transition hover:-translate-y-0.5 hover:bg-cbrs-blue hover:text-white">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            Consulter la fiche FIA (PDF)
+          </button>
         </div>
-      </div>
-      <div class="flex gap-4">
-        <div class="w-10 h-10 rounded-full bg-cbrs-teal text-gray-900 flex items-center justify-center font-bold shrink-0">3</div>
-        <div>
-          <h3 class="font-bold text-gray-900">Formation par activité (M2)</h3>
-          <p class="text-sm text-gray-600">Après la FIA, vous suivez la formation spécifique à l'activité que vous souhaitez encadrer (M2).</p>
+      </article>
+      <article class="relative flex gap-4 rounded-2xl border border-cbrs-teal/10 bg-cbrs-teal/5 p-4 md:gap-5 md:p-5">
+        <div class="z-10 grid h-10 w-10 flex-shrink-0 place-items-center rounded-2xl bg-cbrs-teal font-bold text-white shadow-sm ring-4 ring-white">3</div>
+        <div class="min-w-0">
+          <p class="text-xs font-bold uppercase tracking-[.14em] text-cbrs-teal">La spécialisation</p>
+          <h3 class="mt-1 text-lg font-bold text-gray-900">Formation par activité (M2)</h3>
+          <p class="mt-2 text-sm leading-relaxed text-gray-600">Après la FIA, vous suivez la formation spécifique à l'activité que vous souhaitez encadrer (M2).</p>
         </div>
-      </div>
+      </article>
     </div>
   </div>
 
@@ -304,10 +311,10 @@
       <div class="flex-1 min-w-0">
         <h3 class="font-bold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors">Aquagym</h3>
         <p class="text-xs text-gray-500">M2-AGEF — Gymnastique Aquatique</p>
-        <a href="docs/FFRS_Formation_M2-AGEF_Aout-2025.pdf" target="_blank" class="inline-flex items-center gap-1 text-xs text-cbrs-green font-medium hover:underline mt-1">
+        <button type="button" onclick="openPdf('docs/FFRS_Formation_M2-AGEF_Aout-2025.pdf','Fiche M2-AGEF — Gymnastique Aquatique')" class="inline-flex items-center gap-1 text-xs text-cbrs-green font-medium hover:underline mt-1">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-          Télécharger le PDF
-        </a>
+          Consulter le PDF
+        </button>
       </div>
     </div>
     <div class="bg-white rounded-xl shadow-card p-5 flex items-center gap-4 hover:shadow-card-hover transition-shadow group">
@@ -317,10 +324,10 @@
       <div class="flex-1 min-w-0">
         <h3 class="font-bold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors">Gymnastique</h3>
         <p class="text-xs text-gray-500">M2-AGEF — Gymnastique d'Entretien</p>
-        <a href="docs/FFRS_Formation_M2-AGEF_Aout-2025.pdf" target="_blank" class="inline-flex items-center gap-1 text-xs text-cbrs-green font-medium hover:underline mt-1">
+        <button type="button" onclick="openPdf('docs/FFRS_Formation_M2-AGEF_Aout-2025.pdf','Fiche M2-AGEF — Gymnastique d\u2019Entretien')" class="inline-flex items-center gap-1 text-xs text-cbrs-green font-medium hover:underline mt-1">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-          Télécharger le PDF
-        </a>
+          Consulter le PDF
+        </button>
       </div>
     </div>
     <div class="bg-white rounded-xl shadow-card p-5 flex items-center gap-4 hover:shadow-card-hover transition-shadow group">
@@ -330,10 +337,10 @@
       <div class="flex-1 min-w-0">
         <h3 class="font-bold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors">Danse</h3>
         <p class="text-xs text-gray-500">M2-AD — Danse de Salon</p>
-        <a href="docs/FFRS_Formation_M2-AD_Aout-2025.pdf" target="_blank" class="inline-flex items-center gap-1 text-xs text-cbrs-green font-medium hover:underline mt-1">
+        <button type="button" onclick="openPdf('docs/FFRS_Formation_M2-AD_Aout-2025.pdf','Fiche M2-AD — Danse de Salon')" class="inline-flex items-center gap-1 text-xs text-cbrs-green font-medium hover:underline mt-1">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-          Télécharger le PDF
-        </a>
+          Consulter le PDF
+        </button>
       </div>
     </div>
     <div class="bg-white rounded-xl shadow-card p-5 flex items-center gap-4 hover:shadow-card-hover transition-shadow group">
@@ -343,10 +350,10 @@
       <div class="flex-1 min-w-0">
         <h3 class="font-bold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors">Randonnée</h3>
         <p class="text-xs text-gray-500">M2-AA — Activités de Randonnée</p>
-        <a href="docs/FFRS_Formation_M2-AA_Aout-2025.pdf" target="_blank" class="inline-flex items-center gap-1 text-xs text-cbrs-green font-medium hover:underline mt-1">
+        <button type="button" onclick="openPdf('docs/FFRS_Formation_M2-AA_Aout-2025.pdf','Fiche M2-AA — Activités de Randonnée')" class="inline-flex items-center gap-1 text-xs text-cbrs-green font-medium hover:underline mt-1">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-          Télécharger le PDF
-        </a>
+          Consulter le PDF
+        </button>
       </div>
     </div>
     <div class="bg-white rounded-xl shadow-card p-5 flex items-center gap-4 hover:shadow-card-hover transition-shadow group">
@@ -356,10 +363,10 @@
       <div class="flex-1 min-w-0">
         <h3 class="font-bold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors">Ping Pong / Tennis de Table</h3>
         <p class="text-xs text-gray-500">M2-AC — Activités de raquettes</p>
-        <a href="docs/FFRS_Formation_M2-AC_Aout-2025.pdf" target="_blank" class="inline-flex items-center gap-1 text-xs text-cbrs-green font-medium hover:underline mt-1">
+        <button type="button" onclick="openPdf('docs/FFRS_Formation_M2-AC_Aout-2025.pdf','Fiche M2-AC — Activités de raquettes')" class="inline-flex items-center gap-1 text-xs text-cbrs-green font-medium hover:underline mt-1">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-          Télécharger le PDF
-        </a>
+          Consulter le PDF
+        </button>
       </div>
     </div>
     <div class="bg-white rounded-xl shadow-card p-5 flex items-center gap-4 hover:shadow-card-hover transition-shadow group">
@@ -369,30 +376,15 @@
       <div class="flex-1 min-w-0">
         <h3 class="font-bold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors">Échecs / Jeux de société</h3>
         <p class="text-xs text-gray-500">M2-JB — Jeux de table et de société</p>
-        <a href="docs/FFRS_Formation_M2-JB_Aout-2025.pdf" target="_blank" class="inline-flex items-center gap-1 text-xs text-cbrs-green font-medium hover:underline mt-1">
+        <button type="button" onclick="openPdf('docs/FFRS_Formation_M2-JB_Aout-2025.pdf','Fiche M2-JB — Jeux de table et de société')" class="inline-flex items-center gap-1 text-xs text-cbrs-green font-medium hover:underline mt-1">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-          Télécharger le PDF
-        </a>
+          Consulter le PDF
+        </button>
       </div>
     </div>
   </div>
 
-  <div class="mt-10 bg-cbrs-gray-100 rounded-2xl p-6 md:p-8">
-    <h3 class="text-lg font-bold text-cbrs-blue mb-3">Lecteur PDF intégré</h3>
-    <p class="text-sm text-gray-600 mb-4">Sélectionnez une fiche ci-dessus pour la visualiser. Vous pouvez aussi la télécharger directement.</p>
-    <div class="bg-white rounded-xl overflow-hidden shadow-sm">
-      <iframe id="pdf-viewer" class="pdf-viewer" src="docs/FFRS_Formation_FIA_Aout-2025.pdf" title="Lecteur PDF"></iframe>
-    </div>
-    <div class="flex flex-wrap gap-2 mt-4">
-      <span class="text-xs text-gray-500">Fiches disponibles :</span>
-      <button onclick="document.getElementById('pdf-viewer').src='docs/FFRS_Formation_FIA_Aout-2025.pdf'" class="text-xs px-3 py-1 bg-cbrs-blue text-gray-900 rounded-full hover:bg-cbrs-blue-light transition-colors">FIA</button>
-      <button onclick="document.getElementById('pdf-viewer').src='docs/FFRS_Formation_M2-AGEF_Aout-2025.pdf'" class="text-xs px-3 py-1 bg-cbrs-green text-gray-900 rounded-full hover:bg-cbrs-green-hover transition-colors">Aquagym</button>
-      <button onclick="document.getElementById('pdf-viewer').src='docs/FFRS_Formation_M2-AD_Aout-2025.pdf'" class="text-xs px-3 py-1 bg-cbrs-green text-gray-900 rounded-full hover:bg-cbrs-green-hover transition-colors">Danse</button>
-      <button onclick="document.getElementById('pdf-viewer').src='docs/FFRS_Formation_M2-AA_Aout-2025.pdf'" class="text-xs px-3 py-1 bg-cbrs-green text-gray-900 rounded-full hover:bg-cbrs-green-hover transition-colors">Randonnée</button>
-      <button onclick="document.getElementById('pdf-viewer').src='docs/FFRS_Formation_M2-AC_Aout-2025.pdf'" class="text-xs px-3 py-1 bg-cbrs-green text-gray-900 rounded-full hover:bg-cbrs-green-hover transition-colors">Raquettes</button>
-      <button onclick="document.getElementById('pdf-viewer').src='docs/FFRS_Formation_M2-JB_Aout-2025.pdf'" class="text-xs px-3 py-1 bg-cbrs-green text-gray-900 rounded-full hover:bg-cbrs-green-hover transition-colors">Jeux</button>
-    </div>
-  </div>
+  <p class="text-sm text-gray-600 mt-4">Cliquez sur « Consulter le PDF » d'une fiche pour l'afficher en grand. Vous pourrez ensuite la télécharger, l'imprimer ou zoomer.</p>
 </section>
 
 <section class="bg-white border-y border-gray-100 py-12">
@@ -411,7 +403,7 @@
       <div class="text-xs text-gray-600 font-medium leading-tight">Club du Beauvaisis<br/>de la Retraite Sportive</div>
     </div>
     <p class="text-xs text-gray-500 mb-2 max-w-xs">Association loi 1901 affiliée à la Fédération Française de la Retraite Sportive (FFRS).</p>
-    <a class="text-xs text-cbrs-blue hover:underline" href="contact.html">Mentions légales</a>
+    <a class="text-xs text-cbrs-blue hover:underline" href="mentions-legales.html">Mentions légales</a>
   </div>
   <div>
     <h4 class="font-bold text-gray-900 mb-3 text-sm">Activités</h4>
@@ -435,15 +427,103 @@
     <h4 class="font-bold text-gray-900 mb-3 text-sm">Multimédia</h4>
     <ul class="space-y-1.5 text-xs text-gray-600">
       <li><a class="hover:text-cbrs-blue" href="galerie.html">Galerie photo</a></li>
-      <li><a class="hover:text-cbrs-blue" href="galerie.html">Vidéos</a></li>
     </ul>
   </div>
 </div>
 <div class="border-t border-gray-100 py-4 text-center text-xs text-gray-400">2026 &copy; CBRS — Club du Beauvaisis de la Retraite Sportive</div>
 </footer>
 </main></div></div>
+
+<style>
+  .pdf-lightbox { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(10, 20, 40, 0.72); backdrop-filter: blur(3px); justify-content: center; align-items: center; padding: 1rem; }
+  .pdf-lightbox.active { display: flex; }
+  .pdf-lightbox-card { display: flex; flex-direction: column; width: min(92vw, 60rem); height: min(92vh, 52rem); background: #fff; border-radius: 1rem; box-shadow: 0 24px 70px rgba(0,0,0,0.45); overflow: hidden; }
+  .pdf-lightbox-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; padding: .6rem .9rem; background: #0a3273; color: #fff; }
+  .pdf-lightbox-toolbar-title { flex: 1 1 auto; min-width: 0; font-size: .85rem; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pdf-lightbox-tool { display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .7rem; border: 1px solid rgba(255,255,255,.28); border-radius: .6rem; background: rgba(255,255,255,.08); color: #fff; font-size: .78rem; font-weight: 600; cursor: pointer; transition: background-color .15s, border-color .15s; }
+  .pdf-lightbox-tool:hover, .pdf-lightbox-tool:focus-visible { background: #58a01a; border-color: #58a01a; outline: none; }
+  .pdf-lightbox-tool svg { width: 1rem; height: 1rem; fill: currentColor; }
+  .pdf-lightbox-body { position: relative; flex: 1 1 auto; min-height: 0; overflow: hidden; background: #525659; }
+  .pdf-lightbox-body iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .pdf-lightbox-close { position: absolute; top: 1rem; right: 1.25rem; z-index: 2; display: grid; width: 2.5rem; height: 2.5rem; place-items: center; border-radius: 999px; background: rgba(10, 20, 40, .55); color: #fff; font-size: 1.6rem; line-height: 1; cursor: pointer; border: 1px solid rgba(255,255,255,.3); transition: background-color .15s; }
+  .pdf-lightbox-close:hover, .pdf-lightbox-close:focus-visible { background: #8f1d27; outline: none; }
+</style>
+
+<div class="pdf-lightbox" id="pdf-lightbox" role="dialog" aria-modal="true" aria-label="Aperçu du document PDF" onclick="if (event.target === this) closePdf()">
+  <button type="button" class="pdf-lightbox-close" onclick="closePdf()" aria-label="Fermer">×</button>
+  <div class="pdf-lightbox-card" onclick="event.stopPropagation()">
+    <div class="pdf-lightbox-toolbar">
+      <span class="pdf-lightbox-toolbar-title" id="pdf-lightbox-title">Document</span>
+      <button type="button" class="pdf-lightbox-tool" onclick="pdfZoom(-0.2)" aria-label="Zoom arrière">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13H5v-2h14v2z"/></svg> Zoom -
+      </button>
+      <button type="button" class="pdf-lightbox-tool" onclick="pdfZoom(0.2)" aria-label="Zoom avant">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> Zoom +
+      </button>
+      <span class="pdf-lightbox-tool" id="pdf-zoom-label" aria-live="polite">100 %</span>
+      <button type="button" class="pdf-lightbox-tool" onclick="pdfPrint()" aria-label="Imprimer le document">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg> Imprimer
+      </button>
+      <button type="button" class="pdf-lightbox-tool" onclick="pdfDownload()" aria-label="Télécharger le document">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Télécharger
+      </button>
+    </div>
+    <div class="pdf-lightbox-body" id="pdf-lightbox-body">
+      <iframe id="pdf-lightbox-frame" title="Aperçu du document PDF" loading="lazy"></iframe>
+    </div>
+  </div>
+</div>
 <script>
 let sidebarCollapsed = false;
+
+let pdfCurrentSrc = '';
+let pdfZoomLevel = 1;
+function openPdf(src, title) {
+  pdfCurrentSrc = src;
+  pdfZoomLevel = 1;
+  document.getElementById('pdf-lightbox-title').textContent = title || 'Document';
+  const frame = document.getElementById('pdf-lightbox-frame');
+  frame.src = src;
+  applyPdfZoom();
+  document.body.classList.add('overflow-hidden');
+  document.getElementById('pdf-lightbox').classList.add('active');
+  document.getElementById('pdf-lightbox-frame').focus();
+}
+function closePdf() {
+  const frame = document.getElementById('pdf-lightbox-frame');
+  frame.src = '';
+  document.getElementById('pdf-lightbox').classList.remove('active');
+  document.body.classList.remove('overflow-hidden');
+}
+function applyPdfZoom() {
+  const body = document.getElementById('pdf-lightbox-body');
+  const frame = document.getElementById('pdf-lightbox-frame');
+  frame.style.transform = 'scale(' + pdfZoomLevel + ')';
+  frame.style.transformOrigin = 'top center';
+  body.style.overflow = pdfZoomLevel > 1 ? 'auto' : 'hidden';
+  document.getElementById('pdf-zoom-label').textContent = Math.round(pdfZoomLevel * 100) + ' %';
+}
+function pdfZoom(delta) {
+  pdfZoomLevel = Math.min(3, Math.max(0.5, +(pdfZoomLevel + delta).toFixed(2)));
+  applyPdfZoom();
+}
+function pdfPrint() {
+  const frame = document.getElementById('pdf-lightbox-frame');
+  if (frame && frame.contentWindow) frame.contentWindow.focus();
+  if (frame && frame.contentWindow && frame.contentWindow.print) frame.contentWindow.print();
+}
+function pdfDownload() {
+  const a = document.createElement('a');
+  a.href = pdfCurrentSrc;
+  a.download = pdfCurrentSrc.split('/').pop() || 'fiche-cbrs.pdf';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') closePdf();
+});
+
 function toggleMobileMenu() {
   const menu = document.getElementById('mobile-menu');
   const main = document.getElementById('contenu');

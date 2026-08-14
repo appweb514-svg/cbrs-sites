@@ -20,6 +20,30 @@
     }
   </script>
 <style>
+  .useful-links-grid > a {
+    position: relative;
+    display: flex;
+    min-height: 17rem;
+    flex-direction: column;
+    border: 1px solid rgba(10, 50, 115, .1);
+    border-top-width: 4px;
+    border-left-width: 1px;
+    padding: 1.25rem;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .useful-links-grid > a:hover { transform: translateY(-4px); }
+  .useful-links-grid > a:focus-visible {
+    outline: 3px solid rgba(88, 160, 26, .35);
+    outline-offset: 3px;
+  }
+  .useful-links-grid > a > p:last-of-type { margin-top: 1rem; }
+  .useful-links-grid > a .cbrs-useful-cta { margin-top: auto !important; padding-top: 1rem; }
+  .useful-links-grid > a > .flex.items-start { min-height: 3.5rem; }
+  .useful-links-grid > a > .flex.items-start > .flex-1 { min-width: 0; }
+  @media (max-width: 767px) {
+    .useful-links-grid > a { min-height: 0; }
+  }
+
   .sidebar {
     transition: width 0.3s ease;
     scrollbar-width: none;
@@ -410,8 +434,8 @@
       <img src="logo-cbrs.png" alt="CBRS" class="w-8 h-8 object-contain"/>
       <div class="text-xs text-gray-600 font-medium leading-tight">Club du Beauvaisis<br/>de la Retraite Sportive</div>
     </div>
-    <p class="text-xs text-gray-500 mb-2 max-w-xs">Association loi 1901 affiliée à la FFRS.</p>
-    <a class="text-xs text-cbrs-blue hover:underline" href="contact.html">Mentions légales</a>
+    <p class="text-xs text-gray-500 mb-2 max-w-xs">Association loi 1901 affiliée à la Fédération Française de la Retraite Sportive (FFRS).</p>
+    <a class="text-xs text-cbrs-blue hover:underline" href="mentions-legales.html">Mentions légales</a>
   </div>
   <div>
     <h4 class="font-bold text-gray-900 mb-3 text-sm">Activités</h4>

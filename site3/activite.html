@@ -189,18 +189,25 @@
 <section class="cbrs-activity-hero relative min-h-[236px] md:min-h-[344px] mt-16 md:mt-0 bg-cbrs-blue overflow-hidden flex items-center">
   <img src="assets-premium/header-activities.jpg" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover"/>
   <div class="absolute inset-0 bg-gradient-to-r from-cbrs-blue/95 to-cbrs-blue-light/75"></div>
-  <div class="relative z-10 px-6 md:px-16 md:pr-72 pt-10 pb-20 max-w-7xl mx-auto">
+  <div class="relative z-10 px-6 md:px-16 md:pr-72 pt-8 pb-14 max-w-7xl mx-auto">
     <nav class="text-sm text-white/80 mb-6" aria-label="Fil d'Ariane">
       <a href="activites.html" class="hover:text-white underline underline-offset-4">Toutes les activités</a>
       <span class="mx-2">/</span><span id="breadcrumb-current">Activité</span>
     </nav>
     <div class="max-w-3xl">
-      <p id="activity-category" class="inline-flex px-3 py-1 rounded-full bg-white/15 text-white text-sm font-semibold mb-4">Activité CBRS</p>
-      <h1 id="activity-title" class="header-title text-3xl md:text-5xl font-bold text-white leading-tight mb-4"><span class="text-cbrs-green font-serif-italic">Activité</span></h1>
-      <p id="activity-subtitle" class="text-lg text-white/90 max-w-2xl mb-6"></p>
-      <div class="flex flex-wrap gap-3">
-        <a id="route-link" class="px-5 py-2.5 bg-cbrs-green text-white font-semibold rounded-full hover:bg-cbrs-green-hover transition-colors text-sm" target="_blank" rel="noopener">Itinéraire</a>
-        <a class="px-5 py-2.5 bg-white/10 border border-white/40 text-white font-semibold rounded-full hover:bg-white/20 transition-colors text-sm" href="contact.html">Contacter le club</a>
+      <div class="flex items-start gap-5">
+        <div id="activity-logo-frame" class="hidden md:flex flex-shrink-0 items-start justify-center overflow-hidden" style="width:clamp(6rem,10vw,8rem);height:auto;aspect-ratio:1 / .7;">
+          <img id="activity-logo" src="" alt="" class="block w-full h-auto object-contain opacity-0 transition-opacity duration-200"/>
+        </div>
+        <div class="min-w-0">
+          <h1 id="activity-title" class="header-title text-3xl md:text-5xl font-bold text-white leading-tight mb-4"><span class="text-cbrs-green font-serif-italic">Activité</span></h1>
+          <p id="activity-category" class="inline-flex px-3 py-1 rounded-full bg-white/15 text-white text-sm font-semibold mb-4">Activité CBRS</p>
+          <p id="activity-subtitle" class="text-lg text-white/90 max-w-2xl mb-6"></p>
+          <div class="flex flex-wrap gap-3">
+            <a id="route-link" class="px-5 py-2.5 bg-cbrs-green text-white font-semibold rounded-full hover:bg-cbrs-green-hover transition-colors text-sm" target="_blank" rel="noopener">Itinéraire</a>
+            <a class="px-5 py-2.5 bg-white/10 border border-white/40 text-white font-semibold rounded-full hover:bg-white/20 transition-colors text-sm" href="contact.html">Contacter le club</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -216,40 +223,40 @@
   <span class="sidebar-label">Réduire</span>
 </button>
 <nav class="flex-1 py-4 space-y-1">
-  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="index.html">
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors" href="index.html">
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Accueil</span>
   </a>
-  <a class="sidebar-link flex items-center px-4 py-2.5 bg-cbrs-green text-white font-medium rounded-r-full mr-4 transition-colors" href="activites.html">
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors" href="activites.html">
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Activités</span>
   </a>
-  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="planning.html">
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors" href="planning.html">
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Planning</span>
   </a>
-  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="formation.html">
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors" href="formation.html">
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Formation</span>
   </a>
-  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="sorties-voyages.html">
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors" href="sorties-voyages.html">
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.858 15.355-5.858 21.213 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Sorties - Voyages</span>
   </a>
-  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="galerie.html">
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors" href="galerie.html">
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Galerie photo</span>
   </a>
-  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="liens-utiles.html">
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors" href="liens-utiles.html">
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Liens utiles</span>
   </a>
   <div class="sidebar-divider border-t border-white/10 my-4 mx-4"></div>
-  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="adhesion.html">
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors" href="adhesion.html">
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Adhérer</span>
   </a>
-  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-r-full mr-4 transition-colors" href="contact.html">
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors" href="contact.html">
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Contact</span>
   </a>
@@ -270,27 +277,25 @@
 
 <section class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
   <div class="lg:col-span-2">
-  <div class="bg-white rounded-2xl shadow-card p-6 md:p-8 mb-8">
-    <div class="flex flex-col md:flex-row gap-8">
-      <div class="w-full md:w-1/3 rounded-2xl overflow-hidden border-2 border-cbrs-blue/10 bg-white">
-        <img id="activity-logo" src="" alt="" class="w-full h-full min-h-[220px] object-cover"/>
+  <div id="activity-presentation-card" class="bg-white rounded-3xl shadow-card p-6 md:p-8 mb-8 overflow-hidden">
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] gap-8 items-stretch">
+      <div class="min-w-0">
+        <div class="flex items-start gap-3">
+          <span class="grid h-11 w-11 flex-shrink-0 place-items-center rounded-2xl bg-cbrs-green/10 text-cbrs-green">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </span>
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[.16em] text-cbrs-green">À découvrir</p>
+            <h2 class="mt-1 text-2xl font-bold tracking-tight text-cbrs-text">Présentation</h2>
+          </div>
+        </div>
+        <p id="activity-desc" class="mt-6 text-base font-medium leading-relaxed text-gray-700 md:text-lg"></p>
+        <div id="presentation-block" class="hidden mt-7 border-t border-cbrs-blue/10 pt-6">
+          <p class="text-xs font-bold uppercase tracking-[.16em] text-cbrs-blue/70">En détail</p>
+          <p id="activity-presentation" class="mt-3 text-sm leading-7 text-gray-600 md:text-base"></p>
+        </div>
       </div>
-      <div class="flex-1">
-        <p id="activity-desc" class="text-gray-700 leading-relaxed"></p>
-      </div>
-    </div>
-  </div>
-
-  <div id="presentation-container" class="bg-white rounded-2xl shadow-card mb-8 hidden overflow-hidden">
-    <div class="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr]">
-      <div class="p-6 md:p-8">
-        <h2 class="text-xl font-bold text-cbrs-text mb-4 flex items-center gap-2">
-          <svg class="w-5 h-5 text-cbrs-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Présentation
-        </h2>
-        <p id="activity-presentation" class="text-gray-700 leading-relaxed text-sm md:text-base"></p>
-      </div>
-      <div id="presentation-team" class="hidden bg-gradient-to-br from-cbrs-blue to-cbrs-teal p-6 md:p-8 text-white">
+      <div id="presentation-team" class="hidden bg-gradient-to-br from-cbrs-blue to-cbrs-teal p-6 md:p-8 text-white rounded-2xl">
         <p class="text-xs uppercase tracking-[0.18em] text-white/70">L’équipe qui vous accompagne</p>
         <h3 class="mt-2 text-lg font-bold">Des bénévoles formés et disponibles</h3>
         <div id="presentation-team-grid" class="grid grid-cols-3 gap-3 mt-5"></div>
@@ -350,8 +355,8 @@
       <img src="logo-cbrs.png" alt="CBRS" class="w-8 h-8 object-contain"/>
       <div class="text-xs text-gray-600 font-medium leading-tight">Club du Beauvaisis<br/>de la Retraite Sportive</div>
     </div>
-    <p class="text-xs text-gray-500 mb-2 max-w-xs">Association loi 1901 affiliée à la FFRS.</p>
-    <a class="text-xs text-cbrs-blue hover:underline" href="contact.html">Mentions légales</a>
+    <p class="text-xs text-gray-500 mb-2 max-w-xs">Association loi 1901 affiliée à la Fédération Française de la Retraite Sportive (FFRS).</p>
+    <a class="text-xs text-cbrs-blue hover:underline" href="mentions-legales.html">Mentions légales</a>
   </div>
   <div>
     <h4 class="font-bold text-gray-900 mb-3 text-sm">Activités</h4>
@@ -401,87 +406,87 @@ function mapFor(activity) {
 
 const activities = {
   '01': {
-    name:'Aquagym', logo:'01_aquagym.png',
-    desc:'Gymnastique aquatique en piscine. Exercices adaptes pour un renforcement musculaire et une mobilité articulaire en douceur, sans impact sur les articulations.',
-    presentation:'Seance de gymnastique en milieu aquatique animee par des bénévoles formes. Les exercices sont adaptes a chacun, permettant de travailler le cardio, le renforcement musculaire et la souplesse dans une eau chauffee.',
+    name:'Aquagym', logo:'01_aquagym.png?v=transparent-icons-20260814-v3',
+    desc:'Gymnastique aquatique en piscine. Exercices adaptés pour un renforcement musculaire et une mobilité articulaire en douceur, sans impact sur les articulations.',
+    presentation:'Séance de gymnastique en milieu aquatique animée par des bénévoles formés. Les exercices sont adaptés à chacun, permettant de travailler le cardio, le renforcement musculaire et la souplesse dans une eau chauffée.',
     schedule:[{day:'Lundi', time:'Voir planning', location:'Piscine Bellier'},{day:'Vendredi', time:'Voir planning', location:'Piscine Bellier'}],
     meetingPoint:'Piscine Bellier, Beauvais. Arrivée 15 min avant pour vous changer.',
     animators:[
       {name:'Jacques', photo:'assets-premium/formateurs/jacques.jpg'},
       {name:'Christian'},
-      {name:'Elisabeth', photo:'assets-premium/formateurs/elisabeth.jpg'},
+      {name:'Élisabeth', photo:'assets-premium/formateurs/elisabeth.jpg'},
       {name:'Germaine', photo:'assets-premium/formateurs/germaine.jpg'},
       {name:'Pierre'},
       {name:'Florence', photo:'assets-premium/formateurs/florence.jpg'},
       {name:'Blandine', photo:'assets-premium/formateurs/blandine.jpg'}
     ],
-    info:['Materiel : maillot, bonnet, serviette','Niveau : debutant a confirme','Saison : septembre a juin']
+    info:['Matériel : maillot, bonnet, serviette','Niveau : débutant à confirmé','Saison : septembre à juin']
   },
   '02': {
-    name:'Petanque', logo:'02_petanque.png',
-    desc:'La petanque se pratique toute l annee sur les terrains mis a disposition. Un moment de detente et de convivialite pour tous.',
-    presentation:'Seances de petanque en doublettes ou triplettes, dans une ambiance conviviale. Tournois reguliers organises entre adherents. Acces au boulodrome possible tous les jours.',
+    name:'Pétanque', logo:'02_petanque.png?v=transparent-icons-20260814-v3',
+    desc:'La pétanque se pratique toute l’année sur les terrains mis à disposition. Un moment de détente et de convivialité pour tous.',
+    presentation:'Séances de pétanque en doublettes ou triplettes, dans une ambiance conviviale. Tournois réguliers organisés entre adhérents. Accès au boulodrome possible tous les jours.',
     schedule:[{day:'Lundi', time:'14h00-16h00', location:'Parc Kennedy'},{day:'Vendredi', time:'14h00-16h00', location:'Parc Kennedy'}],
-    meetingPoint:'Parc Kennedy, Beauvais. Boulodrome pres de l entree principale.',
+    meetingPoint:'Parc Kennedy, Beauvais. Boulodrome près de l’entrée principale.',
     animators:[{name:'Eric'},{name:'Philippe'},{name:'Jean Pierre'}],
-    info:['Boules fournies par le club','Tournois reguliers','Tous niveaux acceptes']
+    info:['Boules fournies par le club','Tournois réguliers','Tous niveaux acceptés']
   },
   '03': {
-    name:'Cyclisme', logo:'03_cyclisme.png',
-    desc:'Sorties velo sur les routes du Beauvaisis et du Pays de Bray. Des itinéraires variés adaptes au rythme de chacun.',
-    presentation:'Parcours de 40 a 60 km sur routes secondaires et chemins. Les groupes sont constitues selon le niveau. Depart group depuis le parking du cimetiere du Tilloy.',
-    schedule:[{day:'Mercredi', time:'13h30', location:'Parking cimetiere du Tilloy'},{day:'Vendredi', time:'13h30', location:'Parking Saint Quentin ou Cimetiere du Tilloy'}],
-    meetingPoint:'Parking du cimetiere du Tilloy, avenue du Cimetiere, Beauvais. Mercredi et vendredi 13h30.',
+    name:'Cyclisme', logo:'03_cyclisme.png?v=transparent-icons-20260814-v3',
+    desc:'Sorties vélo sur les routes du Beauvaisis et du Pays de Bray. Des itinéraires variés adaptés au rythme de chacun.',
+    presentation:'Parcours de 40 à 60 km sur routes secondaires et chemins. Les groupes sont constitués selon le niveau. Départ groupé depuis le parking du cimetière du Tilloy.',
+    schedule:[{day:'Mercredi', time:'13h30', location:'Parking cimetière du Tilloy'},{day:'Vendredi', time:'13h30', location:'Parking Saint Quentin ou Cimetière du Tilloy'}],
+    meetingPoint:'Parking du cimetière du Tilloy, avenue du Cimetière, Beauvais. Mercredi et vendredi 13h30.',
     animators:[{name:'Patrick'},{name:'Jean Marie'},{name:'Gerard'},{name:'Jean Francois'},{name:'Maurice'}],
-    info:['Velo en bon etat obligatoire','Casque recommandé','Parcours de 40 a 60 km']
+    info:['Vélo en bon état obligatoire','Casque recommandé','Parcours de 40 à 60 km']
   },
   '04': {
-    name:'Tir a l arc', logo:'04_tir_a_l_arc.png',
-    desc:'Decouverte et pratique du tir a l arc. Une activite de precision qui developpe concentration et maitrise de soi.',
-    presentation:'Seances en plein air de mars a novembre au parc Marcel Dassault. Initiation et perfectionnement avec des animateurs expérimentés.',
+    name:'Tir à l’arc', logo:'04_tir_a_l_arc.png?v=transparent-icons-20260814-v3',
+    desc:'Découverte et pratique du tir à l’arc. Une activité de précision qui développe concentration et maîtrise de soi.',
+    presentation:'Séances en plein air de mars à novembre au parc Marcel Dassault. Initiation et perfectionnement avec des animateurs expérimentés.',
     schedule:[{day:'Mardi', time:'9h30-11h00', location:'Parc Marcel Dassault'},{day:'Vendredi', time:'9h30-11h00', location:'Parc Marcel Dassault'}],
-    meetingPoint:'Parc Marcel Dassault, Beauvais. Pres de l espace vert principal.',
+    meetingPoint:'Parc Marcel Dassault, Beauvais. Près de l’espace vert principal.',
     animators:[{name:'Hubert Guillemot'},{name:'Philippe Liard'},{name:'Philippe Dufour'}],
-    info:['Materiel fourni par le club','Tenue confortable','Saison : mars a novembre']
+    info:['Matériel fourni par le club','Tenue confortable','Saison : mars à novembre']
   },
   '05': {
-    name:'Tennis de Table', logo:'05_ping_pong.png',
+    name:'Tennis de Table', logo:'05_ping_pong.png?v=transparent-icons-20260814-v3',
     desc:'Le Ping Pong se pratique dans une ambiance conviviale. Plusieurs tables disponibles pour jouer en simple ou en double.',
-    presentation:'Cours debutants sur inscription et jeu libre pour les confirms. Tournois internes reguliers. Rencontres inter-clubs avec CBRS Franconville et Enghien.',
+    presentation:'Cours débutants sur inscription et jeu libre pour les confirmés. Tournois internes réguliers. Rencontres inter-clubs avec CBRS Franconville et Enghien.',
     schedule:[{day:'Lundi', time:'10h-12h', location:'Gymnase Briard'},{day:'Mardi', time:'9h-12h', location:'Gymnase Briard'},{day:'Mercredi', time:'9h-12h', location:'Gymnase Briard'},{day:'Jeudi', time:'14h-17h', location:'Gymnase Goincourt'}],
     meetingPoint:'Gymnase Briard (lun/mer) ou Gymnase Goincourt (jeu). Arrivée 10 min avant.',
-    animators:[{name:'Frantz'},{name:'Christian'},{name:'Francois'},{name:'Rene'},{name:'Yannick'},{name:'Jean'}],
+    animators:[{name:'Frantz'},{name:'Christian'},{name:'François'},{name:'René'},{name:'Yannick'},{name:'Jean'}],
     info:['Raquettes fournies','Tenue sportive','Tous niveaux']
   },
   '06': {
-    name:'Tennis', logo:'06_tennis.png',
-    desc:'Pratique du tennis en salle pour maintenir sa condition physique tout en s amusant.',
-    presentation:'Jeu en double sur les courts du complexe sportif de Beauvais. Inscription prealable recommandée.',
+    name:'Tennis', logo:'06_tennis.png?v=transparent-icons-20260814-v3',
+    desc:'Pratique du tennis en salle pour maintenir sa condition physique tout en s’amusant.',
+    presentation:'Jeu en double sur les courts du complexe sportif de Beauvais. Inscription préalable recommandée.',
     schedule:[{day:'Voir planning', time:'Voir planning', location:'Complexe sportif de Beauvais'}],
     meetingPoint:'Complexe sportif de Beauvais. Consulter le planning pour les créneaux.',
     animators:[{name:'Animateur bénévole'}],
-    info:['Raquette personnelle recommandée','Ballons fournis','Inscription prealable']
+    info:['Raquette personnelle recommandée','Ballons fournis','Inscription préalable']
   },
   '07': {
-    name:'Randonnée', logo:'07_randonnée.png',
+    name:'Randonnée', logo:'07_randonnee.png?v=transparent-icons-20260814-v3',
     desc:'Parcourez les sentiers du Beauvaisis et d’ailleurs. Des itinéraires variés en fonction des saisons et du niveau des participants.',
-    presentation:'Randonnées internes au Plan d’eau du Canada et au Bois du Parc Saint Quentin. Randonnées externes le jeudi après-midi vers des destinations variées (caps, baie de Somme, Giverny, Vexin, Andelys, etc.). Les parcours sont annonces lors des séances precedentes.',
+    presentation:'Randonnées internes au Plan d’eau du Canada et au Bois du Parc Saint Quentin. Randonnées externes le jeudi après-midi vers des destinations variées (caps, baie de Somme, Giverny, Vexin, Andelys, etc.). Les parcours sont annoncés lors des séances précédentes.',
     schedule:[{day:'Jeudi', time:'9h30 (ete) / 14h10 (hiver)', location:'Plan d’eau du Canada'},{day:'Jeudi', time:'14h00', location:'Bois du Parc Saint Quentin'},{day:'Jeudi après-midi', time:'Variable', location:'Randonnées externes'}],
     meetingPoint:'Plan d’eau du Canada (juin-sept 9h30) ou Bois du Parc Saint Quentin (après sept, 13h45). Rando externe : voir infos en seance.',
     animators:[{name:'Marie Therese'},{name:'Nelly'},{name:'Jean Jacques'},{name:'Guy'},{name:'Josiane'},{name:'Francis'}],
     info:['Chaussures de marche obligatoires','Batons recommandés','8-12 km en moyenne']
   },
   '08': {
-    name:'Marche Nordique', logo:'08_marche_nordique.png',
-    desc:'La marche nordique sollicite l ensemble du corps grace aux bâtons specifiques. Activité complète et accessible.',
+    name:'Marche Nordique', logo:'08_marche_nordique.png?v=transparent-icons-20260814-v3',
+    desc:'La marche nordique sollicite l’ensemble du corps grâce aux bâtons spécifiques. Activité complète et accessible.',
     presentation:'Initiation à la marche nordique au Plan d’eau du Canada. Les bâtons sont fournis par le club pour les nouveaux pratiquants. Séances encadrées par des animateurs expérimentés.',
     schedule:[{day:'Mercredi', time:'9h30-11h00', location:'Plan d’eau du Canada'}],
-    meetingPoint:'Plan d’eau du Canada, Beauvais. Stationnement pres de l entree.',
+    meetingPoint:'Plan d’eau du Canada, Beauvais. Stationnement près de l’entrée.',
     animators:[{name:'Robert'},{name:'Patrick'},{name:'Betty'},{name:'Dominique'},{name:'Marie France'},{name:'Chantal'},{name:'Hélène'}],
-    info:['Batons fournis par le club','Chaussures de sport','Tous niveaux']
+    info:['Bâtons fournis par le club','Chaussures de sport','Tous niveaux']
   },
   '09': {
-    name:'Gymnastique', logo:'09_gymnastique.png',
+    name:'Gymnastique', logo:'09_gymnastique.png?v=transparent-icons-20260814-v3',
     desc:'Séances de gymnastique d’entretien pour préserver souplesse, équilibre et tonicité musculaire.',
     presentation:'Cours collectifs de gym d’entretien adaptée aux seniors. Exercices de renforcement musculaire, mobilité articulaire, équilibre et étirement. Plusieurs créneaux dans la semaine avec différents animateurs.',
     schedule:[{day:'Lundi', time:'9h30', location:'Salle Carnot'},{day:'Mardi', time:'Voir planning', location:'Salle Coubertin'},{day:'Vendredi', time:'Voir planning', location:'Salle Coubertin'}],
@@ -490,54 +495,54 @@ const activities = {
     info:['Tenue souple','Tapis de sol recommandé','Adapté à tous']
   },
   '10': {
-    name:'Pickleball', logo:'10_pickleball.png',
+    name:'Pickleball', logo:'10_pickleball.png?v=transparent-icons-20260814-v3',
     desc:'Sport de raquette combinant tennis, badminton et ping-pong. Se joue en double sur un terrain réduit.',
     presentation:'Activité ludique et accessible qui mélange les gestes du tennis, du badminton et du ping-pong. Se joue en double avec une balle perforée et des raquettes en composite.',
     schedule:[{day:'Mercredi', time:'11h-13h', location:'Coubertin Plateau'},{day:'Jeudi', time:'11h-13h', location:'Gymnase R Briard St Just'}],
     meetingPoint:'Mercredi : Coubertin Plateau. Jeudi : Gymnase R Briard St Just.',
     animators:[{name:'Patrick'},{name:'Robert'}],
-    info:['Raquettes fournies','Tenue sportive','Facile a apprendre']
+    info:['Raquettes fournies','Tenue sportive','Facile à apprendre']
   },
   '11': {
-    name:'Tai Chi Chuan', logo:'11_tai_chi.png',
+    name:'Tai Chi Chuan', logo:'11_tai_chi.png?v=transparent-icons-20260814-v3',
     desc:'Art martial chinois pratiqu\u00e9 pour ses bienfaits sur la sant\u00e9. Enchaînements lents favorisant équilibre, concentration et sérénité.',
-    presentation:'Le Tai Chi Chuan est anime par Christophe, intervenant extérieur au club. Pratique des mouvements lents et fluides pour améliorer l équilibre, la souplesse et la relaxation.',
+    presentation:'Le Tai Chi Chuan est animé par Christophe, intervenant extérieur au club. Pratique des mouvements lents et fluides pour améliorer l’équilibre, la souplesse et la relaxation.',
     schedule:[{day:'Lundi', time:'10h-11h', location:'Coubertin Plateau'},{day:'Vendredi', time:'11h15-12h15', location:'Coubertin Plateau'}],
     meetingPoint:'Coubertin Plateau, Beauvais. Arrivée 10 min avant.',
     animators:[{name:'Christophe'}],
     info:['Tenue souple','Chaussures plates','Tous niveaux']
   },
   '12': {
-    name:'Échecs / Bridge', logo:'12_échecs.png',
-    desc:'Jouez aux échecs ou au bridge dans une ambiance détendue. Tournois amicaux organises régulièrement.',
-    presentation:'Les amateurs d échecs et de bridge se retrouvent pour des parties en toute convivialite. Tournois internes et initiation pour les debutants.',
+    name:'Échecs / Bridge', logo:'12_echecs.png?v=transparent-icons-20260814-v3',
+    desc:'Jouez aux échecs ou au bridge dans une ambiance détendue. Tournois amicaux organisés régulièrement.',
+    presentation:'Les amateurs d’échecs et de bridge se retrouvent pour des parties en toute convivialité. Tournois internes et initiation pour les débutants.',
     schedule:[{day:'Lundi', time:'14h00-17h00', location:'Salle de réunion CBRS'},{day:'Jeudi', time:'14h00-17h00', location:'Salle de réunion CBRS'}],
     meetingPoint:'Salle de réunion CBRS. Consulter le planning.',
     animators:[{name:'Animateur bénévole'}],
     info:['Jeux fournis','Tournois internes','Débutants bienvenus']
   },
   '13': {
-    name:'Jeux de Cartes', logo:'13_jeux_de_cartes.png',
+    name:'Jeux de Cartes', logo:'13_jeux_de_cartes.png?v=transparent-icons-20260814-v3',
     desc:'Belote, tarot et autres jeux de cartes dans une ambiance conviviale. Un bon moyen de stimuler sa mémoire.',
     presentation:'Tarot le lundi et mardi, belote le jeudi. Une ambiance conviviale et chaleureuse pour partager un bon moment autour des cartes. Salle Boibessot.',
     schedule:[{day:'Lundi', time:'13h30-17h15', location:'Salle Boibessot'},{day:'Mardi', time:'13h30-17h15', location:'Salle Boibessot'},{day:'Jeudi', time:'13h30-17h15', location:'Salle Boibessot'}],
     meetingPoint:'Salle Boibessot, 98 rue de Notre Dame du Thil, Beauvais.',
     animators:[{name:'Annie'},{name:'Jean Marie'}],
-    info:['Jeux fournis','Convivialité garantie','Ouvert a tous']
+    info:['Jeux fournis','Convivialité garantie','Ouvert à tous']
   },
   '14': {
-    name:'Danse', logo:'14_danse.png',
+    name:'Danse', logo:'14_danse.png?v=transparent-icons-20260814-v3',
     desc:'Cours de danse de salon et danse en ligne. Apprenez ou perfectionnez vos pas dans une ambiance musicale et joyeuse.',
-    presentation:'Seances de danse de salon et danse en ligne animees par un animateur bénévole. Tous les styles abordes selon la demande du groupe.',
+    presentation:'Séances de danse de salon et danse en ligne animées par un animateur bénévole. Tous les styles abordés selon la demande du groupe.',
     schedule:[{day:'Voir planning', time:'Voir planning', location:'Salle de danse - Beauvais'}],
     meetingPoint:'Salle de danse à Beauvais. Consulter le planning.',
     animators:[{name:'Animateur bénévole'}],
-    info:['Tenue confortable','Chaussures adaptées','Débutants acceptes']
+    info:['Tenue confortable','Chaussures adaptées','Débutants acceptés']
   },
   '15': {
-    name:'Atelier Memoire', logo:'15_atelier_mémoire.png',
+    name:'Atelier Mémoire', logo:'15_atelier_memoire.png?v=transparent-icons-20260814-v3',
     desc:'Exercices ludiques pour stimuler et entretenir sa mémoire. Jeux, quiz et activités cognitives en petit groupe.',
-    presentation:'Ateliers hebdomadaires en petit groupe pour entretenir sa mémoire par des exercices varies, des jeux et des quiz. Un moment convivial qui stimule les capacites cognitives dans la bonne humeur.',
+    presentation:'Ateliers hebdomadaires en petit groupe pour entretenir sa mémoire par des exercices variés, des jeux et des quiz. Un moment convivial qui stimule les capacités cognitives dans la bonne humeur.',
     schedule:[{day:'Mercredi', time:'Voir planning', location:'Salle de réunion CBRS'}],
     meetingPoint:'Salle de réunion CBRS. Voir le planning pour les créneaux.',
     animators:[{name:'Françoise'},{name:'Raoul'},{name:'Marcel'},{name:'Michèle'}],
@@ -559,12 +564,22 @@ if (activity) {
   document.getElementById('activity-subtitle').textContent = activity.desc;
   document.getElementById('breadcrumb-current').textContent = activity.name;
   document.getElementById('activity-category').textContent = activity.category || 'Tous niveaux';
-  document.getElementById('activity-logo').src = activity.logo;
-  document.getElementById('activity-logo').alt = activity.name;
-  document.getElementById('activity-desc').textContent = activity.presentation || activity.desc;
+  const logoCropRatios = {
+    '01': .74, '02': .74, '03': .73, '04': .71, '05': .70,
+    '06': .69, '07': .71, '08': .70, '09': .70, '10': .66,
+    '11': .68, '12': .65, '13': .52, '14': .50, '15': .51
+  };
+  document.getElementById('activity-logo-frame').style.aspectRatio = '1 / ' + (logoCropRatios[id] || .7);
+  const activityLogo = document.getElementById('activity-logo');
+  activityLogo.classList.add('opacity-0');
+  activityLogo.addEventListener('load', function() { activityLogo.classList.remove('opacity-0'); }, { once: true });
+  activityLogo.src = activity.logo;
+  activityLogo.alt = activity.name;
+  if (activityLogo.complete && activityLogo.naturalWidth > 0) activityLogo.classList.remove('opacity-0');
+  document.getElementById('activity-desc').textContent = activity.desc || '';
 
   if (activity.presentation) {
-    document.getElementById('presentation-container').classList.remove('hidden');
+    document.getElementById('presentation-block').classList.remove('hidden');
     document.getElementById('activity-presentation').textContent = activity.presentation;
   }
 

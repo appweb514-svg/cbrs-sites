@@ -101,6 +101,16 @@
       }
     });
 
+    // The activity icons are binary assets whose background may change while
+    // the static site is being reviewed. Bust a browser/CDN cache that could
+    // otherwise keep serving the previous opaque PNG at the same URL.
+    document.querySelectorAll('img[src]').forEach(function (image) {
+      const src = image.getAttribute('src') || '';
+      if (/(^|\/)\d{2}_[^/?#]+\.png(?:\?[^#]*)?$/i.test(src) && !/[?&]v=/.test(src)) {
+        image.setAttribute('src', src + '?v=transparent-icons-20260814-v3');
+      }
+    });
+
     const flashBar = document.getElementById('flash-bar');
     if (flashBar) {
       flashBar.setAttribute('role', 'status');
@@ -411,7 +421,7 @@
       }
       utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'fr-FR';
-      utterance.rate = .95;
+      utterance.rate = 0.8;
       utterance.pitch = 1;
       utterance.onstart = function () { setState('speaking', 'Lecture en cours…'); };
       utterance.onend = function () { setState('idle', 'Lecture terminée.'); };

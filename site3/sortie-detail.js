@@ -49,6 +49,16 @@
     image.src = record.fallbackImage || fallbackImage;
   });
 
+  const credit = byId('detail-photo-credit');
+  if (record.photoCredit) {
+    credit.innerHTML = [
+      `Photo&nbsp;: <a class="underline decoration-dotted underline-offset-2 hover:text-gray-500" href="${escapeHtml(record.photoCredit.commons)}" target="_blank" rel="noopener">${escapeHtml(record.photoCredit.artist)}</a>`,
+      ` — ${escapeHtml(record.photoCredit.license)} — via Wikimedia Commons`
+    ].join('');
+  } else {
+    credit.textContent = '';
+  }
+
   const itinerary = byId('detail-itinerary-link');
   if (record.coordinates) {
     const mapUrl = `https://www.openstreetmap.org/?mlat=${record.coordinates.lat}&mlon=${record.coordinates.lng}#map=14/${record.coordinates.lat}/${record.coordinates.lng}`;
