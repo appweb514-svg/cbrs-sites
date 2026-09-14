@@ -22,7 +22,7 @@ const upload = multer({ storage, fileFilter: (req, file, cb) => {
   cb(ok ? null : new Error('Format non supporté'), ok);
 }, limits: { fileSize: 10 * 1024 * 1024 } });
 
-router.get('/', (req, res) => {
+router.get('/', requireLogin, (req, res) => {
   const photos = db.prepare('SELECT * FROM gallery_photos ORDER BY sort_order, created_at DESC').all();
   res.json({ photos });
 });
