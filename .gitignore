@@ -29,6 +29,12 @@ Nouveau\ site\ internet\ CBRS.pdf
 # Keep site content but not cache
 **/.DS_Store
 
+# CodeGraph index (shared brain, not committed)
+.codegraph/
+
+# Graphify knowledge graph output (régénérable)
+graphify-out/
+
 # Node (if any)
 node_modules/
 backend/node_modules/

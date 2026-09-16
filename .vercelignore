@@ -1,0 +1,34 @@
+# Exclut les fichiers internes du deploiement Vercel.
+# vercel.json publie la racine du depot (outputDirectory "."), donc sans ce
+# fichier tout fichier du depot est servi publiquement (/ROADMAP.md, sources
+# du CMS legacy, plan .hermes, etc.). Patterns ancres a la racine (prefixe /).
+
+# Memoire projet et materiel agent (interne)
+/.project/
+/.hermes/
+/.opencode/
+/docs/
+/scripts/
+
+# CMS Express legacy : non deploye, contient le seed et les identifiants par defaut
+/backend/
+
+# Documentation interne (non liee par une page publique)
+/PROJECT.md
+/ROADMAP.md
+/UI_UX_PLAN.md
+
+# Doublons / assets de racine inutilises (les copies publiques sont sous site3/)
+/CBRS-FD.png
+/CBRS-FD-logo-transparent-femme.png
+/Flash_info.png
+/FFRS_Formation_FIA_Aout-2025.pdf
+/FFRS_Formation_M2-AA_Aout-2025.pdf
+/FFRS_Formation_M2-AC_Aout-2025.pdf
+/FFRS_Formation_M2-AD_Aout-2025.pdf
+/FFRS_Formation_M2-AGEF_Aout-2025.pdf
+/FFRS_Formation_M2-JB_Aout-2025.pdf
+
+# Index locaux regenerables
+/.codegraph/
+/graphify-out/
