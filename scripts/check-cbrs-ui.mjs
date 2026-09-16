@@ -47,3 +47,19 @@ assert(home.includes('background: #fff'), 'cadre blanc absent');
 assert(home.includes('width: clamp(6.8rem, 11vw, 9rem)'), 'logo Flash Info non agrandi');
 assert(home.includes('width: 6.2rem'), 'taille mobile Flash Info absente');
 console.log('PASS — accueil');
+
+assert(fs.existsSync('.vercelignore'), '.vercelignore doit exister (racine publiée par Vercel)');
+const vercelignore = fs.readFileSync('.vercelignore', 'utf8');
+for (const protectedPath of [
+  '/.project/',
+  '/.hermes/',
+  '/backend/',
+  '/ROADMAP.md',
+  '/UI_UX_PLAN.md',
+  '/PROJECT.md',
+  '/docs/',
+  '/scripts/'
+]) {
+  assert(vercelignore.includes(protectedPath), `.vercelignore: ${protectedPath} non ignoré`);
+}
+console.log('PASS — .vercelignore (fichiers internes exclus du déploiement)');
