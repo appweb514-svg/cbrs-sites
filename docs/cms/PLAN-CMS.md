@@ -1,6 +1,6 @@
 # Plan CMS — CBRS
 
-Date : 2026-09-23 · Statut : **proposition, choix de l'outil à valider**
+Date : 2026-09-23 · Statut : **outil choisi (Payload), maquette en PR #4**
 
 ## 1. Objectif
 
@@ -36,23 +36,20 @@ Les zones concernées sont déjà repérées dans le HTML par `data-cms-collecti
 | `galerie` | album, année, photo, légende | Galerie | Équipe Galerie |
 | `parametres` (singleton) | chiffres clés (1993, 1 200, une vingtaine), contacts, réseaux | Tout le site | Administrateur |
 
-## 4. Choix de l'outil
+## 4. Choix de l’outil : Payload (décision du 2026-09-23)
 
-L'exigence décisive est **« un responsable d'activité ne modifie que ses activités »** (droits par élément).
+Critères retenus : **simple, en français, gratuit** ; à défaut, un développement maison.
 
-| Critère | Cockpit (choix initial) | Directus (alternative recommandée) | Decap CMS |
-| --- | --- | --- | --- |
-| Hébergement | PHP + SQLite/MongoDB, Docker | Node + PostgreSQL (déjà présent sur le serveur), Docker | Aucun serveur (Git) |
-| Droits par collection | Oui | Oui | Non (tout ou rien) |
-| **Droits par élément** | **Non** : à contourner (1 collection par activité, ou extension PHP sur l'événement de sauvegarde) | **Oui, natif** : filtre `referents contient $CURRENT_USER` | Non |
-| Droits par champ | Partiel | Oui | Non |
-| Brouillon / validation | Oui | Oui (statut + workflow) | Oui (éditorial) |
-| Prise en main bénévoles | Très simple | Simple, interface plus riche | Nécessite un compte Git |
-| Licence | MIT (core) | Gratuite ; au-delà de 3 comptes / 25 collections, « Open Innovation Grant » gratuit pour les structures < 5 M$ de CA et < 50 salariés, à demander | MIT |
+**Payload** (licence MIT) coche les trois cases, et il couvre l’exigence décisive : « un responsable d’activité ne modifie que ses activités ».
 
-**Recommandation : Directus**, parce qu'il couvre nativement les droits par équipe **et** par activité, et qu'il réutilise le PostgreSQL existant.
-**Cockpit reste viable** si l'on accepte des droits par section seulement (une collection par équipe) et que les fiches d'activité sont éditées par le bureau, ou si l'on développe une petite extension de contrôle à l'enregistrement.
-Decap CMS est écarté : pas de droits fins, et un compte Git par bénévole.
+- Gratuit, sans limite de comptes ni de contenus.
+- Interface d’administration traduite en français ; tous les libellés des champs sont écrits en français.
+- Droits par section **et** par élément, écrits en code et testés.
+- Évite de redévelopper la connexion, les mots de passe, l’envoi de fichiers et l’administration (estimation « tout maison » : 3 à 4 semaines).
+
+Options écartées : **Cockpit** (droits par section seulement), **Directus** (gratuité conditionnelle au-delà de 3 comptes, interface plus technique), **Decap CMS** (compte GitHub pour chaque bénévole, droits insuffisants).
+
+Maquette : PR #4 (`cms/`), 12 tests d’accès.
 
 ## 5. Architecture cible
 
