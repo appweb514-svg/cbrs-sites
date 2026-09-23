@@ -2,7 +2,7 @@
 <html lang="fr"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Liens utiles - CBRS</title>
+<title>Statuts et règlement intérieur - CBRS Club du Beauvaisis de la Retraite Sportive</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <style data-purpose="custom-fonts">
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap');
@@ -13,37 +13,20 @@
     tailwind.config = {
       theme: {
         extend: {
-          colors: { 'cbrs-blue': '#0a3273', 'cbrs-blue-light': '#1e4b99', 'cbrs-green': '#58a01a', 'cbrs-green-hover': '#4a8716', 'cbrs-teal': '#145c75', 'cbrs-gray-100': '#f8f9fa', 'cbrs-gray-200': '#e9ecef', 'cbrs-text': '#333333', 'cbrs-text-light': '#666666' },
-          boxShadow: { 'card': '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)', 'card-hover': '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)' }
+          colors: {
+            'cbrs-blue': '#0a3273', 'cbrs-blue-light': '#1e4b99', 'cbrs-green': '#58a01a',
+            'cbrs-green-hover': '#4a8716', 'cbrs-teal': '#145c75', 'cbrs-gray-100': '#f8f9fa',
+            'cbrs-gray-200': '#e9ecef', 'cbrs-text': '#333333', 'cbrs-text-light': '#666666',
+          },
+          boxShadow: {
+            'card': '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)',
+            'card-hover': '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
+          }
         }
       }
     }
   </script>
 <style>
-  .useful-links-grid > a {
-    position: relative;
-    display: flex;
-    min-height: 17rem;
-    flex-direction: column;
-    border: 1px solid rgba(10, 50, 115, .1);
-    border-top-width: 4px;
-    border-left-width: 1px;
-    padding: 1.25rem;
-    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-  }
-  .useful-links-grid > a:hover { transform: translateY(-4px); }
-  .useful-links-grid > a:focus-visible {
-    outline: 3px solid rgba(88, 160, 26, .35);
-    outline-offset: 3px;
-  }
-  .useful-links-grid > a > p:last-of-type { margin-top: 1rem; }
-  .useful-links-grid > a .cbrs-useful-cta { margin-top: auto !important; padding-top: 1rem; }
-  .useful-links-grid > a > .flex.items-start { min-height: 3.5rem; }
-  .useful-links-grid > a > .flex.items-start > .flex-1 { min-width: 0; }
-  @media (max-width: 767px) {
-    .useful-links-grid > a { min-height: 0; }
-  }
-
   .sidebar {
     transition: width 0.3s ease;
     scrollbar-width: none;
@@ -51,7 +34,7 @@
   }
   .sidebar::-webkit-scrollbar { display: none; }
   .sidebar.collapsed { width: 4rem; }
-  .sidebar.collapsed .sidebar-label, .sidebar.collapsed .sidebar-quote, .sidebar.collapsed .sidebar-divider { display: none; }
+  .sidebar.collapsed .sidebar-logo-text, .sidebar.collapsed .sidebar-label, .sidebar.collapsed .sidebar-quote, .sidebar.collapsed .sidebar-divider { display: none; }
   .sidebar.collapsed .sidebar-link { justify-content: center; padding: 0.75rem 0; margin-right: 0; border-radius: 0; }
   .sidebar.collapsed .sidebar-link svg { margin-right: 0; }
   .sidebar.collapsed .sidebar-logo { padding: 0.5rem; }
@@ -156,17 +139,6 @@
   }
 </style>
 <link rel="stylesheet" href="ui-shell.css"/>
-<style id="useful-links-design">
-  .useful-links-grid > a { min-height: 100%; }
-  .useful-links-grid > a > div[class*="w-14"] { width: 4.25rem; height: 4.25rem; }
-  .useful-links-grid > a > div[class*="w-12"] { width: 4.25rem; height: 4.25rem; }
-  .useful-links-grid > a .cbrs-useful-cta { display: inline-flex; margin-top: 1rem; color: #0a3273; font-size: .75rem; font-weight: 800; }
-  .useful-links-grid > a:focus-visible { outline: 0; box-shadow: 0 0 0 3px rgba(88,160,26,.42), 0 10px 25px rgba(10,50,115,.12); }
-  @media (max-width: 767px) {
-    .useful-links-grid > a > div[class*="w-14"],
-    .useful-links-grid > a > div[class*="w-12"] { width: 3.75rem; height: 3.75rem; }
-  }
-</style>
 </head>
 <body class="wave-effect-disabled bg-gray-50 text-cbrs-text antialiased flex flex-col min-h-screen">
 <header class="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 shadow-sm">
@@ -230,8 +202,8 @@
   <div class="absolute inset-0 bg-gradient-to-br from-cbrs-blue/90 via-cbrs-blue-light/80 to-cbrs-teal/75"></div>
   <div class="relative z-10 w-full px-8 md:px-16 py-10 md:py-14">
     <div class="text-center md:pr-64">
-      <h1 class="header-title text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3">Liens <span class="text-cbrs-green font-serif-italic">utiles</span></h1>
-      <p class="text-sm md:text-base lg:text-lg text-white/90 max-w-2xl mx-auto">Retrouvez ici les liens vers les organismes partenaires, fédérations et ressources utiles pour les adhérents du CBRS.</p>
+      <h1 class="header-title text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3">Statuts &amp; <span class="text-cbrs-green font-serif-italic">règlement</span></h1>
+      <p class="text-sm md:text-base lg:text-lg text-white/90 max-w-2xl mx-auto">Les textes qui encadrent le fonctionnement de l’association.</p>
     </div>
   </div>
   <img src="logo-cbrs.png" alt="CBRS" class="hidden md:block absolute right-4 md:right-12 top-[44%] -translate-y-1/2 h-[160px] md:h-[200px] w-auto object-contain"/>
@@ -298,161 +270,31 @@
 </div>
 </aside>
 <main id="contenu" class="flex-1 overflow-x-hidden relative md:pt-20">
-<section class="max-w-6xl mx-auto px-6 py-12">
-  <div class="mb-8 text-center">
-    <p class="text-xs font-bold uppercase tracking-[.16em] text-cbrs-green">Les ressources du club</p>
-    <p class="mt-3 text-base text-gray-600 text-center max-w-2xl mx-auto">Les partenaires et ressources qui accompagnent la vie du club.</p>
+<section class="max-w-4xl mx-auto px-6 py-12">
+  <div class="mb-8">
+    <p class="text-sm font-semibold uppercase tracking-wider text-cbrs-green mb-2">Vie associative</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-cbrs-text">Statuts et <span class="text-cbrs-blue font-serif-italic">règlement intérieur</span></h2>
+    <p class="mt-3 text-gray-600">Le Club du Beauvaisis de la Retraite Sportive est une association loi 1901. Ses statuts et son règlement intérieur définissent son objet, son organisation et les règles de vie communes à tous les adhérents.</p>
   </div>
 
-  <div class="mb-8 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
-    <div class="rounded-2xl border border-cbrs-blue/10 bg-white p-4 shadow-card"><p class="text-xs font-bold uppercase tracking-wide text-cbrs-blue">01</p><h2 class="mt-1 font-bold text-gray-900">Fédération & encadrement</h2><p class="mt-2 text-xs leading-relaxed text-gray-500">Les organismes qui structurent et accompagnent la pratique.</p></div>
-    <div class="rounded-2xl border border-cbrs-green/20 bg-white p-4 shadow-card"><p class="text-xs font-bold uppercase tracking-wide text-cbrs-green">02</p><h2 class="mt-1 font-bold text-gray-900">Collectivités locales</h2><p class="mt-2 text-xs leading-relaxed text-gray-500">Les partenaires du territoire et de la vie locale.</p></div>
-    <div class="rounded-2xl border border-cbrs-teal/20 bg-white p-4 shadow-card"><p class="text-xs font-bold uppercase tracking-wide text-cbrs-teal">03</p><h2 class="mt-1 font-bold text-gray-900">Sorties & tourisme</h2><p class="mt-2 text-xs leading-relaxed text-gray-500">Des idées pour préparer vos sorties et découvertes.</p></div>
-    <div class="rounded-2xl border border-amber-200 bg-white p-4 shadow-card"><p class="text-xs font-bold uppercase tracking-wide text-amber-700">04</p><h2 class="mt-1 font-bold text-gray-900">Ressources sportives</h2><p class="mt-2 text-xs leading-relaxed text-gray-500">Des ressources utiles pour bouger en toute confiance.</p></div>
-  </div>
-
-  <div id="documents" class="mb-10" data-cms-collection="documents">
-    <h2 class="text-xl font-bold text-cbrs-text mb-4">Documents à télécharger</h2>
-    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-      <div class="cbrs-doc-callout">
-        <div>
-          <p class="cbrs-doc-callout-title">Déclaration d’assurance</p>
-          <p class="cbrs-doc-callout-text">Formulaire de déclaration de sinistre de l’assurance fédérale.</p>
-        </div>
-        <a class="cbrs-doc-link" href="docs/Declaration_assurance.pdf" target="_blank" rel="noopener" data-cbrs-doc>Télécharger (PDF)</a>
+  <div class="space-y-5" data-cms-collection="documents">
+    <div class="cbrs-doc-callout">
+      <div>
+        <p class="cbrs-doc-callout-title">Statuts de l’association</p>
+        <p class="cbrs-doc-callout-text">Objet, composition, fonctionnement de l’assemblée générale et du conseil d’administration.</p>
       </div>
-      <div class="cbrs-doc-callout">
-        <div>
-          <p class="cbrs-doc-callout-title">Imprimé fédéral</p>
-          <p class="cbrs-doc-callout-text">Document officiel de la Fédération Française de la Retraite Sportive.</p>
-        </div>
-        <a class="cbrs-doc-link" href="docs/FFRS_Imprime_federal.pdf" target="_blank" rel="noopener" data-cbrs-doc>Télécharger (PDF)</a>
+      <a class="cbrs-doc-link" href="docs/CBRS_Statuts.pdf" target="_blank" rel="noopener" data-cbrs-doc>Consulter les statuts (PDF)</a>
+    </div>
+    <div class="cbrs-doc-callout">
+      <div>
+        <p class="cbrs-doc-callout-title">Règlement intérieur</p>
+        <p class="cbrs-doc-callout-text">Règles pratiques de participation aux activités, sorties et voyages du club.</p>
       </div>
+      <a class="cbrs-doc-link" href="docs/CBRS_Reglement_interieur.pdf" target="_blank" rel="noopener" data-cbrs-doc>Consulter le règlement (PDF)</a>
     </div>
   </div>
 
-  <div class="useful-links-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
-    <a href="https://www.ffrs-retraite-sportive.fr" target="_blank" class="bg-white rounded-2xl shadow-card p-6 hover:shadow-card-hover transition-all duration-200 group relative border-l-4 border-cbrs-blue">
-      <span class="absolute top-2 right-2 text-gray-300 group-hover:text-gray-400 transition-colors">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-      </span>
-      <div class="flex items-center gap-4 mb-3">
-        <div class="w-12 h-12 bg-cbrs-blue rounded-xl flex items-center justify-center shrink-0 text-white font-bold text-sm group-hover:scale-110 transition-transform">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-      </div>
-        <div>
-          <h3 class="font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors">FFRS</h3>
-          <p class="text-xs text-cbrs-blue font-medium">Fédération de tutelle</p>
-        </div>
-      </div>
-      <p class="text-xs text-gray-500 leading-relaxed">Fédération Française de la Retraite Sportive — organisme fédéral qui encadre et forme les animateurs du CBRS.</p>
-    </a>
-    <a href="https://coders60.fr" target="_blank" class="bg-white rounded-2xl shadow-card p-6 hover:shadow-card-hover transition-all duration-200 group relative border-l-4 border-cbrs-green">
-      <span class="absolute top-2 right-2 text-gray-300 group-hover:text-gray-400 transition-colors">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-      </span>
-      <div class="flex items-center gap-4 mb-3">
-        <div class="w-12 h-12 bg-cbrs-green rounded-xl flex items-center justify-center shrink-0 text-white font-bold text-sm group-hover:scale-110 transition-transform">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-      </div>
-        <div>
-          <h3 class="font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors">CODERS 60</h3>
-          <p class="text-xs text-cbrs-green font-medium">Comité départemental</p>
-        </div>
-      </div>
-      <p class="text-xs text-gray-500 leading-relaxed">Comité Départemental de la Retraite Sportive de l'Oise. Représente la FFRS au niveau du département.</p>
-    </a>
-    <a href="https://corers-hauts-de-france.fr" target="_blank" class="bg-white rounded-2xl shadow-card p-6 hover:shadow-card-hover transition-all duration-200 group relative border-l-4 border-cbrs-teal">
-      <span class="absolute top-2 right-2 text-gray-300 group-hover:text-gray-400 transition-colors">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-      </span>
-      <div class="flex items-center gap-4 mb-3">
-        <div class="w-12 h-12 bg-cbrs-teal rounded-xl flex items-center justify-center shrink-0 text-white font-bold text-sm group-hover:scale-110 transition-transform">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-      </div>
-        <div>
-          <h3 class="font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors">CORERS Hauts-de-France</h3>
-          <p class="text-xs text-cbrs-teal font-medium">Comité régional</p>
-        </div>
-      </div>
-      <p class="text-xs text-gray-500 leading-relaxed">Comité Régional de la Retraite Sportive des Hauts-de-France. Coordonne les actions au niveau régional.</p>
-    </a>
-    <a href="https://www.beauvaisis.fr" target="_blank" class="bg-white rounded-2xl shadow-card p-5 hover:shadow-card-hover transition-all duration-200 group flex items-start gap-4 relative">
-      <span class="absolute top-3 right-3 text-gray-300 group-hover:text-gray-400 transition-colors">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-      </span>
-      <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shrink-0 p-2 group-hover:scale-105 transition-transform border border-gray-200">
-        <img src="logos-partenaires/beauvaisis-logo.png" alt="CA du Beauvaisis" class="w-full h-full object-contain"/>
-      </div>
-      <div class="flex-1 min-w-0">
-        <div class="flex items-center gap-2 mb-1">
-          <h3 class="font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors text-sm">CA du Beauvaisis</h3>
-          <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Collectivité</span>
-        </div>
-        <p class="text-xs text-gray-500">Communauté d'Agglomération du Beauvaisis — collectivité de rattachement du CBRS.</p>
-      </div>
-    </a>
-    <a href="https://www.ville-beauvais.fr" target="_blank" class="bg-white rounded-2xl shadow-card p-5 hover:shadow-card-hover transition-all duration-200 group flex items-start gap-4 relative">
-      <span class="absolute top-3 right-3 text-gray-300 group-hover:text-gray-400 transition-colors">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-      </span>
-      <div class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center shrink-0 text-white font-bold group-hover:scale-105 transition-transform">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-      </div>
-      <div class="flex-1 min-w-0">
-        <div class="flex items-center gap-2 mb-1">
-          <h3 class="font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors text-sm">Ville de Beauvais</h3>
-          <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Municipalité</span>
-        </div>
-        <p class="text-xs text-gray-500">Mairie de Beauvais — partenariat municipal et mise à disposition d'infrastructures sportives.</p>
-      </div>
-    </a>
-    <a href="https://www.beauvais-tourisme.fr" target="_blank" class="bg-white rounded-2xl shadow-card p-5 hover:shadow-card-hover transition-all duration-200 group flex items-start gap-4 relative">
-      <span class="absolute top-3 right-3 text-gray-300 group-hover:text-gray-400 transition-colors">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-      </span>
-      <div class="w-14 h-14 bg-amber-600 rounded-2xl flex items-center justify-center shrink-0 text-white font-bold group-hover:scale-105 transition-transform">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
-      </div>
-      <div class="flex-1 min-w-0">
-        <div class="flex items-center gap-2 mb-1">
-          <h3 class="font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors text-sm">Office de Tourisme</h3>
-          <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Tourisme</span>
-        </div>
-        <p class="text-xs text-gray-500">Office de Tourisme du Beauvaisis — informations touristiques et idées de sorties dans la région.</p>
-      </div>
-    </a>
-    <a href="https://www.ffrandonnee.fr" target="_blank" class="bg-white rounded-2xl shadow-card p-5 hover:shadow-card-hover transition-all duration-200 group flex items-start gap-4 relative">
-      <span class="absolute top-3 right-3 text-gray-300 group-hover:text-gray-400 transition-colors">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-      </span>
-      <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shrink-0 p-2 group-hover:scale-105 transition-transform border border-gray-200">
-        <img src="logos-partenaires/ffrandonnee-logo.png" alt="FFRandonnée" class="w-full h-full object-contain"/>
-      </div>
-      <div class="flex-1 min-w-0">
-        <div class="flex items-center gap-2 mb-1">
-          <h3 class="font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors text-sm">FFRandonnée</h3>
-          <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Fédération</span>
-        </div>
-        <p class="text-xs text-gray-500">Fédération Française de la Randonnée Pédestre — référentiel pour les sorties randonnée du CBRS.</p>
-      </div>
-    </a>
-    <a href="https://www.sports.gouv.fr" target="_blank" class="bg-white rounded-2xl shadow-card p-5 hover:shadow-card-hover transition-all duration-200 group flex items-start gap-4 relative">
-      <span class="absolute top-3 right-3 text-gray-300 group-hover:text-gray-400 transition-colors">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-      </span>
-      <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shrink-0 p-2 group-hover:scale-105 transition-transform border border-gray-200">
-        <img src="logos-partenaires/sports-gouv-logo.png" alt="Ministère des Sports" class="w-full h-full object-contain"/>
-      </div>
-      <div class="flex-1 min-w-0">
-        <div class="flex items-center gap-2 mb-1">
-          <h3 class="font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors text-sm">Ministère des Sports</h3>
-          <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Gouvernement</span>
-        </div>
-        <p class="text-xs text-gray-500">Ministère des Sports et des Jeux Olympiques et Paralympiques — politique sportive nationale.</p>
-      </div>
-    </a>
-  </div>
+  <p class="mt-8 text-sm text-gray-600">Une question sur ces documents ? <a class="text-cbrs-blue underline" href="contact.html">Contactez le bureau</a>.</p>
 </section>
 
 <footer class="bg-white border-t border-gray-200">
@@ -493,96 +335,8 @@
 </div>
 <div class="border-t border-gray-100 py-4 text-center text-xs text-gray-400">2026 &copy; CBRS — Club du Beauvaisis de la Retraite Sportive</div>
 </footer>
-</main></div></div>
-<script>
-let sidebarCollapsed = false;
-function toggleMobileMenu() {
-  const menu = document.getElementById('mobile-menu');
-  const main = document.getElementById('contenu');
-  if (!menu) return;
-  if (menu.classList.contains('open')) {
-    menu.classList.remove('open');
-    if (main) main.style.paddingTop = '';
-  } else {
-    menu.classList.remove('hidden');
-    const h = menu.scrollHeight;
-    menu.classList.add('open');
-    if (main) main.style.paddingTop = (h > 50 ? 64 + h : 664) + 'px';
-  }
-}
-
-function toggleSidebar() {
-  const s = document.getElementById('sidebar');
-  sidebarCollapsed = !sidebarCollapsed;
-  s.classList.toggle('collapsed', sidebarCollapsed);
-  document.body.classList.toggle('sidebar-collapsed', sidebarCollapsed);
-  const btn = s.querySelector('.sidebar-toggle span');
-  if (btn) btn.textContent = sidebarCollapsed ? 'Ouvrir' : 'Réduire';
-}
-
-const desktopLayout = document.querySelector('body > .flex.flex-1');
-function syncStickySidebar() {
-  if (!desktopLayout) return;
-  document.body.classList.toggle(
-    'sidebar-pinned',
-    window.innerWidth >= 768 && desktopLayout.getBoundingClientRect().top <= 0
-  );
-}
-window.addEventListener('scroll', syncStickySidebar, { passive: true });
-window.addEventListener('resize', syncStickySidebar);
-syncStickySidebar();
-</script>
-
-<div class="accessibility-panel" id="accessibility-panel" aria-labelledby="accessibility-title">
-  <h2 id="accessibility-title">Options d’accessibilité</h2>
-  <button type="button" data-a11y-toggle="a11y-large" aria-pressed="false">Agrandir le texte</button>
-  <button type="button" data-a11y-toggle="a11y-contrast" aria-pressed="false">Contraste renforcé</button>
-  <button type="button" data-a11y-toggle="a11y-links" aria-pressed="false">Souligner les liens</button>
-  <button type="button" data-a11y-toggle="a11y-motion" aria-pressed="false">Réduire les animations</button>
-  <button type="button" data-a11y-toggle="a11y-readable" aria-pressed="false">Police plus lisible</button>
-  <button type="button" class="close" onclick="resetAccessibility()">Réinitialiser</button>
-</div>
-<button type="button" class="accessibility-fab" onclick="toggleAccessibilityPanel()" aria-controls="accessibility-panel" aria-expanded="false">Accessibilité</button>
-<script id="accessibility-script">
-(function(){
-  const key = 'cbrs-accessibility';
-  const toggles = ['a11y-large','a11y-contrast','a11y-links','a11y-motion','a11y-readable'];
-  function saved(){ try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { return []; } }
-  function save(active){ localStorage.setItem(key, JSON.stringify(active)); }
-  function apply(){
-    const active = saved();
-    toggles.forEach(cls => document.documentElement.classList.toggle(cls, active.includes(cls)));
-    document.querySelectorAll('[data-a11y-toggle]').forEach(btn => btn.setAttribute('aria-pressed', String(active.includes(btn.dataset.a11yToggle))));
-  }
-  window.toggleAccessibilityPanel = function(){
-    const panel = document.getElementById('accessibility-panel');
-    const btn = document.querySelector('.accessibility-fab');
-    const open = !panel.classList.contains('open');
-    panel.classList.toggle('open', open);
-    btn.setAttribute('aria-expanded', String(open));
-  };
-  window.resetAccessibility = function(){ save([]); apply(); };
-  document.addEventListener('click', function(e){
-    const btn = e.target.closest('[data-a11y-toggle]');
-    if (!btn) return;
-    const cls = btn.dataset.a11yToggle;
-    const active = new Set(saved());
-    active.has(cls) ? active.delete(cls) : active.add(cls);
-    save([...active]); apply();
-  });
-  apply();
-})();
-</script>
-
-<script>
-  document.querySelectorAll('.useful-links-grid > a[target="_blank"]').forEach((link) => {
-    if (link.querySelector('.cbrs-useful-cta')) return;
-    const cta = document.createElement('span');
-    cta.className = 'cbrs-useful-cta';
-    cta.textContent = 'Visiter le site ↗';
-    link.appendChild(cta);
-  });
-</script>
+</main></div>
 <script src="auth.js"></script>
 <script src="ui-shell.js"></script>
-</body></html>
+</body>
+</html>

@@ -83,7 +83,7 @@ const activities = [
   {
     id: '05', name: 'Tennis de Table', slug: 'tennis-de-table', category: 'Activité',
     logo: '05_ping_pong.png',
-    short_description: "Le Ping Pong se pratique dans une ambiance conviviale. Plusieurs tables disponibles pour jouer en simple ou en double.",
+    short_description: "Le tennis de table se pratique dans une ambiance conviviale. Plusieurs tables disponibles pour jouer en simple ou en double.",
     presentation: "<p>Le tennis de table du CBRS accueille joueurs débutants et confirmés dans une ambiance détendue. Plusieurs tables sont installées à la salle Carnot pour des parties en simple, double ou en rotation.</p><p>Tournois amicaux organisés régulièrement au cours de la saison.</p>",
     meeting_point: "Salle Carnot — Beauvais",
     level: 'Tous niveaux',

@@ -23,7 +23,7 @@
 <style>
   .flash-news-intro { display: flex; align-items: center; gap: .8rem; margin-bottom: .7rem; }
   .flash-news-logo { display: grid; width: clamp(6.8rem, 11vw, 9rem); height: clamp(6.8rem, 11vw, 9rem); flex: 0 0 auto; place-items: center; filter: drop-shadow(0 7px 8px rgba(30,38,56,.26)); animation: flash-breathe 2.4s ease-in-out infinite; }
-  .flash-news-logo img { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .flash-news-logo img { display: block; width: 100%; height: 100%; object-fit: contain; filter: hue-rotate(58deg) saturate(1.15); }
   .flash-news-intro > .flash-scroll { flex: 1 1 auto; min-width: 0; }
   .flash-news-title { margin: 0 0 1.15rem; }
   .flash-scroll { display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; min-height: 42px; overflow: hidden; border: 1px solid rgba(255,255,255,.5); border-radius: 13px; background: linear-gradient(115deg, #8f1d27 0%, #bd2931 56%, #df4438 100%); box-shadow: 0 8px 18px rgba(143,29,39,.18), inset 0 1px 0 rgba(255,255,255,.2); }
@@ -44,56 +44,6 @@
     .flash-scroll-marquee { animation: none; }
     .flash-scroll-text { white-space: normal; }
     .flash-scroll-text[data-flash-clone] { display: none; }
-  }
-  .cbrs-activity-showcase { position: relative; isolation: isolate; overflow: hidden; padding: clamp(2rem, 5vw, 4rem); border-radius: 28px; background: linear-gradient(115deg, #0a3273, #1e4b99 60%, #0a3273); box-shadow: 0 24px 55px rgba(10,50,115,.2); }
-  .cbrs-activity-showcase::after { content: ''; position: absolute; inset: auto -10% -45% 42%; z-index: -1; height: 70%; border-radius: 50%; background: radial-gradient(circle, rgba(125,190,255,.18), transparent 68%); filter: blur(20px); pointer-events: none; }
-  .cbrs-activity-showcase-inner { display: grid; grid-template-columns: minmax(220px, .78fr) minmax(0, 1.5fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: center; }
-  .cbrs-activity-copy { max-width: 27rem; color: #fff; }
-  .cbrs-activity-eyebrow { margin-bottom: .8rem; color: #b9e15d; font-size: .72rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
-  .cbrs-activity-title { margin: 0; color: #fff; font-family: Manrope, Inter, sans-serif; font-size: clamp(2rem, 4.6vw, 3.6rem); font-weight: 800; letter-spacing: -.05em; line-height: .98; text-wrap: balance; }
-  .cbrs-activity-title em { color: #b9e15d; font-family: "Playfair Display", Georgia, serif; font-style: italic; font-weight: 600; letter-spacing: -.03em; }
-  .cbrs-activity-copy > p:not(.cbrs-activity-eyebrow) { max-width: 24rem; margin: 1.25rem 0 1.5rem; color: rgba(255,255,255,.78); font-size: .98rem; line-height: 1.7; }
-  .cbrs-activity-stats { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.6rem; }
-  .cbrs-activity-stat { display: grid; gap: .1rem; padding-left: .75rem; border-left: 2px solid #72b42c; }
-  .cbrs-activity-stat strong { color: #fff; font-size: 1.35rem; line-height: 1; }
-  .cbrs-activity-stat span { color: rgba(255,255,255,.62); font-size: .7rem; letter-spacing: .05em; text-transform: uppercase; }
-  .cbrs-activity-cta { display: inline-flex; align-items: center; gap: .55rem; padding: .8rem 1.15rem; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; background: rgba(255,255,255,.1); color: #fff; font-size: .85rem; font-weight: 800; transition: background-color .2s, transform .2s, border-color .2s; }
-  .cbrs-activity-cta:hover, .cbrs-activity-cta:focus-visible { border-color: #b9e15d; background: #58a01a; color: #fff; transform: translateY(-2px); outline: none; }
-  .cbrs-activity-rail { min-width: 0; overflow-x: auto; overflow-y: hidden; padding: .75rem 0 1.15rem; cursor: grab; scrollbar-width: none; mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); touch-action: pan-y; }
-  .cbrs-activity-rail::-webkit-scrollbar { display: none; }
-  .cbrs-activity-rail.is-dragging { cursor: grabbing; }
-  .cbrs-activity-track { display: flex; width: max-content; will-change: transform; animation: cbrs-activity-loop 38s linear infinite; }
-  .cbrs-activity-track.is-paused { animation-play-state: paused; }
-  .cbrs-activity-set { display: flex; flex: none; gap: 1rem; padding-right: 1rem; }
-  .cbrs-activity-slide { position: relative; display: flex; flex: 0 0 clamp(12rem, 17vw, 15rem); min-height: 17rem; flex-direction: column; justify-content: space-between; padding: 1rem; overflow: hidden; border: 1px solid rgba(255,255,255,.52); border-radius: 22px; background: linear-gradient(150deg, rgba(255,255,255,.98), rgba(235,246,250,.9)); box-shadow: 0 16px 30px rgba(5,31,68,.22); color: #102f5f; cursor: grab; transition: transform .3s ease, box-shadow .3s ease; }
-  .cbrs-activity-rail.is-dragging .cbrs-activity-slide { cursor: grabbing; }
-  .cbrs-activity-slide:hover, .cbrs-activity-slide:focus-visible { box-shadow: 0 22px 38px rgba(5,31,68,.34); transform: translateY(-8px) rotate(-1deg); outline: none; }
-  .cbrs-activity-art { display: grid; min-height: 10rem; place-items: center; overflow: hidden; border: 1px solid rgba(10,50,115,.08); border-radius: 17px; background: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.8); }
-  .cbrs-activity-art img { width: 82%; height: 82%; object-fit: contain; transition: transform .45s ease; }
-  .cbrs-activity-slide:hover .cbrs-activity-art img, .cbrs-activity-slide:focus-visible .cbrs-activity-art img { transform: scale(1.08) rotate(-3deg); }
-  .cbrs-activity-slide-content { display: flex; align-items: end; justify-content: space-between; gap: .6rem; padding-top: .8rem; }
-  .cbrs-activity-slide-content strong { display: block; color: #0a3273; font-size: 1.02rem; line-height: 1.05; }
-  .cbrs-activity-slide-content small { display: block; margin-top: .25rem; color: #5e7897; font-size: .72rem; }
-  .cbrs-activity-arrow { display: grid; width: 2.25rem; height: 2.25rem; flex: 0 0 auto; place-items: center; border-radius: 50%; background: #0a3273; color: #fff; font-size: 1.15rem; transition: background-color .2s, transform .2s; }
-  .cbrs-activity-slide:hover .cbrs-activity-arrow, .cbrs-activity-slide:focus-visible .cbrs-activity-arrow { background: #58a01a; transform: rotate(-12deg); }
-  .cbrs-activity-controls { display: flex; align-items: center; justify-content: flex-end; margin-top: 1.2rem; }
-  .cbrs-activity-toggle { display: grid; width: 2.25rem; height: 2.25rem; margin-left: auto; place-items: center; border: 1px solid rgba(255,255,255,.3); border-radius: 50%; background: rgba(255,255,255,.1); color: #fff; cursor: pointer; transition: background-color .2s, transform .2s; }
-  .cbrs-activity-toggle:hover, .cbrs-activity-toggle:focus-visible { background: #58a01a; transform: scale(1.06); outline: none; }
-  .cbrs-activity-toggle svg { width: 1rem; height: 1rem; fill: currentColor; }
-  @keyframes cbrs-activity-loop { to { transform: translateX(-50%); } }
-  @media (max-width: 767px) {
-    .cbrs-activity-showcase { padding: 2rem 1rem 1.25rem; border-radius: 22px; }
-    .cbrs-activity-showcase-inner { grid-template-columns: 1fr; gap: 1.25rem; }
-    .cbrs-activity-title { max-width: 20rem; font-size: clamp(2rem, 10vw, 2.8rem); }
-    .cbrs-activity-copy > p:not(.cbrs-activity-eyebrow) { font-size: .88rem; }
-    .cbrs-activity-rail { margin: 0 -.5rem; padding-bottom: .75rem; mask-image: none; }
-    .cbrs-activity-slide { flex-basis: 12.5rem; min-height: 15rem; }
-    .cbrs-activity-art { min-height: 8.5rem; }
-    .cbrs-activity-controls { margin-top: .4rem; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .cbrs-activity-track { animation: none; }
-    .cbrs-activity-slide, .cbrs-activity-art img, .cbrs-activity-cta, .cbrs-activity-toggle { transition: none; }
   }
   .sidebar {
     transition: width 0.3s ease;
@@ -230,6 +180,10 @@
       <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
       <span>Planning</span>
     </a>
+    <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="adhesion.html">
+      <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      <span>Adhérer</span>
+    </a>
     <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="formation.html">
       <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
       <span>Formation</span>
@@ -246,11 +200,11 @@
       <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
       <span>Liens utiles</span>
     </a>
-    <div class="border-t border-white/10 my-2 mx-2"></div>
-    <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="adhesion.html">
-      <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-      <span>Adhérer</span>
+    <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="statuts.html">
+      <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      <span>Statuts</span>
     </a>
+    <div class="border-t border-white/10 my-2 mx-2"></div>
     <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="contact.html">
       <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
       <span>Contact</span>
@@ -263,17 +217,17 @@
 </header>
 
 <section class="relative min-h-[236px] md:min-h-[344px] mt-16 md:mt-0 bg-cbrs-blue overflow-hidden flex items-center justify-center">
-  <img src="assets/hero-home-no-people-v1.png" alt="" aria-hidden="true" class="cbrs-home-hero-bg absolute inset-0 w-full h-full object-cover"/>
+  <img src="assets/hero-plan-eau-canada.jpg" alt="" aria-hidden="true" class="cbrs-shared-hero-bg cbrs-home-hero-bg absolute inset-0 w-full h-full object-cover"/>
   <div class="absolute inset-0 bg-gradient-to-br from-cbrs-blue/90 via-cbrs-blue-light/80 to-cbrs-teal/75"></div>
   <div class="relative z-10 w-full px-8 md:px-16 py-10 md:py-14">
     <div class="text-center md:pr-64">
       <h1 class="header-title text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3">
-        Activement vôtre <span class="text-cbrs-green font-serif-italic">depuis 1977</span>
+        Activement vôtre <span class="cbrs-hero-since font-serif-italic">depuis 1993</span>
       </h1>
-      <p class="text-sm md:text-base lg:text-lg text-white/90 max-w-2xl mx-auto mb-6">Plus de 40 activités pour bouger, partager et vivre pleinement votre retraite.</p>
+      <p class="text-sm md:text-base lg:text-lg text-white/90 max-w-2xl mx-auto mb-6">Une vingtaine d’activités pour bouger, partager et vivre pleinement votre retraite.</p>
       <div class="flex flex-wrap justify-center gap-3">
         <a class="px-6 py-2.5 bg-cbrs-green text-white font-semibold rounded-full hover:bg-cbrs-green-hover transition-colors text-sm" href="activites.html">Découvrir nos activités</a>
-        <a class="px-6 py-2.5 bg-transparent border-2 border-white text-white font-semibold rounded-full hover:bg-white/10 transition-colors text-sm" href="#planning">Voir le planning</a>
+        <a class="px-6 py-2.5 bg-transparent border-2 border-white text-white font-semibold rounded-full hover:bg-white/10 transition-colors text-sm" href="planning.html">Voir le planning</a>
       </div>
     </div>
   </div>
@@ -302,6 +256,10 @@
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Planning</span>
   </a>
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors" href="adhesion.html">
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <span class="sidebar-label">Adhérer</span>
+  </a>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors" href="formation.html">
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Formation</span>
@@ -318,11 +276,11 @@
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Liens utiles</span>
   </a>
-  <div class="sidebar-divider border-t border-white/10 my-4 mx-4"></div>
-  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors" href="adhesion.html">
-    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-    <span class="sidebar-label">Adhérer</span>
+  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors" href="statuts.html">
+    <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+    <span class="sidebar-label">Statuts</span>
   </a>
+  <div class="sidebar-divider border-t border-white/10 my-4 mx-4"></div>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors" href="contact.html">
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Contact</span>
@@ -342,7 +300,7 @@
 
 
 
-<section class="bg-blue-50/50 py-12">
+<section id="vie-du-club" class="bg-blue-50/50 py-12" aria-labelledby="vie-du-club-title">
 <div class="max-w-7xl mx-auto px-6">
   <div class="flash-news-intro">
     <span class="flash-news-logo" role="img" aria-label="Flash info"><img src="Flash_info.png" alt=""/></span>
@@ -355,7 +313,7 @@
       </div>
     </div>
   </div>
-  <h2 class="flash-news-title text-2xl md:text-3xl font-bold text-gray-900">Actualités & Vie du club</h2>
+  <h2 id="vie-du-club-title" class="flash-news-title text-2xl md:text-3xl font-bold text-gray-900">Vie du <span class="text-cbrs-blue font-serif-italic">club</span></h2>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
       <div class="relative h-44 overflow-hidden">
@@ -382,114 +340,35 @@
 </div>
 </section>
 
-<section id="planning" class="py-12 px-6 bg-white border-y border-gray-100">
-<div class="max-w-7xl mx-auto">
-  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
-    <div>
-      <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Cette semaine au <span class="text-cbrs-blue font-serif-italic">CBRS</span></h2>
-      <p class="text-gray-600 mt-2">Planning Hebdomadaire période 2025-2026</p>
-    </div>
-    <a href="planning.html" class="inline-flex justify-center px-6 py-3 bg-cbrs-blue text-white font-semibold rounded-full hover:bg-cbrs-blue-light transition-colors text-sm">Voir le planning complet</a>
-  </div>
-  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4" id="planning-grid"></div>
-</div>
-</section>
 
-<section class="py-12 px-6">
+<section id="qui-sommes-nous" class="py-12 px-6" aria-labelledby="qui-sommes-nous-title">
 <div class="max-w-7xl mx-auto">
-  <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">Qui sommes-<span class="text-cbrs-blue font-serif-italic">nous</span> ?</h2>
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-    <div class="bg-white rounded-2xl shadow-card p-8 md:p-10">
-      <p class="text-gray-800 leading-[1.8] text-[15px] md:text-base mb-5">Le <strong class="text-cbrs-blue font-semibold">Club du Beauvaisis de la Retraite Sportive (CBRS)</strong> est une association loi&nbsp;1901 affiliée à la Fédération Française de la Retraite Sportive et au CODERS de l'Oise.</p>
-      <p class="text-gray-800 leading-[1.8] text-[15px] md:text-base mb-5">Fondé en <strong class="text-cbrs-green font-bold">1977</strong>, le CBRS compte aujourd'hui <strong class="text-cbrs-green font-bold">plus de 1&nbsp;200&nbsp;adhérents</strong> pour la saison 2025-2026 et propose <strong class="text-cbrs-green font-bold">plus de 40&nbsp;activités</strong> sportives, culturelles et de loisirs.</p>
-      <p class="text-gray-700 italic leading-[1.8] border-l-4 border-cbrs-teal pl-5 py-1 text-[15px] md:text-base bg-cbrs-teal/5 rounded-r-lg">&laquo;&nbsp;Notre mission : permettre aux retraités de Beauvais et du Beauvaisis de pratiquer une activité physique adaptée dans un cadre convivial et bienveillant.&nbsp;&raquo;</p>
-      <div class="mt-6 flex flex-wrap gap-3 text-sm text-gray-500">
-        <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cbrs-green"></span> Association loi 1901</span>
-        <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cbrs-blue"></span> Affiliée FFRS</span>
-        <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cbrs-teal"></span> 1 200+ adhérents</span>
-      </div>
-    </div>
-    <div class="bg-gradient-to-br from-cbrs-teal to-cbrs-blue rounded-2xl p-8 text-white relative overflow-hidden shadow-lg flex flex-col justify-between min-h-[280px]">
-      <div class="text-white/8 text-[12rem] font-serif leading-none absolute -top-12 -right-6 select-none">"</div>
-      <div class="relative z-10 mt-2">
-        <svg class="w-8 h-8 text-white/40 mb-4" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-        <p class="text-lg leading-relaxed italic font-serif">&laquo;&nbsp;Au CBRS, on trouve bien plus qu'un club, on y trouve une seconde famille.&nbsp;&raquo;</p>
-      </div>
-      <div class="relative z-10 flex items-center gap-3 mt-auto pt-5 border-t border-white/20">
-        <div class="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center font-bold text-sm shrink-0 border-2 border-white/40">FL</div>
-        <div class="min-w-0"><p class="font-semibold text-sm truncate">Françoise L.</p><p class="text-xs text-white/70">Adhérente depuis 2017</p></div>
-      </div>
-    </div>
+  <h2 id="qui-sommes-nous-title" class="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">Qui sommes-<span class="text-cbrs-blue font-serif-italic">nous</span> ?</h2>
+  <div class="bg-white rounded-2xl shadow-card p-8 md:p-10">
+    <p class="text-gray-800 leading-[1.8] text-[15px] md:text-base mb-5">Le <strong class="text-cbrs-blue font-semibold">Club du Beauvaisis de la Retraite Sportive (CBRS)</strong> est une association loi&nbsp;1901 affiliée à la Fédération Française de la Retraite Sportive et au CODERS de l'Oise.</p>
+    <p class="text-gray-800 leading-[1.8] text-[15px] md:text-base mb-5">Fondé en <strong class="text-cbrs-green font-bold">1993</strong>, le CBRS compte aujourd'hui <strong class="text-cbrs-green font-bold">1&nbsp;200&nbsp;adhérents</strong> et propose <strong class="text-cbrs-green font-bold">une vingtaine d'activités</strong> sportives, culturelles et de loisirs.</p>
+    <p class="text-gray-700 leading-[1.8] border-l-4 border-cbrs-teal pl-5 py-1 text-[15px] md:text-base bg-cbrs-teal/5 rounded-r-lg">Notre mission : permettre aux retraités de Beauvais et du Beauvaisis de pratiquer une activité physique adaptée dans un cadre convivial et bienveillant.</p>
+    <dl class="cbrs-key-figures" aria-label="Chiffres clés du CBRS">
+      <div><dt>Depuis</dt><dd>1993</dd></div>
+      <div><dt>Adhérents</dt><dd>1&nbsp;200</dd></div>
+      <div><dt>Activités</dt><dd>une vingtaine</dd></div>
+    </dl>
+  </div>
+
+  <div id="bureau" class="mt-10" aria-labelledby="bureau-title">
+    <h3 id="bureau-title" class="text-xl md:text-2xl font-bold text-gray-900 mb-2">Présentation du <span class="text-cbrs-blue font-serif-italic">bureau</span></h3>
+    <p class="text-gray-600 mb-6">Les bénévoles élus qui font vivre le club au quotidien.</p>
+    <!-- Contenu à remplacer par les membres réels du bureau (nom, fonction, photo) — administrable via le CMS. -->
+    <ul class="cbrs-board-grid" data-cms-collection="bureau">
+      <li class="cbrs-board-card"><div class="cbrs-board-photo" aria-hidden="true"></div><p class="cbrs-board-name">Nom à compléter</p><p class="cbrs-board-role">Président(e)</p></li>
+      <li class="cbrs-board-card"><div class="cbrs-board-photo" aria-hidden="true"></div><p class="cbrs-board-name">Nom à compléter</p><p class="cbrs-board-role">Vice-président(e)</p></li>
+      <li class="cbrs-board-card"><div class="cbrs-board-photo" aria-hidden="true"></div><p class="cbrs-board-name">Nom à compléter</p><p class="cbrs-board-role">Secrétaire</p></li>
+      <li class="cbrs-board-card"><div class="cbrs-board-photo" aria-hidden="true"></div><p class="cbrs-board-name">Nom à compléter</p><p class="cbrs-board-role">Trésorier(ère)</p></li>
+    </ul>
   </div>
 </div>
 </section>
 
-<section class="max-w-7xl mx-auto px-6 py-12" aria-labelledby="activity-showcase-title">
-  <div class="cbrs-activity-showcase" data-activity-showcase>
-    <div class="cbrs-activity-showcase-inner">
-      <div class="cbrs-activity-copy">
-        <p class="cbrs-activity-eyebrow">Le plaisir de bouger ensemble</p>
-        <h2 class="cbrs-activity-title" id="activity-showcase-title">Une activité pour <em>chaque envie.</em></h2>
-        <p>Une énergie douce, un défi collectif ou une sortie au grand air : choisissez votre rythme et faites le plein de moments partagés.</p>
-        <div class="cbrs-activity-stats" aria-label="Chiffres clés du CBRS">
-          <div class="cbrs-activity-stat"><strong>15</strong><span>activités</span></div>
-          <div class="cbrs-activity-stat"><strong>1977</strong><span>depuis</span></div>
-          <div class="cbrs-activity-stat"><strong>1 200+</strong><span>adhérents</span></div>
-        </div>
-        <a class="cbrs-activity-cta" href="activites.html">Explorer les activités <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></a>
-      </div>
-      <div class="cbrs-activity-rail" role="region" aria-label="Activités phares du CBRS — glisser pour faire défiler">
-        <div class="cbrs-activity-track">
-          <div class="cbrs-activity-set">
-            <a href="activite.html?id=07" class="cbrs-activity-slide" aria-label="Découvrir la Randonnée">
-              <span class="cbrs-activity-art"><img src="07_randonnee.png" alt="Randonnée"/></span>
-              <span class="cbrs-activity-slide-content"><span><strong>Randonnée</strong><small>Grand air & liberté</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
-            </a>
-            <a href="activite.html?id=03" class="cbrs-activity-slide" aria-label="Découvrir le Cyclisme">
-              <span class="cbrs-activity-art"><img src="03_cyclisme.png" alt="Cyclisme"/></span>
-              <span class="cbrs-activity-slide-content"><span><strong>Cyclisme</strong><small>Évasion & énergie</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
-            </a>
-            <a href="activite.html?id=01" class="cbrs-activity-slide" aria-label="Découvrir l'Aquagym">
-              <span class="cbrs-activity-art"><img src="01_aquagym.png" alt="Aquagym"/></span>
-              <span class="cbrs-activity-slide-content"><span><strong>Aquagym</strong><small>Forme en douceur</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
-            </a>
-            <a href="activite.html?id=11" class="cbrs-activity-slide" aria-label="Découvrir le Tai Chi">
-              <span class="cbrs-activity-art"><img src="11_tai_chi.png" alt="Tai Chi Chuan"/></span>
-              <span class="cbrs-activity-slide-content"><span><strong>Tai Chi</strong><small>Équilibre & sérénité</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
-            </a>
-            <a href="activite.html?id=02" class="cbrs-activity-slide" aria-label="Découvrir la Pétanque">
-              <span class="cbrs-activity-art"><img src="02_petanque.png" alt="Pétanque"/></span>
-              <span class="cbrs-activity-slide-content"><span><strong>Pétanque</strong><small>Convivialité & détente</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
-            </a>
-          </div>
-          <div class="cbrs-activity-set" aria-hidden="true">
-            <a href="activite.html?id=07" class="cbrs-activity-slide" tabindex="-1">
-              <span class="cbrs-activity-art"><img src="07_randonnee.png" alt=""/></span><span class="cbrs-activity-slide-content"><span><strong>Randonnée</strong><small>Grand air & liberté</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
-            </a>
-            <a href="activite.html?id=03" class="cbrs-activity-slide" tabindex="-1">
-              <span class="cbrs-activity-art"><img src="03_cyclisme.png" alt=""/></span><span class="cbrs-activity-slide-content"><span><strong>Cyclisme</strong><small>Évasion & énergie</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
-            </a>
-            <a href="activite.html?id=01" class="cbrs-activity-slide" tabindex="-1">
-              <span class="cbrs-activity-art"><img src="01_aquagym.png" alt=""/></span><span class="cbrs-activity-slide-content"><span><strong>Aquagym</strong><small>Forme en douceur</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
-            </a>
-            <a href="activite.html?id=11" class="cbrs-activity-slide" tabindex="-1">
-              <span class="cbrs-activity-art"><img src="11_tai_chi.png" alt=""/></span><span class="cbrs-activity-slide-content"><span><strong>Tai Chi</strong><small>Équilibre & sérénité</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
-            </a>
-            <a href="activite.html?id=02" class="cbrs-activity-slide" tabindex="-1">
-              <span class="cbrs-activity-art"><img src="02_petanque.png" alt=""/></span><span class="cbrs-activity-slide-content"><span><strong>Pétanque</strong><small>Convivialité & détente</small></span><span class="cbrs-activity-arrow" aria-hidden="true">↗</span></span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="cbrs-activity-controls">
-      <button class="cbrs-activity-toggle" type="button" data-carousel-toggle aria-pressed="false" aria-label="Mettre en pause le défilement">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z"></path></svg>
-        <span class="sr-only">Mettre en pause le défilement</span>
-      </button>
-    </div>
-  </div>
-</section>
 
 <footer class="bg-white border-t border-gray-200">
 <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
@@ -512,11 +391,12 @@
   <div>
     <h4 class="font-bold text-gray-900 mb-3 text-sm">Infos pratiques</h4>
     <ul class="space-y-1.5 text-xs text-gray-600">
-      <li><a class="hover:text-cbrs-blue" href="#planning">Planning</a></li>
+      <li><a class="hover:text-cbrs-blue" href="planning.html">Planning</a></li>
       <li><a class="hover:text-cbrs-blue" href="adhesion.html">Inscriptions</a></li>
       <li><a class="hover:text-cbrs-blue" href="contact.html">Contact</a></li>
       <li><a data-auth-link="1" class="hover:text-cbrs-blue" href="connexion.html" data-auth-label>Connexion</a></li>
       <li><a class="hover:text-cbrs-blue" href="liens-utiles.html">Liens utiles</a></li>
+      <li><a class="hover:text-cbrs-blue" href="statuts.html">Statuts et règlement</a></li>
     </ul>
   </div>
   <div>
@@ -595,138 +475,7 @@ async function loadFlashInfo() {
 }
 loadFlashInfo();
 
-// Planning data
-const planning = [
-  { day:'Lundi', slots:[
-    { activity:'Gym douce', time:'9h30', location:'Salle Carnot', icon:'09' },
-    { activity:'Tennis de Table', time:'14h00', location:'Salle Carnot', icon:'05' },
-    { activity:'Échecs', time:'14h00', location:'Salle de réunion', icon:'12' }
-  ]},
-  { day:'Mardi', slots:[
-    { activity:'Marche Nordique', time:'8h30', location:'Stade Brisson', icon:'08' },
-    { activity:'Pétanque', time:'14h00', location:'Plan d\'eau', icon:'02' }
-  ]},
-  { day:'Mercredi', slots:[
-    { activity:'Tai Chi Chuan', time:'9h00', location:'Salle Beauvoir', icon:'11' }
-  ]},
-  { day:'Jeudi', slots:[
-    { activity:'Cyclisme', time:'9h00', location:'Place Hachette', icon:'03' },
-    { activity:'Tir à l\'arc', time:'13h30', location:'Salle Jean Moulin', icon:'04' },
-    { activity:'Pétanque', time:'14h00', location:'Plan d\'eau', icon:'02' },
-    { activity:'Jeux de cartes', time:'14h00', location:'Salle de réunion', icon:'13' },
-    { activity:'Randonnée', time:'Après-midi', location:'Variable', icon:'07' }
-  ]},
-  { day:'Vendredi', slots:[
-    { activity:'Randonnée', time:'9h00', location:'Beauvaisis', icon:'07' },
-    { activity:'Aquagym', time:'Voir planning', location:'Piscine Bellier', icon:'01' }
-  ]}
-];
-const colors = ['bg-white','bg-cbrs-gray-100','bg-blue-50','bg-green-50','bg-amber-50'];
-const grid = document.getElementById('planning-grid');
-function renderPlanning(days) {
-  grid.innerHTML = '';
-  days.forEach(d => {
-    const col = document.createElement('div');
-    col.className = 'bg-white rounded-2xl border border-gray-200 shadow-card p-5 hover:shadow-lg hover:border-cbrs-teal/30 transition-all duration-200';
-    col.innerHTML = '<h3 class="font-bold text-lg mb-4 text-cbrs-blue flex items-center gap-2"><span class="w-1.5 h-6 rounded-full bg-cbrs-teal inline-block"></span>'+d.day+'</h3>';
-    d.slots.forEach(s => {
-      const row = document.createElement('div');
-      row.className = 'grid grid-cols-[1fr_auto] gap-x-3 gap-y-1 py-3 px-2 -mx-2 rounded-lg border-b border-gray-100 last:border-0 hover:bg-cbrs-teal/5 transition-colors duration-150';
-      row.innerHTML = '<span class="text-sm font-semibold text-gray-900">'+s.activity+'</span><span class="text-xs font-bold text-cbrs-green bg-cbrs-green/10 px-2 py-0.5 rounded-full">'+s.time+'</span><span class="text-xs text-gray-500 col-span-2 flex items-center gap-1"><svg class="w-3 h-3 shrink-0 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>'+s.location+'</span>';
-      col.appendChild(row);
-    });
-    grid.appendChild(col);
-  });
-}
-async function loadPlanning() {
-  try {
-    const res = await fetch('/api/public/planning-home');
-    if (!res.ok) throw new Error('no api');
-    const { items } = await res.json();
-    const grouped = [];
-    items.forEach(item => {
-      let day = grouped.find(d => d.day === item.day);
-      if (!day) grouped.push(day = { day: item.day, slots: [] });
-      day.slots.push({ activity: item.title, time: item.time, location: item.location || '' });
-    });
-    if (grouped.length) return renderPlanning(grouped);
-  } catch (_) {}
-  renderPlanning(planning);
-}
-loadPlanning();
 
-function setupActivityShowcase() {
-  const showcase = document.querySelector('[data-activity-showcase]');
-  if (!showcase) return;
-  const track = showcase.querySelector('.cbrs-activity-track');
-  const rail = showcase.querySelector('.cbrs-activity-rail');
-  const toggle = showcase.querySelector('[data-carousel-toggle]');
-  if (!track || !rail || !toggle) return;
-
-  function renderToggle(paused) {
-    toggle.setAttribute('aria-pressed', String(paused));
-    toggle.setAttribute('aria-label', paused ? 'Reprendre le défilement' : 'Mettre en pause le défilement');
-    toggle.innerHTML = paused
-      ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg><span class="sr-only">Reprendre le défilement</span>'
-      : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z"></path></svg><span class="sr-only">Mettre en pause le défilement</span>';
-  }
-
-  toggle.addEventListener('click', function() {
-    const paused = !track.classList.contains('is-paused');
-    track.classList.toggle('is-paused', paused);
-    renderToggle(paused);
-  });
-
-  let dragStartX = 0;
-  let dragStartScroll = 0;
-  let dragMoved = false;
-  let wasPlaying = false;
-
-  function endDrag() {
-    if (!rail.classList.contains('is-dragging')) return;
-    rail.classList.remove('is-dragging');
-    if (wasPlaying) {
-      track.classList.remove('is-paused');
-      renderToggle(false);
-    }
-  }
-
-  rail.addEventListener('pointerdown', function(event) {
-    if (event.pointerType === 'mouse' && event.button !== 0) return;
-    dragStartX = event.clientX;
-    dragStartScroll = rail.scrollLeft;
-    dragMoved = false;
-    wasPlaying = !track.classList.contains('is-paused');
-    rail.classList.add('is-dragging');
-    track.classList.add('is-paused');
-    if (wasPlaying) renderToggle(true);
-    rail.setPointerCapture(event.pointerId);
-  });
-
-  rail.addEventListener('pointermove', function(event) {
-    if (!rail.classList.contains('is-dragging')) return;
-    const delta = event.clientX - dragStartX;
-    if (Math.abs(delta) > 4) dragMoved = true;
-    if (dragMoved) event.preventDefault();
-    rail.scrollLeft = dragStartScroll - delta;
-  });
-
-  rail.addEventListener('pointerup', endDrag);
-  rail.addEventListener('pointercancel', endDrag);
-  rail.addEventListener('lostpointercapture', endDrag);
-  rail.addEventListener('click', function(event) {
-    if (!dragMoved) return;
-    event.preventDefault();
-    event.stopPropagation();
-    dragMoved = false;
-  }, true);
-
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    track.classList.add('is-paused');
-    renderToggle(true);
-  }
-}
-setupActivityShowcase();
 </script>
 
 <div class="accessibility-panel" id="accessibility-panel" aria-labelledby="accessibility-title">
