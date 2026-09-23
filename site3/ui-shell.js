@@ -13,22 +13,33 @@
     'galerie.html',
     'liens-utiles.html',
     'planning.html',
-    'sorties-voyages.html'
+    'sorties-voyages.html',
+    'sortie.html',
+    'evenement.html',
+    'statuts.html'
   ]);
 
+  function pageFile(path) {
+    const file = path.split('?')[0].split('#')[0].replace(/\/+$/, '').split('/').pop();
+    if (!file || file === 'site3') return 'index.html';
+    return /\.[a-z0-9]+$/i.test(file) ? file : file + '.html';
+  }
+
   function currentPage() {
-    const file = window.location.pathname.split('/').pop() || 'index.html';
+    const file = pageFile(window.location.pathname);
     return PUBLIC_PAGES.has(file) ? file : 'index.html';
   }
 
   function targetPage(href) {
     if (!href || href.startsWith('#') || href.startsWith('mailto:')) return '';
-    return href.split('/').pop().split('?')[0].split('#')[0] || 'index.html';
+    return pageFile(href);
   }
 
   function setActiveNavigation() {
     const page = currentPage();
-    const activePage = page === 'activite.html' ? 'activites.html' : page;
+    const activePage = page === 'activite.html'
+      ? 'activites.html'
+      : (page === 'sortie.html' || page === 'evenement.html') ? 'sorties-voyages.html' : page;
 
     document.querySelectorAll('#sidebar a[href], #mobile-menu a[href]').forEach(function (link) {
       const isActive = targetPage(link.getAttribute('href')) === activePage;
@@ -78,6 +89,14 @@
         logo.parentNode.insertBefore(frame, logo);
         frame.appendChild(logo);
       }
+    }
+
+    const sharedHero = hero && hero.querySelector('img.cbrs-shared-hero-bg');
+    if (sharedHero && !hero.querySelector('.cbrs-hero-credit')) {
+      const credit = document.createElement('p');
+      credit.className = 'cbrs-hero-credit';
+      credit.innerHTML = 'Plan d’eau du Canada, Beauvais — photo <a href="https://commons.wikimedia.org/wiki/File:Plan_d%27eau_du_Canada1.JPG" target="_blank" rel="noopener">Chatsam</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.fr" target="_blank" rel="noopener">CC BY-SA 3.0</a>';
+      hero.appendChild(credit);
     }
 
     const layout = document.querySelector('body > .flex.flex-1');
@@ -578,6 +597,19 @@
     });
   }
 
+  function setupPendingDocuments() {
+    document.querySelectorAll('a[data-cbrs-doc]').forEach(function (link) {
+      fetch(link.href, { method: 'HEAD' }).then(function (response) {
+        if (response.ok) return;
+        const pending = document.createElement('span');
+        pending.className = link.className + ' is-pending';
+        pending.setAttribute('aria-disabled', 'true');
+        pending.textContent = link.textContent.replace(/\s*\(PDF\)\s*$/, '') + ' — bientôt disponible';
+        link.replaceWith(pending);
+      }).catch(function () {});
+    });
+  }
+
   function init() {
     setupShell();
     setupSidebarToggle();
@@ -588,6 +620,7 @@
     setupFilters();
     setupMembershipForm();
     cleanupEditorialLinks();
+    setupPendingDocuments();
   }
 
   if (document.readyState === 'loading') {
