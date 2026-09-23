@@ -70,7 +70,7 @@ Bénévoles / admin ─▶ https://cms.<domaine>  (Proxmox, Docker via Dokploy, 
 
 | Phase | Contenu | Charge |
 | --- | --- | --- |
-| 0. Décision | Choix Directus/Cockpit, sous-domaine, hôte (Dokploy recommandé) | 0,5 j |
+| 0. Décision | Payload retenu ✅ ; reste à fixer le sous-domaine et l’hôte (Dokploy recommandé) | 0,5 j |
 | 1. Infrastructure | Déploiement Docker, TLS, PostgreSQL, sauvegardes quotidiennes et test de restauration | 1–1,5 j |
 | 2. Modèles et rôles | Collections du §3, rôles du §2, filtres par référent | 1 j |
 | 3. Migration des données | Import depuis `site3/activite.html`, `site3/sorties-data.js`, `api/_data/*` (trois sources divergentes à réconcilier) | 1–1,5 j |
@@ -85,5 +85,4 @@ Bénévoles / admin ─▶ https://cms.<domaine>  (Proxmox, Docker via Dokploy, 
 - **Sécurité** : l'admin actuel `site3/connexion.html` est une démo avec identifiants en clair, publiée en production. À retirer dès la phase 5, ou plus tôt.
 - **Données personnelles** : les photos et noms du bureau nécessitent l'accord écrit des personnes ; pas de téléphone public (décision RGPD du 2026-06-16).
 - Qui valide les publications des responsables d'activité : publication directe ou relecture par le bureau ?
-- Nombre de comptes bénévoles attendus (impact sur la licence Directus Core au-delà de 3 comptes).
 - Domaine définitif de l'association (pour `cms.<domaine>` et le site).
