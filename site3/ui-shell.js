@@ -152,7 +152,9 @@
 
   function setupCookieConsent() {
     const consentKey = 'cbrs-cookie-consent-v1';
-    const externalFrames = Array.from(document.querySelectorAll('[data-cookie-src]'));
+    const externalFrames = Array.from(document.querySelectorAll('[data-cookie-src]')).filter(function (frame) {
+      return Boolean(frame.dataset.cookieSrc);
+    });
     let stored = null;
 
     try {
@@ -189,7 +191,8 @@
       '<div class="cbrs-cookie-dialog-actions"><button type="button" data-cookie-action="close" class="cbrs-cookie-button cbrs-cookie-button-secondary">Annuler</button><button type="button" data-cookie-action="save" class="cbrs-cookie-button cbrs-cookie-button-primary">Enregistrer mes choix</button></div>',
       '</div>',
       '</section>',
-      '<button type="button" class="cbrs-cookie-manage" data-cookie-open hidden>Cookies</button>'
+      '<button type="button" class="cbrs-cookie-manage" data-cookie-open hidden>Cookies</button>',
+      '<p class="cbrs-external-status" aria-live="polite"></p>'
     ].join('');
     document.body.appendChild(root);
 
@@ -197,6 +200,7 @@
     const dialog = root.querySelector('.cbrs-cookie-dialog');
     const toggle = root.querySelector('[data-cookie-toggle="external"]');
     const manage = root.querySelector('.cbrs-cookie-manage');
+    const status = root.querySelector('.cbrs-external-status');
     let lastFocus = null;
     let current = stored && stored.version === 1
       ? { necessary: true, external: stored.external === true }
@@ -208,11 +212,22 @@
         if (!placeholder) {
           placeholder = document.createElement('div');
           placeholder.className = 'cbrs-external-placeholder';
-          placeholder.innerHTML = '<strong>Carte externe désactivée</strong><span>Autorisez les contenus externes pour afficher la carte.</span><button type="button" class="cbrs-cookie-button cbrs-cookie-button-secondary">Autoriser les contenus externes</button>';
-          placeholder.querySelector('button').addEventListener('click', openPreferences);
+          placeholder.setAttribute('role', 'region');
+          placeholder.setAttribute('aria-label', 'Carte : contenu externe désactivé');
+          placeholder.innerHTML = '<strong>Carte externe désactivée</strong>'
+            + '<span>La carte est fournie par OpenStreetMap. L’afficher autorise ce service externe.</span>'
+            + '<button type="button" class="cbrs-cookie-button cbrs-cookie-button-secondary">Autoriser les contenus externes</button>'
+            + '<button type="button" class="cbrs-cookie-link">Gérer mes choix</button>';
+          placeholder.querySelector('.cbrs-cookie-button').addEventListener('click', function () {
+            saveConsent(true, true);
+          });
+          placeholder.querySelector('.cbrs-cookie-link').addEventListener('click', openPreferences);
+          const size = frame.getBoundingClientRect();
+          if (size.height > 0) placeholder.style.minHeight = Math.round(size.height) + 'px';
           frame.insertAdjacentElement('beforebegin', placeholder);
           frame._cbrsCookiePlaceholder = placeholder;
           frame.dataset.cookieIndex = String(index);
+          frame.setAttribute('tabindex', '-1');
         }
 
         const enabled = current.external === true;
@@ -246,7 +261,8 @@
       if (close) close.focus();
     }
 
-    function saveConsent(external) {
+    function saveConsent(external, focusFrame) {
+      const wasDialogOpen = !dialog.hidden;
       current = { necessary: true, external: external === true };
       try {
         window.localStorage.setItem(consentKey, JSON.stringify({
@@ -260,6 +276,17 @@
       banner.hidden = true;
       manage.hidden = false;
       closeDialog(false);
+      if (status) status.textContent = current.external && externalFrames.length ? 'Carte affichée' : '';
+      if (focusFrame && current.external) {
+        const frame = externalFrames.find(function (item) { return !item.hidden; });
+        if (frame && typeof frame.focus === 'function') frame.focus();
+      } else if (wasDialogOpen) {
+        const visible = lastFocus && typeof lastFocus.focus === 'function'
+          && lastFocus.isConnected && !lastFocus.closest('[hidden]');
+        const target = visible ? lastFocus
+          : (current.external ? externalFrames.find(function (item) { return !item.hidden; }) : manage);
+        if (target && typeof target.focus === 'function') target.focus();
+      }
       window.dispatchEvent(new CustomEvent('cbrs-consent-change', { detail: current }));
     }
 

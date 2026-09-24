@@ -109,6 +109,9 @@ for (const file of publicPages) {
   assert(html.includes('href="tailwind.css"'), `${file}: tailwind.css absent`)
   assert(/<body[^>]*class="[^"]*\bcbrs-ui\b/.test(html), `${file}: classe cbrs-ui absente du HTML (saut de mise en page)`)
   assert(!html.includes("@import url('https://fonts.googleapis.com"), `${file}: polices en @import (bloquant)`)
+  for (const [tag] of html.matchAll(/<iframe\b[^>]*>/g)) {
+    assert(!/\ssrc="https:\/\/www\.openstreetmap\.org/.test(tag), `${file}: iframe OpenStreetMap chargée sans consentement (utiliser data-cookie-src)`)
+  }
 }
 assert(!fs.readFileSync('site3/ui-shell.js', 'utf8').includes('--cbrs-hero-height'), 'la mise en page ne doit plus dépendre de la hauteur du bandeau mesurée en JS')
 const bakeCheck = execFileSync('python3', ['scripts/bake-shell.py'], { encoding: 'utf8' })

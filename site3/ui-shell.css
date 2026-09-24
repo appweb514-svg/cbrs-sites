@@ -816,6 +816,50 @@ body.cbrs-ui .cbrs-external-placeholder span {
   line-height: 1.45;
 }
 
+/* Conteneur carte + encart : tant que la carte est bloquée, le conteneur
+   s'allonge et l'encart réserve en bas la place de la carte d'adresse en
+   surimpression (info utile conservée, aucun chevauchement). */
+body.cbrs-ui .cbrs-map-with-overlay:has(.cbrs-external-placeholder:not([hidden])) {
+  height: auto;
+}
+
+body.cbrs-ui .cbrs-map-with-overlay:has(.cbrs-external-placeholder:not([hidden])) > .cbrs-external-placeholder {
+  justify-content: flex-start;
+  padding-top: 1.25rem;
+  padding-bottom: 10.5rem;
+}
+
+body.cbrs-ui .cbrs-external-placeholder .cbrs-cookie-button {
+  min-height: 2.75rem;
+}
+
+body.cbrs-ui .cbrs-external-placeholder .cbrs-cookie-button:focus-visible,
+body.cbrs-ui .cbrs-external-placeholder .cbrs-cookie-link:focus-visible {
+  outline: 3px solid var(--cbrs-green);
+  outline-offset: 2px;
+}
+
+body.cbrs-ui .cbrs-cookie-link {
+  padding: .2rem .4rem;
+  border: 0;
+  background: none;
+  color: var(--cbrs-blue);
+  cursor: pointer;
+  font-size: .74rem;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+body.cbrs-ui .cbrs-external-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 html.a11y-contrast body.cbrs-ui .cbrs-cookie-banner,
 html.a11y-contrast body.cbrs-ui .cbrs-cookie-dialog-card,
 html.a11y-contrast body.cbrs-ui .cbrs-cookie-manage {
