@@ -1347,10 +1347,15 @@ body.cbrs-ui .cbrs-hero-credit {
   z-index: 3;
   right: 14px;
   bottom: 8px;
-  color: rgba(255, 255, 255, .72);
-  font-size: .68rem;
+  color: rgba(255, 255, 255, .5);
+  font-size: .6rem;
   line-height: 1.2;
   text-shadow: 0 1px 2px rgba(0, 0, 0, .45);
+  transition: color .2s ease;
+}
+
+body.cbrs-ui .cbrs-hero:hover .cbrs-hero-credit {
+  color: rgba(255, 255, 255, .85);
 }
 
 body.cbrs-ui .cbrs-hero-credit a {
@@ -1808,12 +1813,15 @@ body.cbrs-ui article:has(.cbrs-card-link:focus-visible) {
 
 body.cbrs-ui .cbrs-card-credit {
   position: absolute;
-  top: 8px;
   right: 8px;
-  padding: 2px 6px;
-  border-radius: 6px;
-  background: rgba(10, 30, 60, .55);
-  color: rgba(255, 255, 255, .9);
-  font-size: .65rem;
-  line-height: 1.3;
+  bottom: 6px;
+  color: rgba(255, 255, 255, .6);
+  font-size: .58rem;
+  line-height: 1.2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+  transition: color .2s ease;
+}
+
+body.cbrs-ui article:hover .cbrs-card-credit {
+  color: rgba(255, 255, 255, .92);
 }
