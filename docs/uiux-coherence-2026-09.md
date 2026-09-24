@@ -31,7 +31,7 @@ Contrôles : `node scripts/check-cbrs-ui.mjs` (garde-fous statiques) et `tooling
 
 | # | Amélioration | Pourquoi |
 | --- | --- | --- |
-| U1 | **Flash info redessiné** : une seule bannière (badge « Flash info » + message défilant + bouton pause) | Demande du client. Défilement lent et constant (45 px/s), pause au survol et au clavier, bouton pause (exigence d'accessibilité WCAG 2.2.2), message fixe si « Réduire les animations » est activé |
+| U1 | **Flash info redessiné** : une seule bannière (emblème animé discrètement toutes les 4 s, sans texte + message défilant + bouton pause) | Demande du client. Défilement lent et constant (45 px/s), pause au survol et au clavier, bouton pause (exigence d'accessibilité WCAG 2.2.2), message fixe si « Réduire les animations » est activé |
 | U2 | **Vert accessible** : `#437c14` pour les boutons et les textes verts ; `#8fd158` pour les accents verts sur fond bleu | Le vert `#58a01a` ne donnait que 3,25:1 de contraste avec du texte blanc (minimum requis : 4,5:1). Public senior |
 | U3 | **Parcours « Adhérer »** : bouton « Adhérer pour pratiquer » sur chaque fiche activité, qui ouvre la page Adhérer avec l'activité déjà cochée | Aucun chemin direct entre une activité et l'adhésion |
 | U4 | Logo du bandeau masqué sur mobile | Il faisait doublon avec celui de l'en-tête et passait dessous |

@@ -1596,7 +1596,7 @@ body.cbrs-ui .cbrs-flash-badge {
   align-items: center;
   gap: .6rem;
   align-self: stretch;
-  padding: 0 2.4rem 0 .9rem;
+  padding: 0 2.2rem 0 1rem;
   border-radius: 20px 0 0 20px;
   background: #fff;
   clip-path: polygon(0 0, 100% 0, calc(100% - 1.4rem) 100%, 0 100%);
@@ -1608,16 +1608,29 @@ body.cbrs-ui .cbrs-flash-emblem {
   margin: -14px 0 -10px -6px;
   object-fit: contain;
   filter: hue-rotate(58deg) saturate(1.15) drop-shadow(0 6px 8px rgba(10, 50, 115, .25));
+  transform-origin: 50% 55%;
+  animation: cbrs-flash-pulse 4s ease-in-out infinite;
 }
 
-body.cbrs-ui .cbrs-flash-label {
-  color: var(--cbrs-blue);
-  font-family: var(--cbrs-font-heading);
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -.01em;
-  white-space: nowrap;
+body.cbrs-ui .cbrs-flash.is-paused .cbrs-flash-emblem {
+  animation-play-state: paused;
 }
+
+@keyframes cbrs-flash-pulse {
+  0%, 62%, 100% {
+    transform: scale(1) rotate(0);
+  }
+  70% {
+    transform: scale(1.1) rotate(-6deg);
+  }
+  78% {
+    transform: scale(1.04) rotate(4deg);
+  }
+  86% {
+    transform: scale(1.07) rotate(-2deg);
+  }
+}
+
 
 body.cbrs-ui .cbrs-flash-track {
   min-width: 0;
@@ -1712,13 +1725,6 @@ body.cbrs-ui .cbrs-flash-toggle svg {
     margin: -10px -4px -8px -4px;
   }
 
-  body.cbrs-ui .cbrs-flash-label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-  }
 
   body.cbrs-ui .cbrs-flash-text {
     font-size: 1rem;
@@ -1726,6 +1732,10 @@ body.cbrs-ui .cbrs-flash-toggle svg {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  body.cbrs-ui .cbrs-flash-emblem {
+    animation: none;
+  }
+
   body.cbrs-ui .cbrs-flash-marquee {
     width: auto;
     animation: none;
@@ -1743,6 +1753,7 @@ body.cbrs-ui .cbrs-flash-toggle svg {
   }
 }
 
+html.a11y-motion body.cbrs-ui .cbrs-flash-emblem,
 html.a11y-motion body.cbrs-ui .cbrs-flash-marquee {
   width: auto;
   animation: none;
