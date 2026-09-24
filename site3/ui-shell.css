@@ -1785,3 +1785,35 @@ body.cbrs-ui > .cbrs-hero .text-cbrs-green,
 body.cbrs-ui #sidebar .text-cbrs-green {
   color: #8fd158 !important;
 }
+
+/* Cartes « Vie du club » : carte entière cliquable, crédit photo discret. */
+body.cbrs-ui .cbrs-card-link {
+  color: inherit;
+}
+
+body.cbrs-ui .cbrs-card-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+body.cbrs-ui .cbrs-card-link:focus-visible {
+  outline: none;
+}
+
+body.cbrs-ui article:has(.cbrs-card-link:focus-visible) {
+  box-shadow: var(--cbrs-focus);
+}
+
+body.cbrs-ui .cbrs-card-credit {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(10, 30, 60, .55);
+  color: rgba(255, 255, 255, .9);
+  font-size: .65rem;
+  line-height: 1.3;
+}
