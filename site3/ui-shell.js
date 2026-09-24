@@ -52,31 +52,8 @@
     });
   }
 
-  function syncHeroHeight() {
-    const hero = document.querySelector('body > .cbrs-hero');
-    if (!hero) return;
-
-    const update = function () {
-      document.documentElement.style.setProperty('--cbrs-hero-height', hero.offsetHeight + 'px');
-    };
-
-    update();
-    if (window.ResizeObserver) {
-      const observer = new ResizeObserver(update);
-      observer.observe(hero);
-    } else {
-      window.addEventListener('resize', update, { passive: true });
-    }
-  }
-
   function setupShell() {
     document.body.classList.add('cbrs-ui');
-    if (
-      typeof document.startViewTransition !== 'function'
-      && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) {
-      document.body.classList.add('cbrs-page-fallback');
-    }
 
     const hero = document.querySelector('body > section.relative');
     if (hero) {
@@ -111,7 +88,6 @@
     const mobileHeader = document.querySelector('header.md\\:hidden');
     if (mobileHeader) mobileHeader.classList.add('cbrs-mobile-header');
 
-    syncHeroHeight();
 
     document.querySelectorAll('#sidebar .sidebar-link, #mobile-menu a').forEach(function (link) {
       if (!link.title) {
@@ -130,11 +106,6 @@
       }
     });
 
-    const flashBar = document.getElementById('flash-bar');
-    if (flashBar) {
-      flashBar.setAttribute('role', 'status');
-      flashBar.setAttribute('aria-live', 'polite');
-    }
 
     setActiveNavigation();
   }
@@ -610,6 +581,34 @@
     });
   }
 
+  function setupFlash() {
+    const bar = document.querySelector('.cbrs-flash');
+    if (!bar) return;
+    const marquee = bar.querySelector('.cbrs-flash-marquee');
+    const text = bar.querySelector('.cbrs-flash-text');
+    const toggle = bar.querySelector('.cbrs-flash-toggle');
+    const SPEED = 45;
+
+    function refresh() {
+      const width = text ? text.getBoundingClientRect().width : 0;
+      if (width) marquee.style.animationDuration = Math.max(12, width / SPEED) + 's';
+    }
+
+    function setPaused(paused) {
+      bar.classList.toggle('is-paused', paused);
+      toggle.setAttribute('aria-pressed', String(paused));
+      toggle.setAttribute('aria-label', paused ? 'Reprendre le défilement' : 'Mettre en pause le défilement');
+      toggle.innerHTML = paused
+        ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>'
+        : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z"></path></svg>';
+    }
+
+    if (toggle) toggle.addEventListener('click', function () { setPaused(!bar.classList.contains('is-paused')); });
+    refresh();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(refresh);
+    window.CBRSFlash = { refresh: refresh, pause: function () { setPaused(true); } };
+  }
+
   function init() {
     setupShell();
     setupSidebarToggle();
@@ -617,6 +616,7 @@
     setupAccessibilityPanel();
     setupMobileMenu();
     setupGallery();
+    setupFlash();
     setupFilters();
     setupMembershipForm();
     cleanupEditorialLinks();

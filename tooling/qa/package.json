@@ -1,0 +1,12 @@
+{
+  "name": "cbrs-qa",
+  "private": true,
+  "description": "Contrôles automatiques du site statique : décalages de mise en page (CLS) et erreurs console.",
+  "type": "module",
+  "scripts": {
+    "cls": "node check-cls.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.58.2"
+  }
+}

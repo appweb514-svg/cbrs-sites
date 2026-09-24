@@ -2,8 +2,8 @@
   --cbrs-blue: #0a3273;
   --cbrs-blue-light: #1e4b99;
   --cbrs-teal: #145c75;
-  --cbrs-green: #58a01a;
-  --cbrs-green-dark: #4a8716;
+  --cbrs-green: #437c14;
+  --cbrs-green-dark: #3b6e11;
   --cbrs-surface: #f5f7fa;
   --cbrs-shell-radius: 28px;
   --cbrs-nav-radius: 22px;
@@ -15,7 +15,6 @@
   --cbrs-nav-shadow: 0 14px 32px rgba(10, 50, 115, .18);
   --cbrs-focus: 0 0 0 3px rgba(88, 160, 26, .42);
   --cbrs-shell-top: 12px;
-  --cbrs-hero-height: 344px;
   --cbrs-sidebar-left: 20px;
   --cbrs-sidebar-width: 216px;
   --cbrs-sidebar-collapsed-width: 68px;
@@ -78,8 +77,12 @@ body.cbrs-ui {
   overflow-x: hidden;
 }
 
-body.cbrs-page-fallback {
-  animation: cbrs-page-fallback-enter .3s ease both;
+@supports not (view-transition-name: none) {
+  @media (prefers-reduced-motion: no-preference) {
+    body.cbrs-ui {
+      animation: cbrs-page-fallback-enter .3s ease both;
+    }
+  }
 }
 
 body.cbrs-ui :where(h1, h2, h3, h4, h5, h6) {
@@ -207,7 +210,7 @@ body.cbrs-ui #sidebar.cbrs-sidebar {
   z-index: 20;
   width: var(--cbrs-sidebar-width);
   height: calc(100vh - 40px);
-  margin: calc(-1 * var(--cbrs-hero-height)) 0 24px var(--cbrs-sidebar-left);
+  margin: 0 0 24px var(--cbrs-sidebar-left);
   padding-top: 0 !important;
   top: var(--cbrs-shell-top);
   border: 1px solid rgba(255, 255, 255, .16);
@@ -255,7 +258,7 @@ body.cbrs-ui #sidebar.cbrs-sidebar .sidebar-link:not(.bg-cbrs-green):focus-visib
 }
 
 body.cbrs-ui #sidebar.cbrs-sidebar .sidebar-link.bg-cbrs-green {
-  background: linear-gradient(135deg, #63a92a, var(--cbrs-green)) !important;
+  background: linear-gradient(135deg, #4f8f1a, var(--cbrs-green)) !important;
   box-shadow: 0 8px 18px rgba(30, 91, 28, .24);
 }
 
@@ -479,41 +482,12 @@ body.cbrs-ui .a11y-audio-actions button:disabled {
   transform: none;
 }
 
-body.cbrs-ui .flash-scroll {
-  min-height: 42px;
-  height: auto;
-  border-radius: 13px;
-}
 
-body.cbrs-ui .flash-news-intro {
-  display: flex;
-  align-items: center;
-  gap: .8rem;
-  margin-bottom: .7rem;
-}
 
-body.cbrs-ui .flash-news-logo {
-  width: clamp(6.2rem, 10.5vw, 8rem);
-  height: clamp(6.2rem, 10.5vw, 8rem);
-  flex: 0 0 auto;
-}
 
-body.cbrs-ui .flash-news-intro > .flash-scroll {
-  flex: 1 1 auto;
-  min-width: 0;
-}
 
-body.cbrs-ui .flash-news-title {
-  margin: 0 0 1.15rem;
-}
 
-body.cbrs-ui .flash-scroll-track {
-  padding: 0 .8rem;
-}
 
-body.cbrs-ui .flash-scroll-text {
-  line-height: 1.35;
-}
 
 body.cbrs-ui #mobile-menu {
   max-height: min(calc(100vh - 4.75rem), 700px) !important;
@@ -1273,25 +1247,9 @@ body.cbrs-ui .cbrs-activity-tag {
     object-position: 28% center;
   }
 
-  body.cbrs-ui .flash-scroll {
-    grid-template-columns: minmax(0, 1fr);
-    min-height: 38px;
-    border-radius: 11px;
-  }
 
-  body.cbrs-ui .flash-news-intro {
-    gap: .55rem;
-    margin-bottom: .55rem;
-  }
 
-  body.cbrs-ui .flash-news-logo {
-    width: 5.7rem;
-    height: 5.7rem;
-  }
 
-  body.cbrs-ui .flash-news-title {
-    margin-bottom: .95rem;
-  }
 
   body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero .cbrs-logo-frame {
     top: .75rem;
@@ -1357,10 +1315,6 @@ body.cbrs-ui .cbrs-activity-tag {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-
-  body.cbrs-page-fallback {
-    animation: none;
   }
 
   body.cbrs-ui *,
@@ -1593,4 +1547,232 @@ body.cbrs-ui .cbrs-price-grid span {
   body.cbrs-ui .cbrs-price-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Barre latérale fixe : ne dépend plus de la hauteur du bandeau mesurée en JS (évite le saut au chargement). */
+@media (min-width: 768px) {
+  body.cbrs-ui #sidebar.cbrs-sidebar {
+    position: fixed;
+    top: var(--cbrs-shell-top);
+    left: var(--cbrs-sidebar-left);
+    height: calc(100vh - 2 * var(--cbrs-shell-top));
+    margin: 0;
+  }
+
+  body.cbrs-ui > .cbrs-layout {
+    padding-left: var(--cbrs-content-offset);
+  }
+
+  body.cbrs-ui.sidebar-collapsed > .cbrs-layout {
+    padding-left: calc(var(--cbrs-sidebar-left) + var(--cbrs-sidebar-collapsed-width) + var(--cbrs-layout-gap));
+  }
+}
+
+/* Fiche activité : réserver la place du logo agrandi à droite du texte. */
+@media (min-width: 768px) {
+  body.cbrs-ui > .cbrs-hero.cbrs-activity-hero > .relative.z-10 {
+    padding-right: calc(clamp(220px, 23vw, 340px) + clamp(1.5rem, 3vw, 3rem)) !important;
+  }
+}
+
+/* Flash info : une seule bannière (badge + message défilant + pause). */
+body.cbrs-ui .cbrs-flash {
+  --flash-height: 64px;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: var(--flash-height);
+  margin: 12px 0 2rem;
+  border-radius: 20px;
+  background: var(--cbrs-blue);
+  box-shadow: 0 14px 30px rgba(10, 50, 115, .18);
+}
+
+body.cbrs-ui .cbrs-flash-badge {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  align-self: stretch;
+  padding: 0 2.4rem 0 .9rem;
+  border-radius: 20px 0 0 20px;
+  background: #fff;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 1.4rem) 100%, 0 100%);
+}
+
+body.cbrs-ui .cbrs-flash-emblem {
+  width: 84px;
+  height: 84px;
+  margin: -14px 0 -10px -6px;
+  object-fit: contain;
+  filter: hue-rotate(58deg) saturate(1.15) drop-shadow(0 6px 8px rgba(10, 50, 115, .25));
+}
+
+body.cbrs-ui .cbrs-flash-label {
+  color: var(--cbrs-blue);
+  font-family: var(--cbrs-font-heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
+
+body.cbrs-ui .cbrs-flash-track {
+  min-width: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent);
+}
+
+body.cbrs-ui .cbrs-flash-marquee {
+  display: flex;
+  width: max-content;
+  animation: cbrs-flash-scroll 30s linear infinite;
+}
+
+body.cbrs-ui .cbrs-flash:hover .cbrs-flash-marquee,
+body.cbrs-ui .cbrs-flash:focus-within .cbrs-flash-marquee,
+body.cbrs-ui .cbrs-flash.is-paused .cbrs-flash-marquee {
+  animation-play-state: paused;
+}
+
+body.cbrs-ui .cbrs-flash-text {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding-right: 5rem;
+  color: #fff;
+  font-size: 1.075rem;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+body.cbrs-ui .cbrs-flash-text::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  margin-left: 5rem;
+  margin-right: -5rem;
+  border-radius: 50%;
+  background: var(--cbrs-green);
+  transform: translateX(-2.5rem);
+}
+
+body.cbrs-ui .cbrs-flash-toggle {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  margin: 0 12px 0 4px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .08);
+  color: #fff;
+  transition: background .2s ease;
+}
+
+body.cbrs-ui .cbrs-flash-toggle:hover {
+  background: var(--cbrs-green);
+}
+
+body.cbrs-ui .cbrs-flash-toggle:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+body.cbrs-ui .cbrs-flash-toggle svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+@keyframes cbrs-flash-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 640px) {
+  body.cbrs-ui .cbrs-flash {
+    --flash-height: 56px;
+    border-radius: 16px;
+  }
+
+  body.cbrs-ui .cbrs-flash-badge {
+    padding: 0 1.6rem 0 .5rem;
+    border-radius: 16px 0 0 16px;
+  }
+
+  body.cbrs-ui .cbrs-flash-emblem {
+    width: 64px;
+    height: 64px;
+    margin: -10px -4px -8px -4px;
+  }
+
+  body.cbrs-ui .cbrs-flash-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  body.cbrs-ui .cbrs-flash-text {
+    font-size: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.cbrs-ui .cbrs-flash-marquee {
+    width: auto;
+    animation: none;
+  }
+
+  body.cbrs-ui .cbrs-flash-text {
+    padding: .7rem 1rem;
+    white-space: normal;
+  }
+
+  body.cbrs-ui .cbrs-flash-text::after,
+  body.cbrs-ui .cbrs-flash-text[data-flash-clone],
+  body.cbrs-ui .cbrs-flash-toggle {
+    display: none;
+  }
+}
+
+html.a11y-motion body.cbrs-ui .cbrs-flash-marquee {
+  width: auto;
+  animation: none;
+}
+
+html.a11y-motion body.cbrs-ui .cbrs-flash-text {
+  padding: .7rem 1rem;
+  white-space: normal;
+}
+
+html.a11y-motion body.cbrs-ui .cbrs-flash-text::after,
+html.a11y-motion body.cbrs-ui .cbrs-flash-text[data-flash-clone],
+html.a11y-motion body.cbrs-ui .cbrs-flash-toggle {
+  display: none;
+}
+
+/* Mobile : le logo est déjà dans l'en-tête, pas de doublon dans le bandeau. */
+@media (max-width: 767px) {
+  body.cbrs-ui > .cbrs-hero .cbrs-logo-frame {
+    display: none !important;
+  }
+
+  body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero > .relative.z-10,
+  body.cbrs-ui > .cbrs-hero.cbrs-activity-hero > .relative.z-10 {
+    padding-top: 2rem;
+  }
+}
+
+/* Accents verts posés sur fond bleu (bandeaux, barre latérale) : vert clair lisible. */
+body.cbrs-ui > .cbrs-hero .text-cbrs-green,
+body.cbrs-ui #sidebar .text-cbrs-green {
+  color: #8fd158 !important;
 }
