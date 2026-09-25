@@ -596,15 +596,20 @@
   }
 
   function setupPendingDocuments() {
-    document.querySelectorAll('a[data-cbrs-doc]').forEach(function (link) {
-      fetch(link.href, { method: 'HEAD' }).then(function (response) {
-        if (response.ok) return;
-        const pending = document.createElement('span');
-        pending.className = link.className + ' is-pending';
-        pending.setAttribute('aria-disabled', 'true');
-        pending.textContent = link.textContent.replace(/\s*\(PDF\)\s*$/, '') + ' — bientôt disponible';
-        link.replaceWith(pending);
-      }).catch(function () {});
+    const ready = window.CBRSCms && window.CBRSCms.ready && typeof window.CBRSCms.ready.then === 'function'
+      ? window.CBRSCms.ready
+      : Promise.resolve();
+    ready.then(function () {
+      document.querySelectorAll('a[data-cbrs-doc]').forEach(function (link) {
+        fetch(link.href, { method: 'HEAD' }).then(function (response) {
+          if (response.ok) return;
+          const pending = document.createElement('span');
+          pending.className = link.className + ' is-pending';
+          pending.setAttribute('aria-disabled', 'true');
+          pending.textContent = link.textContent.replace(/\s*\(PDF\)\s*$/, '') + ' — bientôt disponible';
+          link.replaceWith(pending);
+        }).catch(function () {});
+      });
     });
   }
 

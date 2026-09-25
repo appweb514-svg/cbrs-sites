@@ -3,6 +3,7 @@
 <meta charset="utf-8"/>
 <base href="/site3/"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="cbrs-cms-url" content=""/>
 <title>CBRS - Club du Beauvaisis de la Retraite Sportive</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -426,6 +427,8 @@ syncStickySidebar();
 
 // Flash Info
 async function loadFlashInfo() {
+  const cmsMeta = document.querySelector('meta[name="cbrs-cms-url"]');
+  if (cmsMeta && (cmsMeta.getAttribute('content') || '').trim()) return;
   let flash = null;
   try {
     const override = localStorage.getItem('cbrs-flash-info');
@@ -495,5 +498,6 @@ loadFlashInfo();
 </script>
 
 <script src="auth.js"></script>
+<script src="cms-client.js" defer></script>
 <script src="ui-shell.js"></script>
 </body></html>

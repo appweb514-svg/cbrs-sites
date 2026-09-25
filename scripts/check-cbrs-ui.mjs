@@ -102,6 +102,16 @@ for (const [path, expected] of [
 }
 console.log('PASS — navigation active (URL propres Vercel)');
 
+assert(fs.existsSync('site3/cms-client.js'), 'site3/cms-client.js doit exister');
+assert(!fs.readFileSync('site3/cms-client.js', 'utf8').includes('innerHTML'), 'cms-client.js ne doit pas utiliser innerHTML');
+for (const file of ['index.html', 'statuts.html', 'liens-utiles.html', 'adhesion.html', 'planning.html', 'sorties-voyages.html']) {
+  const html = fs.readFileSync(`site3/${file}`, 'utf8');
+  assert(html.includes('<meta name="cbrs-cms-url" content=""/>'), `${file}: meta cbrs-cms-url absente`);
+  assert(html.includes('<script src="cms-client.js" defer></script>'), `${file}: cms-client.js absent`);
+  assert(html.indexOf('cms-client.js') < html.indexOf('<script src="ui-shell.js"></script>'), `${file}: cms-client.js doit précéder ui-shell.js`);
+}
+console.log('PASS — client CMS (repli statique)');
+
 const publicPages = fs.readdirSync('site3').filter(f => f.endsWith('.html') && !['admin.html', 'connexion.html'].includes(f))
 for (const file of publicPages) {
   const html = fs.readFileSync(`site3/${file}`, 'utf8')
