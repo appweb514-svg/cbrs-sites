@@ -1,0 +1,26 @@
+# Contexte de build minimal : tout le reste est reconstruit dans l'image.
+.git
+.gitignore
+.node_modules
+node_modules
+.next
+out
+build
+coverage
+media
+*.db
+*.db-shm
+*.db-wal
+tsconfig.tsbuildinfo
+.env
+.env*.local
+test.env
+test-results
+playwright-report
+blob-report
+Dockerfile
+docker-compose.prod.yml
+.dockerignore
+README.md
+CLAUDE.md
+AGENTS.md

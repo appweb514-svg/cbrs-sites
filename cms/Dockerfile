@@ -1,71 +1,55 @@
-# To use this Dockerfile, you have to set `output: 'standalone'` in your next.config.mjs file.
-# From https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
+# CMS CBRS — image de production (serveur Next standalone + CLI payload pour les migrations).
+# Construire depuis le dossier cms/ : docker build -t cbrs-cms .
 
 FROM node:22.17.0-alpine AS base
 
-# Install dependencies only when needed
+# Dépendances (devDependencies incluses : le CLI payload en a besoin pour les migrations)
 FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
+# Les navigateurs Playwright (tests e2e) ne sont jamais utilisés dans l'image.
+ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+COPY package.json package-lock.json .npmrc ./
+RUN npm ci
 
-# Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
-
-
-# Rebuild the source code only when needed
+# Compilation (next build, sortie standalone)
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+# URL factice : la compilation n'établit aucune connexion,
+# mais l'adaptateur PostgreSQL doit être sélectionné à l'image de la production.
+ENV DATABASE_URL=postgres://build:build@127.0.0.1:5432/build \
+    NEXT_TELEMETRY_DISABLED=1
+RUN npm run build
 
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry during the build.
-# ENV NEXT_TELEMETRY_DISABLED 1
-
-RUN \
-  if [ -f yarn.lock ]; then yarn run build; \
-  elif [ -f package-lock.json ]; then npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
-
-# Production image, copy all the files and run next
+# Image d'exécution
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
-# Uncomment the following line in case you want to disable telemetry during runtime.
-# ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production \
+    NEXT_TELEMETRY_DISABLED=1 \
+    PORT=3000 \
+    HOSTNAME=0.0.0.0
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
 
-# Remove this line if you do not have this folder
-COPY --from=builder /app/public ./public
-
-# Set the correct permission for prerender cache
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
-
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
+# Serveur standalone (server.js + fichiers tracés)
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-USER nextjs
+# CLI payload, sources TypeScript et migrations : nécessaires à `payload migrate` au démarrage
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
+COPY --from=builder --chown=nextjs:nodejs /app/package.json /app/tsconfig.json ./
+COPY --from=builder --chown=nextjs:nodejs /app/src ./src
 
+# Médias envoyés par les bénévoles (monter un volume Docker dessus)
+RUN mkdir -p /app/media && chown nextjs:nodejs /app/media
+VOLUME /app/media
+
+USER nextjs
 EXPOSE 3000
 
-ENV PORT 3000
-
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD HOSTNAME="0.0.0.0" node server.js
+# Les migrations en attente sont appliquées à chaque démarrage (opération idempotente),
+# puis le serveur démarre.
+CMD ["sh", "-c", "node_modules/.bin/payload migrate && node server.js"]

@@ -70,6 +70,8 @@ export interface Config {
     'vie-du-club': VieDuClub;
     'membres-bureau': MembresBureau;
     activites: Activite;
+    sorties: Sorty;
+    galerie: Galerie;
     documents: Document;
     media: Media;
     users: User;
@@ -83,6 +85,8 @@ export interface Config {
     'vie-du-club': VieDuClubSelect<false> | VieDuClubSelect<true>;
     'membres-bureau': MembresBureauSelect<false> | MembresBureauSelect<true>;
     activites: ActivitesSelect<false> | ActivitesSelect<true>;
+    sorties: SortiesSelect<false> | SortiesSelect<true>;
+    galerie: GalerieSelect<false> | GalerieSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -97,9 +101,13 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'flash-info': FlashInfo;
+    tarifs: Tarif;
+    parametres: Parametre;
   };
   globalsSelect: {
     'flash-info': FlashInfoSelect<false> | FlashInfoSelect<true>;
+    tarifs: TarifsSelect<false> | TarifsSelect<true>;
+    parametres: ParametresSelect<false> | ParametresSelect<true>;
   };
   locale: null;
   widgets: {
@@ -276,6 +284,40 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Manifestations, sorties à la journée et voyages. Seuls les documents publiés apparaissent sur le site.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sorties".
+ */
+export interface Sorty {
+  id: number;
+  type: 'manifestation' | 'sortie' | 'voyage';
+  titre: string;
+  date: string;
+  lieu: string;
+  image?: (number | null) | Media;
+  resume: string;
+  description?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * Photos mises en avant sur le site, regroupées par album et par année.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "galerie".
+ */
+export interface Galerie {
+  id: number;
+  album?: string | null;
+  annee?: number | null;
+  photo: number | Media;
+  legende?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Statuts, règlement intérieur, fiche d’adhésion, assurance, imprimé fédéral.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -333,6 +375,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'activites';
         value: number | Activite;
+      } | null)
+    | ({
+        relationTo: 'sorties';
+        value: number | Sorty;
+      } | null)
+    | ({
+        relationTo: 'galerie';
+        value: number | Galerie;
       } | null)
     | ({
         relationTo: 'documents';
@@ -443,6 +493,34 @@ export interface ActivitesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sorties_select".
+ */
+export interface SortiesSelect<T extends boolean = true> {
+  type?: T;
+  titre?: T;
+  date?: T;
+  lieu?: T;
+  image?: T;
+  resume?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "galerie_select".
+ */
+export interface GalerieSelect<T extends boolean = true> {
+  album?: T;
+  annee?: T;
+  photo?: T;
+  legende?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -586,12 +664,76 @@ export interface FlashInfo {
   createdAt?: string | null;
 }
 /**
+ * Grille tarifaire de la page Adhésion, affichée dans l’ordre saisi.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tarifs".
+ */
+export interface Tarif {
+  id: number;
+  lignes?:
+    | {
+        montant: string;
+        libelle: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Chiffres clés et adresses de contact affichés sur le site. Réservé à l’administrateur.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "parametres".
+ */
+export interface Parametre {
+  id: number;
+  depuis?: string | null;
+  adherents?: string | null;
+  activites?: string | null;
+  emailContact?: string | null;
+  emailSorties?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "flash-info_select".
  */
 export interface FlashInfoSelect<T extends boolean = true> {
   actif?: T;
   message?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tarifs_select".
+ */
+export interface TarifsSelect<T extends boolean = true> {
+  lignes?:
+    | T
+    | {
+        montant?: T;
+        libelle?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "parametres_select".
+ */
+export interface ParametresSelect<T extends boolean = true> {
+  depuis?: T;
+  adherents?: T;
+  activites?: T;
+  emailContact?: T;
+  emailSorties?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

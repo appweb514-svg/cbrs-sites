@@ -1,4 +1,9 @@
+import { mkdtempSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+
 import { getPayload, type Payload } from 'payload'
+import sharp from 'sharp'
 import { beforeAll, describe, expect, it } from 'vitest'
 
 import config from '@/payload.config'
@@ -9,8 +14,10 @@ let admin: User
 let bureau: User
 let referentRando: User
 let sorties: User
+let galerie: User
 let randonnee: Activite
 let danse: Activite
+let fichierTest: string
 
 const createUser = (email: string, nom: string, roles: User['roles']) =>
   payload.create({
@@ -27,6 +34,20 @@ describe('Droits d’accès du CMS', () => {
     bureau = await createUser('bureau@test.local', 'Bureau', ['bureau'])
     referentRando = await createUser('rando@test.local', 'Référent rando', ['activites'])
     sorties = await createUser('sorties@test.local', 'Équipe sorties', ['sorties'])
+    galerie = await createUser('galerie@test.local', 'Équipe galerie', ['galerie'])
+
+    fichierTest = join(
+      mkdtempSync(join(tmpdir(), 'cbrs-cms-test-')),
+      'photo-test.png',
+    )
+    writeFileSync(
+      fichierTest,
+      await sharp({
+        create: { width: 32, height: 32, channels: 3, background: 'rgb(200, 60, 30)' },
+      })
+        .png()
+        .toBuffer(),
+    )
 
     randonnee = await payload.create({
       collection: 'activites',
@@ -105,9 +126,42 @@ describe('Droits d’accès du CMS', () => {
     it('ne gère pas les comptes bénévoles', async () => {
       await expect(createUserAs(bureau)).rejects.toThrow()
     })
+
+    it('modifie les tarifs mais pas les paramètres', async () => {
+      await payload.updateGlobal({
+        slug: 'tarifs',
+        data: { lignes: [{ montant: '49 €', libelle: 'Adhésion annuelle' }] },
+        ...withUser(bureau),
+      })
+      await expect(
+        payload.updateGlobal({ slug: 'parametres', data: { adherents: '999' }, ...withUser(bureau) }),
+      ).rejects.toThrow()
+    })
   })
 
   describe('Équipe sorties', () => {
+    it('crée et modifie une sortie', async () => {
+      const sortie = await payload.create({
+        collection: 'sorties',
+        data: {
+          type: 'sortie',
+          titre: 'Sortie au Plan d’eau',
+          date: new Date().toISOString(),
+          lieu: 'Beauvais',
+          resume: 'Journée conviviale au plan d’eau.',
+          _status: 'published',
+        },
+        ...withUser(sorties),
+      })
+      const updated = await payload.update({
+        collection: 'sorties',
+        id: sortie.id,
+        data: { lieu: 'Plan d’eau du Canada' },
+        ...withUser(sorties),
+      })
+      expect(updated.lieu).toBe('Plan d’eau du Canada')
+    })
+
     it('n’a aucun droit sur les activités ni sur la Vie du club', async () => {
       await expect(
         payload.update({ collection: 'activites', id: randonnee.id, data: { description: 'x' }, ...withUser(sorties) }),
@@ -117,6 +171,36 @@ describe('Droits d’accès du CMS', () => {
           collection: 'vie-du-club',
           data: { titre: 'x', date: new Date().toISOString(), categorie: 'club', resume: 'x' },
           ...withUser(sorties),
+        }),
+      ).rejects.toThrow()
+    })
+  })
+
+  describe('Équipe galerie', () => {
+    it('ajoute une photo de galerie mais pas de sortie', async () => {
+      const photo = await payload.create({
+        collection: 'media',
+        data: { alt: 'Photo de test' },
+        filePath: fichierTest,
+        ...withUser(galerie),
+      })
+      const entree = await payload.create({
+        collection: 'galerie',
+        data: { album: 'Sorties 2026', annee: 2026, photo: photo.id, legende: 'Ambiance' },
+        ...withUser(galerie),
+      })
+      expect(entree.album).toBe('Sorties 2026')
+      await expect(
+        payload.create({
+          collection: 'sorties',
+          data: {
+            type: 'voyage',
+            titre: 'Voyage interdit',
+            date: new Date().toISOString(),
+            lieu: 'Nulle part',
+            resume: 'x',
+          },
+          ...withUser(galerie),
         }),
       ).rejects.toThrow()
     })
@@ -138,12 +222,52 @@ describe('Droits d’accès du CMS', () => {
     it('ne peut pas lister les bénévoles', async () => {
       await expect(payload.find({ collection: 'users', overrideAccess: false })).rejects.toThrow()
     })
+
+    it('lit les tarifs et les paramètres', async () => {
+      const tarifs = await payload.findGlobal({ slug: 'tarifs', overrideAccess: false })
+      expect(tarifs.lignes?.map((ligne) => ligne.montant)).toEqual(['49 €'])
+      const parametres = await payload.findGlobal({ slug: 'parametres', overrideAccess: false })
+      expect(parametres.depuis).toBe('1993')
+      expect(parametres.emailContact).toBe('cbrs@cbrs60.fr')
+    })
+
+    it('lit les sorties publiées mais pas un voyage en brouillon', async () => {
+      await payload.create({
+        collection: 'sorties',
+        draft: true,
+        data: {
+          type: 'voyage',
+          titre: 'Voyage secret',
+          date: new Date().toISOString(),
+          lieu: 'Confidentiel',
+          resume: 'x',
+          _status: 'draft',
+        },
+      })
+      const voyages = await payload.find({
+        collection: 'sorties',
+        where: { type: { equals: 'voyage' } },
+        overrideAccess: false,
+      })
+      expect(voyages.docs.map((doc) => doc.titre)).not.toContain('Voyage secret')
+      const publiées = await payload.find({ collection: 'sorties', overrideAccess: false })
+      expect(publiées.docs.map((doc) => doc.titre)).toContain('Sortie au Plan d’eau')
+    })
   })
 
   describe('Administrateur', () => {
     it('crée des comptes bénévoles', async () => {
       const created = await createUserAs(admin)
       expect(created.roles).toEqual(['galerie'])
+    })
+
+    it('modifie les paramètres du site', async () => {
+      const parametres = await payload.updateGlobal({
+        slug: 'parametres',
+        data: { adherents: '1 250' },
+        ...withUser(admin),
+      })
+      expect(parametres.adherents).toBe('1 250')
     })
   })
 })

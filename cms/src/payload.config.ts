@@ -1,4 +1,6 @@
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { fr } from '@payloadcms/translations/languages/fr'
 import path from 'path'
@@ -8,19 +10,33 @@ import sharp from 'sharp'
 
 import { Activites } from './collections/Activites'
 import { Documents } from './collections/Documents'
+import { Galerie } from './collections/Galerie'
 import { Media } from './collections/Media'
 import { MembresBureau } from './collections/MembresBureau'
+import { Sorties } from './collections/Sorties'
 import { Users } from './collections/Users'
 import { VieDuClub } from './collections/VieDuClub'
 import { FlashInfo } from './globals/FlashInfo'
+import { Parametres } from './globals/Parametres'
+import { Tarifs } from './globals/Tarifs'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const siteOrigins = (process.env.CBRS_SITE_ORIGINS || 'http://127.0.0.1:8080,http://localhost:8080')
+// PostgreSQL dès que DATABASE_URL commence par postgres:// ou postgresql://, SQLite sinon.
+const databaseUrl = process.env.DATABASE_URL || ''
+const isPostgres = /^postgres(ql)?:\/\//.test(databaseUrl)
+
+const siteOrigins = (
+  process.env.CBRS_SITE_ORIGINS ||
+  'https://cbrs-sites.vercel.app,http://127.0.0.1:8092,http://127.0.0.1:8090'
+)
   .split(',')
   .map((origin) => origin.trim())
   .filter(Boolean)
+
+// Envoi des e-mails (mot de passe oublié) uniquement si un serveur SMTP est configuré.
+const smtpHost = process.env.SMTP_HOST
 
 export default buildConfig({
   admin: {
@@ -37,19 +53,34 @@ export default buildConfig({
     supportedLanguages: { fr },
     fallbackLanguage: 'fr',
   },
-  collections: [VieDuClub, MembresBureau, Activites, Documents, Media, Users],
-  globals: [FlashInfo],
+  collections: [VieDuClub, MembresBureau, Activites, Sorties, Galerie, Documents, Media, Users],
+  globals: [FlashInfo, Tarifs, Parametres],
   cors: siteOrigins,
   editor: lexicalEditor(),
+  email: smtpHost
+    ? nodemailerAdapter({
+        defaultFromAddress: process.env.SMTP_FROM || 'no-reply@cbrs60.fr',
+        defaultFromName: 'CBRS',
+        transportOptions: {
+          host: smtpHost,
+          port: Number(process.env.SMTP_PORT || 587),
+          auth: process.env.SMTP_USER
+            ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS || '' }
+            : undefined,
+        },
+      })
+    : undefined,
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  db: sqliteAdapter({
-    client: {
-      url: process.env.DATABASE_URL || '',
-    },
-  }),
+  db: isPostgres
+    ? postgresAdapter({ pool: { connectionString: databaseUrl } })
+    : sqliteAdapter({
+        client: {
+          url: databaseUrl,
+        },
+      }),
   sharp,
   plugins: [],
 })

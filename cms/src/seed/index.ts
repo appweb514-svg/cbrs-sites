@@ -71,5 +71,43 @@ await payload.updateGlobal({
   data: { actif: true, message: 'Inscriptions saison 2025-2026 ouvertes — contactez le club ou consultez la page adhésion.' },
 })
 
-payload.logger.info(`Jeu de démonstration créé : ${comptes.length} comptes, ${activites.length} activités, ${actualites.length} actualités.`)
+await payload.updateGlobal({
+  slug: 'tarifs',
+  data: {
+    lignes: [
+      { montant: '49 €', libelle: 'Libellé à préciser' },
+      { montant: '28 €', libelle: 'Libellé à préciser' },
+      { montant: '20 €', libelle: 'Libellé à préciser' },
+    ],
+  },
+})
+
+await payload.updateGlobal({
+  slug: 'parametres',
+  data: {
+    depuis: '1993',
+    adherents: '1 200',
+    activites: '≈ 20',
+    emailContact: 'cbrs@cbrs60.fr',
+    emailSorties: 'martinelcbrs60@gmail.com',
+  },
+})
+
+await payload.create({
+  collection: 'sorties',
+  draft: true,
+  data: {
+    type: 'voyage',
+    titre: 'Voyage d’exemple',
+    date: '2027-05-10',
+    lieu: 'Destination à définir',
+    resume: 'Voyage de démonstration laissé en brouillon : visible uniquement par les équipes autorisées.',
+    description: 'Complétez la destination, le programme et le tarif lorsque le projet sera arrêté.',
+    _status: 'draft',
+  },
+})
+
+payload.logger.info(
+  `Jeu de démonstration créé : ${comptes.length} comptes, ${activites.length} activités, ${actualites.length} actualités, 1 voyage en brouillon.`,
+)
 process.exit(0)
