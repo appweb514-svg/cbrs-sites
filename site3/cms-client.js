@@ -105,6 +105,14 @@
       img.height = 450;
       img.loading = 'lazy';
       media.appendChild(img);
+    } else {
+      const placeholder = el('div', 'cbrs-card-placeholder');
+      const logo = document.createElement('img');
+      logo.src = 'logo-cbrs.png';
+      logo.alt = '';
+      logo.loading = 'lazy';
+      placeholder.appendChild(logo);
+      media.appendChild(placeholder);
     }
     if (image.credit) media.appendChild(el('span', 'cbrs-card-credit', image.credit));
     media.appendChild(el('span', 'absolute bottom-3 left-3 bg-white text-xs font-bold px-2 py-1 rounded uppercase tracking-wider text-gray-800', categoryLabel(item.categorie)));
