@@ -6,8 +6,11 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
+// Vercel gère lui-même le serveur : pas besoin de sortie standalone.
+const isVercel = Boolean(process.env.VERCEL)
+
 const nextConfig: NextConfig = {
-  output: 'standalone',
+  ...(isVercel ? {} : { output: 'standalone' }),
   async redirects() {
     return [{ source: '/', destination: '/admin', permanent: false }]
   },

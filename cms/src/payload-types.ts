@@ -169,6 +169,7 @@ export interface Media {
    * Auteur et licence si la photo ne vient pas du club.
    */
   credit?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -328,6 +329,7 @@ export interface Document {
   titre: string;
   rubrique: 'statuts' | 'reglement' | 'adhesion' | 'assurance' | 'federal' | 'autre';
   description?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -530,6 +532,7 @@ export interface DocumentsSelect<T extends boolean = true> {
   titre?: T;
   rubrique?: T;
   description?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -549,6 +552,7 @@ export interface DocumentsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   credit?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

@@ -2,6 +2,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { fr } from '@payloadcms/translations/languages/fr'
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -23,9 +24,13 @@ import { Tarifs } from './globals/Tarifs'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-// PostgreSQL dès que DATABASE_URL commence par postgres:// ou postgresql://, SQLite sinon.
-const databaseUrl = process.env.DATABASE_URL || ''
+// PostgreSQL dès que l'URL commence par postgres:// ou postgresql://, SQLite sinon.
+// POSTGRES_URL est l'alias fourni par l'intégration Neon de Vercel.
+const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL || ''
 const isPostgres = /^postgres(ql)?:\/\//.test(databaseUrl)
+
+// Stockage Vercel Blob en production Vercel ; stockage disque (Docker, local) sans le jeton.
+const blobToken = process.env.BLOB_READ_WRITE_TOKEN
 
 const siteOrigins = (
   process.env.CBRS_SITE_ORIGINS ||
@@ -82,5 +87,12 @@ export default buildConfig({
         },
       }),
   sharp,
-  plugins: [],
+  plugins: blobToken
+    ? [
+        vercelBlobStorage({
+          collections: { media: true, documents: true },
+          token: blobToken,
+        }),
+      ]
+    : [],
 })

@@ -126,3 +126,41 @@ docker run --rm --volumes-from $(docker compose -f docker-compose.prod.yml ps -q
   -v $(pwd):/sauvegarde alpine sh -c 'cd / && tar xzf /sauvegarde/media-cbrs-2026-09-25.tar.gz'
 ```
 
+## Déploiement sur Vercel
+
+Le CMS se déploie aussi sur Vercel (le dossier `cms/` est alors **la racine du projet**).
+Le fichier `cms/vercel.json` lance `npm run migrate && npm run build` : les migrations
+PostgreSQL sont appliquées à chaque déploiement.
+
+### Base de données (Neon)
+
+Ajouter l'**intégration Neon** au projet Vercel : elle fournit `POSTGRES_URL`, utilisé
+automatiquement si `DATABASE_URL` est absent (adaptateur PostgreSQL). Sinon, renseigner
+`DATABASE_URL` (préfixe `postgres://` ou `postgresql://`).
+
+### Stockage des fichiers (Vercel Blob)
+
+Ajouter l'**intégration Vercel Blob** : elle fournit `BLOB_READ_WRITE_TOKEN`. Dès qu'il est
+défini, les collections `media` et `documents` stockent leurs fichiers dans Blob. Sans ce
+jeton, le stockage disque reste utilisé (Docker, local).
+
+### Variables d'environnement
+
+| Variable | Rôle |
+| --- | --- |
+| `POSTGRES_URL` | fournie par l'intégration Neon (ou `DATABASE_URL` manuellement) |
+| `BLOB_READ_WRITE_TOKEN` | fournie par l'intégration Vercel Blob (photos et PDF) |
+| `PAYLOAD_SECRET` | secret de signature des sessions (obligatoire, `openssl rand -base64 48`) |
+| `CBRS_SITE_ORIGINS` | origines autorisées à lire l'API (CORS) |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` | e-mails « mot de passe oublié » — désactivés si `SMTP_HOST` est vide |
+
+### Jeu de démonstration
+
+Récupérer les variables du projet puis lancer le seed depuis un poste local :
+
+```sh
+cd cms
+vercel env pull .env.local   # POSTGRES_URL, PAYLOAD_SECRET, CBRS_SEED_PASSWORD, etc.
+CBRS_SEED_PASSWORD='un-mot-de-passe-long' npm run seed
+```
+
