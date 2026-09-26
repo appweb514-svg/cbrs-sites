@@ -1,0 +1,2 @@
+# Le CMS est déployé séparément (serveur Proxmox), jamais comme fichiers statiques du site.
+cms/
