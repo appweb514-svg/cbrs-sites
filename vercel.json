@@ -4,6 +4,18 @@
   "framework": null,
   "cleanUrls": false,
   "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/:page(index|activites|activite|adhesion|contact|conditions-utilisation|evenement|formation|galerie|liens-utiles|mentions-legales|planning|sortie|sorties-voyages|statuts)/",
+      "destination": "/site3/:page.html",
+      "permanent": true
+    },
+    {
+      "source": "/site3/:page(index|activites|activite|adhesion|contact|conditions-utilisation|evenement|formation|galerie|liens-utiles|mentions-legales|planning|sortie|sorties-voyages|statuts)/",
+      "destination": "/site3/:page.html",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/",

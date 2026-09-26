@@ -3,9 +3,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Galerie Photos - CBRS Club du Beauvaisis de la Retraite Sportive</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap"/>
 <style data-purpose="custom-fonts">
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap');
     body { font-family: 'Inter', sans-serif; }
     .font-serif-italic { font-family: 'Playfair Display', serif; font-style: italic; }
   </style>
@@ -18,16 +19,16 @@
   .gallery-item figcaption { padding: 0.6rem 1rem 0.8rem; font-size: 0.85rem; color: #4b5563; font-weight: 500; }
   .gallery-filter-panel { border: 1px solid rgba(10, 50, 115, 0.12); border-radius: 1.25rem; background: linear-gradient(180deg, #fff 0%, #f8fbff 100%); box-shadow: 0 12px 30px rgba(10, 50, 115, 0.08); padding: clamp(1rem, 2vw, 1.5rem); }
   .gallery-filter-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
-  .gallery-filter-kicker { color: #58a01a; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+  .gallery-filter-kicker { color: #437c14; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
   .gallery-filter-title { margin: 0.2rem 0 0; color: #0a3273; font-size: clamp(1.1rem, 2vw, 1.35rem); font-weight: 800; }
   .gallery-filter-description { margin: 0.25rem 0 0; color: #64748b; font-size: 0.85rem; line-height: 1.45; }
   .gallery-filter-reset { flex: 0 0 auto; border: 1px solid rgba(10, 50, 115, 0.18); border-radius: 999px; background: #fff; color: #0a3273; cursor: pointer; font-size: 0.78rem; font-weight: 700; padding: 0.55rem 0.85rem; transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
-  .gallery-filter-reset:hover, .gallery-filter-reset:focus-visible { border-color: #58a01a; background: #58a01a; color: #fff; outline: none; }
+  .gallery-filter-reset:hover, .gallery-filter-reset:focus-visible { border-color: #437c14; background: #437c14; color: #fff; outline: none; }
   .gallery-filter-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; }
   .gallery-filter-field { display: grid; gap: 0.35rem; min-width: 0; }
   .gallery-filter-field > span { color: #475569; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
   .gallery-filter-select { width: 100%; min-height: 2.75rem; border: 1px solid rgba(10, 50, 115, 0.18); border-radius: 0.8rem; background: #fff; color: #0a3273; cursor: pointer; font-size: 0.9rem; font-weight: 650; padding: 0.6rem 2.25rem 0.6rem 0.8rem; transition: border-color 0.2s, box-shadow 0.2s; }
-  .gallery-filter-select:hover, .gallery-filter-select:focus-visible { border-color: #58a01a; box-shadow: 0 0 0 3px rgba(88, 160, 26, 0.14); outline: none; }
+  .gallery-filter-select:hover, .gallery-filter-select:focus-visible { border-color: #437c14; box-shadow: 0 0 0 3px rgba(88, 160, 26, 0.14); outline: none; }
   .gallery-filter-summary { margin: 0.9rem 0 0; color: #64748b; font-size: 0.78rem; }
   @media (max-width: 900px) and (min-width: 641px) {
     .gallery-filter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -39,14 +40,14 @@
     .gallery-filter-grid { grid-template-columns: 1fr; }
   }
   .activity-btn { border: 1px solid #d1d5db; border-radius: 999px; background: #fff; color: #4b5563; cursor: pointer; font-size: 0.75rem; font-weight: 600; padding: 0.35rem 0.75rem; transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
-  .activity-btn:hover, .activity-btn:focus-visible { border-color: #58a01a; color: #58a01a; outline: none; }
-  .activity-btn.active { border-color: #58a01a; background: #58a01a; color: #fff; }
+  .activity-btn:hover, .activity-btn:focus-visible { border-color: #437c14; color: #437c14; outline: none; }
+  .activity-btn.active { border-color: #437c14; background: #437c14; color: #fff; }
   .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; padding: 1rem; }
   .lightbox.active { display: flex; }
   .lightbox img { max-width: 90vw; max-height: 85vh; border-radius: 0.5rem; box-shadow: 0 8px 40px rgba(0,0,0,0.6); object-fit: contain; }
   .lightbox-close { position: fixed; top: 1.25rem; right: 1.5rem; color: white; font-size: 2.5rem; line-height: 1; cursor: pointer; background: none; border: none; font-weight: 300; }
   .lightbox-nav { position: fixed; top: 50%; z-index: 2; display: grid; width: 3rem; height: 3rem; place-items: center; transform: translateY(-50%); border: 1px solid rgba(255,255,255,0.28); border-radius: 999px; background: rgba(0,0,0,0.55); color: white; cursor: pointer; font-size: 2rem; line-height: 1; transition: background-color 0.2s, transform 0.2s; }
-  .lightbox-nav:hover, .lightbox-nav:focus-visible { background: #58a01a; outline: none; }
+  .lightbox-nav:hover, .lightbox-nav:focus-visible { background: #437c14; outline: none; }
   .lightbox-nav:active { transform: translateY(-50%) scale(0.94); }
   .lightbox-nav:disabled { opacity: 0.25; pointer-events: none; }
   .lightbox-prev { left: 1rem; }
@@ -98,23 +99,6 @@
     </clipPath>
   </defs>
 </svg>
-<script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'cbrs-blue': '#0a3273', 'cbrs-blue-light': '#1e4b99', 'cbrs-green': '#58a01a',
-            'cbrs-green-hover': '#4a8716', 'cbrs-teal': '#145c75', 'cbrs-gray-100': '#f8f9fa',
-            'cbrs-gray-200': '#e9ecef', 'cbrs-text': '#333333', 'cbrs-text-light': '#666666',
-          },
-          boxShadow: {
-            'card': '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)',
-            'card-hover': '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
-          }
-        }
-      }
-    }
-  </script>
 
 
 
@@ -173,7 +157,7 @@
     border-left-color: rgba(255, 255, 255, 0.22);
   }
   .sidebar-link.bg-cbrs-green {
-    background: linear-gradient(90deg, #579b28 0%, #70ad35 100%) !important;
+    background: linear-gradient(90deg, #437c14 0%, #4f8f1a 100%) !important;
     border-left-color: rgba(255, 255, 255, 0.72);
     box-shadow: 0 5px 14px rgba(17, 55, 31, 0.16);
   }
@@ -189,9 +173,10 @@
   }
 </style>
 <link rel="stylesheet" href="ui-shell.css"/>
+<link rel="stylesheet" href="tailwind.css"/>
 </head>
-<body class="wave-effect-disabled bg-gray-50 text-cbrs-text antialiased flex flex-col min-h-screen">
-<header class="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+<body class="wave-effect-disabled bg-gray-50 text-cbrs-text antialiased flex flex-col min-h-screen cbrs-ui">
+<header class="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 shadow-sm cbrs-mobile-header">
   <div class="flex items-center gap-2 px-4 py-3">
     <button onclick="toggleMobileMenu()" class="p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -221,9 +206,9 @@
     </a>
     <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="sorties-voyages.html">
       <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.858 15.355-5.858 21.213 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-      <span>Sorties - Voyages</span>
+      <span>Sorties &amp; Voyages</span>
     </a>
-    <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="galerie.html">
+    <a aria-current="page" class="flex items-center gap-3 px-3 py-2.5 hover:text-white hover:bg-white/10 rounded-lg transition-colors cbrs-nav-active bg-cbrs-green text-white" href="galerie.html">
       <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
       <span>Galerie photo</span>
     </a>
@@ -247,7 +232,7 @@
   </nav>
 </header>
 
-<section class="relative min-h-[236px] md:min-h-[344px] bg-cbrs-blue overflow-hidden flex items-center justify-center">
+<section class="relative min-h-[236px] md:min-h-[344px] bg-cbrs-blue overflow-hidden flex items-center justify-center cbrs-hero">
   <img src="assets/hero-plan-eau-canada.jpg" alt="" aria-hidden="true" class="cbrs-shared-hero-bg absolute inset-0 w-full h-full object-cover"/>
   <div class="absolute inset-0 bg-gradient-to-br from-cbrs-blue/90 via-cbrs-blue-light/80 to-cbrs-teal/75"></div>
   <div class="relative z-10 w-full px-8 md:px-16 py-10 md:py-14">
@@ -256,12 +241,12 @@
       <p class="text-sm md:text-base lg:text-lg text-white/90 max-w-2xl mx-auto">Revivez les moments forts de la vie du club — sorties, activités sportives, rencontres et bonne humeur partagée.</p>
     </div>
   </div>
-  <img src="logo-cbrs.png" alt="CBRS" class="hidden md:block absolute right-4 md:right-12 top-[44%] -translate-y-1/2 h-[160px] md:h-[200px] w-auto object-contain"/>
+  <div class="cbrs-logo-frame"><img src="logo-cbrs.png" alt="CBRS" class="cbrs-logo-image"/></div>
   <svg class="header-wave-svg absolute bottom-0" viewBox="0 0 1440 80" preserveAspectRatio="none" style="height:80px;z-index:1">
     <path fill="#f9fafb" d="M0,0 C100,0 130,24 240,24 C350,24 390,0 500,0 C610,0 650,24 760,24 C870,24 910,0 1020,0 C1130,0 1170,24 1280,24 C1370,24 1410,10 1440,6 L1440,80 L0,80 Z"/>
   </svg>
 </section>
-<div class="flex flex-1 flex-row md:-mt-20"><aside id="sidebar" class="sidebar w-52 pt-20 text-white flex-shrink-0 hidden md:flex flex-col sticky top-0 self-start h-screen z-20 overflow-y-auto overflow-x-hidden bg-gradient-to-b from-cbrs-blue via-cbrs-blue-light to-cbrs-teal">
+<div class="flex flex-1 flex-row md:-mt-20 cbrs-layout"><aside id="sidebar" class="sidebar w-52 pt-20 text-white flex-shrink-0 hidden md:flex flex-col sticky top-0 self-start h-screen z-20 overflow-y-auto overflow-x-hidden bg-gradient-to-b from-cbrs-blue via-cbrs-blue-light to-cbrs-teal cbrs-sidebar">
 
 <button onclick="toggleSidebar()" class="sidebar-toggle flex items-center gap-2 px-4 py-2 text-white/60 hover:text-white text-xs border-b border-white/10">
   <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/></svg>
@@ -290,9 +275,9 @@
   </a>
   <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors" href="sorties-voyages.html">
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.858 15.355-5.858 21.213 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-    <span class="sidebar-label">Sorties - Voyages</span>
+    <span class="sidebar-label">Sorties &amp; Voyages</span>
   </a>
-  <a class="sidebar-link flex items-center px-4 py-2.5 text-white/80 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors" href="galerie.html">
+  <a aria-current="page" class="sidebar-link flex items-center px-4 py-2.5 hover:text-white hover:bg-cbrs-green/20 hover:border-l-4 hover:border-cbrs-green rounded-r-full mr-4 transition-colors cbrs-nav-active bg-cbrs-green text-white" href="galerie.html">
     <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
     <span class="sidebar-label">Galerie photo</span>
   </a>
@@ -319,7 +304,7 @@
   <p class="text-sm font-bold leading-tight"><span class="text-cbrs-green">Le sport</span><br/>au service<br/>du bien-être<br/>et du lien<br/>social</p>
 </div>
 </aside>
-<main id="contenu" class="flex-1 overflow-x-hidden relative md:pt-20">
+<main id="contenu" class="flex-1 overflow-x-hidden relative md:pt-20 cbrs-content">
 <section class="max-w-7xl mx-auto px-6 pt-8 pb-4 space-y-3">
   <div class="gallery-filter-panel" aria-label="Filtres de la galerie">
     <div class="gallery-filter-heading">
@@ -395,7 +380,7 @@
       <img src="logo-cbrs.png" alt="CBRS" class="w-8 h-8 object-contain"/>
       <div class="text-xs text-gray-600 font-medium leading-tight">Club du Beauvaisis<br/>de la Retraite Sportive</div>
     </div>
-    <p class="text-xs text-gray-500 mb-2 max-w-xs">Association loi 1901 affiliée à la Fédération Française de la Retraite Sportive (FFRS).</p>
+    <p class="text-xs text-gray-500 mb-2 max-w-xs">Association loi 1901 affiliée à la Fédération Française de la Retraite Sportive (FFRS) et au CODERS de l’Oise.</p>
     <a class="text-xs text-cbrs-blue hover:underline" href="mentions-legales.html">Mentions légales</a>
   </div>
   <div>
@@ -410,11 +395,12 @@
     <h4 class="font-bold text-gray-900 mb-3 text-sm">Infos pratiques</h4>
     <ul class="space-y-1.5 text-xs text-gray-600">
       <li><a class="hover:text-cbrs-blue" href="planning.html">Planning</a></li>
-      <li><a class="hover:text-cbrs-blue" href="adhesion.html">Inscriptions</a></li>
+      <li><a class="hover:text-cbrs-blue" href="adhesion.html">Adhérer</a></li>
       <li><a class="hover:text-cbrs-blue" href="contact.html">Contact</a></li>
       <li><a data-auth-link="1" class="hover:text-cbrs-blue" href="connexion.html" data-auth-label>Connexion</a></li>
       <li><a class="hover:text-cbrs-blue" href="liens-utiles.html">Liens utiles</a></li>
       <li><a class="hover:text-cbrs-blue" href="statuts.html">Statuts et règlement</a></li>
+      <li><a class="hover:text-cbrs-blue" href="conditions-utilisation.html">Conditions d’utilisation</a></li>
     </ul>
   </div>
   <div>
@@ -424,7 +410,7 @@
     </ul>
   </div>
 </div>
-<div class="border-t border-gray-100 py-4 text-center text-xs text-gray-400">2026 &copy; CBRS — Club du Beauvaisis de la Retraite Sportive</div>
+<div class="border-t border-gray-100 py-4 text-center text-sm text-gray-400">2026 &copy; CBRS — Club du Beauvaisis de la Retraite Sportive</div>
 </footer>
 </main></div>
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
