@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { execFileSync } from 'node:child_process';
 
 const dataPath = 'site3/sorties-data.js';
 assert(fs.existsSync(dataPath), 'sorties-data.js doit exister');
@@ -80,8 +81,8 @@ const home = fs.readFileSync('site3/index.html', 'utf8');
 assert(home.includes('depuis 1993'), 'accroche 1993 absente');
 assert(home.includes('id="vie-du-club"'), 'section Vie du club absente');
 assert(home.includes('id="bureau"'), 'présentation du bureau absente');
-assert(home.includes('width: clamp(6.8rem, 11vw, 9rem)'), 'logo Flash Info non agrandi');
-assert(home.includes('width: 6.2rem'), 'taille mobile Flash Info absente');
+assert(home.includes('class="cbrs-flash-toggle"'), 'bouton pause du Flash info absent (WCAG 2.2.2)');
+assert(home.includes('id="flash-text"') && home.includes('data-flash-clone'), 'texte défilant du Flash info absent');
 console.log('PASS — accueil');
 
 const shell = fs.readFileSync('site3/ui-shell.js', 'utf8');
@@ -100,3 +101,30 @@ for (const [path, expected] of [
   assert.equal(pageFile(path), expected, `pageFile(${path})`);
 }
 console.log('PASS — navigation active (URL propres Vercel)');
+
+assert(fs.existsSync('site3/cms-client.js'), 'site3/cms-client.js doit exister');
+assert(!fs.readFileSync('site3/cms-client.js', 'utf8').includes('innerHTML'), 'cms-client.js ne doit pas utiliser innerHTML');
+for (const file of ['index.html', 'statuts.html', 'liens-utiles.html', 'adhesion.html', 'planning.html', 'sorties-voyages.html']) {
+  const html = fs.readFileSync(`site3/${file}`, 'utf8');
+  assert(html.includes('<meta name="cbrs-cms-url" content=""/>'), `${file}: meta cbrs-cms-url absente`);
+  assert(html.includes('<script src="cms-client.js" defer></script>'), `${file}: cms-client.js absent`);
+  assert(html.indexOf('cms-client.js') < html.indexOf('<script src="ui-shell.js"></script>'), `${file}: cms-client.js doit précéder ui-shell.js`);
+}
+console.log('PASS — client CMS (repli statique)');
+
+const publicPages = fs.readdirSync('site3').filter(f => f.endsWith('.html') && !['admin.html', 'connexion.html'].includes(f))
+for (const file of publicPages) {
+  const html = fs.readFileSync(`site3/${file}`, 'utf8')
+  assert(!html.includes('cdn.tailwindcss.com'), `${file}: CDN Tailwind interdit (CSS compilé : tooling/tailwind)`)
+  assert(html.includes('href="tailwind.css"'), `${file}: tailwind.css absent`)
+  assert(/<body[^>]*class="[^"]*\bcbrs-ui\b/.test(html), `${file}: classe cbrs-ui absente du HTML (saut de mise en page)`)
+  assert(!html.includes("@import url('https://fonts.googleapis.com"), `${file}: polices en @import (bloquant)`)
+  for (const [tag] of html.matchAll(/<iframe\b[^>]*>/g)) {
+    assert(!/\ssrc="https:\/\/www\.openstreetmap\.org/.test(tag), `${file}: iframe OpenStreetMap chargée sans consentement (utiliser data-cookie-src)`)
+  }
+}
+assert(!fs.readFileSync('site3/ui-shell.js', 'utf8').includes('--cbrs-hero-height'), 'la mise en page ne doit plus dépendre de la hauteur du bandeau mesurée en JS')
+const bakeCheck = execFileSync('python3', ['scripts/bake-shell.py'], { encoding: 'utf8' })
+assert(bakeCheck.includes('0 page(s) modifiée(s)'), 'lancer scripts/bake-shell.py : des pages ne sont pas à jour')
+assert(fs.readFileSync('site3/index.html', 'utf8').includes('class="cbrs-flash"'), 'bannière Flash info absente')
+console.log('PASS — stabilité de la mise en page (pas de saut au chargement)')
