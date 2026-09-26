@@ -106,7 +106,7 @@ assert(fs.existsSync('site3/cms-client.js'), 'site3/cms-client.js doit exister')
 assert(!fs.readFileSync('site3/cms-client.js', 'utf8').includes('innerHTML'), 'cms-client.js ne doit pas utiliser innerHTML');
 for (const file of ['index.html', 'statuts.html', 'liens-utiles.html', 'adhesion.html', 'planning.html', 'sorties-voyages.html']) {
   const html = fs.readFileSync(`site3/${file}`, 'utf8');
-  assert(html.includes('<meta name="cbrs-cms-url" content=""/>'), `${file}: meta cbrs-cms-url absente`);
+  assert(/<meta name="cbrs-cms-url" content="(https:\/\/[^"\s]+)?"\/>/.test(html), `${file}: meta cbrs-cms-url absente ou invalide (vide ou https://…)`);
   assert(html.includes('<script src="cms-client.js" defer></script>'), `${file}: cms-client.js absent`);
   assert(html.indexOf('cms-client.js') < html.indexOf('<script src="ui-shell.js"></script>'), `${file}: cms-client.js doit précéder ui-shell.js`);
 }
