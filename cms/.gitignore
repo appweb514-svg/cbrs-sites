@@ -53,3 +53,4 @@ node_modules/
 *.db
 *.db-shm
 *.db-wal
+.env*

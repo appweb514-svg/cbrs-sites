@@ -1,0 +1,12 @@
+# Jamais envoyés à Vercel : secrets locaux, bases et builds locaux
+.env
+.env.*
+!.env.example
+*.db
+*.db-shm
+*.db-wal
+media/
+.next/
+node_modules/
+test-results/
+playwright-report/
