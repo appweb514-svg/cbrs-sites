@@ -298,7 +298,7 @@ const Fenetre: React.FC<{
   url,
 }) => {
   const [options, setOptions] = React.useState<OptionsRetouche>(OPTIONS_DEFAUT)
-  const [onglet, setOnglet] = React.useState<Onglet>('filtres')
+  const [onglet, setOnglet] = React.useState<Onglet>('recadrer')
   const [image, setImage] = React.useState<HTMLImageElement | null>(null)
   const [cadreChoisi, setCadreChoisi] = React.useState<Cadre | null>(null)
   const [ratio, setRatio] = React.useState<null | number>(null)
