@@ -6,6 +6,7 @@ import { EditeurPhoto as EditeurPhoto_8968fcad10eb48513ce8ca70d8a406a5 } from '.
 import { ProprietesPhoto as ProprietesPhoto_1bdb07d863e011b08831e5103a63acfb } from '../../../admin/ProprietesPhoto'
 import { NomFichierCellule as NomFichierCellule_8294d9648960fdc8e4b4f9ceee14b90b } from '../../../admin/NomFichierCellule'
 import { CouleurChamp as CouleurChamp_74aa522c92b4d73862035f1dbbca3d0d } from '../../../admin/CouleurChamp'
+import { ApercuEnTete as ApercuEnTete_dd13a2a746c64855048bfeafb76705c6 } from '../../../admin/ApercuEnTete'
 import { PourcentageChamp as PourcentageChamp_fe0c60c1e70b27a1b0ba919be382e93c } from '../../../admin/PourcentageChamp'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -19,6 +20,7 @@ export const importMap = {
   "/admin/ProprietesPhoto#ProprietesPhoto": ProprietesPhoto_1bdb07d863e011b08831e5103a63acfb,
   "/admin/NomFichierCellule#NomFichierCellule": NomFichierCellule_8294d9648960fdc8e4b4f9ceee14b90b,
   "/admin/CouleurChamp#CouleurChamp": CouleurChamp_74aa522c92b4d73862035f1dbbca3d0d,
+  "/admin/ApercuEnTete#ApercuEnTete": ApercuEnTete_dd13a2a746c64855048bfeafb76705c6,
   "/admin/PourcentageChamp#PourcentageChamp": PourcentageChamp_fe0c60c1e70b27a1b0ba919be382e93c,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }
