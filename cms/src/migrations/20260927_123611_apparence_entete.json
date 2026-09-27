@@ -5163,7 +5163,7 @@
           "type": "numeric",
           "primaryKey": false,
           "notNull": true,
-          "default": 90
+          "default": 78
         },
         "valeurs_origine": {
           "name": "valeurs_origine",
