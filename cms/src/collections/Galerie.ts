@@ -37,14 +37,24 @@ export const Galerie: CollectionConfig = {
     hidden: cacheSansDroit('galerie'),
     description:
       'Page « Galerie photo » du site. Glissez les photos (poignée à gauche) pour changer leur ordre sur le site ; cochez-en plusieurs puis « Modifier » pour changer l’année ou la catégorie d’un coup.',
-    pagination: { defaultLimit: 100 },
+    pagination: { defaultLimit: 20, limits: [20, 50, 100] },
+    components: {
+      beforeListTable: ['/admin/GalerieVues#GalerieVues'],
+    },
   },
   // Ordre du site modifiable par glisser-déposer dans la liste.
   orderable: true,
   defaultSort: '_order',
   access: accesSection('galerie', afficheOuEditeur('galerie')),
   fields: [
-    { name: 'photo', label: 'Photo', type: 'upload', relationTo: 'media', required: true },
+    {
+      name: 'photo',
+      label: 'Photo',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+      admin: { components: { Cell: '/admin/GaleriePhotoCellule#GaleriePhotoCellule' } },
+    },
     { name: 'legende', label: 'Légende', type: 'text' },
     {
       type: 'row',
@@ -67,13 +77,22 @@ export const Galerie: CollectionConfig = {
         },
       ],
     },
-    { name: 'album', label: 'Album', type: 'text', admin: { description: 'Facultatif, ex. : Sortie au Touquet 2026.' } },
+    {
+      name: 'album',
+      label: 'Album',
+      type: 'text',
+      admin: { description: 'Facultatif, ex. : Sortie au Touquet 2026.' },
+    },
     {
       name: 'fichierOrigine',
       label: 'Fichier d’origine',
       type: 'text',
       index: true,
-      admin: { readOnly: true, position: 'sidebar', description: 'Renseigné par l’import des photos du site.' },
+      admin: {
+        readOnly: true,
+        position: 'sidebar',
+        description: 'Renseigné par l’import des photos du site.',
+      },
     },
     {
       name: 'afficherSurSite',

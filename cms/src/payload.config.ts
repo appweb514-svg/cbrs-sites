@@ -9,6 +9,7 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
+import { avecCasesVX } from './casesVX'
 import { Activites } from './collections/Activites'
 import { Documents } from './collections/Documents'
 import { Galerie } from './collections/Galerie'
@@ -19,6 +20,7 @@ import { Sorties } from './collections/Sorties'
 import { Users } from './collections/Users'
 import { VieDuClub } from './collections/VieDuClub'
 import { galerieLot } from './endpoints/galerieLot'
+import { mediaRenommer } from './endpoints/mediaRenommer'
 import { Apparence } from './globals/Apparence'
 import { FlashInfo } from './globals/FlashInfo'
 import { Parametres } from './globals/Parametres'
@@ -60,9 +62,21 @@ export default buildConfig({
   i18n: {
     supportedLanguages: { fr },
     fallbackLanguage: 'fr',
+    // Libellé français par défaut de Payload trop lourd : « Créer un(e) nouveau ou nouvelle ».
+    translations: { fr: { general: { createNew: 'Ajouter', createNewLabel: 'Ajouter : {{label}}' } } },
   },
-  endpoints: [galerieLot],
-  collections: [VieDuClub, MembresBureau, Activites, Sorties, Galerie, Documents, Media, Users, Roles],
+  endpoints: [galerieLot, mediaRenommer],
+  collections: avecCasesVX([
+    VieDuClub,
+    MembresBureau,
+    Activites,
+    Sorties,
+    Galerie,
+    Documents,
+    Media,
+    Users,
+    Roles,
+  ]),
   globals: [FlashInfo, Tarifs, Parametres, Apparence],
   cors: siteOrigins,
   editor: lexicalEditor(),

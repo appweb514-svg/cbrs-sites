@@ -1,7 +1,7 @@
 import type { GlobalConfig, TextFieldSingleValidation } from 'payload'
 
 import { cacheSansDroit, peut } from '../access'
-import { COULEURS_ORIGINE, contrasteAvecBlanc, type NomCouleur } from '../couleurs'
+import { COULEURS_ORIGINE, INTENSITE_TEINTE_ORIGINE, contrasteAvecBlanc, type NomCouleur } from '../couleurs'
 import { SITE_PAGES } from '../sitePages'
 
 // Polices testées sur le site (chargées depuis Google Fonts). « defaut » = police actuelle du site.
@@ -71,6 +71,8 @@ export const Apparence: GlobalConfig = {
           policeTitres: 'defaut',
           policeSousTitres: 'defaut',
           policeTexte: 'defaut',
+          intensiteTeinte: INTENSITE_TEINTE_ORIGINE,
+          imageEnTete: null,
           enTetes: [],
           valeursOrigine: false,
         }
@@ -92,9 +94,41 @@ export const Apparence: GlobalConfig = {
         {
           label: 'Couleurs',
           fields: [
-            couleur('couleurPrincipale', 'Couleur principale', 'Menus, titres et boutons principaux (bleu d’origine).'),
-            couleur('couleurSecondaire', 'Couleur secondaire', 'Mises en valeur et boutons d’action (vert d’origine).'),
+            couleur('couleurPrincipale', 'Couleur principale', 'Menus, titres et bandeaux (bleu d’origine).'),
+            couleur('couleurSecondaire', 'Couleur secondaire', 'Tous les boutons (survol compris) et textes mis en valeur (vert d’origine).'),
             couleur('couleurAccent', 'Couleur d’accent', 'Bandeaux et détails (bleu-vert d’origine).'),
+          ],
+        },
+        {
+          label: 'En-tête',
+          fields: [
+            {
+              name: 'imageEnTete',
+              label: 'Image d’en-tête par défaut',
+              type: 'upload',
+              relationTo: 'media',
+              admin: {
+                description:
+                  'Image du bandeau de toutes les pages. L’image propre à une page (onglet « En-têtes de pages ») reste prioritaire.',
+              },
+            },
+            couleur('teinteEnTete', 'Teinte de l’en-tête', 'Voile posé sur l’image pour garder le texte blanc lisible (bleu d’origine).'),
+            {
+              name: 'intensiteTeinte',
+              label: 'Intensité de la teinte',
+              type: 'number',
+              required: true,
+              defaultValue: INTENSITE_TEINTE_ORIGINE,
+              validate: (value: unknown) =>
+                value === null ||
+                value === undefined ||
+                (typeof value === 'number' && value >= 0 && value <= 100) ||
+                'Indiquez un pourcentage entre 0 et 100.',
+              admin: {
+                description: 'Opacité du voile : 0 % laisse l’image nette, 100 % la rend opaque.',
+                components: { Field: '/admin/PourcentageChamp#PourcentageChamp' },
+              },
+            },
           ],
         },
         {

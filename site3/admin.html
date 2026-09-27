@@ -121,7 +121,7 @@
     <p class="text-sm text-gray-500 mb-4">Ajoutez des photos (stockage local, limite ≈ 5 Mo).</p>
     <div class="mb-6 p-4 border-2 border-dashed border-gray-300 rounded-lg text-center">
       <input type="file" id="photo-input" accept="image/*" multiple class="hidden">
-      <button onclick="document.getElementById('photo-input').click()" class="px-4 py-2 bg-cbrs-blue hover:bg-cbrs-blue-light text-white font-semibold rounded-lg transition-colors text-sm">+ Ajouter des photos</button>
+      <button onclick="document.getElementById('photo-input').click()" class="px-4 py-2 bg-cbrs-green hover:bg-cbrs-green-hover text-white font-semibold rounded-lg transition-colors text-sm">+ Ajouter des photos</button>
       <p class="text-xs text-gray-500 mt-2">JPG, PNG, WebP — 2 Mo max</p>
       <div id="upload-status" class="text-xs mt-2"></div>
     </div>
@@ -256,7 +256,7 @@ function renderActivities(filter = '') {
         <div class="flex-1 min-w-0">
           <div class="flex items-center justify-between gap-2">
             <h3 class="font-semibold text-sm">${act.name}</h3>
-            <button onclick="editActivity('${act.id}')" class="text-xs px-3 py-1 bg-cbrs-blue hover:bg-cbrs-blue-light text-white rounded-lg transition-colors">Éditer</button>
+            <button onclick="editActivity('${act.id}')" class="text-xs px-3 py-1 bg-cbrs-green hover:bg-cbrs-green-hover text-white rounded-lg transition-colors">Éditer</button>
           </div>
           <p class="text-xs text-gray-500 mt-0.5 line-clamp-2">${local.short_description || act.short_description}</p>
         </div>
@@ -398,7 +398,7 @@ function renderPlanning(filter = '') {
           </div>
           <div class="flex flex-wrap gap-1.5">${slotsHtml || '<span class="text-xs text-gray-400">Aucun créneau</span>'}</div>
         </div>
-        <button onclick="editPlanningActivity('${act.id}')" class="text-xs px-3 py-1 bg-cbrs-blue hover:bg-cbrs-blue-light text-white rounded-lg transition-colors flex-shrink-0">Éditer</button>
+        <button onclick="editPlanningActivity('${act.id}')" class="text-xs px-3 py-1 bg-cbrs-green hover:bg-cbrs-green-hover text-white rounded-lg transition-colors flex-shrink-0">Éditer</button>
       </div>`;
     container.appendChild(card);
   });

@@ -30,7 +30,10 @@
   const THEME_KEY = 'cbrs-theme';
   const THEME_VARS = ['--cbrs-blue', '--cbrs-blue-rgb', '--cbrs-blue-light', '--cbrs-blue-light-rgb', '--cbrs-green',
     '--cbrs-green-rgb', '--cbrs-green-dark', '--cbrs-green-hover-rgb', '--cbrs-teal', '--cbrs-teal-rgb',
+    '--cbrs-hero-c1', '--cbrs-hero-c2', '--cbrs-hero-c3', '--cbrs-hero-o',
     '--cbrs-font-h1', '--cbrs-font-h2', '--cbrs-font-body'];
+  // Teinte d'en-tête d'origine (bleu du site) : valeurs par défaut de ui-shell.css.
+  const TEINTE_EN_TETE_ORIGINE = '#0a3273';
 
   function getJSON(path) {
     return new Promise(function (resolve, reject) {
@@ -404,6 +407,18 @@
       vars['--cbrs-teal'] = teal;
       vars['--cbrs-teal-rgb'] = mix(teal, 0);
     }
+    // Voile du bandeau : teinte choisie (sinon bleu d'origine) et son intensité (0 = image nette).
+    const teinte = color(data.teinteEnTete);
+    if (teinte && teinte.toLowerCase() !== TEINTE_EN_TETE_ORIGINE) {
+      const c1 = mix(teinte, 0).replace(/ /g, ', ');
+      vars['--cbrs-hero-c1'] = c1;
+      vars['--cbrs-hero-c2'] = mix(teinte, 0.15).replace(/ /g, ', ');
+      vars['--cbrs-hero-c3'] = c1;
+    }
+    const intensite = data.intensiteTeinte;
+    if (typeof intensite === 'number' && intensite >= 0 && intensite <= 100) {
+      vars['--cbrs-hero-o'] = String(intensite / 100);
+    }
     const families = [];
     [['policeTitres', '--cbrs-font-h1'], ['policeSousTitres', '--cbrs-font-h2'], ['policeTexte', '--cbrs-font-body']].forEach(function (pair) {
       const stack = fontStack(data[pair[0]], 'ui-sans-serif, system-ui, sans-serif');
@@ -437,15 +452,20 @@
     return path || '/';
   }
 
-  function renderHeader(header) {
+  function renderHeader(header, imageEnTete) {
     const hero = document.querySelector('.cbrs-hero');
-    if (!hero || !header) return;
-    const title = hero.querySelector('h1');
-    if (header.titre && title) title.textContent = header.titre;
-    const subtitle = title && title.nextElementSibling && title.nextElementSibling.tagName === 'P' ? title.nextElementSibling : null;
-    if (header.sousTitre && subtitle) subtitle.textContent = header.sousTitre;
-    const src = header.image && typeof header.image === 'object' ? resolveUrl(header.image.url) : '';
-    const bg = hero.querySelector('img.cbrs-shared-hero-bg') || hero.querySelector('img');
+    if (!hero) return;
+    if (header) {
+      const title = hero.querySelector('h1');
+      if (header.titre && title) title.textContent = header.titre;
+      const subtitle = title && title.nextElementSibling && title.nextElementSibling.tagName === 'P' ? title.nextElementSibling : null;
+      if (header.sousTitre && subtitle) subtitle.textContent = header.sousTitre;
+    }
+    // Image propre à la page sinon image d'en-tête par défaut du CMS.
+    const image = (header && header.image && typeof header.image === 'object' ? header.image : null) ||
+      (imageEnTete && typeof imageEnTete === 'object' ? imageEnTete : null);
+    const src = image ? resolveUrl(image.url) : '';
+    const bg = hero.querySelector('img.cbrs-shared-hero-bg, img.absolute.inset-0') || hero.querySelector('img');
     if (src && bg) bg.src = src;
   }
 
@@ -459,7 +479,7 @@
     } catch (e) { /* stockage indisponible */ }
     const page = currentPage();
     const header = (data.enTetes || []).filter(function (h) { return h.page === page; })[0];
-    renderHeader(header);
+    renderHeader(header, data.imageEnTete);
   }
 
   function renderTarifs(lignes) {

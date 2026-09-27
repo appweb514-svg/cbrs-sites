@@ -185,7 +185,7 @@ export interface VieDuClub {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * Toutes les photos du site. Ouvrez-en une puis « Modifier l’image » pour la recadrer ou choisir son point d’intérêt ; cochez-en plusieurs pour les ajouter à la galerie du site, ou en retirer.
+ * Toutes les photos du site. Ouvrez-en une pour la renommer ou voir ses propriétés ; « Modifier l’image » recadre et choisit le point d’intérêt. La mise en avant sur le site se gère dans « Galerie photo ».
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
@@ -907,17 +907,29 @@ export interface Apparence {
   policeTexte:
     'defaut' | 'Inter' | 'Manrope' | 'Poppins' | 'Lato' | 'Open Sans' | 'Nunito' | 'Merriweather' | 'Source Serif 4';
   /**
-   * Menus, titres et boutons principaux (bleu d’origine).
+   * Menus, titres et bandeaux (bleu d’origine).
    */
   couleurPrincipale: string;
   /**
-   * Mises en valeur et boutons d’action (vert d’origine).
+   * Tous les boutons (survol compris) et textes mis en valeur (vert d’origine).
    */
   couleurSecondaire: string;
   /**
    * Bandeaux et détails (bleu-vert d’origine).
    */
   couleurAccent: string;
+  /**
+   * Image du bandeau de toutes les pages. L’image propre à une page (onglet « En-têtes de pages ») reste prioritaire.
+   */
+  imageEnTete?: (number | null) | Media;
+  /**
+   * Voile posé sur l’image pour garder le texte blanc lisible (bleu d’origine).
+   */
+  teinteEnTete: string;
+  /**
+   * Opacité du voile : 0 % laisse l’image nette, 100 % la rend opaque.
+   */
+  intensiteTeinte: number;
   /**
    * Remplace le titre, le sous-titre ou l’image d’en-tête d’une page. Champ vide = contenu actuel conservé.
    */
@@ -999,6 +1011,9 @@ export interface ApparenceSelect<T extends boolean = true> {
   couleurPrincipale?: T;
   couleurSecondaire?: T;
   couleurAccent?: T;
+  imageEnTete?: T;
+  teinteEnTete?: T;
+  intensiteTeinte?: T;
   enTetes?:
     | T
     | {
