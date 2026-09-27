@@ -1,6 +1,7 @@
 'use client'
 
-import { useDocumentInfo } from '@payloadcms/ui'
+import { Link, useConfig, useDocumentInfo } from '@payloadcms/ui'
+import { formatAdminURL } from 'payload/shared'
 import React from 'react'
 
 import { formatPoids } from '../nomFichier'
@@ -38,7 +39,13 @@ const Ligne: React.FC<{ label: string; valeur: React.ReactNode }> = ({ label, va
 // Propriétés du fichier (barre latérale) : dimensions, poids, format, dates et présence dans la galerie du site.
 export const ProprietesPhoto: React.FC = () => {
   const { id, savedDocumentData } = useDocumentInfo()
-  const [dansGalerie, setDansGalerie] = React.useState<boolean | null>(null)
+  const {
+    config: {
+      routes: { admin: adminRoute },
+    },
+  } = useConfig()
+  // Fiche de la photo dans la galerie : son identifiant, false si absente, null tant qu'inconnue.
+  const [ficheGalerie, setFicheGalerie] = React.useState<false | null | number | string>(null)
 
   React.useEffect(() => {
     if (!id) return
@@ -46,12 +53,12 @@ export const ProprietesPhoto: React.FC = () => {
     fetch(`/api/galerie?limit=1&depth=0&where[photo][equals]=${encodeURIComponent(String(id))}`, {
       credentials: 'include',
     })
-      .then((reponse) => (reponse.ok ? reponse.json() : { totalDocs: 0 }))
-      .then((donnees: { totalDocs?: number }) => {
-        if (actif) setDansGalerie(Boolean(donnees?.totalDocs))
+      .then((reponse) => (reponse.ok ? reponse.json() : { docs: [] }))
+      .then((donnees: { docs?: { id: number | string }[] }) => {
+        if (actif) setFicheGalerie(donnees?.docs?.[0]?.id ?? false)
       })
       .catch(() => {
-        if (actif) setDansGalerie(null)
+        if (actif) setFicheGalerie(null)
       })
     return () => {
       actif = false
@@ -73,8 +80,21 @@ export const ProprietesPhoto: React.FC = () => {
       <Ligne label="Ajoutée le" valeur={dateFr(savedDocumentData.createdAt)} />
       <Ligne label="Modifiée le" valeur={dateFr(savedDocumentData.updatedAt)} />
       <p style={{ margin: '0.6rem 0 0' }}>
-        Dans la galerie du site : {dansGalerie === null ? '…' : dansGalerie ? '✓' : '✗'}
+        Dans la galerie du site : {ficheGalerie === null ? '…' : ficheGalerie ? '✓' : '✗'}
       </p>
+      {ficheGalerie ? (
+        <p style={{ margin: '0.3rem 0 0' }}>
+          <Link
+            href={formatAdminURL({
+              adminRoute,
+              path: `/collections/galerie/${encodeURIComponent(String(ficheGalerie))}`,
+            })}
+            prefetch={false}
+          >
+            Légende, catégorie et année →
+          </Link>
+        </p>
+      ) : null}
     </div>
   )
 }
