@@ -9,6 +9,7 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
+import { avecCasesVX } from './casesVX'
 import { Activites } from './collections/Activites'
 import { Documents } from './collections/Documents'
 import { Galerie } from './collections/Galerie'
@@ -62,7 +63,7 @@ export default buildConfig({
     fallbackLanguage: 'fr',
   },
   endpoints: [galerieLot],
-  collections: [VieDuClub, MembresBureau, Activites, Sorties, Galerie, Documents, Media, Users, Roles],
+  collections: avecCasesVX([VieDuClub, MembresBureau, Activites, Sorties, Galerie, Documents, Media, Users, Roles]),
   globals: [FlashInfo, Tarifs, Parametres, Apparence],
   cors: siteOrigins,
   editor: lexicalEditor(),
