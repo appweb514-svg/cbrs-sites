@@ -1,6 +1,15 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionBeforeChangeHook, CollectionConfig } from 'payload'
 
 import { peut } from '../access'
+
+// Un formulaire ouvert avant un renommage renvoie l'ancien nom de fichier (celui qu'il connaît) :
+// comme le fichier correspondant a été supprimé, l'enregistrer casserait la photo. Sans nouveau
+// fichier, on garde donc le nom déjà enregistré.
+const garderNomFichier: CollectionBeforeChangeHook = ({ data, originalDoc, req }) => {
+  if (req.file || !data?.filename || !originalDoc?.filename) return data
+  if (data.filename === originalDoc.filename) return data
+  return { ...data, filename: originalDoc.filename }
+}
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -12,13 +21,16 @@ export const Media: CollectionConfig = {
     useAsTitle: 'alt',
     defaultColumns: ['filename', 'alt', 'credit'],
     description:
-      'Toutes les photos du site. Ouvrez-en une pour la renommer ou voir ses propriétés ; « Modifier l’image » recadre et choisit le point d’intérêt. La mise en avant sur le site se gère dans « Galerie photo ».',
+      'Toutes les photos du site. Ouvrez-en une pour la renommer ou voir ses propriétés ; « Modifier l’image » recadre, choisit le point d’intérêt et ajoute filtres, texte ou contours. La mise en avant sur le site se gère dans « Galerie photo ».',
   },
   access: {
     read: () => true,
     create: ({ req: { user } }) => Boolean(user),
     update: peut('media', 'modifier'),
     delete: peut('media', 'supprimer'),
+  },
+  hooks: {
+    beforeChange: [garderNomFichier],
   },
   fields: [
     {
