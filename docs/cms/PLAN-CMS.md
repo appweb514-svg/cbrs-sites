@@ -75,14 +75,14 @@ Bénévoles / admin ─▶ https://cms.<domaine>  (Proxmox, Docker via Dokploy, 
 | 2. Modèles et rôles | Collections du §3, rôles du §2, filtres par référent | 1 j |
 | 3. Migration des données | Import depuis `site3/activite.html`, `site3/sorties-data.js`, `api/_data/*` (trois sources divergentes à réconcilier) | 1–1,5 j |
 | 4. Branchement du site, **par ordre de priorité client** | ① Vie du club, Présentation du bureau, Statuts & règlement ; ② Flash info, tarifs, documents ; ③ Activités + planning ; ④ Sorties & Voyages ; ⑤ Galerie | 3–4 j |
-| 5. Nettoyage | Supprimer le faux admin client (`site3/connexion.html`, `site3/admin.html`, `site3/auth.js` : identifiants en clair), archiver `backend/` Express et `api/_data/*` | 0,5 j |
+| 5. Nettoyage ✅ | Faux admin client (identifiants en clair) et back-end Express supprimés le 2026-09-27 ; `api/public/*` + `api/_data/*` conservés comme repli du site public | 0,5 j |
 | 6. Formation | Guide bénévole d'une page par rôle + séance de 1 h, compte de test | 1 j |
 
 **Total estimé : 8,5 à 10 jours**, livrable par étapes (chaque phase 4 est publiable seule).
 
 ## 7. Risques et questions ouvertes
 
-- **Sécurité** : l'admin actuel `site3/connexion.html` est une démo avec identifiants en clair, publiée en production. À retirer dès la phase 5, ou plus tôt.
+- **Sécurité** : l'admin de démonstration (connexion avec identifiants en clair) a été retiré du dépôt le 2026-09-27 ; l'administration passe désormais par le CMS.
 - **Données personnelles** : les photos et noms du bureau nécessitent l'accord écrit des personnes ; pas de téléphone public (décision RGPD du 2026-06-16).
 - Qui valide les publications des responsables d'activité : publication directe ou relecture par le bureau ?
 - Domaine définitif de l'association (pour `cms.<domaine>` et le site).

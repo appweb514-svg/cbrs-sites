@@ -31,9 +31,6 @@ Nouveau\ site\ internet\ CBRS.pdf
 
 # Node (if any)
 node_modules/
-backend/node_modules/
-backend/db/cbrs.sqlite
-backend/uploads/
 .vercel
 fetched/
 .env*
