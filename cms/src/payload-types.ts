@@ -185,7 +185,7 @@ export interface VieDuClub {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * Toutes les photos du site. Ouvrez-en une puis « Modifier l’image » pour la recadrer ou choisir son point d’intérêt ; cochez-en plusieurs pour les ajouter à la galerie du site, ou en retirer.
+ * Toutes les photos du site. Ouvrez-en une pour la renommer ou voir ses propriétés ; « Modifier l’image » recadre et choisit le point d’intérêt. La mise en avant sur le site se gère dans « Galerie photo ».
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
