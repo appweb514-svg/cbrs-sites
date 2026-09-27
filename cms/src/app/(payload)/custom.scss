@@ -510,3 +510,17 @@
     outline-offset: 2px;
   }
 }
+
+// Une seule fenêtre pour la photo : le bouton natif « Modifier l'image » est masqué,
+// l'éditeur (recadrage, point d'intérêt, filtres, texte, contours) prend sa place.
+.file-field__upload-actions {
+  .file-field__edit {
+    display: none;
+  }
+}
+
+.cbrs-editeur-photo__aide {
+  flex-basis: 100%;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}

@@ -1,7 +1,6 @@
 'use client'
 
 import { toast, useAuth, useDocumentInfo } from '@payloadcms/ui'
-import { useRouter } from 'next/navigation'
 import React from 'react'
 
 import { droits } from '../access'
@@ -14,7 +13,6 @@ const ChampRenommage: React.FC<{ extension: string; id: number | string; nomInit
   id,
   nomInitial,
 }) => {
-  const router = useRouter()
   const [nom, setNom] = React.useState(nomInitial)
   const [occupe, setOccupe] = React.useState(false)
 
@@ -32,7 +30,9 @@ const ChampRenommage: React.FC<{ extension: string; id: number | string; nomInit
         toast.error(donnees.error ?? 'Renommage impossible.')
       } else {
         toast.success(`Photo renommée : ${nomAffiche(donnees.filename)}`)
-        router.refresh()
+        // Le formulaire garde l'ancien nom de fichier : on recharge la fiche pour repartir des
+        // données enregistrées (sinon un enregistrement suivant renverrait l'ancien nom).
+        window.location.reload()
       }
     } catch {
       toast.error('Renommage impossible (connexion au serveur).')

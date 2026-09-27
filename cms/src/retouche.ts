@@ -126,6 +126,56 @@ export const positionTexte = (
   }
 }
 
+// Cadre de recadrage, en pixels de la photo d'origine.
+export type Cadre = { x: number; y: number; largeur: number; hauteur: number }
+
+// Formats de recadrage : ratio largeur/hauteur, null = format libre (photo entière).
+export const RATIOS: { label: string; value: null | number }[] = [
+  { label: 'Libre', value: null },
+  { label: '1:1', value: 1 },
+  { label: '4:3', value: 4 / 3 },
+  { label: '3:2', value: 3 / 2 },
+  { label: '16:9', value: 16 / 9 },
+]
+
+// Cadre centré le plus grand possible pour le format demandé ; toute la photo en format libre.
+export const cadreRecadrage = (largeur: number, hauteur: number, ratio: null | number): Cadre => {
+  if (largeur <= 0 || hauteur <= 0) return { x: 0, y: 0, largeur: 0, hauteur: 0 }
+  if (!ratio || ratio <= 0) return { x: 0, y: 0, largeur, hauteur }
+  const largeurCadre = Math.round(Math.min(largeur, hauteur * ratio))
+  const hauteurCadre = Math.round(largeurCadre / ratio)
+  return {
+    x: Math.round((largeur - largeurCadre) / 2),
+    y: Math.round((hauteur - hauteurCadre) / 2),
+    largeur: largeurCadre,
+    hauteur: hauteurCadre,
+  }
+}
+
+// Garde le cadre dans la photo, avec des mesures entières d'au moins un pixel.
+export const bornerCadre = (cadre: Cadre, largeur: number, hauteur: number): Cadre => {
+  const largeurCadre = Math.min(Math.max(1, Math.round(cadre.largeur)), Math.max(1, largeur))
+  const hauteurCadre = Math.min(Math.max(1, Math.round(cadre.hauteur)), Math.max(1, hauteur))
+  return {
+    x: Math.min(Math.max(0, Math.round(cadre.x)), largeur - largeurCadre),
+    y: Math.min(Math.max(0, Math.round(cadre.y)), hauteur - hauteurCadre),
+    largeur: largeurCadre,
+    hauteur: hauteurCadre,
+  }
+}
+
+// Point d'intérêt Payload (0-100 %) à partir d'un clic exprimé en pixels de la photo.
+export const pointInteret = (
+  xPx: number,
+  yPx: number,
+  largeur: number,
+  hauteur: number,
+): { focalX: number; focalY: number } => {
+  const pourcent = (valeur: number, total: number) =>
+    total > 0 ? Math.min(100, Math.max(0, Math.round((valeur / total) * 100))) : 50
+  return { focalX: pourcent(xPx, largeur), focalY: pourcent(yPx, hauteur) }
+}
+
 // Épaisseur du contour : la plus petite dimension sert de référence pour les contours automatiques.
 const epaisseurContour = ({ type, epaisseur }: Contour, cote: number): number => {
   if (type === 'aucun') return 0

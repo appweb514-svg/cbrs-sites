@@ -40,7 +40,7 @@ beforeAll(async () => {
   const chemin = path.join(dossier, 'photo-test.png')
   writeFileSync(
     chemin,
-    await sharp({ create: { width: 24, height: 16, channels: 3, background: 'rgb(20, 90, 160)' } })
+    await sharp({ create: { width: 800, height: 600, channels: 3, background: 'rgb(20, 90, 160)' } })
       .png()
       .toBuffer(),
   )
@@ -60,6 +60,42 @@ describe('Renommage d’une photo', () => {
 
     const misAJour = await payload.findByID({ collection: 'media', id: photo.id, depth: 0, overrideAccess: true })
     expect(misAJour.filename).toBe('nouveau-nom.png')
+    expect(misAJour.url).toContain('nouveau-nom.png')
+    expect(existsSync(path.join(dossierMedia, 'nouveau-nom.png'))).toBe(true)
+
+    // Les tailles sont régénérées sous le nouveau nom.
+    const vignette = misAJour.sizes?.vignette
+    expect(vignette?.filename).toContain('nouveau-nom')
+    expect(existsSync(path.join(dossierMedia, String(vignette?.filename)))).toBe(true)
+  })
+
+  it('garde le nom et le fichier après une modification des autres champs', async () => {
+    const misAJour = await payload.update({
+      collection: 'media',
+      id: photo.id,
+      data: { alt: 'Description modifiée' },
+      overrideAccess: true,
+    })
+    expect(misAJour.filename).toBe('nouveau-nom.png')
+
+    const relu = await payload.findByID({ collection: 'media', id: photo.id, depth: 0, overrideAccess: true })
+    expect(relu.filename).toBe('nouveau-nom.png')
+    expect(relu.url).toContain('nouveau-nom.png')
+    expect(existsSync(path.join(dossierMedia, 'nouveau-nom.png'))).toBe(true)
+  })
+
+  it('ignore le nom périmé que renvoie un formulaire ouvert avant le renommage', async () => {
+    const misAJour = await payload.update({
+      collection: 'media',
+      id: photo.id,
+      data: { alt: 'Description modifiée', filename: 'photo-test.png' },
+      overrideAccess: true,
+    })
+    expect(misAJour.filename).toBe('nouveau-nom.png')
+
+    const relu = await payload.findByID({ collection: 'media', id: photo.id, depth: 0, overrideAccess: true })
+    expect(relu.filename).toBe('nouveau-nom.png')
+    expect(relu.url).toContain('nouveau-nom.png')
     expect(existsSync(path.join(dossierMedia, 'nouveau-nom.png'))).toBe(true)
   })
 
