@@ -5,9 +5,13 @@ export const COULEURS_ORIGINE = {
   couleurPrincipale: '#0a3273',
   couleurSecondaire: '#437c14',
   couleurAccent: '#145c75',
+  teinteEnTete: '#0a3273',
 } as const
 
 export type NomCouleur = keyof typeof COULEURS_ORIGINE
+
+// Intensité d'origine de la teinte d'en-tête : opacité du voile actuel du site, en pourcentage.
+export const INTENSITE_TEINTE_ORIGINE = 90
 
 const luminance = (hex: string) => {
   const [r, g, b] = [1, 3, 5].map((i) => {

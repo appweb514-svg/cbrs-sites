@@ -4,6 +4,12 @@
   --cbrs-teal: #145c75;
   --cbrs-green: #437c14;
   --cbrs-green-dark: #3b6e11;
+  /* Teinte du bandeau : bleu d'origine. cms-client.js remplace c1/c2/c3 et l'opacité
+     selon l'Apparence du CMS (teinteEnTete, intensiteTeinte). */
+  --cbrs-hero-c1: 10, 50, 115;
+  --cbrs-hero-c2: 30, 75, 153;
+  --cbrs-hero-c3: 20, 92, 117;
+  --cbrs-hero-o: .9;
   --cbrs-surface: #f5f7fa;
   --cbrs-shell-radius: 28px;
   --cbrs-nav-radius: 22px;
@@ -169,7 +175,7 @@ body.cbrs-ui .cbrs-logo-image {
 }
 
 body.cbrs-ui > .cbrs-hero > .absolute.inset-0.bg-gradient-to-br {
-  background: linear-gradient(120deg, rgba(10, 50, 115, .9), rgba(30, 75, 153, .68) 55%, rgba(20, 92, 117, .76)) !important;
+  background: linear-gradient(120deg, rgba(var(--cbrs-hero-c1), calc(var(--cbrs-hero-o) * 1)), rgba(var(--cbrs-hero-c2), calc(var(--cbrs-hero-o) * .756)) 55%, rgba(var(--cbrs-hero-c3), calc(var(--cbrs-hero-o) * .844))) !important;
 }
 
 body.cbrs-ui .cbrs-home-hero-bg {
@@ -1892,4 +1898,19 @@ body.cbrs-ui .cbrs-card-placeholder img {
   width: auto;
   height: 60%;
   object-fit: contain;
+}
+
+/* Boutons et CTA : fond, bordure et survol suivent la couleur secondaire du CMS (vert d'origine).
+   Toutes les familles employées dans les pages sont reprises (bg-cbrs-blue, bg-cbrs-green et leurs
+   variantes translucides ou de survol) pour éviter d'avoir à retoucher chaque fichier HTML.
+   Exclus : liens de menu et de navigation, onglets, filtres de galerie (filter-btn, year-btn). */
+body.cbrs-ui :is(a, button):not(.sidebar-link, .cbrs-nav-active, .tab-btn, .filter-btn, .year-btn):is([class*="bg-cbrs-blue"], [class*="bg-cbrs-green"]) {
+  border-color: var(--cbrs-green);
+  background: var(--cbrs-green);
+  color: #fff;
+}
+
+body.cbrs-ui :is(a, button):not(.sidebar-link, .cbrs-nav-active, .tab-btn, .filter-btn, .year-btn):is([class*="bg-cbrs-blue"], [class*="bg-cbrs-green"]):is(:hover, :focus-visible) {
+  border-color: var(--cbrs-green-dark);
+  background: var(--cbrs-green-dark);
 }
