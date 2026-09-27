@@ -18,6 +18,7 @@ import { MembresBureau } from './collections/MembresBureau'
 import { Sorties } from './collections/Sorties'
 import { Users } from './collections/Users'
 import { VieDuClub } from './collections/VieDuClub'
+import { galerieLot } from './endpoints/galerieLot'
 import { Apparence } from './globals/Apparence'
 import { FlashInfo } from './globals/FlashInfo'
 import { Parametres } from './globals/Parametres'
@@ -60,6 +61,7 @@ export default buildConfig({
     supportedLanguages: { fr },
     fallbackLanguage: 'fr',
   },
+  endpoints: [galerieLot],
   collections: [VieDuClub, MembresBureau, Activites, Sorties, Galerie, Documents, Media, Users, Roles],
   globals: [FlashInfo, Tarifs, Parametres, Apparence],
   cors: siteOrigins,

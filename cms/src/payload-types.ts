@@ -185,7 +185,7 @@ export interface VieDuClub {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * Ouvrez une photo puis « Modifier l’image » pour la recadrer ou choisir son point d’intérêt.
+ * Toutes les photos du site. Ouvrez-en une puis « Modifier l’image » pour la recadrer ou choisir son point d’intérêt ; cochez-en plusieurs pour les ajouter à la galerie du site, ou en retirer.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
@@ -369,7 +369,7 @@ export interface Galerie {
   createdAt: string;
 }
 /**
- * Documents listés sur la page « Liens utiles et documents ». Un document ne remplace un lien officiel (statuts, fiche d’adhésion…) que si vous le choisissez.
+ * Documents du club (PDF, Word, Excel, OpenDocument), listés sur la page « Liens utiles et documents ». Un document ne remplace un lien officiel (statuts, fiche d’adhésion…) que si vous le choisissez.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "documents".

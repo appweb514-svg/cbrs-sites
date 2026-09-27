@@ -9,7 +9,7 @@ export const VieDuClub: CollectionConfig = {
   admin: {
     useAsTitle: 'titre',
     defaultColumns: ['titre', 'date', 'categorie', '_status'],
-    group: 'Accueil',
+    group: 'Vie du club',
     hidden: cacheSansDroit('vie-du-club'),
     description: 'Actualités affichées sur la page d’accueil, section « Vie du club ».',
   },
