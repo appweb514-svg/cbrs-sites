@@ -1,11 +1,12 @@
 'use client'
 
-import { toast, useAuth } from '@payloadcms/ui'
+import { Button, SelectInput, toast, useAuth, XIcon } from '@payloadcms/ui'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
 import { droits } from '../access'
 import { ACTIVITES_GALERIE, CATEGORIES_GALERIE } from '../collections/Galerie'
+import { formatPoids } from '../nomFichier'
 import { estImage, extraireImagesZip, nomSansExtension, typeMime } from './importPhotos'
 
 // Vercel refuse les corps de requête de plus de 4,5 Mo : on réduit au-delà de 4 Mo.
@@ -27,19 +28,38 @@ const messageErreur = (donnees: unknown, defaut: string): string => {
 
 const estArchive = (nom: string) => nom.toLowerCase().endsWith('.zip')
 
+type Props = {
+  fichiersInitiaux?: File[]
+  onFermer: () => void
+  onImporte: () => void
+}
+
 // Import de photos dans la galerie : plusieurs images ou une archive .zip, réduites si trop lourdes.
-export const GalerieImport: React.FC = () => {
+export const GalerieImport: React.FC<Props> = ({ fichiersInitiaux, onFermer, onImporte }) => {
   const { user } = useAuth()
   const router = useRouter()
   const [annee, setAnnee] = React.useState(() => new Date().getFullYear())
   const [categorie, setCategorie] = React.useState('vie')
   const [activite, setActivite] = React.useState('')
-  const [fichiers, setFichiers] = React.useState<File[]>([])
+  const [fichiers, setFichiers] = React.useState<File[]>(() =>
+    (fichiersInitiaux ?? []).filter(
+      (fichier) => estImage(fichier.name) || estArchive(fichier.name),
+    ),
+  )
   const [survol, setSurvol] = React.useState(false)
   const [avancement, setAvancement] = React.useState<null | { faits: number; total: number }>(null)
   const [erreurs, setErreurs] = React.useState<string[]>([])
+  const selecteur = React.useRef<HTMLInputElement>(null)
 
   const enCours = avancement !== null && avancement.faits < avancement.total
+
+  // Vignettes des images choisies, libérées dès que la sélection change.
+  const apercus = React.useMemo(
+    () =>
+      fichiers.map((fichier) => (estArchive(fichier.name) ? null : URL.createObjectURL(fichier))),
+    [fichiers],
+  )
+  React.useEffect(() => () => apercus.forEach((url) => url && URL.revokeObjectURL(url)), [apercus])
 
   if (!droits(user, 'galerie', 'creer').autorise) return null
 
@@ -164,14 +184,34 @@ export const GalerieImport: React.FC = () => {
     if (reussies > 0) {
       toast.success(`${nombre(reussies, 'photo')} ajoutée${reussies > 1 ? 's' : ''} à la galerie.`)
       router.refresh()
+      onImporte()
     } else if (aImporter.length > 0) {
       toast.error('Aucune photo importée.')
     }
   }
 
+  const vider = () => setFichiers([])
+  const retirer = (index: number) =>
+    setFichiers((precedents) => precedents.filter((_, position) => position !== index))
+  const nbImages = fichiers.filter((fichier) => !estArchive(fichier.name)).length
+  const nbArchives = fichiers.length - nbImages
+  const libelleImport =
+    nbArchives > 0
+      ? `Importer ${nombre(fichiers.length, 'fichier')}`
+      : `Importer ${nombre(fichiers.length, 'photo')}`
+
   return (
-    <div style={{ margin: '0 0 1rem' }}>
+    <section aria-label="Importer des photos" className="cbrs-import">
+      <div className="cbrs-import__entete">
+        <h3>Importer des photos</h3>
+        <button aria-label="Fermer l’import" onClick={onFermer} title="Fermer" type="button">
+          <XIcon />
+        </button>
+      </div>
+
       <div
+        className={`cbrs-import__zone${survol ? ' cbrs-import__zone--survol' : ''}`}
+        onClick={() => selecteur.current?.click()}
         onDragLeave={() => setSurvol(false)}
         onDragOver={(evenement) => {
           evenement.preventDefault()
@@ -182,128 +222,170 @@ export const GalerieImport: React.FC = () => {
           setSurvol(false)
           ajouter([...(evenement.dataTransfer?.files ?? [])])
         }}
-        style={{
-          border: `1px dashed ${survol ? 'var(--theme-elevation-500)' : 'var(--theme-elevation-150)'}`,
-          borderRadius: 4,
-          padding: '0.75rem',
+        onKeyDown={(evenement) => {
+          if (evenement.key === 'Enter' || evenement.key === ' ') {
+            evenement.preventDefault()
+            selecteur.current?.click()
+          }
         }}
+        role="button"
+        tabIndex={0}
       >
-        <strong>Importer des photos</strong>
-        <p style={{ fontSize: 12, margin: '0.25rem 0 0.5rem', opacity: 0.75 }}>
-          Glissez ici vos photos (jpg, png, webp, gif) ou une archive .zip, ou choisissez-les
-          ci-dessous. Les images trop lourdes sont réduites automatiquement.
-        </p>
-        <div style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-          <label className="btn btn--style-secondary btn--size-small" style={{ cursor: 'pointer' }}>
-            Choisir des fichiers
-            <input
-              accept="image/*,.zip"
-              multiple
-              onChange={(evenement) => {
-                ajouter([...(evenement.target.files ?? [])])
-                evenement.target.value = ''
-              }}
-              style={{ display: 'none' }}
-              type="file"
-            />
-          </label>
-          <span style={{ opacity: 0.75 }}>
-            {fichiers.length > 0
-              ? `${nombre(fichiers.length, 'fichier')} prêt(s)`
-              : 'Aucun fichier choisi'}
-          </span>
-          {fichiers.length > 0 && (
-            <button
-              className="btn btn--style-secondary btn--size-small"
-              onClick={() => setFichiers([])}
-              type="button"
-            >
-              Vider la sélection
-            </button>
-          )}
-        </div>
-
-        <div
-          style={{
-            alignItems: 'flex-end',
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '0.75rem',
-            marginTop: '0.75rem',
+        <IconeImport />
+        <strong>Glissez vos photos ou une archive .zip ici</strong>
+        <span>
+          ou <u>parcourez vos fichiers</u>
+        </span>
+        <span>
+          JPG, PNG, WebP, GIF ou ZIP · les photos de plus de 4 Mo sont réduites automatiquement
+        </span>
+        <input
+          accept="image/*,.zip"
+          hidden
+          multiple
+          onChange={(evenement) => {
+            ajouter([...(evenement.target.files ?? [])])
+            evenement.target.value = ''
           }}
-        >
-          <label style={{ display: 'flex', flexDirection: 'column', fontSize: 12, gap: '0.25rem' }}>
-            Année
+          ref={selecteur}
+          type="file"
+        />
+      </div>
+
+      {fichiers.length > 0 && (
+        <>
+          <ul className="cbrs-import__fichiers">
+            {fichiers.map((fichier, index) => (
+              <li className="cbrs-import__fichier" key={`${fichier.name}-${index}`}>
+                {apercus[index] ? (
+                  <img alt="" src={apercus[index]} />
+                ) : (
+                  <span className="cbrs-import__archive">ZIP</span>
+                )}
+                <div>
+                  <span title={fichier.name}>{nomSansExtension(fichier.name)}</span>
+                  <span>{formatPoids(fichier.size)}</span>
+                </div>
+                <button
+                  aria-label={`Retirer ${fichier.name}`}
+                  onClick={() => retirer(index)}
+                  title="Retirer"
+                  type="button"
+                >
+                  <XIcon />
+                </button>
+              </li>
+            ))}
+          </ul>
+          <div className="cbrs-import__resume">
+            <span>
+              {nbImages > 0 && nombre(nbImages, 'photo')}
+              {nbImages > 0 && nbArchives > 0 && ' et '}
+              {nbArchives > 0 && nombre(nbArchives, 'archive')} sélectionnée
+              {fichiers.length > 1 ? 's' : ''}
+            </span>
+            <button onClick={vider} type="button">
+              Tout retirer
+            </button>
+          </div>
+        </>
+      )}
+
+      <div className="cbrs-import__classement">
+        <p>Les photos importées seront classées ainsi (modifiable ensuite, photo par photo).</p>
+        <div className="cbrs-import__champs">
+          <div className="field-type cbrs-import__annee">
+            <label className="field-label" htmlFor="cbrs-import-annee">
+              Année
+            </label>
             <input
-              className="text"
+              id="cbrs-import-annee"
               max={2100}
               min={1990}
               onChange={(evenement) => setAnnee(Number(evenement.target.value))}
-              style={{ width: '6rem' }}
               type="number"
               value={annee}
             />
-          </label>
-          <label style={{ display: 'flex', flexDirection: 'column', fontSize: 12, gap: '0.25rem' }}>
-            Catégorie
-            <select
-              className="text"
-              onChange={(evenement) => setCategorie(evenement.target.value)}
-              style={{ width: '12rem' }}
-              value={categorie}
-            >
-              {CATEGORIES_GALERIE.map(({ label, value }) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label style={{ display: 'flex', flexDirection: 'column', fontSize: 12, gap: '0.25rem' }}>
-            Activité ou thème (facultatif)
-            <select
-              className="text"
-              onChange={(evenement) => setActivite(evenement.target.value)}
-              style={{ width: '12rem' }}
-              value={activite}
-            >
-              <option value="">—</option>
-              {ACTIVITES_GALERIE.map(({ label, value }) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </label>
-          <button
-            className="btn btn--style-primary btn--size-small"
-            disabled={fichiers.length === 0 || enCours}
-            onClick={importer}
-            type="button"
-          >
-            {enCours ? 'Import en cours…' : 'Importer dans la galerie'}
-          </button>
+          </div>
+          <SelectInput
+            isClearable={false}
+            label="Catégorie"
+            name="cbrs-import-categorie"
+            onChange={(option) => {
+              if (option && !Array.isArray(option)) setCategorie(String(option.value))
+            }}
+            options={[...CATEGORIES_GALERIE]}
+            path="cbrs-import-categorie"
+            value={categorie}
+          />
+          <SelectInput
+            isClearable
+            label="Activité ou thème (facultatif)"
+            name="cbrs-import-activite"
+            onChange={(option) =>
+              setActivite(option && !Array.isArray(option) ? String(option.value) : '')
+            }
+            options={[...ACTIVITES_GALERIE]}
+            path="cbrs-import-activite"
+            placeholder="Aucune"
+            value={activite}
+          />
         </div>
       </div>
 
-      {avancement && (
-        <div style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-          <progress max={avancement.total} value={avancement.faits} />
-          <span>
-            {avancement.faits} / {avancement.total}
-          </span>
-        </div>
-      )}
-
       {erreurs.length > 0 && (
-        <ul
-          style={{ color: 'var(--theme-error-500)', margin: '0.5rem 0 0', paddingLeft: '1.25rem' }}
-        >
+        <ul className="cbrs-import__erreurs" role="alert">
           {erreurs.map((erreur, index) => (
             <li key={index}>{erreur}</li>
           ))}
         </ul>
       )}
-    </div>
+
+      <div className="cbrs-import__pied">
+        {avancement && (
+          <div aria-live="polite" className="cbrs-import__progression">
+            <span>
+              {enCours
+                ? `Import en cours : ${avancement.faits} / ${avancement.total}`
+                : `Import terminé : ${avancement.faits} / ${avancement.total}`}
+            </span>
+            <div className="cbrs-import__jauge">
+              <div style={{ width: `${(avancement.faits / avancement.total) * 100}%` }} />
+            </div>
+          </div>
+        )}
+        <Button
+          buttonStyle="secondary"
+          disabled={enCours}
+          margin={false}
+          onClick={onFermer}
+          size="medium"
+        >
+          Fermer
+        </Button>
+        <Button
+          buttonStyle="primary"
+          disabled={fichiers.length === 0 || enCours}
+          margin={false}
+          onClick={importer}
+          size="medium"
+        >
+          {enCours ? 'Import en cours…' : fichiers.length > 0 ? libelleImport : 'Importer'}
+        </Button>
+      </div>
+    </section>
   )
 }
+
+// Pictogramme d'envoi (nuage et flèche), dans le trait des icônes Payload.
+const IconeImport: React.FC = () => (
+  <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
+    <path
+      d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 8.5a4 4 0 0 1-.5 9.5M12 12v8m0-8-3 3m3-3 3 3"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+    />
+  </svg>
+)

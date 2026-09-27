@@ -62,9 +62,21 @@ export default buildConfig({
   i18n: {
     supportedLanguages: { fr },
     fallbackLanguage: 'fr',
+    // Libellé français par défaut de Payload trop lourd : « Créer un(e) nouveau ou nouvelle ».
+    translations: { fr: { general: { createNew: 'Ajouter', createNewLabel: 'Ajouter : {{label}}' } } },
   },
   endpoints: [galerieLot, mediaRenommer],
-  collections: avecCasesVX([VieDuClub, MembresBureau, Activites, Sorties, Galerie, Documents, Media, Users, Roles]),
+  collections: avecCasesVX([
+    VieDuClub,
+    MembresBureau,
+    Activites,
+    Sorties,
+    Galerie,
+    Documents,
+    Media,
+    Users,
+    Roles,
+  ]),
   globals: [FlashInfo, Tarifs, Parametres, Apparence],
   cors: siteOrigins,
   editor: lexicalEditor(),

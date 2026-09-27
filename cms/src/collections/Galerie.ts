@@ -39,7 +39,7 @@ export const Galerie: CollectionConfig = {
       'Page « Galerie photo » du site. Glissez les photos (poignée à gauche) pour changer leur ordre sur le site ; cochez-en plusieurs puis « Modifier » pour changer l’année ou la catégorie d’un coup.',
     pagination: { defaultLimit: 20, limits: [20, 50, 100] },
     components: {
-      beforeListTable: ['/admin/GalerieVues#GalerieVues', '/admin/GalerieImport#GalerieImport'],
+      beforeListTable: ['/admin/GalerieVues#GalerieVues'],
     },
   },
   // Ordre du site modifiable par glisser-déposer dans la liste.

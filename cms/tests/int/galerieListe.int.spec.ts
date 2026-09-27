@@ -10,12 +10,10 @@ describe('Liste de la galerie', () => {
     expect(galerie?.admin.pagination?.limits).toEqual([20, 50, 100])
   })
 
-  it('place les deux vues et l’import en tête de liste', async () => {
+  // L'import s'ouvre depuis la barre des vues : un seul composant en tête de liste.
+  it('place la barre des vues et de l’import en tête de liste', async () => {
     const galerie = (await config).collections.find((collection) => collection.slug === 'galerie')
 
-    expect(galerie?.admin.components?.beforeListTable).toEqual([
-      '/admin/GalerieVues#GalerieVues',
-      '/admin/GalerieImport#GalerieImport',
-    ])
+    expect(galerie?.admin.components?.beforeListTable).toEqual(['/admin/GalerieVues#GalerieVues'])
   })
 })

@@ -1,7 +1,6 @@
 import { GaleriePhotoCellule as GaleriePhotoCellule_415908da84db32acd1dceae7673aecca } from '../../../admin/GaleriePhotoCellule'
 import { CaseCellule as CaseCellule_98b55ba43d642cf3a38501514187882e } from '../../../admin/CaseCellule'
 import { GalerieVues as GalerieVues_7f33f2471345e756a3433da9ab0b4e97 } from '../../../admin/GalerieVues'
-import { GalerieImport as GalerieImport_272338541eb3a5550eebe512ae82f360 } from '../../../admin/GalerieImport'
 import { RenommerFichier as RenommerFichier_b6deea5ee37de7918fd71f7d19f2b1a1 } from '../../../admin/RenommerFichier'
 import { EditeurPhoto as EditeurPhoto_8968fcad10eb48513ce8ca70d8a406a5 } from '../../../admin/EditeurPhoto'
 import { ProprietesPhoto as ProprietesPhoto_1bdb07d863e011b08831e5103a63acfb } from '../../../admin/ProprietesPhoto'
@@ -15,7 +14,6 @@ export const importMap = {
   "/admin/GaleriePhotoCellule#GaleriePhotoCellule": GaleriePhotoCellule_415908da84db32acd1dceae7673aecca,
   "/admin/CaseCellule#CaseCellule": CaseCellule_98b55ba43d642cf3a38501514187882e,
   "/admin/GalerieVues#GalerieVues": GalerieVues_7f33f2471345e756a3433da9ab0b4e97,
-  "/admin/GalerieImport#GalerieImport": GalerieImport_272338541eb3a5550eebe512ae82f360,
   "/admin/RenommerFichier#RenommerFichier": RenommerFichier_b6deea5ee37de7918fd71f7d19f2b1a1,
   "/admin/EditeurPhoto#EditeurPhoto": EditeurPhoto_8968fcad10eb48513ce8ca70d8a406a5,
   "/admin/ProprietesPhoto#ProprietesPhoto": ProprietesPhoto_1bdb07d863e011b08831e5103a63acfb,
