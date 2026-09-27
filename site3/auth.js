@@ -33,7 +33,7 @@
 
   function logout() {
     localStorage.removeItem(AUTH_KEY);
-    window.location.href = 'index.html';
+    window.location.href = '/';
   }
 
   window.CBRS_AUTH = { getAuth, isLoggedIn, logout, updateAuthLinks };

@@ -1,0 +1,11 @@
+# Fichiers internes : jamais publiés par Vercel (le site est servi depuis la racine du dépôt)
+# Le CMS (/cms/) est un projet Vercel séparé (cbrs-cms).
+.*
+/cms/
+/backend/
+/tooling/
+/scripts/
+/docs/
+/PROJECT.md
+/ROADMAP.md
+/UI_UX_PLAN.md

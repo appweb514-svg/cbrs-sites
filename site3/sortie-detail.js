@@ -25,7 +25,7 @@
       '<p class="text-sm font-bold uppercase tracking-[.16em] text-cbrs-green">CBRS</p>',
       '<h1 class="mt-3 text-3xl font-bold text-cbrs-blue">Fiche introuvable</h1>',
       '<p class="mx-auto mt-3 max-w-xl text-gray-600">Cette fiche n’est pas disponible ou a été déplacée.</p>',
-      '<a class="mt-7 inline-flex rounded-full bg-cbrs-green px-5 py-3 font-semibold text-white" href="sorties-voyages.html">Retour aux sorties</a>',
+      '<a class="mt-7 inline-flex rounded-full bg-cbrs-green px-5 py-3 font-semibold text-white" href="/sorties-voyages">Retour aux sorties</a>',
       '</div>'
     ].join('');
     return;
@@ -74,7 +74,7 @@
 
   const detailTypeLabel = isEvent ? 'événement' : 'sortie';
   byId('detail-breadcrumb').textContent = `Sorties & Voyages / ${detailTypeLabel}`;
-  byId('detail-back-link').href = 'sorties-voyages.html';
+  byId('detail-back-link').href = '/sorties-voyages';
 
   const canonical = byId('detail-canonical-description');
   canonical.innerHTML = [

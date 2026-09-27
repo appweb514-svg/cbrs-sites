@@ -1,0 +1,14 @@
+{
+  "name": "cbrs-tailwind",
+  "private": true,
+  "description": "Compile le CSS Tailwind du site statique (remplace le CDN « Play », source du saut de mise en page).",
+  "scripts": {
+    "build": "tailwindcss -c tailwind.config.js -i input.css -o ../../site3/tailwind.css --minify",
+    "watch": "tailwindcss -c tailwind.config.js -i input.css -o ../../site3/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.9",
+    "tailwindcss": "^3.4.17"
+  }
+}

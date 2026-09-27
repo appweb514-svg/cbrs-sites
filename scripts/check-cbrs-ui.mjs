@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { execFileSync } from 'node:child_process';
 
 const dataPath = 'site3/sorties-data.js';
 assert(fs.existsSync(dataPath), 'sorties-data.js doit exister');
@@ -32,18 +33,98 @@ const expectations = [
   ['site3/liens-utiles.html', 'Les partenaires et ressources qui accompagnent'],
   ['site3/liens-utiles.html', 'Visiter le site'],
   ['site3/contact.html', 'contact-panel-card'],
-  ['site3/sorties-voyages.html', 'Randonnées du jeudi']
+  ['site3/sorties-voyages.html', 'martinelcbrs60@gmail.com'],
+  ['site3/statuts.html', 'data-cbrs-doc'],
+  ['site3/adhesion.html', 'Club du Beauvaisis de la Retraite Sportive'],
+  ['site3/liens-utiles.html', 'Déclaration d’assurance'],
+  ['site3/liens-utiles.html', 'Imprimé fédéral']
 ];
 
 for (const [file, token] of expectations) {
   assert(fs.readFileSync(file, 'utf8').includes(token), `${file}: ${token} absent`);
 }
 
+const removed = [
+  ['site3/sorties-voyages.html', 'Randonnées du jeudi'],
+  ['site3/sorties-voyages.html', 'Envie de participer'],
+  ['site3/index.html', 'Cette semaine au'],
+  ['site3/index.html', 'activity-showcase'],
+  ['site3/planning.html', 'Légende'],
+  ['site3/activites.html', 'cbrs-activity-tag'],
+  ['site3/adhesion.html', 'Club Beauvaisien']
+];
+
+for (const [file, token] of removed) {
+  assert(!fs.readFileSync(file, 'utf8').includes(token), `${file}: ${token} doit être supprimé`);
+}
+
+const activityNames = [...fs.readFileSync('site3/activites.html', 'utf8').matchAll(/<h3 class="sr-only">([^<]+)<\/h3>/g)].map(m => m[1]);
+const sorted = [...activityNames].sort((a, b) => a.localeCompare(b, 'fr', { sensitivity: 'base' }));
+assert.deepEqual(activityNames, sorted, 'activités non triées alphabétiquement');
+for (const name of ['Bridge', 'Relaxation / Méditation', 'Tennis de table']) {
+  assert(activityNames.includes(name), `activité absente : ${name}`);
+}
+assert(!activityNames.some(name => /ping/i.test(name)), 'Ping-pong doit être renommé');
+
+for (const file of fs.readdirSync('site3').filter(f => f.endsWith('.html') && !['admin.html', 'connexion.html'].includes(f))) {
+  const html = fs.readFileSync(`site3/${file}`, 'utf8');
+  assert(html.includes('cbrs-shared-hero-bg'), `${file}: bandeau commun absent`);
+  const nav = html.slice(html.indexOf('<aside id="sidebar"'), html.indexOf('</aside>'));
+  assert(nav.indexOf('href="adhesion.html"') > nav.indexOf('href="planning.html"')
+    && nav.indexOf('href="adhesion.html"') < nav.indexOf('href="formation.html"'), `${file}: Adhérer doit suivre Planning`);
+  assert(nav.includes('href="statuts.html"'), `${file}: lien Statuts absent`);
+}
+
 console.log('PASS — contenu UI/UX');
 
 const home = fs.readFileSync('site3/index.html', 'utf8');
-assert(home.includes('.cbrs-activity-art {'), 'cadre activité absent');
-assert(home.includes('background: #fff'), 'cadre blanc absent');
-assert(home.includes('width: clamp(6.8rem, 11vw, 9rem)'), 'logo Flash Info non agrandi');
-assert(home.includes('width: 6.2rem'), 'taille mobile Flash Info absente');
+assert(home.includes('depuis 1993'), 'accroche 1993 absente');
+assert(home.includes('id="vie-du-club"'), 'section Vie du club absente');
+assert(home.includes('id="bureau"'), 'présentation du bureau absente');
+assert(home.includes('class="cbrs-flash-toggle"'), 'bouton pause du Flash info absent (WCAG 2.2.2)');
+assert(home.includes('id="flash-text"') && home.includes('data-flash-clone'), 'texte défilant du Flash info absent');
 console.log('PASS — accueil');
+
+const shell = fs.readFileSync('site3/ui-shell.js', 'utf8');
+const pageFileSource = shell.match(/function pageFile\(path\) \{[\s\S]*?\n  \}/);
+assert(pageFileSource, 'pageFile() absent de ui-shell.js');
+const pageFile = new Function(`${pageFileSource[0]}; return pageFile;`)();
+for (const [path, expected] of [
+  ['/', 'index.html'],
+  ['/site3/', 'index.html'],
+  ['/activites', 'activites.html'],
+  ['/activites/', 'activites.html'],
+  ['/site3/planning.html', 'planning.html'],
+  ['/activite?id=05', 'activite.html'],
+  ['statuts.html#top', 'statuts.html']
+]) {
+  assert.equal(pageFile(path), expected, `pageFile(${path})`);
+}
+console.log('PASS — navigation active (URL propres Vercel)');
+
+assert(fs.existsSync('site3/cms-client.js'), 'site3/cms-client.js doit exister');
+assert(!fs.readFileSync('site3/cms-client.js', 'utf8').includes('innerHTML'), 'cms-client.js ne doit pas utiliser innerHTML');
+for (const file of ['index.html', 'statuts.html', 'liens-utiles.html', 'adhesion.html', 'planning.html', 'sorties-voyages.html']) {
+  const html = fs.readFileSync(`site3/${file}`, 'utf8');
+  assert(/<meta name="cbrs-cms-url" content="(https:\/\/[^"\s]+)?"\/>/.test(html), `${file}: meta cbrs-cms-url absente ou invalide (vide ou https://…)`);
+  assert(html.includes('<script src="cms-client.js" defer></script>'), `${file}: cms-client.js absent`);
+  assert(html.indexOf('cms-client.js') < html.indexOf('<script src="ui-shell.js"></script>'), `${file}: cms-client.js doit précéder ui-shell.js`);
+}
+console.log('PASS — client CMS (repli statique)');
+
+const publicPages = fs.readdirSync('site3').filter(f => f.endsWith('.html') && !['admin.html', 'connexion.html'].includes(f))
+for (const file of publicPages) {
+  const html = fs.readFileSync(`site3/${file}`, 'utf8')
+  assert(!html.includes('cdn.tailwindcss.com'), `${file}: CDN Tailwind interdit (CSS compilé : tooling/tailwind)`)
+  assert(html.includes('href="tailwind.css"'), `${file}: tailwind.css absent`)
+  assert(/<body[^>]*class="[^"]*\bcbrs-ui\b/.test(html), `${file}: classe cbrs-ui absente du HTML (saut de mise en page)`)
+  assert(!html.includes("@import url('https://fonts.googleapis.com"), `${file}: polices en @import (bloquant)`)
+  for (const [tag] of html.matchAll(/<iframe\b[^>]*>/g)) {
+    assert(!/\ssrc="https:\/\/www\.openstreetmap\.org/.test(tag), `${file}: iframe OpenStreetMap chargée sans consentement (utiliser data-cookie-src)`)
+  }
+}
+assert(!fs.readFileSync('site3/ui-shell.js', 'utf8').includes('--cbrs-hero-height'), 'la mise en page ne doit plus dépendre de la hauteur du bandeau mesurée en JS')
+const bakeCheck = execFileSync('python3', ['scripts/bake-shell.py'], { encoding: 'utf8' })
+assert(bakeCheck.includes('0 page(s) modifiée(s)'), 'lancer scripts/bake-shell.py : des pages ne sont pas à jour')
+assert(fs.readFileSync('site3/index.html', 'utf8').includes('class="cbrs-flash"'), 'bannière Flash info absente')
+console.log('PASS — stabilité de la mise en page (pas de saut au chargement)')
