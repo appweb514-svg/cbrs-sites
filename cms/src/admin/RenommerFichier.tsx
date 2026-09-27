@@ -46,7 +46,15 @@ const ChampRenommage: React.FC<{ extension: string; id: number | string; nomInit
       <label className="field-label" htmlFor="renommer-fichier">
         Nom du fichier
       </label>
-      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.75rem', marginTop: '0.4rem' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          gap: '0.75rem',
+          marginTop: '0.4rem',
+        }}
+      >
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <input
             aria-label="Nom du fichier sans son extension"
@@ -61,7 +69,7 @@ const ChampRenommage: React.FC<{ extension: string; id: number | string; nomInit
           {extension && <span style={{ marginLeft: '0.5rem', opacity: 0.75 }}>{extension}</span>}
         </div>
         <button
-          className="btn btn--style-secondary btn--size-small"
+          className="cbrs-bouton btn btn--style-secondary btn--size-small"
           disabled={occupe || !nom.trim() || nom === nomInitial}
           onClick={renommer}
           type="button"
@@ -70,8 +78,8 @@ const ChampRenommage: React.FC<{ extension: string; id: number | string; nomInit
         </button>
       </div>
       <p style={{ marginTop: '0.4rem', opacity: 0.7, fontSize: 12 }}>
-        Minuscules, chiffres, tirets : le reste est remplacé automatiquement. L’extension {extension || ''} n’est pas
-        modifiable.
+        Minuscules, chiffres, tirets : le reste est remplacé automatiquement. L’extension{' '}
+        {extension || ''} n’est pas modifiable.
       </p>
     </div>
   )

@@ -87,7 +87,10 @@ const dessiner = (
     ctx.fillRect(0, 0, cadre.largeur, cadre.hauteur)
   }
 
-  const rayon = Math.min((options.coinsArrondis / 100) * Math.min(largeur, hauteur), Math.min(largeur, hauteur) / 2)
+  const rayon = Math.min(
+    (options.coinsArrondis / 100) * Math.min(largeur, hauteur),
+    Math.min(largeur, hauteur) / 2,
+  )
   ctx.save()
   ctx.beginPath()
   ctx.roundRect(cadre.decalage, cadre.decalage, largeur, hauteur, rayon)
@@ -99,7 +102,14 @@ const dessiner = (
     const centreX = cadre.decalage + largeur / 2
     const centreY = cadre.decalage + hauteur / 2
     const rayonMax = Math.hypot(largeur, hauteur) / 2
-    const degrade = ctx.createRadialGradient(centreX, centreY, rayonMax * 0.45, centreX, centreY, rayonMax)
+    const degrade = ctx.createRadialGradient(
+      centreX,
+      centreY,
+      rayonMax * 0.45,
+      centreX,
+      centreY,
+      rayonMax,
+    )
     degrade.addColorStop(0, 'rgba(0, 0, 0, 0)')
     degrade.addColorStop(1, 'rgba(0, 0, 0, 0.45)')
     ctx.fillStyle = degrade
@@ -159,13 +169,13 @@ const Choix = <T extends string>({
   options: { label: string; value: T }[]
   valeur: T
 }) => (
-  <fieldset style={{ border: 0, margin: '0.9rem 0 0', padding: 0 }}>
+  <fieldset style={{ border: 0, margin: '1rem 0 0', minWidth: 0, padding: 0 }}>
     <legend style={{ fontSize: 13, marginBottom: '0.4rem' }}>{label}</legend>
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
       {options.map((option) => (
         <button
           aria-pressed={valeur === option.value}
-          className={`btn btn--size-small ${valeur === option.value ? 'btn--style-primary' : 'btn--style-secondary'}`}
+          className={`cbrs-bouton btn btn--size-small ${valeur === option.value ? 'btn--style-primary' : 'btn--style-secondary'}`}
           key={option.value}
           onClick={() => changer(option.value)}
           type="button"
@@ -193,7 +203,8 @@ const Fenetre: React.FC<{
   const [occupe, setOccupe] = React.useState(false)
   const toile = React.useRef<HTMLCanvasElement>(null)
 
-  const maj = (partiel: Partial<OptionsRetouche>) => setOptions((actuelles) => ({ ...actuelles, ...partiel }))
+  const maj = (partiel: Partial<OptionsRetouche>) =>
+    setOptions((actuelles) => ({ ...actuelles, ...partiel }))
 
   React.useEffect(() => {
     const auClavier = (evenement: KeyboardEvent) => {
@@ -268,7 +279,10 @@ const Fenetre: React.FC<{
       corps.append('file', blob, nomFichier)
       corps.append('_payload', JSON.stringify(charge))
       const reponse = await fetch(chemin, { body: corps, credentials: 'include', method: methode })
-      const donnees = (await reponse.json().catch(() => ({}))) as { error?: string; errors?: { message?: string }[] }
+      const donnees = (await reponse.json().catch(() => ({}))) as {
+        error?: string
+        errors?: { message?: string }[]
+      }
       if (!reponse.ok) {
         toast.error(donnees.errors?.[0]?.message ?? donnees.error ?? 'Enregistrement impossible.')
         return
@@ -299,26 +313,39 @@ const Fenetre: React.FC<{
         inset: 0,
         padding: '1rem',
         position: 'fixed',
-        zIndex: 100,
+        zIndex: 10000,
       }}
     >
       <div style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
         <h3 style={{ margin: 0 }}>Retoucher la photo</h3>
         <span style={{ opacity: 0.7 }}>{nomAffiche(nom)}</span>
         <span style={{ flex: 1 }} />
-        <button className="btn btn--style-secondary" disabled={occupe} onClick={fermer} type="button">
+        <button
+          className="cbrs-bouton btn btn--style-secondary"
+          disabled={occupe}
+          onClick={fermer}
+          type="button"
+        >
           Annuler
         </button>
         <button
-          className="btn btn--style-secondary"
+          className="cbrs-bouton btn btn--style-secondary"
           disabled={occupe || !image}
-          onClick={() => envoyer(nomCopie, '/api/media', 'POST', { alt }, `Copie enregistrée : ${nomAffiche(nomCopie)}`)}
+          onClick={() =>
+            envoyer(
+              nomCopie,
+              '/api/media',
+              'POST',
+              { alt },
+              `Copie enregistrée : ${nomAffiche(nomCopie)}`,
+            )
+          }
           type="button"
         >
           Enregistrer une copie
         </button>
         <button
-          className="btn btn--style-primary"
+          className="cbrs-bouton btn btn--style-primary"
           disabled={occupe || !image}
           onClick={() => envoyer(nom, `/api/media/${id}`, 'PATCH', {}, 'Photo remplacée.')}
           type="button"
@@ -339,13 +366,27 @@ const Fenetre: React.FC<{
           }}
         >
           {image ? (
-            <canvas ref={toile} style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.35)', maxHeight: '72vh', maxWidth: '100%' }} />
+            <canvas
+              ref={toile}
+              style={{
+                boxShadow: '0 2px 12px rgba(0,0,0,0.35)',
+                maxHeight: '72vh',
+                maxWidth: '100%',
+              }}
+            />
           ) : (
             <p style={{ opacity: 0.7 }}>Chargement de la photo…</p>
           )}
         </div>
 
-        <div style={{ borderLeft: '1px solid var(--theme-elevation-100)', overflowY: 'auto', paddingLeft: '1rem', width: 340 }}>
+        <div
+          style={{
+            borderLeft: '1px solid var(--theme-elevation-100)',
+            overflowY: 'auto',
+            paddingLeft: '1rem',
+            width: 340,
+          }}
+        >
           <div style={{ display: 'flex', gap: 6 }}>
             {(
               [
@@ -356,7 +397,7 @@ const Fenetre: React.FC<{
             ).map((choix) => (
               <button
                 aria-pressed={onglet === choix.value}
-                className={`btn btn--size-small ${onglet === choix.value ? 'btn--style-primary' : 'btn--style-secondary'}`}
+                className={`cbrs-bouton btn btn--size-small ${onglet === choix.value ? 'btn--style-primary' : 'btn--style-secondary'}`}
                 key={choix.value}
                 onClick={() => setOnglet(choix.value)}
                 type="button"
@@ -368,10 +409,33 @@ const Fenetre: React.FC<{
 
           {onglet === 'filtres' && (
             <>
-              <Choix changer={(filtre) => maj({ filtre })} label="Filtre" options={FILTRES} valeur={options.filtre} />
-              <Curseur changer={(luminosite) => maj({ luminosite })} label="Luminosité" max={100} min={-100} valeur={options.luminosite} />
-              <Curseur changer={(contraste) => maj({ contraste })} label="Contraste" max={100} min={-100} valeur={options.contraste} />
-              <Curseur changer={(saturation) => maj({ saturation })} label="Saturation" max={100} min={-100} valeur={options.saturation} />
+              <Choix
+                changer={(filtre) => maj({ filtre })}
+                label="Filtre"
+                options={FILTRES}
+                valeur={options.filtre}
+              />
+              <Curseur
+                changer={(luminosite) => maj({ luminosite })}
+                label="Luminosité"
+                max={100}
+                min={-100}
+                valeur={options.luminosite}
+              />
+              <Curseur
+                changer={(contraste) => maj({ contraste })}
+                label="Contraste"
+                max={100}
+                min={-100}
+                valeur={options.contraste}
+              />
+              <Curseur
+                changer={(saturation) => maj({ saturation })}
+                label="Saturation"
+                max={100}
+                min={-100}
+                valeur={options.saturation}
+              />
             </>
           )}
 
@@ -402,8 +466,22 @@ const Fenetre: React.FC<{
                   ))}
                 </select>
               </label>
-              <Curseur changer={(taille) => maj({ taille })} label="Taille" max={20} min={2} suffixe=" %" valeur={options.taille} />
-              <label style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', marginTop: '0.9rem' }}>
+              <Curseur
+                changer={(taille) => maj({ taille })}
+                label="Taille"
+                max={20}
+                min={2}
+                suffixe=" %"
+                valeur={options.taille}
+              />
+              <label
+                style={{
+                  alignItems: 'center',
+                  display: 'flex',
+                  gap: '0.5rem',
+                  marginTop: '0.9rem',
+                }}
+              >
                 <span style={{ fontSize: 13 }}>Couleur</span>
                 <input
                   aria-label="Couleur du texte"
@@ -413,21 +491,36 @@ const Fenetre: React.FC<{
                 />
               </label>
               <label style={{ display: 'flex', gap: '0.5rem', marginTop: '0.9rem' }}>
-                <input checked={options.gras} onChange={(e) => maj({ gras: e.target.checked })} type="checkbox" />
+                <input
+                  checked={options.gras}
+                  onChange={(e) => maj({ gras: e.target.checked })}
+                  type="checkbox"
+                />
                 <span style={{ fontSize: 13 }}>Gras</span>
               </label>
               <label style={{ display: 'flex', gap: '0.5rem', marginTop: '0.4rem' }}>
-                <input checked={options.ombre} onChange={(e) => maj({ ombre: e.target.checked })} type="checkbox" />
+                <input
+                  checked={options.ombre}
+                  onChange={(e) => maj({ ombre: e.target.checked })}
+                  type="checkbox"
+                />
                 <span style={{ fontSize: 13 }}>Ombre portée</span>
               </label>
-              <fieldset style={{ border: 0, margin: '0.9rem 0 0', padding: 0 }}>
+              <fieldset style={{ border: 0, margin: '1rem 0 0', minWidth: 0, padding: 0 }}>
                 <legend style={{ fontSize: 13, marginBottom: '0.4rem' }}>Position</legend>
-                <div style={{ display: 'grid', gap: 6, gridTemplateColumns: 'repeat(3, 1fr)', width: 150 }}>
+                <div
+                  style={{
+                    display: 'grid',
+                    gap: 6,
+                    gridTemplateColumns: 'repeat(3, 1fr)',
+                    width: 150,
+                  }}
+                >
                   {POSITIONS_TEXTE.map((position, index) => (
                     <button
                       aria-label={position.label}
                       aria-pressed={options.position === position.value}
-                      className={`btn btn--size-small ${options.position === position.value ? 'btn--style-primary' : 'btn--style-secondary'}`}
+                      className={`cbrs-bouton btn btn--size-small ${options.position === position.value ? 'btn--style-primary' : 'btn--style-secondary'}`}
                       key={position.value}
                       onClick={() => maj({ position: position.value })}
                       title={position.label}
@@ -443,10 +536,22 @@ const Fenetre: React.FC<{
 
           {onglet === 'contours' && (
             <>
-              <Choix changer={(contour) => maj({ contour })} label="Contour" options={CONTOURS} valeur={options.contour} />
+              <Choix
+                changer={(contour) => maj({ contour })}
+                label="Contour"
+                options={CONTOURS}
+                valeur={options.contour}
+              />
               {options.contour === 'couleur' && (
                 <>
-                  <label style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', marginTop: '0.9rem' }}>
+                  <label
+                    style={{
+                      alignItems: 'center',
+                      display: 'flex',
+                      gap: '0.5rem',
+                      marginTop: '0.9rem',
+                    }}
+                  >
                     <span style={{ fontSize: 13 }}>Couleur du contour</span>
                     <input
                       aria-label="Couleur du contour"
@@ -474,7 +579,11 @@ const Fenetre: React.FC<{
                 valeur={options.coinsArrondis}
               />
               <label style={{ display: 'flex', gap: '0.5rem', marginTop: '0.9rem' }}>
-                <input checked={options.vignettage} onChange={(e) => maj({ vignettage: e.target.checked })} type="checkbox" />
+                <input
+                  checked={options.vignettage}
+                  onChange={(e) => maj({ vignettage: e.target.checked })}
+                  type="checkbox"
+                />
                 <span style={{ fontSize: 13 }}>Vignettage doux</span>
               </label>
             </>
@@ -511,11 +620,16 @@ export const EditeurPhoto: React.FC = () => {
           url={donnees.url}
         />
       )}
-      <button className="btn btn--style-secondary" onClick={() => setOuvert(true)} type="button">
+      <button
+        className="cbrs-bouton btn btn--style-secondary"
+        onClick={() => setOuvert(true)}
+        type="button"
+      >
         Retoucher la photo
       </button>
       <p style={{ marginTop: '0.4rem', opacity: 0.7, fontSize: 12 }}>
-        Filtres, texte et contours. La photo d’origine n’est modifiée qu’en cliquant sur « Remplacer la photo ».
+        Filtres, texte et contours. La photo d’origine n’est modifiée qu’en cliquant sur « Remplacer
+        la photo ».
       </p>
     </div>
   )
