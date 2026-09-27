@@ -1,6 +1,7 @@
 import type { GlobalConfig, TextFieldSingleValidation } from 'payload'
 
 import { cacheSansDroit, peut } from '../access'
+import { COULEURS_ORIGINE, contrasteAvecBlanc, type NomCouleur } from '../couleurs'
 import { SITE_PAGES } from '../sitePages'
 
 // Polices testées sur le site (chargées depuis Google Fonts). « defaut » = police actuelle du site.
@@ -15,23 +16,6 @@ export const POLICES = [
   { label: 'Merriweather', value: 'Merriweather' },
   { label: 'Source Serif 4', value: 'Source Serif 4' },
 ] as const
-
-export const COULEURS_ORIGINE = {
-  couleurPrincipale: '#0a3273',
-  couleurSecondaire: '#437c14',
-  couleurAccent: '#145c75',
-} as const
-
-const luminance = (hex: string) => {
-  const [r, g, b] = [1, 3, 5].map((i) => {
-    const c = parseInt(hex.slice(i, i + 2), 16) / 255
-    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
-  })
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b
-}
-
-// Rapport de contraste avec le blanc (texte blanc sur boutons et bandeaux).
-export const contrasteAvecBlanc = (hex: string) => 1.05 / (luminance(hex) + 0.05)
 
 export const validerCouleur: TextFieldSingleValidation = (value) => {
   if (!value) return true
@@ -53,14 +37,14 @@ const police = (name: string, label: string, description: string) => ({
   admin: { description },
 })
 
-const couleur = (name: keyof typeof COULEURS_ORIGINE, label: string, description: string) => ({
+const couleur = (name: NomCouleur, label: string, description: string) => ({
   name,
   label,
   type: 'text' as const,
   required: true,
   defaultValue: COULEURS_ORIGINE[name],
   validate: validerCouleur,
-  admin: { description, placeholder: COULEURS_ORIGINE[name] },
+  admin: { description, placeholder: COULEURS_ORIGINE[name], components: { Field: '/admin/CouleurChamp#CouleurChamp' } },
 })
 
 export const Apparence: GlobalConfig = {

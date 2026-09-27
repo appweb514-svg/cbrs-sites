@@ -6,7 +6,7 @@ import { getPayload, type Payload } from 'payload'
 import sharp from 'sharp'
 import { beforeAll, describe, expect, it } from 'vitest'
 
-import { contrasteAvecBlanc } from '@/globals/Apparence'
+import { contrasteAvecBlanc } from '@/couleurs'
 import config from '@/payload.config'
 import type { Activite, User } from '@/payload-types'
 import { importerRoles } from '@/seed/import'

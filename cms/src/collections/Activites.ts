@@ -8,7 +8,7 @@ export const Activites: CollectionConfig = {
   admin: {
     useAsTitle: 'nom',
     defaultColumns: ['nom', 'ordre', '_status'],
-    group: 'Activités',
+    group: 'Activités & sorties',
     hidden: cacheSansDroit('activites'),
     description:
       'Pages « Activités » et fiches du site. Une activité dépubliée (ou en brouillon seulement) disparaît du site.',

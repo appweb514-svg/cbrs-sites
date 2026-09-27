@@ -2,16 +2,31 @@ import type { CollectionConfig } from 'payload'
 
 import { accesSection, afficheOuEditeur, cacheSansDroit } from '../access'
 
+// Formats acceptés pour les documents déposés.
+// Payload compare le type DÉTECTÉ dans le contenu, pas l'extension : les .doc et .xls
+// enregistrés par les anciennes versions d'Office sont des conteneurs OLE2, détectés
+// « application/x-cfb ». Sans cette entrée, ils sont refusés malgré « application/msword ».
+const MIME_DOCUMENTS = [
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.ms-excel',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'application/vnd.oasis.opendocument.text',
+  'application/vnd.oasis.opendocument.spreadsheet',
+  'application/x-cfb',
+]
+
 export const Documents: CollectionConfig = {
   slug: 'documents',
-  labels: { singular: 'Document', plural: 'Documents (PDF)' },
+  labels: { singular: 'Document', plural: 'Documents' },
   admin: {
     useAsTitle: 'titre',
     defaultColumns: ['titre', 'categorie', 'remplaceLienOfficiel', 'afficherSurSite', 'updatedAt'],
-    group: 'Vie associative',
+    group: 'Photos & documents',
     hidden: cacheSansDroit('documents'),
     description:
-      'Documents listés sur la page « Liens utiles et documents ». Un document ne remplace un lien officiel (statuts, fiche d’adhésion…) que si vous le choisissez.',
+      'Documents du club (PDF, Word, Excel, OpenDocument), listés sur la page « Liens utiles et documents ». Un document ne remplace un lien officiel (statuts, fiche d’adhésion…) que si vous le choisissez.',
   },
   defaultSort: 'ordre',
   access: accesSection('documents', afficheOuEditeur('documents')),
@@ -60,5 +75,5 @@ export const Documents: CollectionConfig = {
     },
     { name: 'ordre', label: 'Ordre', type: 'number', defaultValue: 100, admin: { position: 'sidebar' } },
   ],
-  upload: { mimeTypes: ['application/pdf'] },
+  upload: { mimeTypes: MIME_DOCUMENTS },
 }

@@ -8,7 +8,7 @@ export const Sorties: CollectionConfig = {
   admin: {
     useAsTitle: 'titre',
     defaultColumns: ['titre', 'type', 'date', '_status'],
-    group: 'Sorties & Voyages',
+    group: 'Activités & sorties',
     hidden: cacheSansDroit('sorties'),
     description:
       'Manifestations, sorties à la journée et voyages. Seuls les documents publiés apparaissent sur le site.',

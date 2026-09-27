@@ -8,7 +8,7 @@ export const MembresBureau: CollectionConfig = {
   admin: {
     useAsTitle: 'nom',
     defaultColumns: ['nom', 'fonction', 'ordre'],
-    group: 'Accueil',
+    group: 'Vie du club',
     hidden: cacheSansDroit('membres-bureau'),
     description: 'Section « Présentation du bureau » de la page d’accueil. Accord écrit des personnes requis pour la photo.',
   },

@@ -6,7 +6,7 @@ export const Tarifs: GlobalConfig = {
   slug: 'tarifs',
   label: 'Tarifs',
   admin: {
-    group: 'Vie associative',
+    group: 'Vie du club',
     hidden: cacheSansDroit('tarifs'),
     description: 'Grille tarifaire de la page Adhésion, affichée dans l’ordre saisi.',
   },

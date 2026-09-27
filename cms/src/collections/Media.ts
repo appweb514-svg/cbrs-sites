@@ -4,11 +4,13 @@ import { cacheSansDroit, peut } from '../access'
 
 export const Media: CollectionConfig = {
   slug: 'media',
-  labels: { singular: 'Photo', plural: 'Photos' },
+  labels: { singular: 'Photo', plural: 'Photothèque' },
   admin: {
-    group: 'Médiathèque',
+    group: 'Photos & documents',
     hidden: cacheSansDroit('media'),
-    description: 'Ouvrez une photo puis « Modifier l’image » pour la recadrer ou choisir son point d’intérêt.',
+    description:
+      'Toutes les photos du site. Ouvrez-en une puis « Modifier l’image » pour la recadrer ou choisir son point d’intérêt ; cochez-en plusieurs pour les ajouter à la galerie du site, ou en retirer.',
+    components: { beforeListTable: ['/admin/GalerieLot#GalerieLot'] },
   },
   access: {
     read: () => true,

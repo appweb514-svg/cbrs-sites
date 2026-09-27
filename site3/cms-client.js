@@ -128,6 +128,20 @@
     return '';
   }
 
+  // Les documents déposés peuvent être au format PDF, Word, Excel ou OpenDocument :
+  // le libellé du lien indique le format réel plutôt qu'un « (PDF) » systématique.
+  function libelleTelechargement(item) {
+    const source = String(item.filename || item.url || '').split('?')[0];
+    const extension = source.indexOf('.') !== -1 ? source.split('.').pop().toLowerCase() : '';
+    const noms = {
+      pdf: 'PDF',
+      doc: 'Word', docx: 'Word',
+      xls: 'Excel', xlsx: 'Excel',
+      odt: 'OpenDocument', ods: 'OpenDocument'
+    };
+    return noms[extension] ? 'Télécharger (' + noms[extension] + ')' : 'Télécharger';
+  }
+
   function buildClubCard(item) {
     const article = el('article', 'relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group');
     const media = el('div', 'relative h-44 overflow-hidden');
@@ -280,7 +294,7 @@
         const text = el('div');
         text.appendChild(el('p', 'cbrs-doc-callout-title', item.titre || item.filename || 'Document'));
         if (item.description) text.appendChild(el('p', 'cbrs-doc-callout-text', item.description));
-        const link = el('a', 'cbrs-doc-link', 'Télécharger (PDF)');
+        const link = el('a', 'cbrs-doc-link', libelleTelechargement(item));
         link.href = resolveUrl(item.url);
         link.target = '_blank';
         link.rel = 'noopener';

@@ -29,11 +29,11 @@ export const ACTIVITES_GALERIE = [
 
 export const Galerie: CollectionConfig = {
   slug: 'galerie',
-  labels: { singular: 'Photo de galerie', plural: 'Galerie' },
+  labels: { singular: 'Photo de galerie', plural: 'Galerie photo' },
   admin: {
     useAsTitle: 'legende',
     defaultColumns: ['photo', 'legende', 'categorie', 'activite', 'annee', 'afficherSurSite'],
-    group: 'Médiathèque',
+    group: 'Photos & documents',
     hidden: cacheSansDroit('galerie'),
     description:
       'Page « Galerie photo » du site. Glissez les photos (poignée à gauche) pour changer leur ordre sur le site ; cochez-en plusieurs puis « Modifier » pour changer l’année ou la catégorie d’un coup.',

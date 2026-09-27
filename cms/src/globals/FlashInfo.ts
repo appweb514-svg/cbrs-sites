@@ -6,7 +6,7 @@ export const FlashInfo: GlobalConfig = {
   slug: 'flash-info',
   label: 'Flash info',
   admin: {
-    group: 'Accueil',
+    group: 'Vie du club',
     hidden: cacheSansDroit('flash-info'),
     description: 'Bandeau défilant de la page d’accueil.',
   },
