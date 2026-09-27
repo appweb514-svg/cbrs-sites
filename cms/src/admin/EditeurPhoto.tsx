@@ -956,19 +956,21 @@ export const EditeurPhoto: React.FC = () => {
 
   return (
     <>
-      {ouvert && (
-        <Fenetre
-          alt={String(donnees.alt ?? '')}
-          fermer={fermer}
-          focalX={typeof donnees.focalX === 'number' ? donnees.focalX : 50}
-          focalY={typeof donnees.focalY === 'number' ? donnees.focalY : 50}
-          id={id}
-          mimeType={String(donnees.mimeType ?? '')}
-          nom={String(donnees.filename ?? '')}
-          recharger={recharger}
-          url={donnees.url}
-        />
-      )}
+      {ouvert &&
+        createPortal(
+          <Fenetre
+            alt={String(donnees.alt ?? '')}
+            fermer={fermer}
+            focalX={typeof donnees.focalX === 'number' ? donnees.focalX : 50}
+            focalY={typeof donnees.focalY === 'number' ? donnees.focalY : 50}
+            id={id}
+            mimeType={String(donnees.mimeType ?? '')}
+            nom={String(donnees.filename ?? '')}
+            recharger={recharger}
+            url={donnees.url}
+          />,
+          document.body,
+        )}
       {conteneur ? (
         createPortal(
           <>
