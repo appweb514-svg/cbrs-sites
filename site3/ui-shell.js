@@ -171,7 +171,7 @@
       '<p class="cbrs-cookie-eyebrow">Confidentialité</p>',
       '<h2>Votre vie privée compte</h2>',
       '<p>Le CBRS mémorise uniquement votre choix et bloque les cartes externes tant que vous ne les avez pas autorisées.</p>',
-      '<a href="mentions-legales.html#cookies">En savoir plus</a>',
+      '<a href="/mentions-legales#cookies">En savoir plus</a>',
       '</div>',
       '<div class="cbrs-cookie-actions">',
       '<button type="button" data-cookie-action="reject" class="cbrs-cookie-button cbrs-cookie-button-secondary">Refuser</button>',
@@ -569,18 +569,18 @@
         if (item) item.remove();
         else link.remove();
       }
-      if (label === 'Mentions légales') link.href = 'mentions-legales.html';
+      if (label === 'Mentions légales') link.href = '/mentions-legales';
       if (label === 'Inscriptions') link.textContent = 'Adhérer';
     });
 
     const infoList = Array.from(document.querySelectorAll('footer ul')).find(function (list) {
       return Array.from(list.querySelectorAll('a')).some(function (link) {
-        return link.getAttribute('href') === 'adhesion.html';
+        return targetPage(link.getAttribute('href')) === 'adhesion.html';
       });
     });
-    if (infoList && !infoList.querySelector('a[href="conditions-utilisation.html"]')) {
+    if (infoList && !infoList.querySelector('a[href="/conditions-utilisation"]')) {
       const item = document.createElement('li');
-      item.innerHTML = '<a class="hover:text-cbrs-blue" href="conditions-utilisation.html">Conditions d’utilisation</a>';
+      item.innerHTML = '<a class="hover:text-cbrs-blue" href="/conditions-utilisation">Conditions d’utilisation</a>';
       infoList.appendChild(item);
     }
 
