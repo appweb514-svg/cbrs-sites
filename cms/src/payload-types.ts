@@ -907,17 +907,29 @@ export interface Apparence {
   policeTexte:
     'defaut' | 'Inter' | 'Manrope' | 'Poppins' | 'Lato' | 'Open Sans' | 'Nunito' | 'Merriweather' | 'Source Serif 4';
   /**
-   * Menus, titres et boutons principaux (bleu d’origine).
+   * Menus, titres et bandeaux (bleu d’origine).
    */
   couleurPrincipale: string;
   /**
-   * Mises en valeur et boutons d’action (vert d’origine).
+   * Tous les boutons (survol compris) et textes mis en valeur (vert d’origine).
    */
   couleurSecondaire: string;
   /**
    * Bandeaux et détails (bleu-vert d’origine).
    */
   couleurAccent: string;
+  /**
+   * Image du bandeau de toutes les pages. L’image propre à une page (onglet « En-têtes de pages ») reste prioritaire.
+   */
+  imageEnTete?: (number | null) | Media;
+  /**
+   * Voile posé sur l’image pour garder le texte blanc lisible (bleu d’origine).
+   */
+  teinteEnTete: string;
+  /**
+   * Opacité du voile : 0 % laisse l’image nette, 100 % la rend opaque.
+   */
+  intensiteTeinte: number;
   /**
    * Remplace le titre, le sous-titre ou l’image d’en-tête d’une page. Champ vide = contenu actuel conservé.
    */
@@ -999,6 +1011,9 @@ export interface ApparenceSelect<T extends boolean = true> {
   couleurPrincipale?: T;
   couleurSecondaire?: T;
   couleurAccent?: T;
+  imageEnTete?: T;
+  teinteEnTete?: T;
+  intensiteTeinte?: T;
   enTetes?:
     | T
     | {
