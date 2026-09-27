@@ -1,0 +1,40 @@
+# Mise en production du CMS (Proxmox/Dokploy) :
+#   cp .env.example .env   # puis renseigner PAYLOAD_SECRET et POSTGRES_PASSWORD
+#   docker compose -f docker-compose.prod.yml up -d --build
+#
+# Les variables proviennent du fichier .env (voir .env.example).
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-cbrs}
+      POSTGRES_USER: ${POSTGRES_USER:-cbrs}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Définissez POSTGRES_PASSWORD dans .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-cbrs} -d ${POSTGRES_DB:-cbrs}']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  cms:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      # Hôte interne « postgres » : le port et le mot de passe viennent de .env
+      DATABASE_URL: postgres://${POSTGRES_USER:-cbrs}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-cbrs}
+    ports:
+      - '${CMS_PORT:-3000}:3000'
+    volumes:
+      - media:/app/media
+
+volumes:
+  pgdata:
+  media:

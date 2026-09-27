@@ -1,0 +1,481 @@
+[
+  {
+    "nom": "Aquagym",
+    "description": "Gymnastique aquatique en piscine. Exercices adaptés pour un renforcement musculaire et une mobilité articulaire en douceur, sans impact sur les articulations.",
+    "presentation": "Séance de gymnastique en milieu aquatique animée par des bénévoles formés. Les exercices sont adaptés à chacun, permettant de travailler le cardio, le renforcement musculaire et la souplesse dans une eau chauffée.",
+    "creneaux": [
+      {
+        "jour": "Lundi",
+        "horaire": "Voir planning",
+        "lieu": "Piscine Bellier"
+      },
+      {
+        "jour": "Vendredi",
+        "horaire": "Voir planning",
+        "lieu": "Piscine Bellier"
+      }
+    ],
+    "pointRencontre": "Piscine Bellier, Beauvais. Arrivée 15 min avant pour vous changer.",
+    "infos": [
+      {
+        "texte": "Matériel : maillot, bonnet, serviette"
+      },
+      {
+        "texte": "Niveau : débutant à confirmé"
+      },
+      {
+        "texte": "Saison : septembre à juin"
+      }
+    ]
+  },
+  {
+    "nom": "Atelier Mémoire",
+    "description": "Exercices ludiques pour stimuler et entretenir sa mémoire. Jeux, quiz et activités cognitives en petit groupe.",
+    "presentation": "Ateliers hebdomadaires en petit groupe pour entretenir sa mémoire par des exercices variés, des jeux et des quiz. Un moment convivial qui stimule les capacités cognitives dans la bonne humeur.",
+    "creneaux": [
+      {
+        "jour": "Mercredi",
+        "horaire": "Voir planning",
+        "lieu": "Salle de réunion CBRS"
+      }
+    ],
+    "pointRencontre": "Salle de réunion CBRS. Voir le planning pour les créneaux.",
+    "infos": [
+      {
+        "texte": "Aucun matériel requis"
+      },
+      {
+        "texte": "Groupes de 10-15 personnes"
+      },
+      {
+        "texte": "Séances hebdomadaires"
+      }
+    ]
+  },
+  {
+    "nom": "Bridge",
+    "description": "Jeu de cartes de réflexion qui se pratique par équipes de deux. Informations détaillées à venir.",
+    "presentation": null,
+    "creneaux": [
+      {
+        "jour": "Voir planning",
+        "horaire": "Voir planning",
+        "lieu": "Voir planning"
+      }
+    ],
+    "pointRencontre": "Consulter le planning.",
+    "infos": [
+      {
+        "texte": "Ouvert à tous"
+      }
+    ]
+  },
+  {
+    "nom": "Cyclisme",
+    "description": "Sorties vélo sur les routes du Beauvaisis et du Pays de Bray. Des itinéraires variés adaptés au rythme de chacun.",
+    "presentation": "Parcours de 40 à 60 km sur routes secondaires et chemins. Les groupes sont constitués selon le niveau. Départ groupé depuis le parking du cimetière du Tilloy.",
+    "creneaux": [
+      {
+        "jour": "Mercredi",
+        "horaire": "13h30",
+        "lieu": "Parking cimetière du Tilloy"
+      },
+      {
+        "jour": "Vendredi",
+        "horaire": "13h30",
+        "lieu": "Parking Saint Quentin ou Cimetière du Tilloy"
+      }
+    ],
+    "pointRencontre": "Parking du cimetière du Tilloy, avenue du Cimetière, Beauvais. Mercredi et vendredi 13h30.",
+    "infos": [
+      {
+        "texte": "Vélo en bon état obligatoire"
+      },
+      {
+        "texte": "Casque recommandé"
+      },
+      {
+        "texte": "Parcours de 40 à 60 km"
+      }
+    ]
+  },
+  {
+    "nom": "Danse",
+    "description": "Cours de danse de salon et danse en ligne. Apprenez ou perfectionnez vos pas dans une ambiance musicale et joyeuse.",
+    "presentation": "Séances de danse de salon et danse en ligne animées par un animateur bénévole. Tous les styles abordés selon la demande du groupe.",
+    "creneaux": [
+      {
+        "jour": "Voir planning",
+        "horaire": "Voir planning",
+        "lieu": "Salle de danse - Beauvais"
+      }
+    ],
+    "pointRencontre": "Salle de danse à Beauvais. Consulter le planning.",
+    "infos": [
+      {
+        "texte": "Tenue confortable"
+      },
+      {
+        "texte": "Chaussures adaptées"
+      },
+      {
+        "texte": "Débutants acceptés"
+      }
+    ]
+  },
+  {
+    "nom": "Échecs / Bridge",
+    "description": "Jouez aux échecs ou au bridge dans une ambiance détendue. Tournois amicaux organisés régulièrement.",
+    "presentation": "Les amateurs d’échecs et de bridge se retrouvent pour des parties en toute convivialité. Tournois internes et initiation pour les débutants.",
+    "creneaux": [
+      {
+        "jour": "Lundi",
+        "horaire": "14h00-17h00",
+        "lieu": "Salle de réunion CBRS"
+      },
+      {
+        "jour": "Jeudi",
+        "horaire": "14h00-17h00",
+        "lieu": "Salle de réunion CBRS"
+      }
+    ],
+    "pointRencontre": "Salle de réunion CBRS. Consulter le planning.",
+    "infos": [
+      {
+        "texte": "Jeux fournis"
+      },
+      {
+        "texte": "Tournois internes"
+      },
+      {
+        "texte": "Débutants bienvenus"
+      }
+    ]
+  },
+  {
+    "nom": "Gymnastique",
+    "description": "Séances de gymnastique d’entretien pour préserver souplesse, équilibre et tonicité musculaire.",
+    "presentation": "Cours collectifs de gym d’entretien adaptée aux seniors. Exercices de renforcement musculaire, mobilité articulaire, équilibre et étirement. Plusieurs créneaux dans la semaine avec différents animateurs.",
+    "creneaux": [
+      {
+        "jour": "Lundi",
+        "horaire": "9h30",
+        "lieu": "Salle Carnot"
+      },
+      {
+        "jour": "Mardi",
+        "horaire": "Voir planning",
+        "lieu": "Salle Coubertin"
+      },
+      {
+        "jour": "Vendredi",
+        "horaire": "Voir planning",
+        "lieu": "Salle Coubertin"
+      }
+    ],
+    "pointRencontre": "Salle Carnot (lundi) ou Salle Coubertin (mardi/vendredi), Beauvais.",
+    "infos": [
+      {
+        "texte": "Tenue souple"
+      },
+      {
+        "texte": "Tapis de sol recommandé"
+      },
+      {
+        "texte": "Adapté à tous"
+      }
+    ]
+  },
+  {
+    "nom": "Jeux de Cartes",
+    "description": "Belote, tarot et autres jeux de cartes dans une ambiance conviviale. Un bon moyen de stimuler sa mémoire.",
+    "presentation": "Tarot le lundi et mardi, belote le jeudi. Une ambiance conviviale et chaleureuse pour partager un bon moment autour des cartes. Salle Boibessot.",
+    "creneaux": [
+      {
+        "jour": "Lundi",
+        "horaire": "13h30-17h15",
+        "lieu": "Salle Boibessot"
+      },
+      {
+        "jour": "Mardi",
+        "horaire": "13h30-17h15",
+        "lieu": "Salle Boibessot"
+      },
+      {
+        "jour": "Jeudi",
+        "horaire": "13h30-17h15",
+        "lieu": "Salle Boibessot"
+      }
+    ],
+    "pointRencontre": "Salle Boibessot, 98 rue de Notre Dame du Thil, Beauvais.",
+    "infos": [
+      {
+        "texte": "Jeux fournis"
+      },
+      {
+        "texte": "Convivialité garantie"
+      },
+      {
+        "texte": "Ouvert à tous"
+      }
+    ]
+  },
+  {
+    "nom": "Marche Nordique",
+    "description": "La marche nordique sollicite l’ensemble du corps grâce aux bâtons spécifiques. Activité complète et accessible.",
+    "presentation": "Initiation à la marche nordique au Plan d’eau du Canada. Les bâtons sont fournis par le club pour les nouveaux pratiquants. Séances encadrées par des animateurs expérimentés.",
+    "creneaux": [
+      {
+        "jour": "Mercredi",
+        "horaire": "9h30-11h00",
+        "lieu": "Plan d’eau du Canada"
+      }
+    ],
+    "pointRencontre": "Plan d’eau du Canada, Beauvais. Stationnement près de l’entrée.",
+    "infos": [
+      {
+        "texte": "Bâtons fournis par le club"
+      },
+      {
+        "texte": "Chaussures de sport"
+      },
+      {
+        "texte": "Tous niveaux"
+      }
+    ]
+  },
+  {
+    "nom": "Pétanque",
+    "description": "La pétanque se pratique toute l’année sur les terrains mis à disposition. Un moment de détente et de convivialité pour tous.",
+    "presentation": "Séances de pétanque en doublettes ou triplettes, dans une ambiance conviviale. Tournois réguliers organisés entre adhérents. Accès au boulodrome possible tous les jours.",
+    "creneaux": [
+      {
+        "jour": "Lundi",
+        "horaire": "14h00-16h00",
+        "lieu": "Parc Kennedy"
+      },
+      {
+        "jour": "Vendredi",
+        "horaire": "14h00-16h00",
+        "lieu": "Parc Kennedy"
+      }
+    ],
+    "pointRencontre": "Parc Kennedy, Beauvais. Boulodrome près de l’entrée principale.",
+    "infos": [
+      {
+        "texte": "Boules fournies par le club"
+      },
+      {
+        "texte": "Tournois réguliers"
+      },
+      {
+        "texte": "Tous niveaux acceptés"
+      }
+    ]
+  },
+  {
+    "nom": "Pickleball",
+    "description": "Sport de raquette combinant tennis, badminton et ping-pong. Se joue en double sur un terrain réduit.",
+    "presentation": "Activité ludique et accessible qui mélange les gestes du tennis, du badminton et du ping-pong. Se joue en double avec une balle perforée et des raquettes en composite.",
+    "creneaux": [
+      {
+        "jour": "Mercredi",
+        "horaire": "11h-13h",
+        "lieu": "Coubertin Plateau"
+      },
+      {
+        "jour": "Jeudi",
+        "horaire": "11h-13h",
+        "lieu": "Gymnase R Briard St Just"
+      }
+    ],
+    "pointRencontre": "Mercredi : Coubertin Plateau. Jeudi : Gymnase R Briard St Just.",
+    "infos": [
+      {
+        "texte": "Raquettes fournies"
+      },
+      {
+        "texte": "Tenue sportive"
+      },
+      {
+        "texte": "Facile à apprendre"
+      }
+    ]
+  },
+  {
+    "nom": "Randonnée",
+    "description": "Parcourez les sentiers du Beauvaisis et d’ailleurs. Des itinéraires variés en fonction des saisons et du niveau des participants.",
+    "presentation": "Randonnées internes au Plan d’eau du Canada et au Bois du Parc Saint Quentin. Randonnées externes le jeudi après-midi vers des destinations variées (caps, baie de Somme, Giverny, Vexin, Andelys, etc.). Les parcours sont annoncés lors des séances précédentes.",
+    "creneaux": [
+      {
+        "jour": "Jeudi",
+        "horaire": "9h30 (ete) / 14h10 (hiver)",
+        "lieu": "Plan d’eau du Canada"
+      },
+      {
+        "jour": "Jeudi",
+        "horaire": "14h00",
+        "lieu": "Bois du Parc Saint Quentin"
+      },
+      {
+        "jour": "Jeudi après-midi",
+        "horaire": "Variable",
+        "lieu": "Randonnées externes"
+      }
+    ],
+    "pointRencontre": "Plan d’eau du Canada (juin-sept 9h30) ou Bois du Parc Saint Quentin (après sept, 13h45). Rando externe : voir infos en seance.",
+    "infos": [
+      {
+        "texte": "Chaussures de marche obligatoires"
+      },
+      {
+        "texte": "Batons recommandés"
+      },
+      {
+        "texte": "8-12 km en moyenne"
+      }
+    ]
+  },
+  {
+    "nom": "Relaxation / Méditation",
+    "description": "Un temps pour se détendre, respirer et se recentrer en douceur. Informations détaillées à venir.",
+    "presentation": null,
+    "creneaux": [
+      {
+        "jour": "Voir planning",
+        "horaire": "Voir planning",
+        "lieu": "Voir planning"
+      }
+    ],
+    "pointRencontre": "Consulter le planning.",
+    "infos": [
+      {
+        "texte": "Tenue confortable"
+      },
+      {
+        "texte": "Ouvert à tous"
+      }
+    ]
+  },
+  {
+    "nom": "Tai Chi Chuan",
+    "description": "Art martial chinois pratiqué pour ses bienfaits sur la santé. Enchaînements lents favorisant équilibre, concentration et sérénité.",
+    "presentation": "Le Tai Chi Chuan est animé par Christophe, intervenant extérieur au club. Pratique des mouvements lents et fluides pour améliorer l’équilibre, la souplesse et la relaxation.",
+    "creneaux": [
+      {
+        "jour": "Lundi",
+        "horaire": "10h-11h",
+        "lieu": "Coubertin Plateau"
+      },
+      {
+        "jour": "Vendredi",
+        "horaire": "11h15-12h15",
+        "lieu": "Coubertin Plateau"
+      }
+    ],
+    "pointRencontre": "Coubertin Plateau, Beauvais. Arrivée 10 min avant.",
+    "infos": [
+      {
+        "texte": "Tenue souple"
+      },
+      {
+        "texte": "Chaussures plates"
+      },
+      {
+        "texte": "Tous niveaux"
+      }
+    ]
+  },
+  {
+    "nom": "Tennis",
+    "description": "Pratique du tennis en salle pour maintenir sa condition physique tout en s’amusant.",
+    "presentation": "Jeu en double sur les courts du complexe sportif de Beauvais. Inscription préalable recommandée.",
+    "creneaux": [
+      {
+        "jour": "Voir planning",
+        "horaire": "Voir planning",
+        "lieu": "Complexe sportif de Beauvais"
+      }
+    ],
+    "pointRencontre": "Complexe sportif de Beauvais. Consulter le planning pour les créneaux.",
+    "infos": [
+      {
+        "texte": "Raquette personnelle recommandée"
+      },
+      {
+        "texte": "Ballons fournis"
+      },
+      {
+        "texte": "Inscription préalable"
+      }
+    ]
+  },
+  {
+    "nom": "Tennis de table",
+    "description": "Le tennis de table se pratique dans une ambiance conviviale. Plusieurs tables disponibles pour jouer en simple ou en double.",
+    "presentation": "Cours débutants sur inscription et jeu libre pour les confirmés. Tournois internes réguliers. Rencontres inter-clubs avec CBRS Franconville et Enghien.",
+    "creneaux": [
+      {
+        "jour": "Lundi",
+        "horaire": "10h-12h",
+        "lieu": "Gymnase Briard"
+      },
+      {
+        "jour": "Mardi",
+        "horaire": "9h-12h",
+        "lieu": "Gymnase Briard"
+      },
+      {
+        "jour": "Mercredi",
+        "horaire": "9h-12h",
+        "lieu": "Gymnase Briard"
+      },
+      {
+        "jour": "Jeudi",
+        "horaire": "14h-17h",
+        "lieu": "Gymnase Goincourt"
+      }
+    ],
+    "pointRencontre": "Gymnase Briard (lun/mer) ou Gymnase Goincourt (jeu). Arrivée 10 min avant.",
+    "infos": [
+      {
+        "texte": "Raquettes fournies"
+      },
+      {
+        "texte": "Tenue sportive"
+      },
+      {
+        "texte": "Tous niveaux"
+      }
+    ]
+  },
+  {
+    "nom": "Tir à l’arc",
+    "description": "Découverte et pratique du tir à l’arc. Une activité de précision qui développe concentration et maîtrise de soi.",
+    "presentation": "Séances en plein air de mars à novembre au parc Marcel Dassault. Initiation et perfectionnement avec des animateurs expérimentés.",
+    "creneaux": [
+      {
+        "jour": "Mardi",
+        "horaire": "9h30-11h00",
+        "lieu": "Parc Marcel Dassault"
+      },
+      {
+        "jour": "Vendredi",
+        "horaire": "9h30-11h00",
+        "lieu": "Parc Marcel Dassault"
+      }
+    ],
+    "pointRencontre": "Parc Marcel Dassault, Beauvais. Près de l’espace vert principal.",
+    "infos": [
+      {
+        "texte": "Matériel fourni par le club"
+      },
+      {
+        "texte": "Tenue confortable"
+      },
+      {
+        "texte": "Saison : mars à novembre"
+      }
+    ]
+  }
+]
