@@ -20,6 +20,7 @@ import { Sorties } from './collections/Sorties'
 import { Users } from './collections/Users'
 import { VieDuClub } from './collections/VieDuClub'
 import { galerieLot } from './endpoints/galerieLot'
+import { mediaRenommer } from './endpoints/mediaRenommer'
 import { Apparence } from './globals/Apparence'
 import { FlashInfo } from './globals/FlashInfo'
 import { Parametres } from './globals/Parametres'
@@ -62,7 +63,7 @@ export default buildConfig({
     supportedLanguages: { fr },
     fallbackLanguage: 'fr',
   },
-  endpoints: [galerieLot],
+  endpoints: [galerieLot, mediaRenommer],
   collections: avecCasesVX([VieDuClub, MembresBureau, Activites, Sorties, Galerie, Documents, Media, Users, Roles]),
   globals: [FlashInfo, Tarifs, Parametres, Apparence],
   cors: siteOrigins,
