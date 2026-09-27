@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { canEdit, hiddenUnless, publishedOrEditor } from '../access'
+import { accesSection, cacheSansDroit, publieOuEditeur, verifierPublication } from '../access'
 
 export const Sorties: CollectionConfig = {
   slug: 'sorties',
@@ -9,18 +9,14 @@ export const Sorties: CollectionConfig = {
     useAsTitle: 'titre',
     defaultColumns: ['titre', 'type', 'date', '_status'],
     group: 'Sorties & Voyages',
-    hidden: hiddenUnless('sorties', 'bureau'),
+    hidden: cacheSansDroit('sorties'),
     description:
       'Manifestations, sorties à la journée et voyages. Seuls les documents publiés apparaissent sur le site.',
   },
   defaultSort: 'date',
   versions: { drafts: true },
-  access: {
-    read: publishedOrEditor('sorties', 'bureau'),
-    create: canEdit('sorties', 'bureau'),
-    update: canEdit('sorties', 'bureau'),
-    delete: canEdit('sorties', 'bureau'),
-  },
+  access: accesSection('sorties', publieOuEditeur('sorties')),
+  hooks: { beforeChange: [verifierPublication('sorties')] },
   fields: [
     {
       name: 'type',

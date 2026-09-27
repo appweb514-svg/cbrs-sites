@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
-import { canEdit, hiddenUnless, publishedOrEditor } from '../access'
+import { accesSection, cacheSansDroit, publieOuEditeur, verifierPublication } from '../access'
+import { lienField } from '../fields/lien'
 
 export const VieDuClub: CollectionConfig = {
   slug: 'vie-du-club',
@@ -9,17 +10,13 @@ export const VieDuClub: CollectionConfig = {
     useAsTitle: 'titre',
     defaultColumns: ['titre', 'date', 'categorie', '_status'],
     group: 'Accueil',
-    hidden: hiddenUnless('bureau'),
+    hidden: cacheSansDroit('vie-du-club'),
     description: 'Actualités affichées sur la page d’accueil, section « Vie du club ».',
   },
   defaultSort: '-date',
   versions: { drafts: true },
-  access: {
-    read: publishedOrEditor('bureau'),
-    create: canEdit('bureau'),
-    update: canEdit('bureau'),
-    delete: canEdit('bureau'),
-  },
+  access: accesSection('vie-du-club', publieOuEditeur('vie-du-club')),
+  hooks: { beforeChange: [verifierPublication('vie-du-club')] },
   fields: [
     { name: 'titre', label: 'Titre', type: 'text', required: true },
     {
@@ -42,6 +39,6 @@ export const VieDuClub: CollectionConfig = {
     },
     { name: 'image', label: 'Photo', type: 'upload', relationTo: 'media' },
     { name: 'resume', label: 'Résumé', type: 'textarea', required: true, maxLength: 240 },
-    { name: 'lien', label: 'Lien « En savoir plus »', type: 'text' },
+    lienField({ label: 'Lien « En savoir plus »', description: 'Choisissez une page, une activité ou une sortie du site.' }),
   ],
 }

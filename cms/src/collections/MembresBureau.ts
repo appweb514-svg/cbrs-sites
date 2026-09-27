@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { canEdit, hiddenUnless } from '../access'
+import { accesSection, cacheSansDroit } from '../access'
 
 export const MembresBureau: CollectionConfig = {
   slug: 'membres-bureau',
@@ -9,16 +9,11 @@ export const MembresBureau: CollectionConfig = {
     useAsTitle: 'nom',
     defaultColumns: ['nom', 'fonction', 'ordre'],
     group: 'Accueil',
-    hidden: hiddenUnless('bureau'),
+    hidden: cacheSansDroit('membres-bureau'),
     description: 'Section « Présentation du bureau » de la page d’accueil. Accord écrit des personnes requis pour la photo.',
   },
   defaultSort: 'ordre',
-  access: {
-    read: () => true,
-    create: canEdit('bureau'),
-    update: canEdit('bureau'),
-    delete: canEdit('bureau'),
-  },
+  access: accesSection('membres-bureau', () => true),
   fields: [
     { name: 'nom', label: 'Prénom et nom', type: 'text', required: true },
     { name: 'fonction', label: 'Fonction', type: 'text', required: true, admin: { description: 'Ex. : Présidente, Trésorier…' } },

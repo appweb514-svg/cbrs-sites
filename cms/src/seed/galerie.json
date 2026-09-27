@@ -1,0 +1,912 @@
+[
+  {
+    "fichier": "photo_001.jpg",
+    "annee": 2023,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 10
+  },
+  {
+    "fichier": "photo_002.jpg",
+    "annee": 2023,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 20
+  },
+  {
+    "fichier": "photo_003.jpg",
+    "annee": 2023,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 30
+  },
+  {
+    "fichier": "photo_004.jpg",
+    "annee": 2023,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 40
+  },
+  {
+    "fichier": "photo_005.jpg",
+    "annee": 2023,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 50
+  },
+  {
+    "fichier": "photo_006.jpg",
+    "annee": 2023,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 60
+  },
+  {
+    "fichier": "photo_007.jpg",
+    "annee": 2023,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 70
+  },
+  {
+    "fichier": "photo_008.jpg",
+    "annee": 2023,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 80
+  },
+  {
+    "fichier": "photo_009.jpg",
+    "annee": 2023,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 90
+  },
+  {
+    "fichier": "photo_010.jpg",
+    "annee": 2023,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 100
+  },
+  {
+    "fichier": "photo_011.jpg",
+    "annee": 2023,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 110
+  },
+  {
+    "fichier": "photo_012.jpg",
+    "annee": 2023,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 120
+  },
+  {
+    "fichier": "photo_013.jpg",
+    "annee": 2023,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 130
+  },
+  {
+    "fichier": "photo_014.jpg",
+    "annee": 2023,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 140
+  },
+  {
+    "fichier": "photo_015.jpg",
+    "annee": 2023,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 150
+  },
+  {
+    "fichier": "photo_016.jpg",
+    "annee": 2023,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 160
+  },
+  {
+    "fichier": "photo_017.jpg",
+    "annee": 2023,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 170
+  },
+  {
+    "fichier": "photo_018.jpg",
+    "annee": 2023,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 180
+  },
+  {
+    "fichier": "photo_019.jpg",
+    "annee": 2023,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 190
+  },
+  {
+    "fichier": "photo_020.jpg",
+    "annee": 2023,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 200
+  },
+  {
+    "fichier": "photo_021.jpg",
+    "annee": 2023,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 210
+  },
+  {
+    "fichier": "photo_022.jpg",
+    "annee": 2023,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 220
+  },
+  {
+    "fichier": "photo_023.jpg",
+    "annee": 2023,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 230
+  },
+  {
+    "fichier": "photo_024.jpg",
+    "annee": 2023,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 240
+  },
+  {
+    "fichier": "photo_025.jpg",
+    "annee": 2023,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 250
+  },
+  {
+    "fichier": "photo_026.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 260
+  },
+  {
+    "fichier": "photo_027.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 270
+  },
+  {
+    "fichier": "photo_028.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 280
+  },
+  {
+    "fichier": "photo_029.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 290
+  },
+  {
+    "fichier": "photo_030.jpg",
+    "annee": 2024,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 300
+  },
+  {
+    "fichier": "photo_031.jpg",
+    "annee": 2024,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 310
+  },
+  {
+    "fichier": "photo_032.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 320
+  },
+  {
+    "fichier": "photo_033.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 330
+  },
+  {
+    "fichier": "photo_034.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 340
+  },
+  {
+    "fichier": "photo_035.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 350
+  },
+  {
+    "fichier": "photo_036.jpg",
+    "annee": 2024,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 360
+  },
+  {
+    "fichier": "photo_037.jpg",
+    "annee": 2024,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 370
+  },
+  {
+    "fichier": "photo_038.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 380
+  },
+  {
+    "fichier": "photo_039.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 390
+  },
+  {
+    "fichier": "photo_040.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 400
+  },
+  {
+    "fichier": "photo_041.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 410
+  },
+  {
+    "fichier": "photo_042.jpg",
+    "annee": 2024,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 420
+  },
+  {
+    "fichier": "photo_043.jpg",
+    "annee": 2024,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 430
+  },
+  {
+    "fichier": "photo_044.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 440
+  },
+  {
+    "fichier": "photo_045.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 450
+  },
+  {
+    "fichier": "photo_046.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 460
+  },
+  {
+    "fichier": "photo_047.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 470
+  },
+  {
+    "fichier": "photo_048.jpg",
+    "annee": 2024,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 480
+  },
+  {
+    "fichier": "photo_049.jpg",
+    "annee": 2024,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 490
+  },
+  {
+    "fichier": "photo_050.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 500
+  },
+  {
+    "fichier": "photo_051.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 510
+  },
+  {
+    "fichier": "photo_052.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 520
+  },
+  {
+    "fichier": "photo_053.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 530
+  },
+  {
+    "fichier": "photo_054.jpg",
+    "annee": 2024,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 540
+  },
+  {
+    "fichier": "photo_055.jpg",
+    "annee": 2024,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 550
+  },
+  {
+    "fichier": "photo_056.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 560
+  },
+  {
+    "fichier": "photo_057.jpg",
+    "annee": 2024,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 570
+  },
+  {
+    "fichier": "photo_058.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 580
+  },
+  {
+    "fichier": "photo_059.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 590
+  },
+  {
+    "fichier": "photo_060.jpg",
+    "annee": 2025,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 600
+  },
+  {
+    "fichier": "photo_061.jpg",
+    "annee": 2025,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 610
+  },
+  {
+    "fichier": "photo_062.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 620
+  },
+  {
+    "fichier": "photo_063.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 630
+  },
+  {
+    "fichier": "photo_064.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 640
+  },
+  {
+    "fichier": "photo_065.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 650
+  },
+  {
+    "fichier": "photo_066.jpg",
+    "annee": 2025,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 660
+  },
+  {
+    "fichier": "photo_067.jpg",
+    "annee": 2025,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 670
+  },
+  {
+    "fichier": "photo_068.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 680
+  },
+  {
+    "fichier": "photo_069.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 690
+  },
+  {
+    "fichier": "photo_070.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 700
+  },
+  {
+    "fichier": "photo_071.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 710
+  },
+  {
+    "fichier": "photo_072.jpg",
+    "annee": 2025,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 720
+  },
+  {
+    "fichier": "photo_073.jpg",
+    "annee": 2025,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 730
+  },
+  {
+    "fichier": "photo_074.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 740
+  },
+  {
+    "fichier": "photo_075.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 750
+  },
+  {
+    "fichier": "photo_076.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 760
+  },
+  {
+    "fichier": "photo_077.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 770
+  },
+  {
+    "fichier": "photo_078.jpg",
+    "annee": 2025,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 780
+  },
+  {
+    "fichier": "photo_079.jpg",
+    "annee": 2025,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 790
+  },
+  {
+    "fichier": "photo_080.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 800
+  },
+  {
+    "fichier": "photo_081.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 810
+  },
+  {
+    "fichier": "photo_082.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 820
+  },
+  {
+    "fichier": "photo_083.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 830
+  },
+  {
+    "fichier": "photo_084.jpg",
+    "annee": 2025,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 840
+  },
+  {
+    "fichier": "photo_085.jpg",
+    "annee": 2025,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 850
+  },
+  {
+    "fichier": "photo_086.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 860
+  },
+  {
+    "fichier": "photo_087.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 870
+  },
+  {
+    "fichier": "photo_088.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 880
+  },
+  {
+    "fichier": "photo_089.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 890
+  },
+  {
+    "fichier": "photo_090.jpg",
+    "annee": 2025,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 900
+  },
+  {
+    "fichier": "photo_091.jpg",
+    "annee": 2025,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 910
+  },
+  {
+    "fichier": "photo_092.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 920
+  },
+  {
+    "fichier": "photo_093.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 930
+  },
+  {
+    "fichier": "photo_094.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 940
+  },
+  {
+    "fichier": "photo_095.jpg",
+    "annee": 2025,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 950
+  },
+  {
+    "fichier": "photo_096.jpg",
+    "annee": 2026,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 960
+  },
+  {
+    "fichier": "photo_097.jpg",
+    "annee": 2026,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 970
+  },
+  {
+    "fichier": "photo_098.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 980
+  },
+  {
+    "fichier": "photo_099.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 990
+  },
+  {
+    "fichier": "photo_100.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1000
+  },
+  {
+    "fichier": "photo_101.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1010
+  },
+  {
+    "fichier": "photo_102.jpg",
+    "annee": 2026,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 1020
+  },
+  {
+    "fichier": "photo_103.jpg",
+    "annee": 2026,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 1030
+  },
+  {
+    "fichier": "photo_104.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1040
+  },
+  {
+    "fichier": "photo_105.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1050
+  },
+  {
+    "fichier": "photo_106.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1060
+  },
+  {
+    "fichier": "photo_107.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1070
+  },
+  {
+    "fichier": "photo_108.jpg",
+    "annee": 2026,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 1080
+  },
+  {
+    "fichier": "photo_109.jpg",
+    "annee": 2026,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 1090
+  },
+  {
+    "fichier": "photo_110.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1100
+  },
+  {
+    "fichier": "photo_111.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1110
+  },
+  {
+    "fichier": "photo_112.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1120
+  },
+  {
+    "fichier": "photo_113.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1130
+  },
+  {
+    "fichier": "photo_114.jpg",
+    "annee": 2026,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 1140
+  },
+  {
+    "fichier": "photo_115.jpg",
+    "annee": 2026,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 1150
+  },
+  {
+    "fichier": "photo_116.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1160
+  },
+  {
+    "fichier": "photo_117.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1170
+  },
+  {
+    "fichier": "photo_118.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1180
+  },
+  {
+    "fichier": "photo_121.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1190
+  },
+  {
+    "fichier": "photo_124.jpg",
+    "annee": 2026,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 1200
+  },
+  {
+    "fichier": "photo_125.jpg",
+    "annee": 2026,
+    "categorie": "sport",
+    "activite": "autres-sport",
+    "ordre": 1210
+  },
+  {
+    "fichier": "photo_126.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1220
+  },
+  {
+    "fichier": "photo_127.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1230
+  },
+  {
+    "fichier": "photo_128.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1240
+  },
+  {
+    "fichier": "photo_130.jpg",
+    "annee": 2026,
+    "categorie": "sortie",
+    "activite": "autres-sorties",
+    "ordre": 1250
+  },
+  {
+    "fichier": "photo_131.jpg",
+    "annee": 2026,
+    "categorie": "vie",
+    "activite": "vie-club",
+    "ordre": 1260
+  },
+  {
+    "fichier": "assets-premium/real-gym-group.jpg",
+    "annee": 2024,
+    "categorie": "sport",
+    "activite": "gymnastique",
+    "legende": "Gymnastique douce – Cours collectif"
+  },
+  {
+    "fichier": "assets-premium/real-danse.jpg",
+    "annee": 2024,
+    "categorie": "sport",
+    "activite": "danse",
+    "legende": "Danse – Atelier hebdomadaire"
+  },
+  {
+    "fichier": "assets-premium/real-tennis-table.jpg",
+    "annee": 2024,
+    "categorie": "sport",
+    "activite": "tennis-de-table",
+    "legende": "Tennis de table – Tournoi amical"
+  },
+  {
+    "fichier": "assets-premium/real-memoire.jpg",
+    "annee": 2024,
+    "categorie": "vie",
+    "activite": "atelier-memoire",
+    "legende": "Atelier mémoire – Stimulation cognitive"
+  }
+]

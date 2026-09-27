@@ -1,16 +1,20 @@
 import type { CollectionConfig } from 'payload'
 
-import { canEdit } from '../access'
+import { cacheSansDroit, peut } from '../access'
 
 export const Media: CollectionConfig = {
   slug: 'media',
   labels: { singular: 'Photo', plural: 'Photos' },
-  admin: { group: 'Médiathèque' },
+  admin: {
+    group: 'Médiathèque',
+    hidden: cacheSansDroit('media'),
+    description: 'Ouvrez une photo puis « Modifier l’image » pour la recadrer ou choisir son point d’intérêt.',
+  },
   access: {
     read: () => true,
     create: ({ req: { user } }) => Boolean(user),
-    update: canEdit('bureau', 'galerie'),
-    delete: canEdit('bureau', 'galerie'),
+    update: peut('media', 'modifier'),
+    delete: peut('media', 'supprimer'),
   },
   fields: [
     {
@@ -29,6 +33,10 @@ export const Media: CollectionConfig = {
   ],
   upload: {
     mimeTypes: ['image/*'],
+    // Éditeur intégré : recadrage et point d'intérêt (centre conservé dans les vignettes).
+    crop: true,
+    focalPoint: true,
+    adminThumbnail: 'vignette',
     imageSizes: [
       { name: 'vignette', width: 480 },
       { name: 'large', width: 1600 },

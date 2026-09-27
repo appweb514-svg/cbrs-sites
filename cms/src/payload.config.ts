@@ -13,10 +13,12 @@ import { Activites } from './collections/Activites'
 import { Documents } from './collections/Documents'
 import { Galerie } from './collections/Galerie'
 import { Media } from './collections/Media'
+import { Roles } from './collections/Roles'
 import { MembresBureau } from './collections/MembresBureau'
 import { Sorties } from './collections/Sorties'
 import { Users } from './collections/Users'
 import { VieDuClub } from './collections/VieDuClub'
+import { Apparence } from './globals/Apparence'
 import { FlashInfo } from './globals/FlashInfo'
 import { Parametres } from './globals/Parametres'
 import { Tarifs } from './globals/Tarifs'
@@ -58,8 +60,8 @@ export default buildConfig({
     supportedLanguages: { fr },
     fallbackLanguage: 'fr',
   },
-  collections: [VieDuClub, MembresBureau, Activites, Sorties, Galerie, Documents, Media, Users],
-  globals: [FlashInfo, Tarifs, Parametres],
+  collections: [VieDuClub, MembresBureau, Activites, Sorties, Galerie, Documents, Media, Users, Roles],
+  globals: [FlashInfo, Tarifs, Parametres, Apparence],
   cors: siteOrigins,
   editor: lexicalEditor(),
   email: smtpHost

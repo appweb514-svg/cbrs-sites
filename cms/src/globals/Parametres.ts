@@ -1,13 +1,13 @@
 import type { GlobalConfig } from 'payload'
 
-import { hiddenUnless, isAdmin } from '../access'
+import { cacheSaufAdmin, isAdmin } from '../access'
 
 export const Parametres: GlobalConfig = {
   slug: 'parametres',
   label: 'Paramètres du site',
   admin: {
     group: 'Administration',
-    hidden: hiddenUnless('admin'),
+    hidden: cacheSaufAdmin,
     description: 'Chiffres clés et adresses de contact affichés sur le site. Réservé à l’administrateur.',
   },
   access: {
