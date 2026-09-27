@@ -4,8 +4,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'cbrs-blue': '#0a3273', 'cbrs-blue-light': '#1e4b99', 'cbrs-green': '#437c14',
-        'cbrs-green-hover': '#3b6e11', 'cbrs-teal': '#145c75', 'cbrs-gray-100': '#f8f9fa',
+        // Couleurs pilotées par l'Apparence du CMS (variables posées par cms-client.js), valeurs d'origine par défaut.
+        'cbrs-blue': 'rgb(var(--cbrs-blue-rgb, 10 50 115) / <alpha-value>)',
+        'cbrs-blue-light': 'rgb(var(--cbrs-blue-light-rgb, 30 75 153) / <alpha-value>)',
+        'cbrs-green': 'rgb(var(--cbrs-green-rgb, 67 124 20) / <alpha-value>)',
+        'cbrs-green-hover': 'rgb(var(--cbrs-green-hover-rgb, 59 110 17) / <alpha-value>)',
+        'cbrs-teal': 'rgb(var(--cbrs-teal-rgb, 20 92 117) / <alpha-value>)',
+        'cbrs-gray-100': '#f8f9fa',
         'cbrs-gray-200': '#e9ecef', 'cbrs-text': '#333333', 'cbrs-text-light': '#666666',
       },
       boxShadow: {

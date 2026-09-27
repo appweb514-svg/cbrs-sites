@@ -1,18 +1,18 @@
 import type { GlobalConfig } from 'payload'
 
-import { canEdit, hiddenUnless } from '../access'
+import { cacheSansDroit, peut } from '../access'
 
 export const FlashInfo: GlobalConfig = {
   slug: 'flash-info',
   label: 'Flash info',
   admin: {
     group: 'Accueil',
-    hidden: hiddenUnless('bureau'),
+    hidden: cacheSansDroit('flash-info'),
     description: 'Bandeau défilant de la page d’accueil.',
   },
   access: {
     read: () => true,
-    update: canEdit('bureau'),
+    update: peut('flash-info', 'modifier'),
   },
   fields: [
     { name: 'actif', label: 'Afficher le bandeau', type: 'checkbox', defaultValue: true },

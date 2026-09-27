@@ -12,6 +12,7 @@
   const TIMEOUT = 3000;
   const MONTHS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
   const CATEGORIES = { club: 'Club', sortie: 'Sortie', evenement: 'Événement' };
+  // Lien officiel du site (nom du fichier PDF) → valeur « Remplace le lien officiel » du CMS.
   const DOC_RUBRIQUES = [
     ['statut', 'statuts'],
     ['reglement', 'reglement'],
@@ -19,6 +20,17 @@
     ['assurance', 'assurance'],
     ['federal', 'federal']
   ];
+  const DOC_CATEGORIES = [
+    ['adhesion', 'Adhésion'],
+    ['vie-associative', 'Vie associative'],
+    ['formations', 'Formations'],
+    ['assurance', 'Assurance'],
+    ['autre', 'Autres documents']
+  ];
+  const THEME_KEY = 'cbrs-theme';
+  const THEME_VARS = ['--cbrs-blue', '--cbrs-blue-rgb', '--cbrs-blue-light', '--cbrs-blue-light-rgb', '--cbrs-green',
+    '--cbrs-green-rgb', '--cbrs-green-dark', '--cbrs-green-hover-rgb', '--cbrs-teal', '--cbrs-teal-rgb',
+    '--cbrs-font-h1', '--cbrs-font-h2', '--cbrs-font-body'];
 
   function getJSON(path) {
     return new Promise(function (resolve, reject) {
@@ -83,6 +95,31 @@
     return CATEGORIES[key] || String(value || '');
   }
 
+  // Lien choisi dans le CMS (page du site, activité, sortie ou adresse externe) → adresse.
+  function resolveLien(lien) {
+    if (typeof lien === 'string') return resolveUrl(lien);
+    if (!lien || typeof lien !== 'object') return '';
+    const target = function (value, key) {
+      return value && typeof value === 'object' ? value[key] : value;
+    };
+    switch (lien.type) {
+      case 'page':
+        return typeof lien.page === 'string' && lien.page.charAt(0) === '/' ? lien.page : '';
+      case 'activite': {
+        const slug = target(lien.activite, 'slug');
+        return slug ? '/activite?id=' + encodeURIComponent(slug) : '';
+      }
+      case 'sortie': {
+        const id = target(lien.sortie, 'id');
+        return id ? '/sortie?id=' + encodeURIComponent(id) : '';
+      }
+      case 'externe':
+        return /^https:\/\//i.test(lien.url || '') ? lien.url : '';
+      default:
+        return '';
+    }
+  }
+
   function docRubrique(href) {
     const file = (href || '').split('?')[0].split('/').pop().toLowerCase();
     for (let i = 0; i < DOC_RUBRIQUES.length; i++) {
@@ -121,7 +158,7 @@
     const date = formatDate(item.date);
     if (date) body.appendChild(el('p', 'text-sm text-gray-500 mb-1', date));
     const heading = el('h3', 'font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors');
-    const link = resolveUrl(item.lien);
+    const link = resolveLien(item.lien);
     if (link) {
       const anchor = el('a', 'cbrs-card-link', item.titre || '');
       anchor.href = link;
@@ -211,16 +248,204 @@
   }
 
   function renderDocuments(items) {
-    const byRubrique = {};
-    items.forEach(function (item) {
-      if (item && item.rubrique && !byRubrique[item.rubrique]) byRubrique[item.rubrique] = item;
+    // Lien officiel : remplacé seulement par un document explicitement choisi pour lui (le plus récent).
+    const official = {};
+    items.slice().sort(function (x, y) {
+      return String(y.updatedAt || '').localeCompare(String(x.updatedAt || ''));
+    }).forEach(function (item) {
+      const key = item && item.remplaceLienOfficiel;
+      if (key && key !== 'aucun' && !official[key]) official[key] = item;
     });
     document.querySelectorAll('a[data-cbrs-doc]').forEach(function (link) {
-      const doc = byRubrique[docRubrique(link.getAttribute('href'))];
-      if (!doc) return;
-      const url = resolveUrl(doc.url);
+      const doc = official[docRubrique(link.getAttribute('href'))];
+      const url = doc && resolveUrl(doc.url);
       if (url) link.setAttribute('href', url);
     });
+
+    const container = document.getElementById('documents');
+    const listed = items.filter(function (item) { return item && item.afficherSurSite !== false && resolveUrl(item.url); });
+    if (!container || !listed.length) return;
+    let block = document.getElementById('cbrs-cms-documents');
+    if (block) block.remove();
+    block = el('div', 'mt-6 grid gap-6');
+    block.id = 'cbrs-cms-documents';
+    DOC_CATEGORIES.forEach(function (category) {
+      const group = listed.filter(function (item) { return (item.categorie || 'autre') === category[0]; });
+      if (!group.length) return;
+      const section = el('section');
+      section.appendChild(el('h3', 'text-base font-bold text-cbrs-text mb-3', category[1]));
+      const grid = el('div', 'grid grid-cols-1 gap-4 lg:grid-cols-2');
+      group.forEach(function (item) {
+        const card = el('div', 'cbrs-doc-callout');
+        const text = el('div');
+        text.appendChild(el('p', 'cbrs-doc-callout-title', item.titre || item.filename || 'Document'));
+        if (item.description) text.appendChild(el('p', 'cbrs-doc-callout-text', item.description));
+        const link = el('a', 'cbrs-doc-link', 'Télécharger (PDF)');
+        link.href = resolveUrl(item.url);
+        link.target = '_blank';
+        link.rel = 'noopener';
+        card.appendChild(text);
+        card.appendChild(link);
+        grid.appendChild(card);
+      });
+      section.appendChild(grid);
+      block.appendChild(section);
+    });
+    container.appendChild(block);
+  }
+
+  function renderGallery(items) {
+    if (typeof window.cbrsRenderGallery !== 'function') return;
+    const photos = items.map(function (item) {
+      const photo = item.photo || {};
+      const src = resolveUrl((photo.sizes && photo.sizes.large && photo.sizes.large.url) || photo.url);
+      if (!src) return null;
+      return {
+        src: src,
+        cat: item.categorie || 'vie',
+        year: item.annee,
+        caption: item.legende || photo.alt || ('CBRS ' + item.annee),
+        activity: item.activite && item.activite !== 'autres' ? item.activite : ''
+      };
+    }).filter(Boolean);
+    if (photos.length) window.cbrsRenderGallery(photos);
+  }
+
+  // Activité du CMS → format des données de site3/activite.html.
+  function toSiteActivity(item) {
+    const lat = item.carte && item.carte.lat;
+    const lon = item.carte && item.carte.lon;
+    return {
+      name: item.nom || '',
+      logo: imageUrl(item.icone) || '/logo-cbrs.png',
+      desc: item.description || '',
+      presentation: item.presentation || '',
+      category: item.niveau || '',
+      schedule: (item.creneaux || []).map(function (c) { return { day: c.jour, time: c.horaire, location: c.lieu }; }),
+      meetingPoint: item.pointRencontre || '',
+      map: typeof lat === 'number' && typeof lon === 'number' ? { lat: lat, lon: lon } : null,
+      animators: (item.animateurs || []).map(function (a) {
+        return { name: a.nom, photo: imageUrl(a.photo) || undefined };
+      }),
+      info: (item.infos || []).map(function (i) { return i.texte; }).filter(Boolean)
+    };
+  }
+
+  function renderActivityList(items) {
+    const grid = document.querySelector('.cbrs-activities-grid');
+    if (!grid) return;
+    grid.textContent = '';
+    items.forEach(function (item) {
+      const card = el('a', 'cbrs-activity-card group');
+      card.href = '/activite?id=' + encodeURIComponent(item.slug);
+      card.setAttribute('aria-label', item.nom || '');
+      const icon = el('div', 'cbrs-activity-icon');
+      const img = document.createElement('img');
+      img.src = imageUrl(item.icone) || '/logo-cbrs.png';
+      img.alt = item.nom || '';
+      img.className = 'w-full h-full object-contain';
+      icon.appendChild(img);
+      card.appendChild(icon);
+      card.appendChild(el('h3', 'sr-only', item.nom || ''));
+      grid.appendChild(card);
+    });
+  }
+
+  function hexToRgb(hex) {
+    return [1, 3, 5].map(function (i) { return parseInt(hex.slice(i, i + 2), 16); });
+  }
+
+  // Mélange vers le blanc (amount > 0) ou le noir (amount < 0), au format « r g b ».
+  function mix(hex, amount) {
+    const target = amount > 0 ? 255 : 0;
+    const a = Math.abs(amount);
+    return hexToRgb(hex).map(function (c) { return Math.round(c + (target - c) * a); }).join(' ');
+  }
+
+  function fontStack(name, fallback) {
+    if (!name || name === 'defaut') return '';
+    const serif = /Merriweather|Serif/.test(name);
+    return '"' + name + '", ' + (serif ? 'Georgia, serif' : fallback);
+  }
+
+  function themeFrom(data) {
+    const vars = {};
+    const color = function (value) { return /^#[0-9a-f]{6}$/i.test(value || '') ? value : ''; };
+    const blue = color(data.couleurPrincipale);
+    const green = color(data.couleurSecondaire);
+    const teal = color(data.couleurAccent);
+    if (blue) {
+      vars['--cbrs-blue'] = blue;
+      vars['--cbrs-blue-rgb'] = mix(blue, 0);
+      vars['--cbrs-blue-light-rgb'] = mix(blue, 0.15);
+      vars['--cbrs-blue-light'] = 'rgb(' + vars['--cbrs-blue-light-rgb'] + ')';
+    }
+    if (green) {
+      vars['--cbrs-green'] = green;
+      vars['--cbrs-green-rgb'] = mix(green, 0);
+      vars['--cbrs-green-hover-rgb'] = mix(green, -0.12);
+      vars['--cbrs-green-dark'] = 'rgb(' + vars['--cbrs-green-hover-rgb'] + ')';
+    }
+    if (teal) {
+      vars['--cbrs-teal'] = teal;
+      vars['--cbrs-teal-rgb'] = mix(teal, 0);
+    }
+    const families = [];
+    [['policeTitres', '--cbrs-font-h1'], ['policeSousTitres', '--cbrs-font-h2'], ['policeTexte', '--cbrs-font-body']].forEach(function (pair) {
+      const stack = fontStack(data[pair[0]], 'ui-sans-serif, system-ui, sans-serif');
+      if (!stack) return;
+      vars[pair[1]] = stack;
+      if (families.indexOf(data[pair[0]]) === -1) families.push(data[pair[0]]);
+    });
+    const fonts = families.length
+      ? 'https://fonts.googleapis.com/css2?' + families.map(function (f) { return 'family=' + f.replace(/ /g, '+') + ':wght@400;600;700'; }).join('&') + '&display=swap'
+      : '';
+    return { vars: vars, fonts: fonts };
+  }
+
+  function applyTheme(theme) {
+    const root = document.documentElement.style;
+    THEME_VARS.forEach(function (name) { root.removeProperty(name); });
+    Object.keys(theme.vars).forEach(function (name) { root.setProperty(name, theme.vars[name]); });
+    const current = document.getElementById('cbrs-theme-fonts');
+    if (current && current.getAttribute('href') !== theme.fonts) current.remove();
+    if (theme.fonts && !document.getElementById('cbrs-theme-fonts')) {
+      const link = document.createElement('link');
+      link.id = 'cbrs-theme-fonts';
+      link.rel = 'stylesheet';
+      link.href = theme.fonts;
+      document.head.appendChild(link);
+    }
+  }
+
+  function currentPage() {
+    const path = window.location.pathname.replace(/\.html$/, '').replace(/\/index$/, '/').replace(/\/+$/, '');
+    return path || '/';
+  }
+
+  function renderHeader(header) {
+    const hero = document.querySelector('.cbrs-hero');
+    if (!hero || !header) return;
+    const title = hero.querySelector('h1');
+    if (header.titre && title) title.textContent = header.titre;
+    const subtitle = title && title.nextElementSibling && title.nextElementSibling.tagName === 'P' ? title.nextElementSibling : null;
+    if (header.sousTitre && subtitle) subtitle.textContent = header.sousTitre;
+    const src = header.image && typeof header.image === 'object' ? resolveUrl(header.image.url) : '';
+    const bg = hero.querySelector('img.cbrs-shared-hero-bg') || hero.querySelector('img');
+    if (src && bg) bg.src = src;
+  }
+
+  function renderApparence(data) {
+    if (!data || typeof data !== 'object') return;
+    const theme = themeFrom(data);
+    applyTheme(theme);
+    try {
+      if (Object.keys(theme.vars).length) localStorage.setItem(THEME_KEY, JSON.stringify(theme));
+      else localStorage.removeItem(THEME_KEY);
+    } catch (e) { /* stockage indisponible */ }
+    const page = currentPage();
+    const header = (data.enTetes || []).filter(function (h) { return h.page === page; })[0];
+    renderHeader(header);
   }
 
   function renderTarifs(lignes) {
@@ -287,8 +512,12 @@
     '/api/globals/parametres',
     renderFigures);
 
-  register(function () { return Boolean(document.querySelector('a[data-cbrs-doc]')); },
-    '/api/documents?limit=100',
+  register(function () { return true; },
+    '/api/globals/apparence?depth=1',
+    renderApparence);
+
+  register(function () { return Boolean(document.querySelector('a[data-cbrs-doc]') || document.getElementById('documents')); },
+    '/api/documents?limit=200&sort=ordre',
     function (data) {
       const items = docs(data);
       if (items.length) renderDocuments(items);
@@ -306,6 +535,25 @@
     function (data) {
       const items = docs(data);
       if (items.length) renderVoyages(items);
+    });
+
+  register(function () { return typeof window.cbrsRenderGallery === 'function'; },
+    '/api/galerie?limit=1000&sort=_order&depth=1',
+    function (data) { renderGallery(docs(data)); });
+
+  register(function () { return Boolean(document.querySelector('.cbrs-activities-grid')); },
+    '/api/activites?limit=100&sort=ordre&depth=1',
+    function (data) {
+      const items = docs(data).filter(function (item) { return item.slug; });
+      if (items.length) renderActivityList(items);
+    });
+
+  register(function () { return typeof window.cbrsRenderActivity === 'function' && Boolean(window.cbrsActivityId); },
+    '/api/activites?limit=1&depth=1&where[slug][equals]=' + encodeURIComponent(window.cbrsActivityId || ''),
+    function (data) {
+      const item = docs(data)[0];
+      if (item) window.cbrsRenderActivity(toSiteActivity(item));
+      else window.cbrsActivityMissing(Boolean(window.cbrsActivityKnown));
     });
 
   const pending = jobs.map(function (job) {

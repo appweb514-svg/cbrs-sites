@@ -89,6 +89,15 @@ body.cbrs-ui :where(h1, h2, h3, h4, h5, h6) {
   font-family: var(--cbrs-font-heading);
 }
 
+/* Polices choisies dans l'Apparence du CMS (variables posées par cms-client.js). */
+body.cbrs-ui h1 {
+  font-family: var(--cbrs-font-h1, var(--cbrs-font-heading));
+}
+
+body.cbrs-ui :where(h2, h3) {
+  font-family: var(--cbrs-font-h2, var(--cbrs-font-heading));
+}
+
 body.cbrs-ui :where(button, input, textarea, select, optgroup) {
   font-family: inherit;
 }

@@ -1,55 +1,44 @@
 import 'dotenv/config'
 
+import path from 'node:path'
+
 import { getPayload } from 'payload'
 
 import config from '../payload.config'
-import activites from './activites.json'
-
-const JOURS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche', 'Voir planning'] as const
-type Jour = (typeof JOURS)[number]
+import { importerActivites, importerGalerie, importerRoles } from './import'
 
 const password = process.env.CBRS_SEED_PASSWORD
-if (!password || password.length < 12) {
-  throw new Error('Définissez CBRS_SEED_PASSWORD (12 caractères minimum) avant de lancer le jeu de démonstration.')
-}
-
-const normaliserCreneau = (creneau: { jour: string; horaire: string; lieu: string }) => {
-  const jour = JOURS.find((j) => creneau.jour.startsWith(j)) ?? 'Voir planning'
-  const reste = creneau.jour.slice(jour.length).trim()
-  return { jour: jour as Jour, horaire: reste ? `${reste} — ${creneau.horaire}` : creneau.horaire, lieu: creneau.lieu }
-}
+const siteDir = path.resolve(process.cwd(), process.env.CBRS_SITE_DIR ?? '../site3')
 
 const payload = await getPayload({ config: await config })
 
-const existing = await payload.count({ collection: 'users' })
-if (existing.totalDocs > 0) {
+// Contenu du site statique : rejouable à tout moment (mise à jour par identifiant, sans doublons).
+const activitesImport = await importerActivites(payload, siteDir)
+const roles = await importerRoles(payload)
+const galerieImport = await importerGalerie(payload, siteDir)
+payload.logger.info(
+  `Import du site : activités ${activitesImport.crees} créées / ${activitesImport.misesAJour} mises à jour, ` +
+    `galerie ${galerieImport.crees} photos ajoutées (${galerieImport.ignores} fichiers absents ou illisibles), ${Object.keys(roles).length} rôles.`,
+)
+
+// Jeu de démonstration : seulement sur une base sans compte.
+if ((await payload.count({ collection: 'users' })).totalDocs > 0) {
   payload.logger.info('La base contient déjà des comptes : jeu de démonstration ignoré.')
   process.exit(0)
 }
-
-const comptes = [
-  { email: 'admin@cbrs.local', nom: 'Administrateur', roles: ['admin'] as const },
-  { email: 'bureau@cbrs.local', nom: 'Membre du bureau', roles: ['bureau'] as const },
-  { email: 'randonnee@cbrs.local', nom: 'Référent Randonnée', roles: ['activites'] as const },
-  { email: 'sorties@cbrs.local', nom: 'Équipe Sorties & Voyages', roles: ['sorties'] as const },
-]
-
-const users: Record<string, number> = {}
-for (const compte of comptes) {
-  const user = await payload.create({ collection: 'users', data: { ...compte, roles: [...compte.roles], password } })
-  users[compte.email] = user.id
+if (!password || password.length < 12) {
+  throw new Error('Définissez CBRS_SEED_PASSWORD (12 caractères minimum) pour créer les comptes de démonstration.')
 }
 
-for (const activite of activites) {
-  await payload.create({
-    collection: 'activites',
-    data: {
-      ...activite,
-      creneaux: activite.creneaux.map(normaliserCreneau),
-      referents: activite.nom === 'Randonnée' ? [users['randonnee@cbrs.local']] : [],
-      _status: 'published',
-    },
-  })
+const comptes = [
+  { email: 'admin@cbrs.local', nom: 'Administrateur', estAdministrateur: true, roles: [] },
+  { email: 'bureau@cbrs.local', nom: 'Membre du bureau', roles: [roles['Bureau']] },
+  { email: 'cartes@cbrs.local', nom: 'Responsable Jeux de cartes', roles: [roles['Responsable Jeux de cartes']] },
+  { email: 'sorties@cbrs.local', nom: 'Équipe Sorties & Voyages', roles: [roles['Équipe Sorties & Voyages']] },
+]
+
+for (const compte of comptes) {
+  await payload.create({ collection: 'users', data: { ...compte, password } })
 }
 
 const actualites = [
@@ -108,6 +97,6 @@ await payload.create({
 })
 
 payload.logger.info(
-  `Jeu de démonstration créé : ${comptes.length} comptes, ${activites.length} activités, ${actualites.length} actualités, 1 voyage en brouillon.`,
+  `Jeu de démonstration créé : ${comptes.length} comptes, ${actualites.length} actualités, 1 voyage en brouillon.`,
 )
 process.exit(0)

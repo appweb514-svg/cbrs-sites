@@ -75,6 +75,7 @@ export interface Config {
     documents: Document;
     media: Media;
     users: User;
+    roles: Role;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -90,6 +91,7 @@ export interface Config {
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    roles: RolesSelect<false> | RolesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -103,11 +105,13 @@ export interface Config {
     'flash-info': FlashInfo;
     tarifs: Tarif;
     parametres: Parametre;
+    apparence: Apparence;
   };
   globalsSelect: {
     'flash-info': FlashInfoSelect<false> | FlashInfoSelect<true>;
     tarifs: TarifsSelect<false> | TarifsSelect<true>;
     parametres: ParametresSelect<false> | ParametresSelect<true>;
+    apparence: ApparenceSelect<false> | ApparenceSelect<true>;
   };
   locale: null;
   widgets: {
@@ -150,12 +154,39 @@ export interface VieDuClub {
   categorie: 'club' | 'sortie' | 'evenement';
   image?: (number | null) | Media;
   resume: string;
-  lien?: string | null;
+  /**
+   * Choisissez une page, une activité ou une sortie du site.
+   */
+  lien?: {
+    type?: ('aucun' | 'page' | 'activite' | 'sortie' | 'externe') | null;
+    page?:
+      | (
+          | '/'
+          | '/activites'
+          | '/planning'
+          | '/sorties-voyages'
+          | '/galerie'
+          | '/adhesion'
+          | '/formation'
+          | '/evenement'
+          | '/statuts'
+          | '/liens-utiles'
+          | '/contact'
+          | '/mentions-legales'
+          | '/conditions-utilisation'
+        )
+      | null;
+    activite?: (number | null) | Activite;
+    sortie?: (number | null) | Sorty;
+    url?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Ouvrez une photo puis « Modifier l’image » pour la recadrer ou choisir son point d’intérêt.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
@@ -169,6 +200,7 @@ export interface Media {
    * Auteur et licence si la photo ne vient pas du club.
    */
   credit?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -200,25 +232,7 @@ export interface Media {
   };
 }
 /**
- * Section « Présentation du bureau » de la page d’accueil. Accord écrit des personnes requis pour la photo.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "membres-bureau".
- */
-export interface MembresBureau {
-  id: number;
-  nom: string;
-  /**
-   * Ex. : Présidente, Trésorier…
-   */
-  fonction: string;
-  photo?: (number | null) | Media;
-  ordre?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Chaque responsable ne voit et ne modifie que les activités dont il est référent.
+ * Pages « Activités » et fiches du site. Une activité dépubliée (ou en brouillon seulement) disparaît du site.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "activites".
@@ -226,9 +240,15 @@ export interface MembresBureau {
 export interface Activite {
   id: number;
   nom: string;
-  icone?: (number | null) | Media;
+  /**
+   * Affichée sur la carte de la page Activités et sous le titre de la fiche.
+   */
   description: string;
   presentation?: string | null;
+  niveau?: string | null;
+  icone?: (number | null) | Media;
+  photo?: (number | null) | Media;
+  photos?: (number | Media)[] | null;
   creneaux?:
     | {
         jour: 'Lundi' | 'Mardi' | 'Mercredi' | 'Jeudi' | 'Vendredi' | 'Samedi' | 'Dimanche' | 'Voir planning';
@@ -238,6 +258,21 @@ export interface Activite {
       }[]
     | null;
   pointRencontre?: string | null;
+  /**
+   * Position du point de rendez-vous. Laisser vide pour la détecter à partir du lieu.
+   */
+  carte?: {
+    lieu?: string | null;
+    lat?: number | null;
+    lon?: number | null;
+  };
+  animateurs?:
+    | {
+        nom: string;
+        photo?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
   infos?:
     | {
         texte: string;
@@ -245,43 +280,13 @@ export interface Activite {
       }[]
     | null;
   /**
-   * Seul un administrateur peut changer les référents.
+   * Adresse de la fiche : /activite?id=<identifiant>. La changer casse les liens existants.
    */
-  referents?: (number | User)[] | null;
+  slug: string;
+  ordre?: number | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: number;
-  nom: string;
-  /**
-   * Détermine les sections que le bénévole peut modifier.
-   */
-  roles: ('admin' | 'bureau' | 'activites' | 'sorties' | 'galerie')[];
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  resetPasswordRequestedAt?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-  collection: 'users';
 }
 /**
  * Manifestations, sorties à la journée et voyages. Seuls les documents publiés apparaissent sur le site.
@@ -303,22 +308,69 @@ export interface Sorty {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * Photos mises en avant sur le site, regroupées par album et par année.
+ * Section « Présentation du bureau » de la page d’accueil. Accord écrit des personnes requis pour la photo.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "membres-bureau".
+ */
+export interface MembresBureau {
+  id: number;
+  nom: string;
+  /**
+   * Ex. : Présidente, Trésorier…
+   */
+  fonction: string;
+  photo?: (number | null) | Media;
+  ordre?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Page « Galerie photo » du site. Glissez les photos (poignée à gauche) pour changer leur ordre sur le site ; cochez-en plusieurs puis « Modifier » pour changer l’année ou la catégorie d’un coup.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "galerie".
  */
 export interface Galerie {
   id: number;
-  album?: string | null;
-  annee?: number | null;
+  _order?: string | null;
   photo: number | Media;
   legende?: string | null;
+  annee: number;
+  categorie: 'sport' | 'sortie' | 'vie';
+  activite?:
+    | (
+        | 'marche-nordique'
+        | 'tai-chi'
+        | 'randonnee'
+        | 'gymnastique'
+        | 'tennis-de-table'
+        | 'danse'
+        | 'cyclisme'
+        | 'aquagym'
+        | 'petanque'
+        | 'tennis'
+        | 'atelier-memoire'
+        | 'autres-sport'
+        | 'autres-sorties'
+        | 'vie-club'
+        | 'autres'
+      )
+    | null;
+  /**
+   * Facultatif, ex. : Sortie au Touquet 2026.
+   */
+  album?: string | null;
+  /**
+   * Renseigné par l’import des photos du site.
+   */
+  fichierOrigine?: string | null;
+  afficherSurSite?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
- * Statuts, règlement intérieur, fiche d’adhésion, assurance, imprimé fédéral.
+ * Documents listés sur la page « Liens utiles et documents ». Un document ne remplace un lien officiel (statuts, fiche d’adhésion…) que si vous le choisissez.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "documents".
@@ -326,8 +378,15 @@ export interface Galerie {
 export interface Document {
   id: number;
   titre: string;
-  rubrique: 'statuts' | 'reglement' | 'adhesion' | 'assurance' | 'federal' | 'autre';
+  categorie: 'adhesion' | 'vie-associative' | 'formations' | 'assurance' | 'autre';
   description?: string | null;
+  /**
+   * Le plus récent document choisi pour un lien officiel remplace le fichier actuel du site.
+   */
+  remplaceLienOfficiel: 'aucun' | 'statuts' | 'reglement' | 'adhesion' | 'assurance' | 'federal';
+  afficherSurSite?: boolean | null;
+  ordre?: number | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -339,6 +398,78 @@ export interface Document {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: number;
+  nom: string;
+  /**
+   * Gère les bénévoles, les rôles, les paramètres et l’apparence du site.
+   */
+  estAdministrateur?: boolean | null;
+  /**
+   * Détermine les sections que le bénévole peut voir, modifier ou publier (menu Administration › Rôles).
+   */
+  roles?: (number | Role)[] | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+  collection: 'users';
+}
+/**
+ * Chaque rôle regroupe des droits par section. Un bénévole peut avoir plusieurs rôles ; ses droits s’additionnent.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "roles".
+ */
+export interface Role {
+  id: number;
+  nom: string;
+  description?: string | null;
+  /**
+   * « Voir » affiche la section dans l’administration. « Publier » permet de mettre en ligne ; sans ce droit, seuls les brouillons sont possibles.
+   */
+  permissions?:
+    | {
+        section:
+          | 'vie-du-club'
+          | 'membres-bureau'
+          | 'activites'
+          | 'sorties'
+          | 'galerie'
+          | 'documents'
+          | 'media'
+          | 'flash-info'
+          | 'tarifs'
+          | 'apparence';
+        actions: ('voir' | 'creer' | 'modifier' | 'publier' | 'supprimer')[];
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Laisser vide pour toutes les activités. Sinon, les droits sur la section « Activités » ne concernent que celles-ci (ex. : responsable Jeux de cartes).
+   */
+  activitesAutorisees?: (number | Activite)[] | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -395,6 +526,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: number | User;
+      } | null)
+    | ({
+        relationTo: 'roles';
+        value: number | Role;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -448,7 +583,15 @@ export interface VieDuClubSelect<T extends boolean = true> {
   categorie?: T;
   image?: T;
   resume?: T;
-  lien?: T;
+  lien?:
+    | T
+    | {
+        type?: T;
+        page?: T;
+        activite?: T;
+        sortie?: T;
+        url?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -471,9 +614,12 @@ export interface MembresBureauSelect<T extends boolean = true> {
  */
 export interface ActivitesSelect<T extends boolean = true> {
   nom?: T;
-  icone?: T;
   description?: T;
   presentation?: T;
+  niveau?: T;
+  icone?: T;
+  photo?: T;
+  photos?: T;
   creneaux?:
     | T
     | {
@@ -483,13 +629,28 @@ export interface ActivitesSelect<T extends boolean = true> {
         id?: T;
       };
   pointRencontre?: T;
+  carte?:
+    | T
+    | {
+        lieu?: T;
+        lat?: T;
+        lon?: T;
+      };
+  animateurs?:
+    | T
+    | {
+        nom?: T;
+        photo?: T;
+        id?: T;
+      };
   infos?:
     | T
     | {
         texte?: T;
         id?: T;
       };
-  referents?: T;
+  slug?: T;
+  ordre?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -515,10 +676,15 @@ export interface SortiesSelect<T extends boolean = true> {
  * via the `definition` "galerie_select".
  */
 export interface GalerieSelect<T extends boolean = true> {
-  album?: T;
-  annee?: T;
+  _order?: T;
   photo?: T;
   legende?: T;
+  annee?: T;
+  categorie?: T;
+  activite?: T;
+  album?: T;
+  fichierOrigine?: T;
+  afficherSurSite?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -528,8 +694,12 @@ export interface GalerieSelect<T extends boolean = true> {
  */
 export interface DocumentsSelect<T extends boolean = true> {
   titre?: T;
-  rubrique?: T;
+  categorie?: T;
   description?: T;
+  remplaceLienOfficiel?: T;
+  afficherSurSite?: T;
+  ordre?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -549,6 +719,7 @@ export interface DocumentsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   credit?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -591,6 +762,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   nom?: T;
+  estAdministrateur?: T;
   roles?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -609,6 +781,24 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "roles_select".
+ */
+export interface RolesSelect<T extends boolean = true> {
+  nom?: T;
+  description?: T;
+  permissions?:
+    | T
+    | {
+        section?: T;
+        actions?: T;
+        id?: T;
+      };
+  activitesAutorisees?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -698,6 +888,70 @@ export interface Parametre {
   createdAt?: string | null;
 }
 /**
+ * Polices, couleurs et en-têtes de pages. Chaque enregistrement est conservé : onglet « Versions » › « Restaurer » pour revenir en arrière.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "apparence".
+ */
+export interface Apparence {
+  id: number;
+  /**
+   * Titre principal de chaque page.
+   */
+  policeTitres:
+    'defaut' | 'Inter' | 'Manrope' | 'Poppins' | 'Lato' | 'Open Sans' | 'Nunito' | 'Merriweather' | 'Source Serif 4';
+  /**
+   * Titres des sections.
+   */
+  policeSousTitres:
+    'defaut' | 'Inter' | 'Manrope' | 'Poppins' | 'Lato' | 'Open Sans' | 'Nunito' | 'Merriweather' | 'Source Serif 4';
+  /**
+   * Paragraphes, menus et boutons.
+   */
+  policeTexte:
+    'defaut' | 'Inter' | 'Manrope' | 'Poppins' | 'Lato' | 'Open Sans' | 'Nunito' | 'Merriweather' | 'Source Serif 4';
+  /**
+   * Menus, titres et boutons principaux (bleu d’origine).
+   */
+  couleurPrincipale: string;
+  /**
+   * Mises en valeur et boutons d’action (vert d’origine).
+   */
+  couleurSecondaire: string;
+  /**
+   * Bandeaux et détails (bleu-vert d’origine).
+   */
+  couleurAccent: string;
+  /**
+   * Remplace le titre, le sous-titre ou l’image d’en-tête d’une page. Champ vide = contenu actuel conservé.
+   */
+  enTetes?:
+    | {
+        page:
+          | '/'
+          | '/activites'
+          | '/planning'
+          | '/sorties-voyages'
+          | '/galerie'
+          | '/adhesion'
+          | '/formation'
+          | '/evenement'
+          | '/statuts'
+          | '/liens-utiles'
+          | '/contact'
+          | '/mentions-legales'
+          | '/conditions-utilisation';
+        titre?: string | null;
+        sousTitre?: string | null;
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  valeursOrigine?: boolean | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "flash-info_select".
  */
@@ -734,6 +988,31 @@ export interface ParametresSelect<T extends boolean = true> {
   activites?: T;
   emailContact?: T;
   emailSorties?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "apparence_select".
+ */
+export interface ApparenceSelect<T extends boolean = true> {
+  policeTitres?: T;
+  policeSousTitres?: T;
+  policeTexte?: T;
+  couleurPrincipale?: T;
+  couleurSecondaire?: T;
+  couleurAccent?: T;
+  enTetes?:
+    | T
+    | {
+        page?: T;
+        titre?: T;
+        sousTitre?: T;
+        image?: T;
+        id?: T;
+      };
+  valeursOrigine?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

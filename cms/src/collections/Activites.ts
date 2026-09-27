@@ -1,74 +1,149 @@
 import type { CollectionConfig } from 'payload'
 
-import { canEdit, hasRole, hiddenUnless, isAdminField, ownActivityOrEditor, publishedOrEditor } from '../access'
+import { accesSection, cacheSansDroit, publieOuEditeur, verifierPublication } from '../access'
 
 export const Activites: CollectionConfig = {
   slug: 'activites',
   labels: { singular: 'Activité', plural: 'Activités' },
   admin: {
     useAsTitle: 'nom',
-    defaultColumns: ['nom', 'referents', '_status'],
+    defaultColumns: ['nom', 'ordre', '_status'],
     group: 'Activités',
-    hidden: hiddenUnless('bureau', 'activites'),
-    description: 'Chaque responsable ne voit et ne modifie que les activités dont il est référent.',
+    hidden: cacheSansDroit('activites'),
+    description:
+      'Pages « Activités » et fiches du site. Une activité dépubliée (ou en brouillon seulement) disparaît du site.',
   },
-  defaultSort: 'nom',
+  defaultSort: 'ordre',
   versions: { drafts: true },
-  access: {
-    read: (args) => {
-      const { user } = args.req
-      if (user && !hasRole(user, 'bureau')) {
-        return ownActivityOrEditor(args)
-      }
-      return publishedOrEditor('bureau')(args)
-    },
-    create: canEdit('bureau'),
-    update: ownActivityOrEditor,
-    delete: canEdit('bureau'),
-  },
+  access: accesSection('activites', publieOuEditeur('activites')),
+  hooks: { beforeChange: [verifierPublication('activites')] },
   fields: [
-    { name: 'nom', label: 'Nom de l’activité', type: 'text', required: true },
-    { name: 'icone', label: 'Icône', type: 'upload', relationTo: 'media' },
-    { name: 'description', label: 'Description courte', type: 'textarea', required: true, maxLength: 240 },
-    { name: 'presentation', label: 'Présentation', type: 'textarea' },
     {
-      name: 'creneaux',
-      label: 'Créneaux',
-      labels: { singular: 'Créneau', plural: 'Créneaux' },
-      type: 'array',
-      fields: [
+      type: 'tabs',
+      tabs: [
         {
-          type: 'row',
+          label: 'Présentation',
+          fields: [
+            { name: 'nom', label: 'Nom de l’activité', type: 'text', required: true },
+            {
+              name: 'description',
+              label: 'Description courte',
+              type: 'textarea',
+              required: true,
+              maxLength: 240,
+              admin: { description: 'Affichée sur la carte de la page Activités et sous le titre de la fiche.' },
+            },
+            { name: 'presentation', label: 'Présentation', type: 'textarea' },
+            { name: 'niveau', label: 'Niveau', type: 'text', admin: { placeholder: 'Tous niveaux' } },
+            {
+              type: 'row',
+              fields: [
+                { name: 'icone', label: 'Logo', type: 'upload', relationTo: 'media' },
+                { name: 'photo', label: 'Photo principale', type: 'upload', relationTo: 'media' },
+              ],
+            },
+            {
+              name: 'photos',
+              label: 'Galerie de l’activité',
+              type: 'upload',
+              relationTo: 'media',
+              hasMany: true,
+            },
+          ],
+        },
+        {
+          label: 'Horaires et lieu',
           fields: [
             {
-              name: 'jour',
-              label: 'Jour',
-              type: 'select',
-              required: true,
-              options: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche', 'Voir planning'],
+              name: 'creneaux',
+              label: 'Créneaux',
+              labels: { singular: 'Créneau', plural: 'Créneaux' },
+              type: 'array',
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'jour',
+                      label: 'Jour',
+                      type: 'select',
+                      required: true,
+                      options: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche', 'Voir planning'],
+                    },
+                    { name: 'horaire', label: 'Horaire', type: 'text', required: true, admin: { placeholder: '9h-12h' } },
+                    { name: 'lieu', label: 'Lieu', type: 'text', required: true },
+                  ],
+                },
+              ],
             },
-            { name: 'horaire', label: 'Horaire', type: 'text', required: true, admin: { placeholder: '9h-12h' } },
-            { name: 'lieu', label: 'Lieu', type: 'text', required: true },
+            { name: 'pointRencontre', label: 'Point de rendez-vous', type: 'text' },
+            {
+              name: 'carte',
+              label: 'Carte',
+              type: 'group',
+              admin: {
+                description: 'Position du point de rendez-vous. Laisser vide pour la détecter à partir du lieu.',
+              },
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    { name: 'lieu', label: 'Nom du lieu', type: 'text' },
+                    { name: 'lat', label: 'Latitude', type: 'number', min: -90, max: 90 },
+                    { name: 'lon', label: 'Longitude', type: 'number', min: -180, max: 180 },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: 'Animateurs et infos',
+          fields: [
+            {
+              name: 'animateurs',
+              label: 'Animateurs',
+              labels: { singular: 'Animateur', plural: 'Animateurs' },
+              type: 'array',
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    { name: 'nom', label: 'Prénom et nom', type: 'text', required: true },
+                    { name: 'photo', label: 'Photo (accord écrit requis)', type: 'upload', relationTo: 'media' },
+                  ],
+                },
+              ],
+            },
+            {
+              name: 'infos',
+              label: 'Infos pratiques',
+              labels: { singular: 'Info', plural: 'Infos pratiques' },
+              type: 'array',
+              fields: [{ name: 'texte', label: 'Texte', type: 'text', required: true }],
+            },
           ],
         },
       ],
     },
-    { name: 'pointRencontre', label: 'Point de rendez-vous', type: 'text' },
     {
-      name: 'infos',
-      label: 'Infos pratiques',
-      labels: { singular: 'Info', plural: 'Infos pratiques' },
-      type: 'array',
-      fields: [{ name: 'texte', label: 'Texte', type: 'text', required: true }],
+      name: 'slug',
+      label: 'Identifiant de page (ne pas modifier)',
+      type: 'text',
+      required: true,
+      unique: true,
+      index: true,
+      admin: {
+        position: 'sidebar',
+        description: 'Adresse de la fiche : /activite?id=<identifiant>. La changer casse les liens existants.',
+      },
     },
     {
-      name: 'referents',
-      label: 'Référents (bénévoles autorisés à modifier)',
-      type: 'relationship',
-      relationTo: 'users',
-      hasMany: true,
-      access: { create: isAdminField, update: isAdminField },
-      admin: { position: 'sidebar', description: 'Seul un administrateur peut changer les référents.' },
+      name: 'ordre',
+      label: 'Ordre d’affichage',
+      type: 'number',
+      defaultValue: 100,
+      admin: { position: 'sidebar' },
     },
   ],
 }

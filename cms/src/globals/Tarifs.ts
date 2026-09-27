@@ -1,18 +1,18 @@
 import type { GlobalConfig } from 'payload'
 
-import { canEdit, hiddenUnless } from '../access'
+import { cacheSansDroit, peut } from '../access'
 
 export const Tarifs: GlobalConfig = {
   slug: 'tarifs',
   label: 'Tarifs',
   admin: {
     group: 'Vie associative',
-    hidden: hiddenUnless('bureau'),
+    hidden: cacheSansDroit('tarifs'),
     description: 'Grille tarifaire de la page Adhésion, affichée dans l’ordre saisi.',
   },
   access: {
     read: () => true,
-    update: canEdit('bureau'),
+    update: peut('tarifs', 'modifier'),
   },
   fields: [
     {

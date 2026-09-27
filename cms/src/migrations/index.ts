@@ -1,5 +1,6 @@
 import * as migration_20260925_194715_init from './20260925_194715_init';
 import * as migration_20260926_182301_vercel_blob from './20260926_182301_vercel_blob';
+import * as migration_20260927_090415_cms_v2 from './20260927_090415_cms_v2';
 
 export const migrations = [
   {
@@ -10,6 +11,11 @@ export const migrations = [
   {
     up: migration_20260926_182301_vercel_blob.up,
     down: migration_20260926_182301_vercel_blob.down,
-    name: '20260926_182301_vercel_blob'
+    name: '20260926_182301_vercel_blob',
+  },
+  {
+    up: migration_20260927_090415_cms_v2.up,
+    down: migration_20260927_090415_cms_v2.down,
+    name: '20260927_090415_cms_v2'
   },
 ];

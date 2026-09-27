@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr"><head>
+<meta name="cbrs-cms-url" content="https://cbrs-cms.vercel.app"/>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Galerie Photos - CBRS Club du Beauvaisis de la Retraite Sportive</title>
@@ -173,6 +174,7 @@
   }
 </style>
 <link rel="stylesheet" href="ui-shell.css"/>
+<script>/* Apparence du CMS mémorisée : appliquée avant l’affichage (voir cms-client.js). */try{var t=JSON.parse(localStorage.getItem("cbrs-theme"));if(t&&t.vars){for(var k in t.vars)document.documentElement.style.setProperty(k,t.vars[k]);if(t.fonts)document.write('<link id="cbrs-theme-fonts" rel="stylesheet" href="'+t.fonts.replace(/"/g,"")+'"/>');}}catch(e){}</script>
 <link rel="stylesheet" href="tailwind.css"/>
 </head>
 <body class="wave-effect-disabled bg-gray-50 text-cbrs-text antialiased flex flex-col min-h-screen cbrs-ui">
@@ -1334,45 +1336,27 @@ function loadScrapedPhotos() {
     gallery.appendChild(fig);
   }
 
-  let local = [];
-  try { local = JSON.parse(localStorage.getItem('cbrs-gallery') || '[]'); } catch(e) {}
-
-  fetch('/api/public/gallery').then(r => r.ok && r.json()).then(data => {
-    if (local.length) {
-      local.forEach(function(p) {
-        appendPhoto(p.dataUrl, p.category || 'vie', p.year || '2026', p.caption || p.filename, p.activity);
-      });
-    }
-    if (data && data.photos && data.photos.length) {
-      data.photos.forEach(function(p) {
-        appendPhoto('photos/' + p.filename, p.category, p.year, p.caption || 'CBRS ' + p.year, p.activity);
-      });
-    } else if (!local.length) {
-      fallback();
+  // Remplace toutes les photos (appelé au chargement, puis par cms-client.js quand le CMS répond).
+  function render(list) {
+    gallery.querySelectorAll('.gallery-item').forEach(function(item) { item.remove(); });
+    list.forEach(function(p) { appendPhoto(p.src, p.cat, String(p.year), p.caption || 'CBRS ' + p.year, p.activity); });
+    const yearSelect = document.getElementById('gallery-year-filter');
+    if (yearSelect) {
+      const years = [...new Set(list.map(function(p) { return String(p.year); }))].sort().reverse();
+      if (!years.includes(currentYear)) currentYear = 'all';
+      yearSelect.innerHTML = '<option value="all">Toutes les années</option>' + years.map(function(y) { return '<option value="' + y + '">' + y + '</option>'; }).join('');
+      yearSelect.value = currentYear;
     }
     refreshActivityFilters();
     applyFilters();
-  }).catch(function() {
-    if (local.length) {
-      local.forEach(function(p) {
-        appendPhoto(p.dataUrl, p.category || 'vie', p.year || '2026', p.caption || p.filename, p.activity);
-      });
-    } else {
-      fallback();
-    }
-    refreshActivityFilters();
-    applyFilters();
-  });
-  function fallback() {
-    scrapedPhotos.forEach(function(p) {
-      appendPhoto('photos/' + p.file, p.cat, p.year, 'CBRS ' + p.year, p.activity);
-    });
   }
+  window.cbrsRenderGallery = render;
+  render(scrapedPhotos.map(function(p) {
+    return { src: '/photos/' + p.file, cat: p.cat, year: p.year, activity: p.activity };
+  }));
 }
-document.addEventListener('DOMContentLoaded', function() {
-  refreshActivityFilters();
-  loadScrapedPhotos();
-});
+// Appel immédiat : window.cbrsRenderGallery doit exister avant cms-client.js (chargé en defer).
+loadScrapedPhotos();
 
 </script>
 
@@ -1419,4 +1403,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script src="auth.js"></script>
 <script src="ui-shell.js"></script>
+<script src="cms-client.js" defer></script>
 </body></html>

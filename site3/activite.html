@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr"><head>
+<meta name="cbrs-cms-url" content="https://cbrs-cms.vercel.app"/>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Activité - CBRS</title>
@@ -121,6 +122,7 @@
   }
 </style>
 <link rel="stylesheet" href="ui-shell.css"/>
+<script>/* Apparence du CMS mémorisée : appliquée avant l’affichage (voir cms-client.js). */try{var t=JSON.parse(localStorage.getItem("cbrs-theme"));if(t&&t.vars){for(var k in t.vars)document.documentElement.style.setProperty(k,t.vars[k]);if(t.fonts)document.write('<link id="cbrs-theme-fonts" rel="stylesheet" href="'+t.fonts.replace(/"/g,"")+'"/>');}}catch(e){}</script>
 <link rel="stylesheet" href="tailwind.css"/>
 </head>
 <body class="wave-effect-disabled bg-gray-50 text-cbrs-text antialiased flex flex-col min-h-screen cbrs-ui">
@@ -575,9 +577,15 @@ function getParam(name) {
 }
 
 const id = getParam('id');
-const activity = activities[id];
 
-if (activity) {
+function esc(value) {
+  return String(value == null ? '' : value).replace(/[&<>"']/g, function(c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
+// Affiche une fiche (données du site, puis celles du CMS via cms-client.js). Idempotent.
+function renderActivity(activity) {
   document.title = activity.name + ' - CBRS';
   const ADHESION_VALUES = {
     '01': 'aquagym', '02': 'petanque', '03': 'cyclisme', '04': 'tir-arc', '05': 'tennis-de-table',
@@ -586,7 +594,7 @@ if (activity) {
     '16': 'bridge', '17': 'relaxation'
   };
   if (ADHESION_VALUES[id]) document.getElementById('join-link').href = '/adhesion?activite=' + ADHESION_VALUES[id] + '#adhesion';
-  document.getElementById('activity-title').innerHTML = '<span class="text-cbrs-green font-serif-italic">'+activity.name+'</span>';
+  document.getElementById('activity-title').innerHTML = '<span class="text-cbrs-green font-serif-italic">'+esc(activity.name)+'</span>';
   document.getElementById('activity-subtitle').textContent = activity.desc;
   document.getElementById('breadcrumb-current').textContent = activity.name;
   document.getElementById('activity-category').textContent = activity.category || 'Tous niveaux';
@@ -605,6 +613,10 @@ if (activity) {
   if (activityLogo.complete && activityLogo.naturalWidth > 0) activityLogo.classList.remove('opacity-0');
   document.getElementById('activity-desc').textContent = activity.desc || '';
 
+  document.getElementById('presentation-block').classList.toggle('hidden', !activity.presentation);
+  document.getElementById('presentation-team').classList.add('hidden');
+  document.getElementById('animators-grid').innerHTML = '';
+  document.getElementById('activity-info').innerHTML = '';
   if (activity.presentation) {
     document.getElementById('presentation-block').classList.remove('hidden');
     document.getElementById('activity-presentation').textContent = activity.presentation;
@@ -617,7 +629,7 @@ if (activity) {
     const presentationTeamCaption = document.getElementById('presentation-team-caption');
     presentationTeam.classList.remove('hidden');
     presentationTeamGrid.innerHTML = photoAnimators.slice(0, 3).map(function(a) {
-      return '<figure class="group"><div class="aspect-square overflow-hidden rounded-2xl bg-white/15 ring-1 ring-white/25"><img src="'+a.photo+'" alt="Portrait de '+a.name+'" loading="lazy" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"/></div><figcaption class="mt-2 truncate text-center text-xs font-semibold text-white">'+a.name+'</figcaption></figure>';
+      return '<figure class="group"><div class="aspect-square overflow-hidden rounded-2xl bg-white/15 ring-1 ring-white/25"><img src="'+esc(a.photo)+'" alt="Portrait de '+esc(a.name)+'" loading="lazy" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"/></div><figcaption class="mt-2 truncate text-center text-xs font-semibold text-white">'+esc(a.name)+'</figcaption></figure>';
     }).join('');
     presentationTeamCaption.textContent = photoAnimators.length > 3
       ? photoAnimators.length + ' portraits disponibles dans la liste des animateurs.'
@@ -634,18 +646,18 @@ if (activity) {
       const initial = (a.name || '?').charAt(0).toUpperCase();
       const color = colors[i % colors.length];
       const visual = a.photo
-        ? '<div class="w-12 h-12 rounded-2xl overflow-hidden bg-white ring-2 ring-white shadow-sm shrink-0"><img src="'+a.photo+'" alt="Portrait de '+a.name+'" loading="lazy" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/></div>'
+        ? '<div class="w-12 h-12 rounded-2xl overflow-hidden bg-white ring-2 ring-white shadow-sm shrink-0"><img src="'+esc(a.photo)+'" alt="Portrait de '+esc(a.name)+'" loading="lazy" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/></div>'
         : '<div class="w-12 h-12 rounded-2xl '+color+' text-white flex items-center justify-center font-bold text-base shrink-0">'+initial+'</div>';
-      div.innerHTML = visual + '<div class="min-w-0"><p class="font-semibold text-gray-900 text-sm leading-tight break-words">'+a.name+'</p>'+(a.phone ? '<p class="text-xs text-gray-500">'+a.phone+'</p>' : '')+'</div>';
+      div.innerHTML = visual + '<div class="min-w-0"><p class="font-semibold text-gray-900 text-sm leading-tight break-words">'+esc(a.name)+'</p>'+(a.phone ? '<p class="text-xs text-gray-500">'+esc(a.phone)+'</p>' : '')+'</div>';
       grid.appendChild(div);
     });
   }
 
   const infoContainer = document.getElementById('activity-info');
-  activity.info.forEach(function(i) {
+  (activity.info || []).forEach(function(i) {
     const div = document.createElement('div');
     div.className = 'flex items-center gap-2';
-    div.innerHTML = '<svg class="w-4 h-4 text-cbrs-green shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>'+i+'</span>';
+    div.innerHTML = '<svg class="w-4 h-4 text-cbrs-green shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>'+esc(i)+'</span>';
     infoContainer.appendChild(div);
   });
 
@@ -664,23 +676,35 @@ if (activity) {
     return '/planning#' + anchor;
   };
   const practicalSchedule = document.getElementById('practical-schedule');
-  practicalSchedule.innerHTML = '<h3 class="text-sm font-bold text-gray-900 mb-2">Horaires</h3><ul class="space-y-3 text-sm text-gray-700">'+activity.schedule.map(function(s) {
-    const time = s.time && s.time !== 'Voir planning' ? '<span>'+s.time+' · </span>' : '';
-    return '<li class="border-b border-gray-100 pb-3 last:border-0 last:pb-0"><div class="flex items-center justify-between gap-3"><span class="font-semibold text-gray-900">'+s.day+'</span><a href="'+planningHref(s.day)+'" class="inline-flex items-center gap-1 text-cbrs-blue hover:text-cbrs-blue-light font-semibold transition-colors" aria-label="Voir le planning pour '+s.day+'">Voir planning<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg></a></div><p class="mt-1 text-xs text-gray-500">'+time+s.location+'</p></li>';
+  practicalSchedule.innerHTML = '<h3 class="text-sm font-bold text-gray-900 mb-2">Horaires</h3><ul class="space-y-3 text-sm text-gray-700">'+(activity.schedule || []).map(function(s) {
+    const time = s.time && s.time !== 'Voir planning' ? '<span>'+esc(s.time)+' · </span>' : '';
+    return '<li class="border-b border-gray-100 pb-3 last:border-0 last:pb-0"><div class="flex items-center justify-between gap-3"><span class="font-semibold text-gray-900">'+esc(s.day)+'</span><a href="'+planningHref(s.day)+'" class="inline-flex items-center gap-1 text-cbrs-blue hover:text-cbrs-blue-light font-semibold transition-colors" aria-label="Voir le planning pour '+esc(s.day)+'">Voir planning<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg></a></div><p class="mt-1 text-xs text-gray-500">'+time+esc(s.location)+'</p></li>';
   }).join('')+'</ul>';
 
   const practicalPlace = document.getElementById('practical-place');
-  practicalPlace.innerHTML = '<h3 class="text-sm font-bold text-gray-900 mb-2">Lieu</h3><p class="text-sm text-gray-700">'+(activity.meetingPoint || activity.schedule[0].location)+'</p>';
+  practicalPlace.innerHTML = '<h3 class="text-sm font-bold text-gray-900 mb-2">Lieu</h3><p class="text-sm text-gray-700">'+esc(activity.meetingPoint || (activity.schedule && activity.schedule[0] && activity.schedule[0].location) || '')+'</p>';
 
-  const m = mapFor(activity);
+  const m = activity.map || mapFor(activity);
   const route = 'https://www.openstreetmap.org/directions?to='+m.lat+'%2C'+m.lon+'#map=16/'+m.lat+'/'+m.lon;
   document.getElementById('route-link').href = route;
   document.getElementById('route-link-card').href = route;
   document.getElementById('map-frame').dataset.cookieSrc = 'https://www.openstreetmap.org/export/embed.html?bbox='+(m.lon-0.01)+'%2C'+(m.lat-0.006)+'%2C'+(m.lon+0.01)+'%2C'+(m.lat+0.006)+'&layer=mapnik&marker='+m.lat+'%2C'+m.lon;
-} else {
-  document.getElementById('activity-title').innerHTML = '<span class="text-cbrs-green font-serif-italic">Activité</span> introuvable';
-  document.getElementById('activity-subtitle').textContent = 'Cette activité n’existe pas.';
 }
+
+// Fiche absente : « introuvable », ou « plus proposée » quand le CMS confirme qu'elle n'est plus publiée.
+function renderActivityMissing(retired) {
+  document.title = 'Activité ' + (retired ? 'non proposée' : 'introuvable') + ' - CBRS';
+  document.getElementById('activity-title').innerHTML = '<span class="text-cbrs-green font-serif-italic">Activité</span> ' + (retired ? 'non proposée' : 'introuvable');
+  document.getElementById('activity-subtitle').innerHTML = (retired ? 'Cette activité n’est plus proposée.' : 'Cette activité n’existe pas.') +
+    ' <a class="underline" href="/activites">Voir toutes les activités</a>';
+}
+
+window.cbrsActivityId = id;
+window.cbrsActivityKnown = Boolean(activities[id]);
+window.cbrsRenderActivity = renderActivity;
+window.cbrsActivityMissing = renderActivityMissing;
+if (activities[id]) renderActivity(activities[id]);
+else renderActivityMissing(false);
 
 function toggleMobileMenu() {
   const menu = document.getElementById('mobile-menu');
@@ -764,4 +788,5 @@ syncStickySidebar();
 
 <script src="auth.js"></script>
 <script src="ui-shell.js"></script>
+<script src="cms-client.js" defer></script>
 </body></html>
