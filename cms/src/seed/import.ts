@@ -140,7 +140,6 @@ export const importerActivites = async (payload: Payload, siteDir: string) => {
       where: { slug: { equals: activite.slug } },
       limit: 1,
       depth: 0,
-      draft: true,
     })
     if (existant.docs[0]) {
       // Mise à jour : ne remplace que ce qui vient du site, sans toucher aux photos ajoutées dans le CMS.

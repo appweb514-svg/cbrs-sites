@@ -318,6 +318,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
     const slug = slugParNom.get(String(activite.nom ?? '').toLowerCase()) ?? `activite-${activite.id}`
     await db.execute(sql`UPDATE "activites" SET "slug" = ${slug} WHERE "id" = ${activite.id}`)
   }
+  await db.execute(sql`
+  UPDATE "_activites_v" v SET "version_slug" = a."slug" FROM "activites" a WHERE v."parent_id" = a."id" AND v."version_slug" IS NULL;`)
 
   const photos = await lignes(db, sql`SELECT "id" FROM "galerie" ORDER BY "annee" DESC, "id"`)
   for (const [i, photo] of photos.entries()) {
