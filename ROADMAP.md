@@ -1,6 +1,8 @@
 # ROADMAP — CBRS
 
-Fonctionnalités planifiées pour le site CBRS (site3/ + backend/).
+Fonctionnalités planifiées pour le site CBRS (site3/ + CMS Payload `cms/`).
+
+> Depuis le 2026-09-27, l'ancien back-end Express et son admin de démonstration ont été supprimés du dépôt ; les fonctions d'administration ci-dessous sont à porter dans le CMS (voir `docs/cms/`).
 
 Statuts : 🔵 À faire · 🟡 En cours · 🟢 Fait · ⚪ Non prioritaire
 
@@ -23,50 +25,44 @@ sans amélioration perceptible.
 
 ---
 
-## 🎯 P1 — Recherche de photos Wikimedia Commons côté back-end (webmaster)
+## 🎯 P1 — Recherche de photos Wikimedia Commons côté CMS (webmaster)
 
-**Objectif :** quand le webmaster met en ligne une sortie depuis le back-end, il peut chercher une
+**Objectif :** quand le webmaster met en ligne une sortie depuis l'admin du CMS, il peut chercher une
 photo libre de droits (Wikimedia Commons) directement dans l'admin, prévisualiser, choisir et
 enregistrer **image + crédit obligatoire** (artiste, licence, lien Commons).
 
-### 🟢 1.1 — Module de recherche (fait)
+### 🔵 1.1 — Module de recherche (prototype supprimé avec l'ancien back-end, à transposer)
 
-Fichier : `backend/src/services/commons-search.js`
+Prototype `searchCommonsPhotos(query, { limit, width })` livré avec l'ancien back-end Express
+(supprimé le 2026-09-27) :
 
-- Fonction `searchCommonsPhotos(query, { limit, width })` → liste de résultats :
+- Liste de résultats :
   `{ title, commonsUrl, thumbUrl, fileUrl, width, height, license, artist, safeName }`
 - API officielle Wikimedia Commons (`action=query`, `generator=search`, `prop=imageinfo`,
   `iiprop=url|size|extmetadata`) — aucun token, aucune clé, usage gratuit.
 - Licence et artiste extraits automatiquement des métadonnées (obligation CC-BY).
-- Utilisable en module (`require`) et en CLI :
-  `node src/services/commons-search.js "Le Tréport" --limit 3`
-- ✅ Testé : 3 requêtes réelles OK (« Le Tréport », « Dieppe port »), URLs nettoyées (`utm_*` retirés).
+- ✅ Testé (3 requêtes réelles OK : « Le Tréport », « Dieppe port », URLs nettoyées `utm_*` retirés).
 
-### 🔵 1.2 — Route API back-end
+### 🔵 1.2 — Recherche dans l'admin du CMS
 
-- [ ] Créer `backend/src/routes/commons.js` :
-  - `GET /api/admin/photos/search?q=Dieppe&limit=12` (auth admin requise, rate-limit)
+- [ ] Exposer un endpoint de recherche réservé à l'admin du CMS (droits admin, rate-limit) :
+  - `GET …/photos/search?q=Dieppe&limit=12`
   - Réutilise `searchCommonsPhotos()` de 1.1
-- [ ] Montage dans `backend/server.js` avec les routes admin existantes
-- [ ] ✅ Test : curl authentifié → JSON de résultats
+- [ ] ✅ Test : requête authentifiée → JSON de résultats
 
-### 🔵 1.3 — Écran admin « Sorties » (le webmaster publie une sortie)
+### 🔵 1.3 — Écran « Sorties » du CMS (le webmaster publie une sortie)
 
-- [ ] Créer `backend/public-admin/outings.html` + `outings-edit.html` (CRUD sorties),
-      calqué sur le pattern `activities.html` / `activity-edit.html` existant
-- [ ] Table `outings` en base : `id, title, category, teaser, description, location,
-      lat, lng, bbox, date, schedule, status, image, photo_credit, published`
-- [ ] Routes admin : `GET/POST/PUT/DELETE /api/admin/outings`, route publique
-      `GET /api/outings` (consommable par `sorties-voyages.html`)
+- [ ] Collection `sorties` du CMS : titre, catégorie, accroche, description, lieu,
+      lat, lng, bbox, date, horaire, statut, image, crédit, publication
+- [ ] Écran CRUD sorties dans l'admin du CMS (droits par rôle : bureau, équipe Sorties & Voyages)
 - [ ] Dans le formulaire : bouton « 🔎 Chercher une photo » → panneau de recherche
       (champ texte + grille de miniatures Commons) → clic = sélection
-- [ ] À l'enregistrement : télécharger `fileUrl` (webmaster proxied via serveur) dans
-      `backend/uploads/outings/`, générer les crédits côté admin, et fusionner le
-      JSON dans `site3/sorties-data.js` (sortie = publiée immédiatement sur le site)
+- [ ] À l'enregistrement : télécharger `fileUrl` dans les médias du CMS, renseigner le
+      crédit et servir la sortie au site (repli statique `site3/sorties-data.js`)
 
 ### 🔵 1.4 — Crédits photo (obligatoire)
 
-- [ ] Champ `photo_credit` non vide requis à la validation (blocage sinon)
+- [ ] Champ crédit non vide requis à la validation (blocage sinon)
 - [ ] Format stocké : `{ commons, artist, license }` (même modèle que `sorties-data.js`)
 - [ ] Affichage automatique dans `site3/sortie-detail.js` (déjà en place via `#detail-photo-credit`)
 
@@ -74,15 +70,14 @@ Fichier : `backend/src/services/commons-search.js`
 
 ## 🎯 P2 — Recherche photo intégrée à un éditeur WYSIWYG
 
-**Objectif :** dans tout éditeur de contenu riche du back-end, offrir un bouton « Insérer une image » qui
+**Objectif :** dans tout éditeur de contenu riche du CMS, offrir un bouton « Insérer une image » qui
 ouvre la recherche Commons, insère l'image **et son crédit** dans le HTML avec attributs normalisés.
 
 ### 🔵 2.1 — Choisir/intégrer l'éditeur WYSIWYG
 
-- [ ] Actuellement : `activity-edit.html` utilise des `<textarea>` bruts → basculer les
-      champs longs (`presentation`, `practical_info`, …) sur un éditeur léger
-      (TinyMCE/Quill/CDN) — pas de build à conserver, compatible admin statique
-- [ ] ⚪ Évaluer l'impact sur `api/admin/activities` (texte enrichi → HTML stocké en base)
+- [ ] Actuellement : les champs longs du CMS (`presentation`, `practical_info`, …) sont en
+      texte brut → basculer sur un éditeur léger (TinyMCE/Quill/CDN) — pas de build à conserver
+- [ ] ⚪ Évaluer l'impact du texte enrichi (HTML stocké en base)
 
 ### 🔵 2.2 — Plugin « image depuis Commons » dans l'éditeur
 
@@ -94,8 +89,8 @@ ouvre la recherche Commons, insère l'image **et son crédit** dans le HTML avec
       `<figure><img src="<URL Commons proxifiée ou uploadée>" alt="…">
       <figcaption>Photo : <a href="{commonsUrl}">{artist}</a> — {license} — via Wikimedia Commons</figcaption></figure>`
       (crédit = exigence légale CC-BY, inséré automatiquement, non supprimable par défaut)
-- [ ] Téléchargement local (plutôt que lien chaud) : le back-end proxifie/downloade
-      l'image vers `backend/uploads/` (évite le hotlinking bloqué par Commons)
+- [ ] Téléchargement local (plutôt que lien chaud) : le CMS stocke l'image dans ses
+      médias (évite le hotlinking bloqué par Commons)
 - [ ] ✅ Test manuel : insérer une photo dans une présentation d'activité → vérifier
       l'affichage côté public et la présence du crédit
 
@@ -103,15 +98,15 @@ ouvre la recherche Commons, insère l'image **et son crédit** dans le HTML avec
 
 - [ ] Règle : si `license` contient autre chose que CC0/Public domain → crédit **toujours**
       présent en `figcaption` ; si l'admin retire le texte, un avertissement s'affiche
-- [ ] Journal : enregistrer `photo_credit` dans la base (traçabilité)
+- [ ] Journal : enregistrer le crédit dans le CMS (traçabilité)
 
 ---
 
 ## 🔵 P3 — Publication des sorties par le webmaster (parcours complet)
 
-- [ ] Table `outings` (cf. 1.3) + synchronisation vers `site3/sorties-data.js`
-- [ ] L'écran admin affiche les sorties existantes : modifier/dupliquer/archiver
-- [ ] La page publique `sorties-voyages.html` bascule sur l'API (`GET /api/outings`)
+- [ ] Collection `sorties` (cf. 1.3) + repli statique `site3/sorties-data.js`
+- [ ] L'écran du CMS affiche les sorties existantes : modifier/dupliquer/archiver
+- [ ] La page publique `sorties-voyages.html` lit le CMS (via `site3/cms-client.js`)
       avec fallback statique si l'API est indisponible (résilience)
 - [ ] Validation automatique : titre non vide, image + crédit présents, coordonnées
       lat/lng valides si renseignées, statut parmi la liste connue
@@ -121,7 +116,7 @@ ouvre la recherche Commons, insère l'image **et son crédit** dans le HTML avec
 
 ## ⚪ P4 — Idées non engagées
 
-- [ ] Conversion automatique des images uploadées → WebP/AVIF à l'upload (multer)
-- [ ] Recadrage intelligent 16:9 à l'upload (sharp) pour uniformiser les fiches
+- [ ] Conversion automatique des images uploadées → WebP/AVIF à l'upload (CMS)
+- [ ] Recadrage intelligent 16:9 à l'upload pour uniformiser les fiches
 - [ ] Galerie événementielle : relier une sortie à plusieurs photos (`galerie.html`)
 - [ ] Traduction multi-langues des fiches sorties

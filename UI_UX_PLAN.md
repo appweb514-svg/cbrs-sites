@@ -16,7 +16,6 @@ Avant toute mise en production, confirmer le point d’entrée : la racine affic
 - [x] Flash Info responsive et compatible avec la réduction de mouvement.
 - [x] Galerie et planning utilisables au clavier.
 - [x] Formulaire d’adhésion clarifié et données reprises dans le mailto.
-- [ ] API/backend à tester avec ses dépendances installées.
 - [ ] Audit visuel de l’administration à finaliser.
 
 ## Direction visuelle — header et menu latéral

@@ -49,6 +49,26 @@
       "source": "/site3/:page(index|activites|activite|adhesion|contact|conditions-utilisation|evenement|formation|galerie|liens-utiles|mentions-legales|planning|sortie|sorties-voyages|statuts)/",
       "destination": "/:page",
       "permanent": true
+    },
+    {
+      "source": "/connexion",
+      "destination": "https://cbrs-cms.vercel.app/admin/",
+      "permanent": true
+    },
+    {
+      "source": "/connexion.html",
+      "destination": "https://cbrs-cms.vercel.app/admin/",
+      "permanent": true
+    },
+    {
+      "source": "/admin",
+      "destination": "https://cbrs-cms.vercel.app/admin/",
+      "permanent": true
+    },
+    {
+      "source": "/admin.html",
+      "destination": "https://cbrs-cms.vercel.app/admin/",
+      "permanent": true
     }
   ],
   "rewrites": [

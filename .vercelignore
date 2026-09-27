@@ -2,7 +2,6 @@
 # Le CMS (/cms/) est un projet Vercel séparé (cbrs-cms).
 .*
 /cms/
-/backend/
 /tooling/
 /scripts/
 /docs/

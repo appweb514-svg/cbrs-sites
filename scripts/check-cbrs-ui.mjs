@@ -66,7 +66,7 @@ for (const name of ['Bridge', 'Relaxation / Méditation', 'Tennis de table']) {
 }
 assert(!activityNames.some(name => /ping/i.test(name)), 'Ping-pong doit être renommé');
 
-for (const file of fs.readdirSync('site3').filter(f => f.endsWith('.html') && !['admin.html', 'connexion.html'].includes(f))) {
+for (const file of fs.readdirSync('site3').filter(f => f.endsWith('.html'))) {
   const html = fs.readFileSync(`site3/${file}`, 'utf8');
   assert(html.includes('cbrs-shared-hero-bg'), `${file}: bandeau commun absent`);
   const nav = html.slice(html.indexOf('<aside id="sidebar"'), html.indexOf('</aside>'));
@@ -112,7 +112,7 @@ for (const file of ['index.html', 'statuts.html', 'liens-utiles.html', 'adhesion
 }
 console.log('PASS — client CMS (repli statique)');
 
-const publicPages = fs.readdirSync('site3').filter(f => f.endsWith('.html') && !['admin.html', 'connexion.html'].includes(f))
+const publicPages = fs.readdirSync('site3').filter(f => f.endsWith('.html'))
 for (const file of publicPages) {
   const html = fs.readFileSync(`site3/${file}`, 'utf8')
   assert(!html.includes('cdn.tailwindcss.com'), `${file}: CDN Tailwind interdit (CSS compilé : tooling/tailwind)`)

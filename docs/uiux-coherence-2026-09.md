@@ -43,7 +43,7 @@ Contrôles : `node scripts/check-cbrs-ui.mjs` (garde-fous statiques) et `tooling
 
 | # | Proposition | Constat |
 | --- | --- | --- |
-| P1 | Retirer le lien **« Connexion »** du menu public jusqu'à la mise en service du CMS | Il mène à une maquette d'administration avec identifiants en clair (`site3/connexion.html`) |
+| P1 | ✅ Le lien **« Connexion »** du menu public mène au CMS | Il menait à une maquette d'administration avec identifiants en clair, retirée du dépôt le 2026-09-27 |
 | P2 | Regrouper les boutons flottants **« Accessibilité »** et **« Cookies »** (par exemple dans le pied de page) | Sur mobile, ils recouvrent le texte en bas d'écran |
 | P3 | Ajouter un bouton **« Adhérer »** dans le bandeau d'accueil | Adhérer est l'objectif principal du site, mais n'apparaît qu'au 3e niveau du menu |
 | P4 | Passer le texte courant à **17-18 px** | Lisibilité pour les seniors ; aujourd'hui 15-16 px |
