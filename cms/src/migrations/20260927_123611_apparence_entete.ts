@@ -4,7 +4,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    ALTER TABLE "apparence" ADD COLUMN "image_en_tete_id" integer;
   ALTER TABLE "apparence" ADD COLUMN "teinte_en_tete" varchar DEFAULT '#0a3273' NOT NULL;
-  ALTER TABLE "apparence" ADD COLUMN "intensite_teinte" numeric DEFAULT 90 NOT NULL;
+  ALTER TABLE "apparence" ADD COLUMN "intensite_teinte" numeric DEFAULT 78 NOT NULL;
   ALTER TABLE "_apparence_v" ADD COLUMN "version_image_en_tete_id" integer;
   ALTER TABLE "_apparence_v" ADD COLUMN "version_teinte_en_tete" varchar DEFAULT '#0a3273' NOT NULL;
   ALTER TABLE "_apparence_v" ADD COLUMN "version_intensite_teinte" numeric DEFAULT 90 NOT NULL;

@@ -8,6 +8,8 @@ export const Media: CollectionConfig = {
   admin: {
     // Hors du menu : on ouvre une photo depuis la galerie du site (ou par son adresse).
     group: false,
+    // Titre = description : le nom du fichier n'apparaît nulle part avec son extension.
+    useAsTitle: 'alt',
     defaultColumns: ['filename', 'alt', 'credit'],
     description:
       'Toutes les photos du site. Ouvrez-en une pour la renommer ou voir ses propriétés ; « Modifier l’image » recadre et choisit le point d’intérêt. La mise en avant sur le site se gère dans « Galerie photo ».',

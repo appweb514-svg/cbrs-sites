@@ -9,7 +9,7 @@
   --cbrs-hero-c1: 10, 50, 115;
   --cbrs-hero-c2: 30, 75, 153;
   --cbrs-hero-c3: 20, 92, 117;
-  --cbrs-hero-o: .9;
+  --cbrs-hero-o: .78;
   --cbrs-surface: #f5f7fa;
   --cbrs-shell-radius: 28px;
   --cbrs-nav-radius: 22px;
@@ -174,9 +174,6 @@ body.cbrs-ui .cbrs-logo-image {
   filter: drop-shadow(0 8px 10px rgba(10, 50, 115, .14));
 }
 
-body.cbrs-ui > .cbrs-hero > .absolute.inset-0.bg-gradient-to-br {
-  background: linear-gradient(120deg, rgba(var(--cbrs-hero-c1), calc(var(--cbrs-hero-o) * 1)), rgba(var(--cbrs-hero-c2), calc(var(--cbrs-hero-o) * .756)) 55%, rgba(var(--cbrs-hero-c3), calc(var(--cbrs-hero-o) * .844))) !important;
-}
 
 body.cbrs-ui .cbrs-home-hero-bg {
   object-position: center 52%;
@@ -1393,7 +1390,7 @@ body.cbrs-ui > .cbrs-hero > img.cbrs-shared-hero-bg {
 }
 
 body.cbrs-ui > .cbrs-hero > .absolute.inset-0.bg-gradient-to-br {
-  background: linear-gradient(120deg, rgba(10, 50, 115, .78), rgba(30, 75, 153, .5) 55%, rgba(20, 92, 117, .58)) !important;
+  background: linear-gradient(120deg, rgba(var(--cbrs-hero-c1), calc(var(--cbrs-hero-o) * 1)), rgba(var(--cbrs-hero-c2), calc(var(--cbrs-hero-o) * .641)) 55%, rgba(var(--cbrs-hero-c3), calc(var(--cbrs-hero-o) * .744))) !important;
 }
 
 body.cbrs-ui .cbrs-hero-since {

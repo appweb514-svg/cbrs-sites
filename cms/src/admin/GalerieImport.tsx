@@ -46,7 +46,13 @@ export const GalerieImport: React.FC = () => {
   const ajouter = (choisis: File[]) => {
     const retenus = choisis.filter((fichier) => estImage(fichier.name) || estArchive(fichier.name))
     const ignores = choisis.length - retenus.length
-    setErreurs(ignores > 0 ? [`${nombre(ignores, 'fichier')} ignoré(s) : formats acceptés jpg, jpeg, png, webp, gif ou zip.`] : [])
+    setErreurs(
+      ignores > 0
+        ? [
+            `${nombre(ignores, 'fichier')} ignoré(s) : formats acceptés jpg, jpeg, png, webp, gif ou zip.`,
+          ]
+        : [],
+    )
     setFichiers((precedents) => [...precedents, ...retenus])
   }
 
@@ -63,7 +69,9 @@ export const GalerieImport: React.FC = () => {
       if (!contexte) return fichier
       contexte.drawImage(image, 0, 0, toile.width, toile.height)
       image.close()
-      const blob = await new Promise<Blob | null>((resolve) => toile.toBlob(resolve, 'image/jpeg', QUALITE_JPEG))
+      const blob = await new Promise<Blob | null>((resolve) =>
+        toile.toBlob(resolve, 'image/jpeg', QUALITE_JPEG),
+      )
       if (!blob) return fichier
       return new File([blob], `${nomSansExtension(fichier.name)}.jpg`, { type: 'image/jpeg' })
     } catch {
@@ -75,10 +83,17 @@ export const GalerieImport: React.FC = () => {
     const corps = new FormData()
     corps.append('file', await reduire(fichier))
     corps.append('_payload', JSON.stringify({ alt: nomSansExtension(fichier.name) }))
-    const reponse = await fetch('/api/media', { body: corps, credentials: 'include', method: 'POST' })
-    const donnees = (await reponse.json().catch(() => null)) as null | { doc?: { id: number | string } }
+    const reponse = await fetch('/api/media', {
+      body: corps,
+      credentials: 'include',
+      method: 'POST',
+    })
+    const donnees = (await reponse.json().catch(() => null)) as null | {
+      doc?: { id: number | string }
+    }
     if (!reponse.ok) throw new Error(messageErreur(donnees, `Photo « ${fichier.name} » refusée.`))
-    if (!donnees?.doc?.id) throw new Error(`Photo « ${fichier.name} » : réponse inattendue du serveur.`)
+    if (!donnees?.doc?.id)
+      throw new Error(`Photo « ${fichier.name} » : réponse inattendue du serveur.`)
     return donnees.doc.id
   }
 
@@ -98,7 +113,12 @@ export const GalerieImport: React.FC = () => {
     })
     if (!reponse.ok) {
       const donnees = await reponse.json().catch(() => null)
-      throw new Error(messageErreur(donnees, `« ${fichier.name} » : photo importée mais non ajoutée à la galerie.`))
+      throw new Error(
+        messageErreur(
+          donnees,
+          `« ${fichier.name} » : photo importée mais non ajoutée à la galerie.`,
+        ),
+      )
     }
   }
 
@@ -113,8 +133,11 @@ export const GalerieImport: React.FC = () => {
       }
       try {
         const images = extraireImagesZip(new Uint8Array(await fichier.arrayBuffer()))
-        if (images.length === 0) problemes.push(`« ${fichier.name} » : aucune image dans l’archive.`)
-        images.forEach(({ nom, octets }) => aImporter.push(new File([octets], nom, { type: typeMime(nom) })))
+        if (images.length === 0)
+          problemes.push(`« ${fichier.name} » : aucune image dans l’archive.`)
+        images.forEach(({ nom, octets }) =>
+          aImporter.push(new File([octets], nom, { type: typeMime(nom) })),
+        )
       } catch {
         problemes.push(`« ${fichier.name} » : archive illisible.`)
       }
@@ -130,7 +153,9 @@ export const GalerieImport: React.FC = () => {
         await creerEntree(await creerPhoto(fichier), fichier)
         reussies += 1
       } catch (erreur) {
-        problemes.push(erreur instanceof Error ? erreur.message : `« ${fichier.name} » : import impossible.`)
+        problemes.push(
+          erreur instanceof Error ? erreur.message : `« ${fichier.name} » : import impossible.`,
+        )
       }
       setErreurs([...problemes])
       setAvancement({ faits: index + 1, total: aImporter.length })
@@ -165,8 +190,8 @@ export const GalerieImport: React.FC = () => {
       >
         <strong>Importer des photos</strong>
         <p style={{ fontSize: 12, margin: '0.25rem 0 0.5rem', opacity: 0.75 }}>
-          Glissez ici vos photos (jpg, png, webp, gif) ou une archive .zip, ou choisissez-les ci-dessous. Les images trop
-          lourdes sont réduites automatiquement.
+          Glissez ici vos photos (jpg, png, webp, gif) ou une archive .zip, ou choisissez-les
+          ci-dessous. Les images trop lourdes sont réduites automatiquement.
         </p>
         <div style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
           <label className="btn btn--style-secondary btn--size-small" style={{ cursor: 'pointer' }}>
@@ -183,68 +208,82 @@ export const GalerieImport: React.FC = () => {
             />
           </label>
           <span style={{ opacity: 0.75 }}>
-            {fichiers.length > 0 ? `${nombre(fichiers.length, 'fichier')} prêt(s)` : 'Aucun fichier choisi'}
+            {fichiers.length > 0
+              ? `${nombre(fichiers.length, 'fichier')} prêt(s)`
+              : 'Aucun fichier choisi'}
           </span>
           {fichiers.length > 0 && (
-            <button className="btn btn--style-secondary btn--size-small" onClick={() => setFichiers([])} type="button">
+            <button
+              className="btn btn--style-secondary btn--size-small"
+              onClick={() => setFichiers([])}
+              type="button"
+            >
               Vider la sélection
             </button>
           )}
         </div>
-      </div>
 
-      <div style={{ alignItems: 'flex-end', display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginTop: '0.75rem' }}>
-        <label style={{ display: 'flex', flexDirection: 'column', fontSize: 12, gap: '0.25rem' }}>
-          Année
-          <input
-            className="text"
-            max={2100}
-            min={1990}
-            onChange={(evenement) => setAnnee(Number(evenement.target.value))}
-            style={{ width: '6rem' }}
-            type="number"
-            value={annee}
-          />
-        </label>
-        <label style={{ display: 'flex', flexDirection: 'column', fontSize: 12, gap: '0.25rem' }}>
-          Catégorie
-          <select
-            className="text"
-            onChange={(evenement) => setCategorie(evenement.target.value)}
-            style={{ width: '12rem' }}
-            value={categorie}
-          >
-            {CATEGORIES_GALERIE.map(({ label, value }) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label style={{ display: 'flex', flexDirection: 'column', fontSize: 12, gap: '0.25rem' }}>
-          Activité ou thème (facultatif)
-          <select
-            className="text"
-            onChange={(evenement) => setActivite(evenement.target.value)}
-            style={{ width: '12rem' }}
-            value={activite}
-          >
-            <option value="">—</option>
-            {ACTIVITES_GALERIE.map(({ label, value }) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <button
-          className="btn btn--style-primary btn--size-small"
-          disabled={fichiers.length === 0 || enCours}
-          onClick={importer}
-          type="button"
+        <div
+          style={{
+            alignItems: 'flex-end',
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '0.75rem',
+            marginTop: '0.75rem',
+          }}
         >
-          {enCours ? 'Import en cours…' : 'Importer dans la galerie'}
-        </button>
+          <label style={{ display: 'flex', flexDirection: 'column', fontSize: 12, gap: '0.25rem' }}>
+            Année
+            <input
+              className="text"
+              max={2100}
+              min={1990}
+              onChange={(evenement) => setAnnee(Number(evenement.target.value))}
+              style={{ width: '6rem' }}
+              type="number"
+              value={annee}
+            />
+          </label>
+          <label style={{ display: 'flex', flexDirection: 'column', fontSize: 12, gap: '0.25rem' }}>
+            Catégorie
+            <select
+              className="text"
+              onChange={(evenement) => setCategorie(evenement.target.value)}
+              style={{ width: '12rem' }}
+              value={categorie}
+            >
+              {CATEGORIES_GALERIE.map(({ label, value }) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label style={{ display: 'flex', flexDirection: 'column', fontSize: 12, gap: '0.25rem' }}>
+            Activité ou thème (facultatif)
+            <select
+              className="text"
+              onChange={(evenement) => setActivite(evenement.target.value)}
+              style={{ width: '12rem' }}
+              value={activite}
+            >
+              <option value="">—</option>
+              {ACTIVITES_GALERIE.map(({ label, value }) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button
+            className="btn btn--style-primary btn--size-small"
+            disabled={fichiers.length === 0 || enCours}
+            onClick={importer}
+            type="button"
+          >
+            {enCours ? 'Import en cours…' : 'Importer dans la galerie'}
+          </button>
+        </div>
       </div>
 
       {avancement && (
@@ -257,7 +296,9 @@ export const GalerieImport: React.FC = () => {
       )}
 
       {erreurs.length > 0 && (
-        <ul style={{ color: 'var(--theme-error-500)', margin: '0.5rem 0 0', paddingLeft: '1.25rem' }}>
+        <ul
+          style={{ color: 'var(--theme-error-500)', margin: '0.5rem 0 0', paddingLeft: '1.25rem' }}
+        >
           {erreurs.map((erreur, index) => (
             <li key={index}>{erreur}</li>
           ))}

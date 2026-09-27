@@ -11,7 +11,7 @@ export const COULEURS_ORIGINE = {
 export type NomCouleur = keyof typeof COULEURS_ORIGINE
 
 // Intensité d'origine de la teinte d'en-tête : opacité du voile actuel du site, en pourcentage.
-export const INTENSITE_TEINTE_ORIGINE = 90
+export const INTENSITE_TEINTE_ORIGINE = 78
 
 const luminance = (hex: string) => {
   const [r, g, b] = [1, 3, 5].map((i) => {

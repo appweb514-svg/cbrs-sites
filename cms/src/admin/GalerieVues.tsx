@@ -2,6 +2,8 @@
 
 import React from 'react'
 
+import { nomAffiche } from '../nomFichier'
+
 // Nombre de photos par page : identique à la pagination de la collection Galerie.
 const PAR_PAGE = 20
 
@@ -37,7 +39,11 @@ const ecrire = (cle: string, valeur: string) => {
   }
 }
 
-type PhotoMedia = { sizes?: null | { vignette?: null | { url?: null | string } }; url?: null | string }
+type PhotoMedia = {
+  filename?: null | string
+  sizes?: null | { vignette?: null | { url?: null | string } }
+  url?: null | string
+}
 
 type EntreeGalerie = {
   afficherSurSite?: boolean | null
@@ -49,6 +55,12 @@ type EntreeGalerie = {
 const vignetteDe = (entree: EntreeGalerie): string => {
   const photo = typeof entree.photo === 'object' && entree.photo !== null ? entree.photo : null
   return photo?.sizes?.vignette?.url || photo?.url || ''
+}
+
+// Sans légende, la vignette porte le nom du fichier, sans extension.
+const nomDe = (entree: EntreeGalerie): string => {
+  const photo = typeof entree.photo === 'object' && entree.photo !== null ? entree.photo : null
+  return photo?.filename ? nomAffiche(photo.filename) : ''
 }
 
 // Numéros de page affichés : 1 … autour de la page courante … dernière.
@@ -151,7 +163,9 @@ export const GalerieVues: React.FC = () => {
           </button>
         ))}
         {vue === 'mosaique' && (
-          <label style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', marginLeft: 'auto' }}>
+          <label
+            style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', marginLeft: 'auto' }}
+          >
             Taille des photos
             <input
               aria-label="Taille des vignettes"
@@ -171,7 +185,9 @@ export const GalerieVues: React.FC = () => {
         <div style={{ marginTop: '1rem' }}>
           {erreur && <p style={{ color: 'var(--theme-error-500)' }}>{erreur}</p>}
           {!erreur && chargement && <p style={{ opacity: 0.75 }}>Chargement des photos…</p>}
-          {!erreur && !chargement && photos.length === 0 && <p style={{ opacity: 0.75 }}>Aucune photo dans la galerie.</p>}
+          {!erreur && !chargement && photos.length === 0 && (
+            <p style={{ opacity: 0.75 }}>Aucune photo dans la galerie.</p>
+          )}
 
           <div
             style={{
@@ -192,7 +208,13 @@ export const GalerieVues: React.FC = () => {
                     <img
                       alt=""
                       src={source}
-                      style={{ aspectRatio: '1 / 1', borderRadius: 4, display: 'block', objectFit: 'cover', width: '100%' }}
+                      style={{
+                        aspectRatio: '1 / 1',
+                        borderRadius: 4,
+                        display: 'block',
+                        objectFit: 'cover',
+                        width: '100%',
+                      }}
                     />
                   ) : (
                     <span
@@ -204,9 +226,19 @@ export const GalerieVues: React.FC = () => {
                       }}
                     />
                   )}
-                  <span style={{ alignItems: 'center', display: 'flex', fontSize: 12, gap: '0.35rem', marginTop: 4 }}>
-                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {entree.legende || `Photo ${entree.id}`}
+                  <span
+                    style={{
+                      alignItems: 'center',
+                      display: 'flex',
+                      fontSize: 12,
+                      gap: '0.35rem',
+                      marginTop: 4,
+                    }}
+                  >
+                    <span
+                      style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                    >
+                      {entree.legende || nomDe(entree) || `Photo ${entree.id}`}
                     </span>
                     <span
                       aria-label={entree.afficherSurSite ? 'Oui' : 'Non'}
@@ -216,7 +248,9 @@ export const GalerieVues: React.FC = () => {
                         flex: '0 0 auto',
                         fontWeight: 'bold',
                       }}
-                      title={entree.afficherSurSite ? 'Affichée sur le site' : 'Masquée sur le site'}
+                      title={
+                        entree.afficherSurSite ? 'Affichée sur le site' : 'Masquée sur le site'
+                      }
                     >
                       {entree.afficherSurSite ? '✓' : '✗'}
                     </span>
@@ -229,7 +263,13 @@ export const GalerieVues: React.FC = () => {
           {!chargement && totalPages > 1 && (
             <nav
               aria-label="Pages de la mosaïque"
-              style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.35rem', marginTop: '1rem' }}
+              style={{
+                alignItems: 'center',
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '0.35rem',
+                marginTop: '1rem',
+              }}
             >
               <button
                 className="btn btn--style-secondary btn--size-small"
