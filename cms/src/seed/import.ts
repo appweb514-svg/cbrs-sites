@@ -159,7 +159,8 @@ export const importerGalerie = async (payload: Payload, siteDir: string) => {
   for (const photo of galerie) {
     const deja = await payload.count({ collection: 'galerie', where: { fichierOrigine: { equals: photo.fichier } } })
     if (deja.totalDocs) continue
-    const media = await importerMedia(payload, path.join(siteDir, 'photos', photo.fichier), `Photo CBRS ${photo.annee}`)
+    const chemin = photo.fichier.includes('/') ? photo.fichier : path.join('photos', photo.fichier)
+    const media = await importerMedia(payload, path.join(siteDir, chemin), `Photo CBRS ${photo.annee}`)
     if (!media) {
       ignores++
       continue
@@ -171,6 +172,7 @@ export const importerGalerie = async (payload: Payload, siteDir: string) => {
         annee: photo.annee,
         categorie: photo.categorie as Galerie['categorie'],
         activite: photo.activite as Galerie['activite'],
+        legende: 'legende' in photo ? (photo.legende as string) : undefined,
         fichierOrigine: photo.fichier,
         afficherSurSite: true,
       },
