@@ -103,6 +103,11 @@ export const Apparence: GlobalConfig = {
           label: 'En-tête',
           fields: [
             {
+              name: 'apercuEnTete',
+              type: 'ui',
+              admin: { components: { Field: '/admin/ApercuEnTete#ApercuEnTete' } },
+            },
+            {
               name: 'imageEnTete',
               label: 'Image d’en-tête par défaut',
               type: 'upload',
