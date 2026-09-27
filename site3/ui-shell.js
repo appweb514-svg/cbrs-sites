@@ -601,6 +601,9 @@
       : Promise.resolve();
     ready.then(function () {
       document.querySelectorAll('a[data-cbrs-doc]').forEach(function (link) {
+        // Seuls les fichiers du site sont vérifiés : un lien remplacé par le CMS pointe vers
+        // un document existant, et l'API Payload répond 404 aux requêtes HEAD.
+        if (new URL(link.href, location.href).origin !== location.origin) return;
         fetch(link.href, { method: 'HEAD' }).then(function (response) {
           if (response.ok) return;
           const pending = document.createElement('span');
