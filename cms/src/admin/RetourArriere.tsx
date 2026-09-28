@@ -38,7 +38,7 @@ export const RetourArriere: React.FC = () => {
   )
 
   React.useEffect(() => {
-    if (!liste || hasSavePermission === false || (versionCount ?? 0) < 2) return
+    if (!liste || hasSavePermission === false || (typeof versionCount === 'number' && versionCount < 2)) return
     let vivant = true
     fetch(liste, { credentials: 'include' })
       .then((reponse) => (reponse.ok ? reponse.json() : null))

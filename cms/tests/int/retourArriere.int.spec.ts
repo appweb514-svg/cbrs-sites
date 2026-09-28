@@ -11,14 +11,14 @@ let payload: Payload
 let dossier: string
 
 // Type local : le typage publié de la configuration nettoyée ne reflète pas le chemin réel
-// des composants (`admin.components.edit.beforeDocumentControls`).
+// des composants (collections : `admin.components.edit`, globals : `admin.components.elements`).
 type AdminAvecBouton = {
-  admin?: { components?: { edit?: { beforeDocumentControls?: unknown[] } } }
+  admin?: { components?: Record<string, { beforeDocumentControls?: unknown[] }> }
 }
 
-const contientBouton = (entite: unknown): boolean =>
-  ((entite as AdminAvecBouton).admin?.components?.edit?.beforeDocumentControls ?? []).some((element) =>
-    JSON.stringify(element).includes('RetourArriere'),
+const boutonDans = (entite: unknown, emplacement: 'edit' | 'elements'): boolean =>
+  ((entite as AdminAvecBouton).admin?.components?.[emplacement]?.beforeDocumentControls ?? []).some(
+    (element) => JSON.stringify(element).includes('RetourArriere'),
   )
 
 // Appelle le droit « lire les versions » avec un utilisateur donné.
@@ -51,13 +51,13 @@ describe('Retour en arrière', () => {
     for (const collection of collections) {
       expect(collection.versions, collection.slug).toBeTruthy()
       expect(collection.access?.readVersions, collection.slug).toBeTruthy()
-      expect(contientBouton(collection), collection.slug).toBe(true)
+      expect(boutonDans(collection, 'edit'), collection.slug).toBe(true)
     }
 
     for (const global of cfg.globals) {
       expect(global.versions, global.slug).toBeTruthy()
       expect(global.access?.readVersions, global.slug).toBeTruthy()
-      expect(contientBouton(global), global.slug).toBe(true)
+      expect(boutonDans(global, 'elements'), global.slug).toBe(true)
     }
   })
 

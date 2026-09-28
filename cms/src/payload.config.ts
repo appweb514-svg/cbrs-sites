@@ -79,8 +79,9 @@ export default buildConfig({
       Users,
       Roles,
     ]),
+    'collections',
   ),
-  globals: avecRetourArriere([FlashInfo, Tarifs, Parametres, Apparence]),
+  globals: avecRetourArriere([FlashInfo, Tarifs, Parametres, Apparence], 'globals'),
   cors: siteOrigins,
   editor: lexicalEditor(),
   email: smtpHost
