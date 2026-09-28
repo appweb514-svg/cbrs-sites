@@ -28,6 +28,7 @@ export const Media: CollectionConfig = {
     create: ({ req: { user } }) => Boolean(user),
     update: peut('media', 'modifier'),
     delete: peut('media', 'supprimer'),
+    readVersions: peut('media', 'voir'),
   },
   hooks: {
     beforeChange: [garderNomFichier],

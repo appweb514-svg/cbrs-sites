@@ -29,6 +29,7 @@ export const Users: CollectionConfig = {
     admin: ({ req: { user } }) => Boolean(user),
     create: isAdmin,
     delete: isAdmin,
+    readVersions: isAdmin,
     read: ({ req: { user } }) => {
       if (!user) return false
       if (estAdmin(user)) return true

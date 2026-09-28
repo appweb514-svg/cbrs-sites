@@ -15,21 +15,32 @@ const quand = (version: Version): string => {
 // Bouton affiché à côté des boutons d'enregistrement : restaure la version précédente de la fiche.
 // L'historique (20 versions) est activé par `avecRetourArriere` sur toutes les collections et globals.
 export const RetourArriere: React.FC = () => {
-  const { apiURL, collectionSlug, globalSlug, hasSavePermission, id, versionCount } = useDocumentInfo()
+  const { collectionSlug, globalSlug, hasSavePermission, id, versionCount } = useDocumentInfo()
   const [precedente, setPrecedente] = React.useState<null | Version>(null)
   const [occupe, setOccupe] = React.useState(false)
+  const api = '/api'
 
-  const base = React.useMemo(() => {
-    if (!id) return null
-    if (collectionSlug) return `${apiURL ?? '/api'}/${collectionSlug}/${id}/versions`
-    if (globalSlug) return `${apiURL ?? '/api'}/globals/${globalSlug}/versions`
+  // Les deux dernières versions de la fiche courante, la plus récente en tête.
+  const liste = React.useMemo(() => {
+    if (collectionSlug && id) {
+      return `${api}/${collectionSlug}/versions?where[parent][equals]=${id}&limit=2&depth=0&sort=-updatedAt`
+    }
+    if (globalSlug) return `${api}/globals/${globalSlug}/versions?limit=2&depth=0&sort=-updatedAt`
     return null
-  }, [apiURL, collectionSlug, globalSlug, id])
+  }, [api, collectionSlug, globalSlug, id])
+
+  const urlVersion = React.useCallback(
+    (versionId: number | string) =>
+      collectionSlug && id
+        ? `${api}/${collectionSlug}/versions/${versionId}`
+        : `${api}/globals/${globalSlug}/versions/${versionId}`,
+    [api, collectionSlug, globalSlug, id],
+  )
 
   React.useEffect(() => {
-    if (!base || hasSavePermission === false || (versionCount ?? 0) < 2) return
+    if (!liste || hasSavePermission === false || (versionCount ?? 0) < 2) return
     let vivant = true
-    fetch(`${base}?limit=2&depth=0&sort=-updatedAt`, { credentials: 'include' })
+    fetch(liste, { credentials: 'include' })
       .then((reponse) => (reponse.ok ? reponse.json() : null))
       .then((donnees: { docs?: Version[] } | null) => {
         if (vivant) setPrecedente(donnees?.docs?.[1] ?? null)
@@ -40,9 +51,9 @@ export const RetourArriere: React.FC = () => {
     return () => {
       vivant = false
     }
-  }, [base, hasSavePermission, versionCount])
+  }, [liste, hasSavePermission, versionCount])
 
-  if (!base || hasSavePermission === false || !precedente) return null
+  if (!liste || hasSavePermission === false || !precedente) return null
 
   const revenir = async () => {
     const date = quand(precedente)
@@ -53,7 +64,7 @@ export const RetourArriere: React.FC = () => {
 
     setOccupe(true)
     try {
-      const reponse = await fetch(`${base}/${precedente.id}`, { credentials: 'include', method: 'POST' })
+      const reponse = await fetch(urlVersion(precedente.id), { credentials: 'include', method: 'POST' })
       if (!reponse.ok) throw new Error()
       toast.success(`Version du ${date} restaurée.`)
       window.location.reload()

@@ -21,6 +21,14 @@ const contientBouton = (entite: unknown): boolean =>
     JSON.stringify(element).includes('RetourArriere'),
   )
 
+// Appelle le droit « lire les versions » avec un utilisateur donné.
+const permisVersions = (entite: unknown, user: unknown): unknown => {
+  const acces = (entite as { access?: { readVersions?: unknown } }).access?.readVersions
+  return typeof acces === 'function'
+    ? (acces as (args: { req: { user: unknown } }) => unknown)({ req: { user } })
+    : undefined
+}
+
 beforeAll(async () => {
   payload = await getPayload({ config })
   dossier = mkdtempSync(join(tmpdir(), 'cbrs-retour-'))
@@ -42,13 +50,35 @@ describe('Retour en arrière', () => {
 
     for (const collection of collections) {
       expect(collection.versions, collection.slug).toBeTruthy()
+      expect(collection.access?.readVersions, collection.slug).toBeTruthy()
       expect(contientBouton(collection), collection.slug).toBe(true)
     }
 
     for (const global of cfg.globals) {
       expect(global.versions, global.slug).toBeTruthy()
+      expect(global.access?.readVersions, global.slug).toBeTruthy()
       expect(contientBouton(global), global.slug).toBe(true)
     }
+  })
+
+  // Sans `readVersions`, Payload masque l'historique : le bouton ne doit pas rester sans effet.
+  it('ouvre l’historique aux bénévoles qui voient la section', async () => {
+    const cfg = await config
+    const bureau = cfg.collections.find((collection) => collection.slug === 'membres-bureau')!
+    const flash = cfg.globals.find((global) => global.slug === 'flash-info')!
+    const benevole = {
+      estAdministrateur: false,
+      roles: [{ id: 1, permissions: [{ actions: ['voir'], section: 'membres-bureau' }] }],
+    }
+
+    expect(permisVersions(bureau, benevole)).toBe(true)
+    expect(permisVersions(flash, benevole)).toBe(false)
+    expect(
+      permisVersions(flash, {
+        ...benevole,
+        roles: [{ id: 1, permissions: [{ actions: ['voir'], section: 'flash-info' }] }],
+      }),
+    ).toBe(true)
   })
 
   // Même requête que le bouton : les deux dernières versions, la plus récente en tête.
