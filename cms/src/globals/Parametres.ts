@@ -12,6 +12,7 @@ export const Parametres: GlobalConfig = {
   },
   access: {
     read: () => true,
+    readVersions: isAdmin,
     update: isAdmin,
   },
   fields: [

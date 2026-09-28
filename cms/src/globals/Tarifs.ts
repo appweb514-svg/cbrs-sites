@@ -12,6 +12,7 @@ export const Tarifs: GlobalConfig = {
   },
   access: {
     read: () => true,
+    readVersions: peut('tarifs', 'voir'),
     update: peut('tarifs', 'modifier'),
   },
   fields: [

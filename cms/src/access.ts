@@ -122,11 +122,14 @@ export const verifierPublication =
   }
 
 // Droits CRUD standard d'une section.
+// `readVersions` ouvre l'historique (et le bouton « Revenir en arrière ») à ceux qui voient la section ;
+// sans lui, Payload réserve les versions à son propre administrateur, qui n'existe pas ici.
 export const accesSection = (section: Section, read: Access) => ({
   read,
   create: peut(section, 'creer'),
   update: peut(section, 'modifier'),
   delete: peut(section, 'supprimer'),
+  readVersions: peut(section, 'voir'),
 })
 
 // Lecture : les éditeurs voient tout, les visiteurs seulement ce qui est marqué « afficher sur le site ».

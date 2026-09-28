@@ -27,6 +27,7 @@ export const Roles: CollectionConfig = {
     create: isAdmin,
     update: isAdmin,
     delete: isAdmin,
+    readVersions: isAdmin,
   },
   fields: [
     { name: 'nom', label: 'Nom du rôle', type: 'text', required: true, unique: true },

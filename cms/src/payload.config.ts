@@ -10,6 +10,7 @@ import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
 import { avecCasesVX } from './casesVX'
+import { avecRetourArriere } from './retourArriere'
 import { Activites } from './collections/Activites'
 import { Documents } from './collections/Documents'
 import { Galerie } from './collections/Galerie'
@@ -66,18 +67,21 @@ export default buildConfig({
     translations: { fr: { general: { createNew: 'Ajouter', createNewLabel: 'Ajouter : {{label}}' } } },
   },
   endpoints: [galerieLot, mediaRenommer],
-  collections: avecCasesVX([
-    VieDuClub,
-    MembresBureau,
-    Activites,
-    Sorties,
-    Galerie,
-    Documents,
-    Media,
-    Users,
-    Roles,
-  ]),
-  globals: [FlashInfo, Tarifs, Parametres, Apparence],
+  collections: avecRetourArriere(
+    avecCasesVX([
+      VieDuClub,
+      MembresBureau,
+      Activites,
+      Sorties,
+      Galerie,
+      Documents,
+      Media,
+      Users,
+      Roles,
+    ]),
+    'collections',
+  ),
+  globals: avecRetourArriere([FlashInfo, Tarifs, Parametres, Apparence], 'globals'),
   cors: siteOrigins,
   editor: lexicalEditor(),
   email: smtpHost

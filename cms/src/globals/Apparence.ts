@@ -59,6 +59,7 @@ export const Apparence: GlobalConfig = {
   versions: { max: 50 },
   access: {
     read: () => true,
+    readVersions: peut('apparence', 'voir'),
     update: peut('apparence', 'modifier'),
   },
   hooks: {

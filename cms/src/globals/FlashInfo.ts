@@ -12,6 +12,7 @@ export const FlashInfo: GlobalConfig = {
   },
   access: {
     read: () => true,
+    readVersions: peut('flash-info', 'voir'),
     update: peut('flash-info', 'modifier'),
   },
   fields: [
