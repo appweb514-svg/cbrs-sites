@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionBeforeChangeHook, CollectionConfig } from 'payload'
 
 import { accesSection, afficheOuEditeur, cacheSansDroit } from '../access'
 
@@ -17,6 +17,15 @@ const MIME_DOCUMENTS = [
   'application/x-cfb',
 ]
 
+// Un formulaire ouvert avant un remplacement (ou un retour en arrière) renvoie l'ancien nom de
+// fichier : sans nouveau fichier, on garde le nom déjà enregistré, sinon le document pointerait
+// vers un fichier supprimé.
+const garderNomFichier: CollectionBeforeChangeHook = ({ data, originalDoc, req }) => {
+  if (req.file || !data?.filename || !originalDoc?.filename) return data
+  if (data.filename === originalDoc.filename) return data
+  return { ...data, filename: originalDoc.filename }
+}
+
 export const Documents: CollectionConfig = {
   slug: 'documents',
   labels: { singular: 'Document', plural: 'Documents' },
@@ -30,6 +39,7 @@ export const Documents: CollectionConfig = {
   },
   defaultSort: 'ordre',
   access: accesSection('documents', afficheOuEditeur('documents')),
+  hooks: { beforeChange: [garderNomFichier] },
   fields: [
     { name: 'titre', label: 'Titre', type: 'text', required: true },
     {

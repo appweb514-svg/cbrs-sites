@@ -2,6 +2,7 @@ import * as migration_20260925_194715_init from './20260925_194715_init';
 import * as migration_20260926_182301_vercel_blob from './20260926_182301_vercel_blob';
 import * as migration_20260927_090415_cms_v2 from './20260927_090415_cms_v2';
 import * as migration_20260927_123611_apparence_entete from './20260927_123611_apparence_entete';
+import * as migration_20260928_190820_versions_partout from './20260928_190820_versions_partout';
 
 export const migrations = [
   {
@@ -22,6 +23,11 @@ export const migrations = [
   {
     up: migration_20260927_123611_apparence_entete.up,
     down: migration_20260927_123611_apparence_entete.down,
-    name: '20260927_123611_apparence_entete'
+    name: '20260927_123611_apparence_entete',
+  },
+  {
+    up: migration_20260928_190820_versions_partout.up,
+    down: migration_20260928_190820_versions_partout.down,
+    name: '20260928_190820_versions_partout'
   },
 ];
