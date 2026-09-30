@@ -91,7 +91,7 @@ Le site est statique (`site3/`, déployé tel quel) et lit le CMS côté navigat
 - [x] Task 1: Global `Formation` + section de droits + types + tests d'intégration
 - [x] Task 2: Migration Postgres générée, inspectée et validée sur base jetable
 - [x] Task 3: `/formation` branchée au CMS (page, client, proxy `/cms-docs`)
-- [ ] Task 4: E2E « retour en arrière » étendu à Formation + mémoire projet
+- [x] Task 4: E2E « retour en arrière » étendu à Formation + mémoire projet
 
 ## Implementation Tasks
 
@@ -196,10 +196,10 @@ Le site est statique (`site3/`, déployé tel quel) et lit le CMS côté navigat
 
 **Definition of Done:**
 
-- [ ] Le test E2E « « Page Formation » : le bouton restaure la version précédente » passe
-- [ ] `cms/tests/e2e/retourArriere.e2e.spec.ts` contient 14 fiches (13 + Formation)
-- [ ] `/Users/gildas/orca/projects/cbrs-sites/.project/JOURNAL.md` et `.project/DECISIONS.md` contiennent une entrée datée du 30/09 décrivant l'écran Formation et le choix du proxy `/cms-docs` (fichiers locaux, hors PR)
-- [ ] Verify: `cd cms && npm run test:e2e -- retourArriere`
+- [x] Le test E2E « « Page Formation » : le bouton restaure la version précédente » passe (30/09, 14/14)
+- [x] `cms/tests/e2e/retourArriere.e2e.spec.ts` contient 14 fiches (13 + Formation)
+- [x] `/Users/gildas/orca/projects/cbrs-sites/.project/JOURNAL.md` et `.project/DECISIONS.md` contiennent une entrée datée du 30/09 décrivant l'écran Formation et le choix du proxy `/cms-docs` (fichiers locaux, hors PR)
+- [x] Verify: `cd cms && npm run test:e2e -- retourArriere` (14 passed)
 
 ## Déploiement après fusion (hors PR)
 
