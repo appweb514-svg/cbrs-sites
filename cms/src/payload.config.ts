@@ -109,12 +109,11 @@ export default buildConfig({
         },
       }),
   sharp,
-  plugins: blobToken
-    ? [
-        vercelBlobStorage({
-          collections: { media: true, documents: true },
-          token: blobToken,
-        }),
-      ]
-    : [],
+  plugins: [
+    vercelBlobStorage({
+      alwaysInsertFields: true,
+      collections: { media: true, documents: true },
+      token: blobToken,
+    }),
+  ],
 })
