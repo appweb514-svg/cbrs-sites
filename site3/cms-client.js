@@ -313,7 +313,9 @@
 
   function renderGallery(items) {
     if (typeof window.cbrsRenderGallery !== 'function') return;
-    const photos = items.map(function (item) {
+    const photos = items.filter(function (item) {
+      return item && item.afficherSurSite !== false;
+    }).map(function (item) {
       const photo = item.photo || {};
       const src = resolveUrl((photo.sizes && photo.sizes.large && photo.sizes.large.url) || photo.url);
       if (!src) return null;
