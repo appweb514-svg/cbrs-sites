@@ -496,6 +496,27 @@
     });
   }
 
+  function valeur(data, chemin) {
+    return chemin.split('.').reduce(function (noeud, cle) {
+      return noeud && typeof noeud === 'object' ? noeud[cle] : undefined;
+    }, data);
+  }
+
+  function renderFormation(data) {
+    if (!data || typeof data !== 'object') return;
+    Array.prototype.slice.call(document.querySelectorAll('[data-cbrs-formation]')).forEach(function (noeud) {
+      const texte = valeur(data, noeud.dataset.cbrsFormation);
+      if (typeof texte === 'string' && texte.trim() !== '') noeud.textContent = texte;
+    });
+    Array.prototype.slice.call(document.querySelectorAll('[data-cbrs-fiche]')).forEach(function (bouton) {
+      const documentPdf = data[bouton.dataset.cbrsFiche];
+      if (!documentPdf || typeof documentPdf !== 'object' || !documentPdf.filename) return;
+      bouton.onclick = function () {
+        window.openPdf('/cms-docs/' + encodeURIComponent(documentPdf.filename), bouton.dataset.cbrsFicheTitre || documentPdf.titre || '');
+      };
+    });
+  }
+
   function renderVoyages(items) {
     const container = document.getElementById('voyages');
     if (!container) return;
@@ -565,6 +586,10 @@
       const lignes = data && Array.isArray(data.lignes) ? data.lignes : [];
       if (lignes.length) renderTarifs(lignes);
     });
+
+  register(function () { return Boolean(document.querySelector('[data-cbrs-formation]') || document.querySelector('[data-cbrs-fiche]')); },
+    '/api/globals/formation?depth=1',
+    renderFormation);
 
   register(function () { return Boolean(document.getElementById('voyages')); },
     '/api/sorties?where[type][equals]=voyage&sort=date&limit=20&depth=1',

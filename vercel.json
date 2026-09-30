@@ -121,6 +121,10 @@
       "destination": "/logos_rectangulaires/:path*"
     },
     {
+      "source": "/cms-docs/:file*",
+      "destination": "https://cbrs-cms.vercel.app/api/documents/file/:file*"
+    },
+    {
       "source": "/:path((?!old-version|site1|site2|site4|api).*)",
       "destination": "/site3/:path"
     }

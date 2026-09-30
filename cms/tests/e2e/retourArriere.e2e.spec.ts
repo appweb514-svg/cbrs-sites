@@ -266,6 +266,19 @@ const fiches: { nom: string; preparer: () => Promise<Fiche> }[] = [
       }
     },
   },
+  {
+    nom: 'Page Formation',
+    preparer: async () => {
+      await payload.updateGlobal({ data: { parcoursTitre: 'Formation e2e' }, slug: 'formation' })
+      await payload.updateGlobal({ data: { parcoursTitre: 'Formation e2e modifiée' }, slug: 'formation' })
+      return {
+        api: '/api/globals/formation',
+        avant: 'Formation e2e',
+        edition: '/admin/globals/formation',
+        lire: (donnees) => donnees.parcoursTitre,
+      }
+    },
+  },
 ]
 
 const imageE2e = async (): Promise<Buffer> =>
