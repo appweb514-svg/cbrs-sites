@@ -12,6 +12,7 @@ export const SECTIONS = [
   { label: 'Documents (PDF)', value: 'documents' },
   { label: 'Photos (médiathèque)', value: 'media' },
   { label: 'Flash info', value: 'flash-info' },
+  { label: 'Page Formation', value: 'formation' },
   { label: 'Tarifs', value: 'tarifs' },
   { label: 'Apparence du site', value: 'apparence' },
 ] as const

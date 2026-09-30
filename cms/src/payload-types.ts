@@ -103,12 +103,14 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'flash-info': FlashInfo;
+    formation: Formation;
     tarifs: Tarif;
     parametres: Parametre;
     apparence: Apparence;
   };
   globalsSelect: {
     'flash-info': FlashInfoSelect<false> | FlashInfoSelect<true>;
+    formation: FormationSelect<false> | FormationSelect<true>;
     tarifs: TarifsSelect<false> | TarifsSelect<true>;
     parametres: ParametresSelect<false> | ParametresSelect<true>;
     apparence: ApparenceSelect<false> | ApparenceSelect<true>;
@@ -460,6 +462,7 @@ export interface Role {
           | 'documents'
           | 'media'
           | 'flash-info'
+          | 'formation'
           | 'tarifs'
           | 'apparence';
         actions: ('voir' | 'creer' | 'modifier' | 'publier' | 'supprimer')[];
@@ -858,6 +861,69 @@ export interface FlashInfo {
   createdAt?: string | null;
 }
 /**
+ * Contenu de la page Formation : parcours, fiches PDF et textes. Laissez un champ vide pour garder le contenu d’origine du site.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "formation".
+ */
+export interface Formation {
+  id: number;
+  parcoursSurtitre?: string | null;
+  parcoursTitre?: string | null;
+  parcoursTexte?: string | null;
+  etape1?: {
+    surtitre?: string | null;
+    titre?: string | null;
+    texte?: string | null;
+  };
+  etape2?: {
+    surtitre?: string | null;
+    titre?: string | null;
+    texte?: string | null;
+  };
+  etape3?: {
+    surtitre?: string | null;
+    titre?: string | null;
+    texte?: string | null;
+  };
+  ficheFia?: (number | null) | Document;
+  ficheM2Agef?: (number | null) | Document;
+  ficheM2Ad?: (number | null) | Document;
+  ficheM2Aa?: (number | null) | Document;
+  ficheM2Ac?: (number | null) | Document;
+  ficheM2Jb?: (number | null) | Document;
+  carteAg?: {
+    titre?: string | null;
+    sousTitre?: string | null;
+  };
+  carteGym?: {
+    titre?: string | null;
+    sousTitre?: string | null;
+  };
+  carteDanse?: {
+    titre?: string | null;
+    sousTitre?: string | null;
+  };
+  carteRando?: {
+    titre?: string | null;
+    sousTitre?: string | null;
+  };
+  carteRaquettes?: {
+    titre?: string | null;
+    sousTitre?: string | null;
+  };
+  carteEchecs?: {
+    titre?: string | null;
+    sousTitre?: string | null;
+  };
+  note?: string | null;
+  ctaTitre?: string | null;
+  ctaTexte?: string | null;
+  ctaBouton?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * Grille tarifaire de la page Adhésion, affichée dans l’ordre saisi.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -974,6 +1040,85 @@ export interface Apparence {
 export interface FlashInfoSelect<T extends boolean = true> {
   actif?: T;
   message?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "formation_select".
+ */
+export interface FormationSelect<T extends boolean = true> {
+  parcoursSurtitre?: T;
+  parcoursTitre?: T;
+  parcoursTexte?: T;
+  etape1?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        texte?: T;
+      };
+  etape2?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        texte?: T;
+      };
+  etape3?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        texte?: T;
+      };
+  ficheFia?: T;
+  ficheM2Agef?: T;
+  ficheM2Ad?: T;
+  ficheM2Aa?: T;
+  ficheM2Ac?: T;
+  ficheM2Jb?: T;
+  carteAg?:
+    | T
+    | {
+        titre?: T;
+        sousTitre?: T;
+      };
+  carteGym?:
+    | T
+    | {
+        titre?: T;
+        sousTitre?: T;
+      };
+  carteDanse?:
+    | T
+    | {
+        titre?: T;
+        sousTitre?: T;
+      };
+  carteRando?:
+    | T
+    | {
+        titre?: T;
+        sousTitre?: T;
+      };
+  carteRaquettes?:
+    | T
+    | {
+        titre?: T;
+        sousTitre?: T;
+      };
+  carteEchecs?:
+    | T
+    | {
+        titre?: T;
+        sousTitre?: T;
+      };
+  note?: T;
+  ctaTitre?: T;
+  ctaTexte?: T;
+  ctaBouton?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

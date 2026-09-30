@@ -24,6 +24,7 @@ import { galerieLot } from './endpoints/galerieLot'
 import { mediaRenommer } from './endpoints/mediaRenommer'
 import { Apparence } from './globals/Apparence'
 import { FlashInfo } from './globals/FlashInfo'
+import { Formation } from './globals/Formation'
 import { Parametres } from './globals/Parametres'
 import { Tarifs } from './globals/Tarifs'
 
@@ -81,7 +82,7 @@ export default buildConfig({
     ]),
     'collections',
   ),
-  globals: avecRetourArriere([FlashInfo, Tarifs, Parametres, Apparence], 'globals'),
+  globals: avecRetourArriere([FlashInfo, Formation, Tarifs, Parametres, Apparence], 'globals'),
   cors: siteOrigins,
   editor: lexicalEditor(),
   email: smtpHost
