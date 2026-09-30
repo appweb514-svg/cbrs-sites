@@ -861,7 +861,7 @@ export interface FlashInfo {
   createdAt?: string | null;
 }
 /**
- * Contenu de la page Formation : parcours, fiches PDF et textes. Laissez un champ vide pour garder le contenu d’origine du site.
+ * Contenu de la page Formation : étapes du parcours, cartes par activité avec leurs fiches PDF, et textes. Un texte laissé vide garde le contenu d’origine du site.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "formation".
@@ -871,51 +871,62 @@ export interface Formation {
   parcoursSurtitre?: string | null;
   parcoursTitre?: string | null;
   parcoursTexte?: string | null;
-  etape1?: {
-    surtitre?: string | null;
-    titre?: string | null;
-    texte?: string | null;
-  };
-  etape2?: {
-    surtitre?: string | null;
-    titre?: string | null;
-    texte?: string | null;
-  };
-  etape3?: {
-    surtitre?: string | null;
-    titre?: string | null;
-    texte?: string | null;
-  };
-  ficheFia?: (number | null) | Document;
-  ficheM2Agef?: (number | null) | Document;
-  ficheM2Ad?: (number | null) | Document;
-  ficheM2Aa?: (number | null) | Document;
-  ficheM2Ac?: (number | null) | Document;
-  ficheM2Jb?: (number | null) | Document;
-  carteAg?: {
-    titre?: string | null;
-    sousTitre?: string | null;
-  };
-  carteGym?: {
-    titre?: string | null;
-    sousTitre?: string | null;
-  };
-  carteDanse?: {
-    titre?: string | null;
-    sousTitre?: string | null;
-  };
-  carteRando?: {
-    titre?: string | null;
-    sousTitre?: string | null;
-  };
-  carteRaquettes?: {
-    titre?: string | null;
-    sousTitre?: string | null;
-  };
-  carteEchecs?: {
-    titre?: string | null;
-    sousTitre?: string | null;
-  };
+  /**
+   * Jusqu’à 8 étapes, numérotées dans l’ordre de la liste (glisser-déposer pour réordonner).
+   */
+  etapes?:
+    | {
+        surtitre?: string | null;
+        titre: string;
+        texte?: string | null;
+        /**
+         * PDF de la médiathèque Documents. Laissez vide pour garder le fichier livré avec le site.
+         */
+        fiche?: (number | null) | Document;
+        ficheSite?: string | null;
+        /**
+         * Affiché seulement si l’étape a une fiche PDF. Par défaut : « Consulter la fiche (PDF) ».
+         */
+        boutonLibelle?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Jusqu’à 24 cartes, affichées dans l’ordre de la liste (glisser-déposer pour réordonner).
+   */
+  cartes?:
+    | {
+        titre: string;
+        sousTitre?: string | null;
+        icone?:
+          | (
+              | '01_aquagym.png'
+              | '02_petanque.png'
+              | '03_cyclisme.png'
+              | '04_tir_a_l_arc.png'
+              | '05_ping_pong.png'
+              | '05_tennis_de_table.png'
+              | '06_tennis.png'
+              | '07_randonnee.png'
+              | '08_marche_nordique.png'
+              | '09_gymnastique.png'
+              | '10_pickleball.png'
+              | '11_tai_chi.png'
+              | '12_echecs.png'
+              | '13_jeux_de_cartes.png'
+              | '14_danse.png'
+              | '15_atelier_memoire.png'
+              | '16_bridge.png'
+            )
+          | null;
+        /**
+         * PDF de la médiathèque Documents. Laissez vide pour garder le fichier livré avec le site.
+         */
+        fiche?: (number | null) | Document;
+        ficheSite?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   note?: string | null;
   ctaTitre?: string | null;
   ctaTexte?: string | null;
@@ -1052,68 +1063,26 @@ export interface FormationSelect<T extends boolean = true> {
   parcoursSurtitre?: T;
   parcoursTitre?: T;
   parcoursTexte?: T;
-  etape1?:
+  etapes?:
     | T
     | {
         surtitre?: T;
         titre?: T;
         texte?: T;
+        fiche?: T;
+        ficheSite?: T;
+        boutonLibelle?: T;
+        id?: T;
       };
-  etape2?:
-    | T
-    | {
-        surtitre?: T;
-        titre?: T;
-        texte?: T;
-      };
-  etape3?:
-    | T
-    | {
-        surtitre?: T;
-        titre?: T;
-        texte?: T;
-      };
-  ficheFia?: T;
-  ficheM2Agef?: T;
-  ficheM2Ad?: T;
-  ficheM2Aa?: T;
-  ficheM2Ac?: T;
-  ficheM2Jb?: T;
-  carteAg?:
+  cartes?:
     | T
     | {
         titre?: T;
         sousTitre?: T;
-      };
-  carteGym?:
-    | T
-    | {
-        titre?: T;
-        sousTitre?: T;
-      };
-  carteDanse?:
-    | T
-    | {
-        titre?: T;
-        sousTitre?: T;
-      };
-  carteRando?:
-    | T
-    | {
-        titre?: T;
-        sousTitre?: T;
-      };
-  carteRaquettes?:
-    | T
-    | {
-        titre?: T;
-        sousTitre?: T;
-      };
-  carteEchecs?:
-    | T
-    | {
-        titre?: T;
-        sousTitre?: T;
+        icone?: T;
+        fiche?: T;
+        ficheSite?: T;
+        id?: T;
       };
   note?: T;
   ctaTitre?: T;
