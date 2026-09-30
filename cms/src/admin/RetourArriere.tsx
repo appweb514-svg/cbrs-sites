@@ -3,7 +3,12 @@
 import { toast, useDocumentInfo } from '@payloadcms/ui'
 import React from 'react'
 
-type Version = { id: number | string; updatedAt?: string; createdAt?: string }
+type Version = {
+  id: number | string
+  updatedAt?: string
+  createdAt?: string
+  version?: { _status?: string }
+}
 
 const quand = (version: Version): string => {
   const valeur = version.updatedAt ?? version.createdAt
@@ -57,15 +62,30 @@ export const RetourArriere: React.FC = () => {
 
   const revenir = async () => {
     const date = quand(precedente)
+    // Un brouillon restauré comme version publiée retirerait la fiche du site : on le remet en brouillon.
+    const enBrouillon = precedente.version?._status === 'draft'
     const message =
       `Revenir à la version du ${date} ?\n\n` +
-      'Le contenu actuel sera remplacé. Il restera consultable dans l’historique des versions.'
+      'Le contenu actuel sera remplacé. Il restera consultable dans l’historique des versions.' +
+      (enBrouillon
+        ? '\n\nCette version était un brouillon : la fiche restera en ligne telle quelle jusqu’à sa publication.'
+        : '')
     if (!window.confirm(message)) return
 
     setOccupe(true)
     try {
-      const reponse = await fetch(urlVersion(precedente.id), { credentials: 'include', method: 'POST' })
-      if (!reponse.ok) throw new Error()
+      const reponse = await fetch(
+        `${urlVersion(precedente.id)}${enBrouillon ? '?draft=true' : ''}`,
+        { credentials: 'include', method: 'POST' },
+      )
+      if (!reponse.ok) {
+        const corps = (await reponse.json().catch(() => null)) as {
+          errors?: { message?: string }[]
+        } | null
+        toast.error(corps?.errors?.[0]?.message ?? 'Retour en arrière impossible.')
+        setOccupe(false)
+        return
+      }
       toast.success(`Version du ${date} restaurée.`)
       window.location.reload()
     } catch {
