@@ -8,6 +8,12 @@ import { fileURLToPath } from 'node:url'
 const root = fileURLToPath(new URL('..', import.meta.url))
 const config = JSON.parse(readFileSync(join(root, 'vercel.json'), 'utf8'))
 
+const CMS_ORIGIN = (process.env.CBRS_CMS_ORIGIN || 'https://cbrs-cms.vercel.app').replace(/\/+$/, '')
+
+function reecrireMeta(html) {
+  return html.replace(/(<meta[^>]*name=["']cbrs-cms-url["'][^>]*content=["'])[^"']*(["'])/i, '$1/__cms$2')
+}
+
 // Convertit une source Vercel (:param, :param*, :param(regex)) en expression régulière.
 function compile(source) {
   const names = []
@@ -68,11 +74,24 @@ export function resolve(pathname) {
   for (const rule of config.rewrites || []) {
     const target = match(rule, pathname)
     if (target) {
+      if (/^https?:\/\//.test(target)) return { status: 200, proxy: target }
       const file = isFile(target)
       return file ? { status: 200, file } : { status: 404 }
     }
   }
   return { status: 404 }
+}
+
+async function proxy(res, pathname, search, method) {
+  const upstream = await fetch(CMS_ORIGIN + pathname + search, { method, redirect: 'manual' })
+  const corps = method === 'HEAD' ? undefined : Buffer.from(await upstream.arrayBuffer())
+  const entetes = { 'Content-Length': String(corps ? corps.length : Number(upstream.headers.get('content-length') || 0)) }
+  const type = upstream.headers.get('content-type')
+  if (type) entetes['Content-Type'] = type
+  const disposition = upstream.headers.get('content-disposition')
+  if (disposition) entetes['Content-Disposition'] = disposition
+  res.writeHead(upstream.status, entetes)
+  res.end(corps)
 }
 
 const TYPES = {
@@ -83,18 +102,35 @@ const TYPES = {
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const port = Number(process.argv[2] || 8090)
-  createServer((req, res) => {
-    const url = new URL(req.url, 'http://localhost')
-    const result = resolve(url.pathname)
-    if (result.location) {
-      res.writeHead(result.status, { Location: result.location + url.search })
-      return res.end()
+  createServer(async (req, res) => {
+    try {
+      const url = new URL(req.url, 'http://localhost')
+      if (url.pathname === '/__cms' || url.pathname.startsWith('/__cms/')) {
+        return await proxy(res, url.pathname.slice('/__cms'.length) || '/', url.search, req.method)
+      }
+      const result = resolve(url.pathname)
+      if (result.location) {
+        res.writeHead(result.status, { Location: result.location + url.search })
+        return res.end()
+      }
+      if (result.proxy) {
+        const cible = new URL(result.proxy)
+        return await proxy(res, cible.pathname, cible.search + url.search, req.method)
+      }
+      if (!result.file) {
+        res.writeHead(404)
+        return res.end('Introuvable')
+      }
+      if (result.file.endsWith('.html')) {
+        const page = Buffer.from(reecrireMeta(readFileSync(result.file, 'utf8')))
+        res.writeHead(200, { 'Content-Type': TYPES['.html'], 'Content-Length': String(page.length) })
+        return res.end(req.method === 'HEAD' ? undefined : page)
+      }
+      res.writeHead(200, { 'Content-Type': TYPES[extname(result.file)] || 'application/octet-stream' })
+      createReadStream(result.file).pipe(res)
+    } catch (erreur) {
+      res.writeHead(502)
+      res.end('CMS injoignable : ' + erreur.message)
     }
-    if (!result.file) {
-      res.writeHead(404)
-      return res.end('Introuvable')
-    }
-    res.writeHead(200, { 'Content-Type': TYPES[extname(result.file)] || 'application/octet-stream' })
-    createReadStream(result.file).pipe(res)
   }).listen(port, '127.0.0.1', () => console.log(`Site : http://127.0.0.1:${port}/`))
 }

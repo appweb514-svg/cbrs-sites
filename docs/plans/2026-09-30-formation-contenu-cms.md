@@ -90,7 +90,7 @@ Le site est statique (`site3/`, déployé tel quel) et lit le CMS côté navigat
 
 - [x] Task 1: Global `Formation` + section de droits + types + tests d'intégration
 - [x] Task 2: Migration Postgres générée, inspectée et validée sur base jetable
-- [ ] Task 3: `/formation` branchée au CMS (page, client, proxy `/cms-docs`)
+- [x] Task 3: `/formation` branchée au CMS (page, client, proxy `/cms-docs`)
 - [ ] Task 4: E2E « retour en arrière » étendu à Formation + mémoire projet
 
 ## Implementation Tasks
@@ -175,10 +175,10 @@ Le site est statique (`site3/`, déployé tel quel) et lit le CMS côté navigat
 
 **Definition of Done:**
 
-- [ ] Sans CMS joignable, `/formation` affiche les textes et PDF d'origine, sans erreur console liée à `renderFormation`
-- [ ] Un champ rempli remplace le texte correspondant ; un champ vidé conserve le texte statique
-- [ ] Les PDF choisis s'ouvrent via `/cms-docs/<fichier>` (même origine) ; sans PDF choisi, le bouton garde le PDF livré avec le site
-- [ ] Verify: TS-001, TS-002, TS-003 (Chrome MCP, `node tooling/serve.mjs 8090`)
+- [x] Sans CMS joignable, `/formation` affiche les textes et PDF d'origine, sans erreur console liée à `renderFormation` (vérifié le 30/09 : CMS arrêté → textes et PDF statiques, seuls logs réseau 502)
+- [x] Un champ rempli remplace le texte correspondant ; un champ vidé conserve le texte statique (vérifié le 30/09 : « Parcours e2e » affiché, puis champ vidé → « Devenir animateur vous tente ? »)
+- [x] Les PDF choisis s'ouvrent via `/cms-docs/<fichier>` (même origine) ; sans PDF choisi, le bouton garde le PDF livré avec le site (vérifié le 30/09 : iframe `/cms-docs/…`, `print()` accessible, zoom 120 %, repli `docs/…`)
+- [x] Verify: TS-001, TS-002, TS-003 (Chrome MCP, `node tooling/serve.mjs 8090`, le 30/09)
 
 ### Task 4: E2E « retour en arrière » et mémoire projet
 
