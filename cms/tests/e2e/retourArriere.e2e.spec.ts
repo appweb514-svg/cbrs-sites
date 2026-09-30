@@ -38,9 +38,19 @@ const fiches: { nom: string; preparer: () => Promise<Fiche> }[] = [
       const doc = await payload.create({
         collection: 'vie-du-club',
         draft: false,
-        data: { categorie: 'club', date: '2026-09-01', resume: 'Résumé e2e', titre: 'Actu e2e' },
+        data: {
+          _status: 'published',
+          categorie: 'club',
+          date: '2026-09-01',
+          resume: 'Résumé e2e',
+          titre: 'Actu e2e',
+        },
       })
-      await payload.update({ collection: 'vie-du-club', data: { titre: 'Actu e2e modifiée' }, id: doc.id })
+      await payload.update({
+        collection: 'vie-du-club',
+        data: { titre: 'Actu e2e modifiée' },
+        id: doc.id,
+      })
       return {
         api: `/api/vie-du-club/${doc.id}`,
         avant: 'Actu e2e',
@@ -59,7 +69,11 @@ const fiches: { nom: string; preparer: () => Promise<Fiche> }[] = [
         collection: 'membres-bureau',
         data: { fonction: 'Président', nom: 'Membre e2e' },
       })
-      await payload.update({ collection: 'membres-bureau', data: { fonction: 'Trésorier' }, id: doc.id })
+      await payload.update({
+        collection: 'membres-bureau',
+        data: { fonction: 'Trésorier' },
+        id: doc.id,
+      })
       return {
         api: `/api/membres-bureau/${doc.id}`,
         avant: 'Président',
@@ -77,9 +91,19 @@ const fiches: { nom: string; preparer: () => Promise<Fiche> }[] = [
       const doc = await payload.create({
         collection: 'activites',
         draft: false,
-        data: { description: 'Description e2e', nom: 'Activité e2e', slug: `activite-e2e-${Date.now()}` },
+        data: {
+          _status: 'published',
+          description: 'Description e2e',
+          nom: 'Activité e2e',
+          slug: `activite-e2e-${Date.now()}`,
+        },
       })
-      await payload.update({ collection: 'activites', data: { nom: 'Activité e2e modifiée' }, id: doc.id })
+      await payload.update({
+        collection: 'activites',
+        data: { _status: 'published', nom: 'Activité e2e modifiée' },
+        draft: false,
+        id: doc.id,
+      })
       return {
         api: `/api/activites/${doc.id}`,
         avant: 'Activité e2e',
@@ -97,9 +121,21 @@ const fiches: { nom: string; preparer: () => Promise<Fiche> }[] = [
       const doc = await payload.create({
         collection: 'sorties',
         draft: false,
-        data: { date: '2026-10-01', lieu: 'Beauvais', resume: 'Résumé e2e', titre: 'Sortie e2e', type: 'sortie' },
+        data: {
+          _status: 'published',
+          date: '2026-10-01',
+          lieu: 'Beauvais',
+          resume: 'Résumé e2e',
+          titre: 'Sortie e2e',
+          type: 'sortie',
+        },
       })
-      await payload.update({ collection: 'sorties', data: { titre: 'Sortie e2e modifiée' }, id: doc.id })
+      await payload.update({
+        collection: 'sorties',
+        data: { _status: 'published', titre: 'Sortie e2e modifiée' },
+        draft: false,
+        id: doc.id,
+      })
       return {
         api: `/api/sorties/${doc.id}`,
         avant: 'Sortie e2e',
@@ -118,7 +154,11 @@ const fiches: { nom: string; preparer: () => Promise<Fiche> }[] = [
         collection: 'galerie',
         data: { annee: 2026, categorie: 'vie', legende: 'Légende e2e', photo: idMedia as number },
       })
-      await payload.update({ collection: 'galerie', data: { legende: 'Légende e2e modifiée' }, id: doc.id })
+      await payload.update({
+        collection: 'galerie',
+        data: { legende: 'Légende e2e modifiée' },
+        id: doc.id,
+      })
       return {
         api: `/api/galerie/${doc.id}`,
         avant: 'Légende e2e',
@@ -137,7 +177,12 @@ const fiches: { nom: string; preparer: () => Promise<Fiche> }[] = [
       const doc = await payload.create({
         collection: 'media',
         data: { alt: 'Photo e2e' },
-        file: { data: image, mimetype: 'image/png', name: 'photo-retour-e2e.png', size: image.length },
+        file: {
+          data: image,
+          mimetype: 'image/png',
+          name: 'photo-retour-e2e.png',
+          size: image.length,
+        },
       })
       await payload.update({ collection: 'media', data: { alt: 'Photo e2e modifiée' }, id: doc.id })
       return {
@@ -157,9 +202,18 @@ const fiches: { nom: string; preparer: () => Promise<Fiche> }[] = [
       const doc = await payload.create({
         collection: 'documents',
         data: { categorie: 'autre', remplaceLienOfficiel: 'aucun', titre: 'Document e2e' },
-        file: { data: PDF, mimetype: 'application/pdf', name: 'document-retour-e2e.pdf', size: PDF.length },
+        file: {
+          data: PDF,
+          mimetype: 'application/pdf',
+          name: 'document-retour-e2e.pdf',
+          size: PDF.length,
+        },
       })
-      await payload.update({ collection: 'documents', data: { titre: 'Document e2e modifié' }, id: doc.id })
+      await payload.update({
+        collection: 'documents',
+        data: { titre: 'Document e2e modifié' },
+        id: doc.id,
+      })
       return {
         api: `/api/documents/${doc.id}`,
         avant: 'Document e2e',
@@ -177,9 +231,17 @@ const fiches: { nom: string; preparer: () => Promise<Fiche> }[] = [
       const jeton = Date.now()
       const doc = await payload.create({
         collection: 'users',
-        data: { email: `benevole-${jeton}@cbrs.local`, nom: 'Bénévole e2e', password: 'motdepasse-e2e' },
+        data: {
+          email: `benevole-${jeton}@cbrs.local`,
+          nom: 'Bénévole e2e',
+          password: 'motdepasse-e2e',
+        },
       })
-      await payload.update({ collection: 'users', data: { nom: 'Bénévole e2e modifié' }, id: doc.id })
+      await payload.update({
+        collection: 'users',
+        data: { nom: 'Bénévole e2e modifié' },
+        id: doc.id,
+      })
       return {
         api: `/api/users/${doc.id}`,
         avant: 'Bénévole e2e',
@@ -196,7 +258,11 @@ const fiches: { nom: string; preparer: () => Promise<Fiche> }[] = [
     preparer: async () => {
       const jeton = Date.now()
       const doc = await payload.create({ collection: 'roles', data: { nom: `Rôle e2e ${jeton}` } })
-      await payload.update({ collection: 'roles', data: { nom: `Rôle e2e modifié ${jeton}` }, id: doc.id })
+      await payload.update({
+        collection: 'roles',
+        data: { nom: `Rôle e2e modifié ${jeton}` },
+        id: doc.id,
+      })
       return {
         api: `/api/roles/${doc.id}`,
         avant: `Rôle e2e ${jeton}`,
@@ -319,7 +385,12 @@ test.describe('Retour en arrière', () => {
     const photo = await payload.create({
       collection: 'media',
       data: { alt: 'Photo support e2e' },
-      file: { data: image, mimetype: 'image/png', name: 'photo-support-e2e.png', size: image.length },
+      file: {
+        data: image,
+        mimetype: 'image/png',
+        name: 'photo-support-e2e.png',
+        size: image.length,
+      },
     })
     idMedia = photo.id
 
@@ -352,13 +423,18 @@ test.describe('Retour en arrière', () => {
 
         const bouton = page.getByRole('button', { name: 'Revenir en arrière' })
         await expect(bouton).toBeVisible()
-        await expect(bouton).toHaveAttribute('title', /^Revenir à la version du \d{2}\/\d{2}\/\d{4}/)
+        await expect(bouton).toHaveAttribute(
+          'title',
+          /^Revenir à la version du \d{2}\/\d{2}\/\d{4}/,
+        )
 
         // Le rechargement de la fiche efface ce repère.
         await page.evaluate('window.__avantRetour = true')
         page.once('dialog', (dialogue) => dialogue.accept())
         await bouton.click()
-        await page.waitForFunction('window.__avantRetour === undefined', undefined, { timeout: 30000 })
+        await page.waitForFunction('window.__avantRetour === undefined', undefined, {
+          timeout: 30000,
+        })
 
         await expect
           .poll(
@@ -374,4 +450,46 @@ test.describe('Retour en arrière', () => {
       }
     })
   }
+
+  // Régression : restaurer un brouillon comme version publiée retirait la fiche du site.
+  test('« Vie du club » : revenir sur un brouillon garde la fiche en ligne', async () => {
+    const publie = { categorie: 'club' as const, date: '2026-09-01', resume: 'Résumé e2e' }
+    const doc = await payload.create({
+      collection: 'vie-du-club',
+      data: { ...publie, _status: 'published', titre: 'Publiée e2e A' },
+      draft: false,
+    })
+    try {
+      await payload.update({
+        collection: 'vie-du-club',
+        data: { _status: 'draft', titre: 'Brouillon e2e B' },
+        draft: true,
+        id: doc.id,
+      })
+      await payload.update({
+        collection: 'vie-du-club',
+        data: { _status: 'published', titre: 'Publiée e2e C' },
+        draft: false,
+        id: doc.id,
+      })
+      await page.goto(`${SERVER}/admin/collections/vie-du-club/${doc.id}`)
+
+      await page.evaluate('window.__avantRetour = true')
+      page.once('dialog', (dialogue) => dialogue.accept())
+      await page.getByRole('button', { name: 'Revenir en arrière' }).click()
+      await page.waitForFunction('window.__avantRetour === undefined', undefined, {
+        timeout: 30000,
+      })
+
+      const enLigne = await (await page.request.get(`${SERVER}/api/vie-du-club/${doc.id}`)).json()
+      expect(enLigne._status).toBe('published')
+      expect(enLigne.titre).toBe('Publiée e2e C')
+      const brouillon = await (
+        await page.request.get(`${SERVER}/api/vie-du-club/${doc.id}?draft=true`)
+      ).json()
+      expect(brouillon.titre).toBe('Brouillon e2e B')
+    } finally {
+      await payload.delete({ collection: 'vie-du-club', id: doc.id }).catch(() => undefined)
+    }
+  })
 })
