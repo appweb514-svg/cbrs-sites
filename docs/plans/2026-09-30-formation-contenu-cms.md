@@ -89,7 +89,7 @@ Le site est statique (`site3/`, déployé tel quel) et lit le CMS côté navigat
 ## Progress Tracking
 
 - [x] Task 1: Global `Formation` + section de droits + types + tests d'intégration
-- [ ] Task 2: Migration Postgres générée, inspectée et validée sur base jetable
+- [x] Task 2: Migration Postgres générée, inspectée et validée sur base jetable
 - [ ] Task 3: `/formation` branchée au CMS (page, client, proxy `/cms-docs`)
 - [ ] Task 4: E2E « retour en arrière » étendu à Formation + mémoire projet
 
@@ -149,10 +149,10 @@ Le site est statique (`site3/`, déployé tel quel) et lit le CMS côté navigat
 
 **Definition of Done:**
 
-- [ ] `cms/src/migrations/index.ts` référence la nouvelle migration et `npm run payload migrate` passe sur une base neuve puis sur une base déjà migrée
-- [ ] `\dT+` contient les nouveaux types et `permissions.section` accepte `formation` (`SELECT enum_range(NULL::"enum_roles_permissions_section")` — nom exact à relever au moment de la génération)
-- [ ] Le SQL de la migration ne contient aucun `DROP TABLE`/`DROP COLUMN`
-- [ ] Verify: `docker exec cbrs-pg-mig psql -U cbrs -d cbrs -c '\dt' | grep -E 'formation'` et `payload migrate:status` sans « pending » après application
+- [x] `cms/src/migrations/index.ts` référence la nouvelle migration et `npm run payload migrate` passe sur une base neuve puis sur une base déjà migrée
+- [x] `\dT+` contient les nouveaux types et `permissions.section` accepte `formation` (vérifié le 30/09 : `enum_range` des deux enums contient `formation` avant `tarifs`)
+- [x] Le SQL de la migration ne contient aucun `DROP TABLE`/`DROP COLUMN` (section `up` ; les `DROP` du `down()` sont le motif Payload standard)
+- [x] Verify: `docker exec cbrs-pg-mig psql -U cbrs -d cbrs -c '\dt' | grep -E 'formation'` (tables `formation` et `_formation_v`) et `payload migrate:status` sans « pending » après application (base neuve et base déjà migrée le 30/09)
 
 ### Task 3: Page /formation rendue depuis le CMS
 
