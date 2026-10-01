@@ -1,0 +1,25 @@
+name: merge-on-approval
+on:
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: "Numéro de la PR à fusionner"
+        required: true
+      method:
+        description: "squash | merge | rebase"
+        default: squash
+permissions:
+  contents: write
+  pull-requests: write
+concurrency: merge-pr-${{ inputs.pr }}
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    environment: merge-approval   # bloque jusqu'au clic « Approve and deploy »
+    steps:
+      - name: Fusionner la PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr ready "${{ inputs.pr }}" -R "$GITHUB_REPOSITORY" || true
+          gh pr merge "${{ inputs.pr }}" -R "$GITHUB_REPOSITORY" --"${{ inputs.method }}" --delete-branch
