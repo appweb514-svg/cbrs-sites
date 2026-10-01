@@ -502,19 +502,113 @@
     }, data);
   }
 
+  const ICONE_PDF = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>';
+  // Couleurs des étapes, reprises dans l'ordre du gabarit (vert, bleu, sarcelle).
+  const TEINTES_ETAPES = [
+    { carte: 'border-gray-100 bg-cbrs-gray-100/70', puce: 'bg-cbrs-green', texte: 'text-cbrs-green' },
+    { carte: 'border-cbrs-blue/10 bg-blue-50/60', puce: 'bg-cbrs-blue', texte: 'text-cbrs-blue' },
+    { carte: 'border-cbrs-teal/10 bg-cbrs-teal/5', puce: 'bg-cbrs-teal', texte: 'text-cbrs-teal' },
+  ];
+
+  function texteRempli(valeurTexte) {
+    return typeof valeurTexte === 'string' && valeurTexte.trim() !== '';
+  }
+
+  // PDF choisi dans le CMS (servi en même origine via /cms-docs), sinon le fichier livré avec le site.
+  function lienFiche(ligne) {
+    const documentPdf = ligne && ligne.fiche;
+    if (documentPdf && typeof documentPdf === 'object' && documentPdf.filename) {
+      return '/cms-docs/' + encodeURIComponent(documentPdf.filename);
+    }
+    return texteRempli(ligne && ligne.ficheSite) ? ligne.ficheSite : '';
+  }
+
+  function boutonFiche(lien, titre, className, iconeClass, libelle) {
+    const bouton = el('button', className);
+    bouton.type = 'button';
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', iconeClass);
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.innerHTML = ICONE_PDF;
+    bouton.appendChild(svg);
+    bouton.appendChild(document.createTextNode(' ' + libelle));
+    bouton.onclick = function () { window.openPdf(lien, titre); };
+    return bouton;
+  }
+
+  function renderEtapes(conteneur, etapes) {
+    const ligne = conteneur.querySelector('[aria-hidden="true"]');
+    Array.prototype.slice.call(conteneur.children).forEach(function (enfant) {
+      if (enfant !== ligne) enfant.remove();
+    });
+    etapes.forEach(function (etape, index) {
+      const teinte = TEINTES_ETAPES[index % TEINTES_ETAPES.length];
+      const article = el('article', 'relative flex gap-4 rounded-2xl border p-4 md:gap-5 md:p-5 ' + teinte.carte);
+      article.appendChild(el('div', 'z-10 grid h-10 w-10 flex-shrink-0 place-items-center rounded-2xl font-bold text-white shadow-sm ring-4 ring-white ' + teinte.puce, String(index + 1)));
+      const corps = el('div', 'min-w-0');
+      if (texteRempli(etape.surtitre)) corps.appendChild(el('p', 'text-xs font-bold uppercase tracking-[.14em] ' + teinte.texte, etape.surtitre));
+      corps.appendChild(el('h3', 'mt-1 text-lg font-bold text-gray-900', etape.titre || ''));
+      if (texteRempli(etape.texte)) corps.appendChild(el('p', 'mt-2 text-sm leading-relaxed text-gray-600', etape.texte));
+      const lien = lienFiche(etape);
+      if (lien) {
+        corps.appendChild(boutonFiche(
+          lien,
+          'Fiche — ' + (etape.titre || ''),
+          'mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-cbrs-blue shadow-sm ring-1 ring-cbrs-blue/15 transition hover:-translate-y-0.5 hover:bg-cbrs-blue hover:text-white',
+          'h-4 w-4',
+          texteRempli(etape.boutonLibelle) ? etape.boutonLibelle : 'Consulter la fiche (PDF)'
+        ));
+      }
+      article.appendChild(corps);
+      conteneur.appendChild(article);
+    });
+    if (ligne) ligne.hidden = etapes.length < 2;
+  }
+
+  function renderCartes(conteneur, cartes) {
+    conteneur.textContent = '';
+    cartes.forEach(function (carte) {
+      const bloc = el('div', 'bg-white rounded-xl shadow-card p-5 flex items-center gap-4 hover:shadow-card-hover transition-shadow group');
+      if (texteRempli(carte.icone)) {
+        const cadre = el('div', 'w-14 h-14 bg-gray-50 rounded-xl flex items-center justify-center p-2 shrink-0');
+        const image = el('img', 'w-full h-full object-contain');
+        image.src = carte.icone + '?v=transparent-icons-20260814-v3';
+        image.alt = carte.titre || '';
+        cadre.appendChild(image);
+        bloc.appendChild(cadre);
+      }
+      const corps = el('div', 'flex-1 min-w-0');
+      corps.appendChild(el('h3', 'font-bold text-gray-900 text-sm group-hover:text-cbrs-blue transition-colors', carte.titre || ''));
+      if (texteRempli(carte.sousTitre)) corps.appendChild(el('p', 'text-xs text-gray-500', carte.sousTitre));
+      const lien = lienFiche(carte);
+      if (lien) {
+        corps.appendChild(boutonFiche(
+          lien,
+          'Fiche ' + (carte.sousTitre || carte.titre || ''),
+          'inline-flex items-center gap-1 text-xs text-cbrs-green font-medium hover:underline mt-1',
+          'w-3 h-3',
+          'Consulter le PDF'
+        ));
+      }
+      bloc.appendChild(corps);
+      conteneur.appendChild(bloc);
+    });
+  }
+
   function renderFormation(data) {
     if (!data || typeof data !== 'object') return;
     Array.prototype.slice.call(document.querySelectorAll('[data-cbrs-formation]')).forEach(function (noeud) {
       const texte = valeur(data, noeud.dataset.cbrsFormation);
-      if (typeof texte === 'string' && texte.trim() !== '') noeud.textContent = texte;
+      if (texteRempli(texte)) noeud.textContent = texte;
     });
-    Array.prototype.slice.call(document.querySelectorAll('[data-cbrs-fiche]')).forEach(function (bouton) {
-      const documentPdf = data[bouton.dataset.cbrsFiche];
-      if (!documentPdf || typeof documentPdf !== 'object' || !documentPdf.filename) return;
-      bouton.onclick = function () {
-        window.openPdf('/cms-docs/' + encodeURIComponent(documentPdf.filename), bouton.dataset.cbrsFicheTitre || documentPdf.titre || '');
-      };
-    });
+    // Une liste vide (ou absente) garde le contenu livré avec le site.
+    const etapes = document.querySelector('[data-cbrs-formation-etapes]');
+    if (etapes && Array.isArray(data.etapes) && data.etapes.length) renderEtapes(etapes, data.etapes);
+    const cartes = document.querySelector('[data-cbrs-formation-cartes]');
+    if (cartes && Array.isArray(data.cartes) && data.cartes.length) renderCartes(cartes, data.cartes);
   }
 
   function renderVoyages(items) {
@@ -587,7 +681,7 @@
       if (lignes.length) renderTarifs(lignes);
     });
 
-  register(function () { return Boolean(document.querySelector('[data-cbrs-formation]') || document.querySelector('[data-cbrs-fiche]')); },
+  register(function () { return Boolean(document.querySelector('[data-cbrs-formation]') || document.querySelector('[data-cbrs-formation-etapes]')); },
     '/api/globals/formation?depth=1',
     renderFormation);
 

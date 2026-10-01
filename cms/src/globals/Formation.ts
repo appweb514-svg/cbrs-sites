@@ -1,34 +1,44 @@
-import type { GlobalConfig, GroupField, Tab } from 'payload'
+import type { Field, GlobalConfig, Tab } from 'payload'
 
 import { cacheSansDroit, peut } from '../access'
 
-const etape = (name: string, label: string, surtitre: string, titre: string, texte: string): GroupField => ({
-  name,
-  label,
-  type: 'group',
-  fields: [
-    { name: 'surtitre', label: 'Sur-titre', type: 'text', defaultValue: surtitre },
-    { name: 'titre', label: 'Titre', type: 'text', defaultValue: titre },
-    { name: 'texte', label: 'Texte', type: 'textarea', defaultValue: texte },
-  ],
-})
+// Pictogrammes d’activité livrés avec le site (dossier site3/).
+export const ICONES = [
+  { label: 'Aquagym', value: '01_aquagym.png' },
+  { label: 'Pétanque', value: '02_petanque.png' },
+  { label: 'Cyclisme', value: '03_cyclisme.png' },
+  { label: 'Tir à l’arc', value: '04_tir_a_l_arc.png' },
+  { label: 'Ping-pong', value: '05_ping_pong.png' },
+  { label: 'Tennis de table', value: '05_tennis_de_table.png' },
+  { label: 'Tennis', value: '06_tennis.png' },
+  { label: 'Randonnée', value: '07_randonnee.png' },
+  { label: 'Marche nordique', value: '08_marche_nordique.png' },
+  { label: 'Gymnastique', value: '09_gymnastique.png' },
+  { label: 'Pickleball', value: '10_pickleball.png' },
+  { label: 'Tai-chi', value: '11_tai_chi.png' },
+  { label: 'Échecs', value: '12_echecs.png' },
+  { label: 'Jeux de cartes', value: '13_jeux_de_cartes.png' },
+  { label: 'Danse', value: '14_danse.png' },
+  { label: 'Atelier mémoire', value: '15_atelier_memoire.png' },
+  { label: 'Bridge', value: '16_bridge.png' },
+] as const
 
-const carte = (name: string, label: string, titre: string, sousTitre: string): GroupField => ({
-  name,
-  label,
-  type: 'group',
-  fields: [
-    { name: 'titre', label: 'Titre', type: 'text', defaultValue: titre },
-    { name: 'sousTitre', label: 'Sous-titre', type: 'text', defaultValue: sousTitre },
-  ],
-})
+export const MAX_ETAPES = 8
+export const MAX_CARTES = 24
 
-const fiche = (name: string, label: string): { name: string; label: string; type: 'upload'; relationTo: 'documents' } => ({
-  name,
-  label,
-  type: 'upload',
-  relationTo: 'documents',
-})
+// PDF choisi dans la médiathèque Documents ; à défaut, le fichier livré avec le site (`ficheSite`).
+const ficheFields: Field[] = [
+  {
+    name: 'fiche',
+    label: 'Fiche PDF',
+    type: 'upload',
+    relationTo: 'documents',
+    admin: { description: 'PDF de la médiathèque Documents. Laissez vide pour garder le fichier livré avec le site.' },
+  },
+  { name: 'ficheSite', type: 'text', admin: { hidden: true } },
+]
+
+const pdf = (fichier: string) => `docs/FFRS_Formation_${fichier}_Aout-2025.pdf`
 
 const parcours: Tab = {
   label: 'Parcours',
@@ -42,52 +52,81 @@ const parcours: Tab = {
       defaultValue:
         'Voici le cheminement pour encadrer bénévolement une activité au sein du CBRS, étape après étape.',
     },
-    etape(
-      'etape1',
-      'Étape 1',
-      'Première étape',
-      'Connaître la FFRS',
-      'La Fédération Française de la Retraite Sportive (FFRS) est l’organisme fédéral qui encadre et forme les animateurs.',
-    ),
-    etape(
-      'etape2',
-      'Étape 2',
-      'Le socle commun',
-      'Formation Initiale des Animateurs (FIA)',
-      'Première étape incontournable : la FIA vous forme aux bases de l’animation sportive bénévole (pédagogie, sécurité, connaissance de la fédération).',
-    ),
-    etape(
-      'etape3',
-      'Étape 3',
-      'La spécialisation',
-      'Formation par activité (M2)',
-      'Après la FIA, vous suivez la formation spécifique à l’activité que vous souhaitez encadrer (M2).',
-    ),
-  ],
-}
-
-const fiches: Tab = {
-  label: 'Fiches PDF',
-  description: 'Choisissez un PDF de la médiathèque Documents. Laissez vide pour garder le fichier livré avec le site.',
-  fields: [
-    fiche('ficheFia', 'Fiche FIA (Formation Initiale des Animateurs)'),
-    fiche('ficheM2Agef', 'Fiche M2-AGEF (Aquagym et Gymnastique)'),
-    fiche('ficheM2Ad', 'Fiche M2-AD (Danse)'),
-    fiche('ficheM2Aa', 'Fiche M2-AA (Randonnée)'),
-    fiche('ficheM2Ac', 'Fiche M2-AC (Tennis de table)'),
-    fiche('ficheM2Jb', 'Fiche M2-JB (Échecs et jeux de société)'),
+    {
+      name: 'etapes',
+      label: 'Étapes du parcours',
+      labels: { singular: 'Étape', plural: 'Étapes' },
+      type: 'array',
+      maxRows: MAX_ETAPES,
+      admin: {
+        description: `Jusqu’à ${MAX_ETAPES} étapes, numérotées dans l’ordre de la liste (glisser-déposer pour réordonner).`,
+        initCollapsed: true,
+      },
+      fields: [
+        { name: 'surtitre', label: 'Sur-titre', type: 'text' },
+        { name: 'titre', label: 'Titre', type: 'text', required: true },
+        { name: 'texte', label: 'Texte', type: 'textarea' },
+        ...ficheFields,
+        {
+          name: 'boutonLibelle',
+          label: 'Libellé du bouton PDF',
+          type: 'text',
+          admin: { description: 'Affiché seulement si l’étape a une fiche PDF. Par défaut : « Consulter la fiche (PDF) ».' },
+        },
+      ],
+      defaultValue: [
+        {
+          surtitre: 'Première étape',
+          titre: 'Connaître la FFRS',
+          texte:
+            'La Fédération Française de la Retraite Sportive (FFRS) est l’organisme fédéral qui encadre et forme les animateurs.',
+        },
+        {
+          surtitre: 'Le socle commun',
+          titre: 'Formation Initiale des Animateurs (FIA)',
+          texte:
+            'Première étape incontournable : la FIA vous forme aux bases de l’animation sportive bénévole (pédagogie, sécurité, connaissance de la fédération).',
+          ficheSite: pdf('FIA'),
+          boutonLibelle: 'Consulter la fiche FIA (PDF)',
+        },
+        {
+          surtitre: 'La spécialisation',
+          titre: 'Formation par activité (M2)',
+          texte: 'Après la FIA, vous suivez la formation spécifique à l’activité que vous souhaitez encadrer (M2).',
+        },
+      ],
+    },
   ],
 }
 
 const cartes: Tab = {
   label: 'Cartes',
   fields: [
-    carte('carteAg', 'Aquagym', 'Aquagym', 'M2-AGEF — Gymnastique Aquatique'),
-    carte('carteGym', 'Gymnastique', 'Gymnastique', 'M2-AGEF — Gymnastique d’Entretien'),
-    carte('carteDanse', 'Danse', 'Danse', 'M2-AD — Danse de Salon'),
-    carte('carteRando', 'Randonnée', 'Randonnée', 'M2-AA — Activités de Randonnée'),
-    carte('carteRaquettes', 'Tennis de table', 'Tennis de table', 'M2-AC — Activités de raquettes'),
-    carte('carteEchecs', 'Échecs / Jeux de société', 'Échecs / Jeux de société', 'M2-JB — Jeux de table et de société'),
+    {
+      name: 'cartes',
+      label: 'Fiches formation par activité',
+      labels: { singular: 'Carte', plural: 'Cartes' },
+      type: 'array',
+      maxRows: MAX_CARTES,
+      admin: {
+        description: `Jusqu’à ${MAX_CARTES} cartes, affichées dans l’ordre de la liste (glisser-déposer pour réordonner).`,
+        initCollapsed: true,
+      },
+      fields: [
+        { name: 'titre', label: 'Titre', type: 'text', required: true },
+        { name: 'sousTitre', label: 'Sous-titre', type: 'text' },
+        { name: 'icone', label: 'Pictogramme', type: 'select', options: [...ICONES] },
+        ...ficheFields,
+      ],
+      defaultValue: [
+        { titre: 'Aquagym', sousTitre: 'M2-AGEF — Gymnastique Aquatique', icone: '01_aquagym.png', ficheSite: pdf('M2-AGEF') },
+        { titre: 'Gymnastique', sousTitre: 'M2-AGEF — Gymnastique d’Entretien', icone: '09_gymnastique.png', ficheSite: pdf('M2-AGEF') },
+        { titre: 'Danse', sousTitre: 'M2-AD — Danse de Salon', icone: '14_danse.png', ficheSite: pdf('M2-AD') },
+        { titre: 'Randonnée', sousTitre: 'M2-AA — Activités de Randonnée', icone: '07_randonnee.png', ficheSite: pdf('M2-AA') },
+        { titre: 'Tennis de table', sousTitre: 'M2-AC — Activités de raquettes', icone: '05_ping_pong.png', ficheSite: pdf('M2-AC') },
+        { titre: 'Échecs / Jeux de société', sousTitre: 'M2-JB — Jeux de table et de société', icone: '12_echecs.png', ficheSite: pdf('M2-JB') },
+      ],
+    },
   ],
 }
 
@@ -119,12 +158,12 @@ export const Formation: GlobalConfig = {
     group: 'Vie du club',
     hidden: cacheSansDroit('formation'),
     description:
-      'Contenu de la page Formation : parcours, fiches PDF et textes. Laissez un champ vide pour garder le contenu d’origine du site.',
+      'Contenu de la page Formation : étapes du parcours, cartes par activité avec leurs fiches PDF, et textes. Un texte laissé vide garde le contenu d’origine du site.',
   },
   access: {
     read: () => true,
     readVersions: peut('formation', 'voir'),
     update: peut('formation', 'modifier'),
   },
-  fields: [{ type: 'tabs', tabs: [parcours, fiches, cartes, basDePage] }],
+  fields: [{ type: 'tabs', tabs: [parcours, cartes, basDePage] }],
 }
