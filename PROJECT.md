@@ -1,12 +1,11 @@
 # Project Memory
 
-Stable facts only. Update same commit when stale.
+Stable facts only.
 
-## Commands
-
-- L'administration du site passe par le CMS Payload (`cms/`) ; les liens « Connexion » du site public pointent vers son admin (https://cbrs-cms.vercel.app/admin/).
-- Public UI currently lives under `site3/`; serve the repository root and open `/site3/index.html` for local review.
-
-## Decisions
-
-- UI/UX improvements are developed in the `ui-ux-improvements` worktree.
+- Public site: static HTML and vanilla JS in `site3/`; `node tooling/serve.mjs 8090` serves clean routes locally.
+- `CBRS_CMS_ORIGIN` selects the CMS used by the local site proxy.
+- CMS: Payload 3 / Next.js in `cms/`; scripts: `npm run dev`, `npm run test:int`, `npm run lint`, `npx tsc --noEmit`.
+- PostgreSQL in production, SQLite locally, selected by `DATABASE_URL`.
+- After admin component changes: `npm run generate:importmap`; after schema changes: `npm run generate:types` and generate a PostgreSQL migration.
+- Vercel projects: `cbrs-sites` (repository root) and `cbrs-cms` (`cms/`, production branch `main`).
+- Use an isolated worktree for feature changes.

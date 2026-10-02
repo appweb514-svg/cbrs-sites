@@ -6,6 +6,7 @@ export const Parametres: GlobalConfig = {
   slug: 'parametres',
   label: 'Paramètres du site',
   admin: {
+    components: { elements: { beforeDocumentControls: ['/admin/VoirPage#VoirPage'] } },
     group: 'Administration',
     hidden: cacheSaufAdmin,
     description: 'Chiffres clés et adresses de contact affichés sur le site. Réservé à l’administrateur.',

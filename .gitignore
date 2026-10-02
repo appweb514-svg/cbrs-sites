@@ -41,3 +41,6 @@ fetched/
 sortie-detail-baie-somme-full.png
 sortie-detail-deux-caps.png
 site3/planche-photos-commons.jpg
+
+# Index de structure local
+.codegraph/

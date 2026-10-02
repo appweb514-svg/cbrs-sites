@@ -6,6 +6,7 @@ export const Tarifs: GlobalConfig = {
   slug: 'tarifs',
   label: 'Tarifs',
   admin: {
+    components: { elements: { beforeDocumentControls: ['/admin/VoirPage#VoirPage'] } },
     group: 'Vie du club',
     hidden: cacheSansDroit('tarifs'),
     description: 'Grille tarifaire de la page Adhésion, affichée dans l’ordre saisi.',

@@ -6,6 +6,7 @@ export const FlashInfo: GlobalConfig = {
   slug: 'flash-info',
   label: 'Flash info',
   admin: {
+    components: { elements: { beforeDocumentControls: ['/admin/VoirPage#VoirPage'] } },
     group: 'Vie du club',
     hidden: cacheSansDroit('flash-info'),
     description: 'Bandeau défilant de la page d’accueil.',

@@ -51,6 +51,7 @@ export const Apparence: GlobalConfig = {
   slug: 'apparence',
   label: 'Apparence du site',
   admin: {
+    components: { elements: { beforeDocumentControls: ['/admin/VoirPage#VoirPage'] } },
     group: 'Administration',
     hidden: cacheSansDroit('apparence'),
     description:
