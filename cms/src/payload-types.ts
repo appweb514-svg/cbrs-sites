@@ -920,6 +920,10 @@ export interface Formation {
             )
           | null;
         /**
+         * Choisissez ou téléversez une image. Elle remplace le pictogramme ci-dessus ; retirez-la pour retrouver celui d’origine.
+         */
+        image?: (number | null) | Media;
+        /**
          * PDF de la médiathèque Documents. Laissez vide pour garder le fichier livré avec le site.
          */
         fiche?: (number | null) | Document;
@@ -1080,6 +1084,7 @@ export interface FormationSelect<T extends boolean = true> {
         titre?: T;
         sousTitre?: T;
         icone?: T;
+        image?: T;
         fiche?: T;
         ficheSite?: T;
         id?: T;

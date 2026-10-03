@@ -572,10 +572,11 @@
     conteneur.textContent = '';
     cartes.forEach(function (carte) {
       const bloc = el('div', 'bg-white rounded-xl shadow-card p-5 flex items-center gap-4 hover:shadow-card-hover transition-shadow group');
-      if (texteRempli(carte.icone)) {
+      const pictogramme = imageUrl(carte.image) || (texteRempli(carte.icone) ? carte.icone + '?v=transparent-icons-20260814-v3' : '');
+      if (pictogramme) {
         const cadre = el('div', 'w-14 h-14 bg-gray-50 rounded-xl flex items-center justify-center p-2 shrink-0');
         const image = el('img', 'w-full h-full object-contain');
-        image.src = carte.icone + '?v=transparent-icons-20260814-v3';
+        image.src = pictogramme;
         image.alt = carte.titre || '';
         cadre.appendChild(image);
         bloc.appendChild(cadre);

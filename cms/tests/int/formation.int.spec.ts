@@ -1,4 +1,4 @@
-import { mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
@@ -30,6 +30,7 @@ beforeAll(async () => {
 
   const dossier = mkdtempSync(join(tmpdir(), 'cbrs-formation-'))
   const chemin = join(dossier, 'fiche-fia.pdf')
+  mkdirSync(join(process.cwd(), 'documents'), { recursive: true })
   // Repartir d’un dépôt propre : un test interrompu peut laisser le PDF du run précédent.
   for (const fichier of readdirSync(join(process.cwd(), 'documents')).filter((f) => f.startsWith('fiche-fia'))) {
     rmSync(join(process.cwd(), 'documents', fichier), { force: true })

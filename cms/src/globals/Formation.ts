@@ -116,6 +116,13 @@ const cartes: Tab = {
         { name: 'titre', label: 'Titre', type: 'text', required: true },
         { name: 'sousTitre', label: 'Sous-titre', type: 'text' },
         { name: 'icone', label: 'Pictogramme', type: 'select', options: [...ICONES] },
+        {
+          name: 'image',
+          label: 'Pictogramme personnalisé',
+          type: 'upload',
+          relationTo: 'media',
+          admin: { description: 'Choisissez ou téléversez une image. Elle remplace le pictogramme ci-dessus ; retirez-la pour retrouver celui d’origine.' },
+        },
         ...ficheFields,
       ],
       defaultValue: [
@@ -155,6 +162,7 @@ export const Formation: GlobalConfig = {
   slug: 'formation',
   label: 'Formation',
   admin: {
+    components: { elements: { beforeDocumentControls: ['/admin/VoirPage#VoirPage'] } },
     group: 'Vie du club',
     hidden: cacheSansDroit('formation'),
     description:
