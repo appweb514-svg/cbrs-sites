@@ -1,0 +1,23 @@
+# Site CBRS (test alwaysdata) — équivalent du vercel.json : URLs sans extension, redirections.
+# Fichier généré par deploy.sh : @PAGES@ est remplacé par la liste des pages de site3/.
+RewriteEngine On
+Options -Indexes
+
+# Administration : redirection vers le CMS
+RewriteRule ^(connexion|admin)(\.html)?$ /admin/ [R=301,L]
+
+# Documents PDF servis par le CMS (même origine pour la visionneuse)
+RewriteRule ^cms-docs/(.*)$ /api/documents/file/$1 [R=302,L]
+
+# Adresses « à l'ancienne » -> adresse propre (THE_REQUEST évite la boucle avec la réécriture interne)
+RewriteCond %{THE_REQUEST} "^[A-Z]+ /index(\.html|/)?(\?| )"
+RewriteRule ^index(\.html|/)?$ / [R=301,L]
+
+RewriteCond %{THE_REQUEST} "^[A-Z]+ /(@PAGES@)(\.html|/)(\?| )"
+RewriteRule ^(@PAGES@)(\.html|/)$ /$1 [R=301,L]
+
+# /xxx -> xxx.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^(@PAGES@)$ $1.html [L]

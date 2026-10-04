@@ -1,0 +1,11 @@
+# /api/public/<nom> -> <nom>.json (réponses figées générées depuis api/_data)
+DirectorySlash Off
+Options -Indexes
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.json -f
+RewriteRule ^(.+)$ $1.json [L]
+<FilesMatch "\.json$">
+  ForceType application/json
+  Header set Cache-Control "public, max-age=60"
+</FilesMatch>
