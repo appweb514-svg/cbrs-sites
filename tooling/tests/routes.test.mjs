@@ -26,7 +26,7 @@ test('ressources du site servies depuis site3', () => {
   assert.ok(file('/tailwind.css'))
 })
 
-test('ancienne version intacte', () => {
-  assert.match(resolve('/old-version').file, /old-version\/index\.html$/)
+test('ancienne version retirée, page inconnue en 404', () => {
+  assert.equal(resolve('/old-version').status, 404)
   assert.equal(resolve('/inexistant-xyz').status, 404)
 })
