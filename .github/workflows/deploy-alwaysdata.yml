@@ -23,16 +23,26 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      # Sans les secrets (voir deploy/alwaysdata/README.md), le job s'arrête proprement au lieu d'échouer.
+      SECRETS_OK: ${{ secrets.ALWAYSDATA_SSH_KEY != '' && secrets.ALWAYSDATA_API_TOKEN != '' }}
     steps:
+      - name: Secrets absents
+        if: env.SECRETS_OK != 'true'
+        run: echo "::notice::Secrets ALWAYSDATA_SSH_KEY / ALWAYSDATA_API_TOKEN absents, déploiement alwaysdata ignoré."
+
       - uses: actions/checkout@v4
+        if: env.SECRETS_OK == 'true'
         with:
           fetch-depth: 0
 
       - uses: actions/setup-node@v4
+        if: env.SECRETS_OK == 'true'
         with:
           node-version: 24
 
       - name: Clé SSH de déploiement
+        if: env.SECRETS_OK == 'true'
         env:
           ALWAYSDATA_SSH_KEY: ${{ secrets.ALWAYSDATA_SSH_KEY }}
         run: |
@@ -41,6 +51,7 @@ jobs:
           chmod 600 ~/.ssh/cbrs_deploy
 
       - name: Choix des parties à déployer
+        if: env.SECRETS_OK == 'true'
         id: cible
         env:
           DEMANDE: ${{ inputs.cible }}
@@ -57,6 +68,7 @@ jobs:
           fi
 
       - name: Déploiement
+        if: env.SECRETS_OK == 'true'
         env:
           SSH_OPTS: -i /home/runner/.ssh/cbrs_deploy -o IdentitiesOnly=yes
           AD_API_TOKEN: ${{ secrets.ALWAYSDATA_API_TOKEN }}
