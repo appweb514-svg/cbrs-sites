@@ -77,6 +77,10 @@
       "destination": "/site3/index.html"
     },
     {
+      "source": "/favicon.ico",
+      "destination": "/site3/favicon.ico"
+    },
+    {
       "source": "/:page(index|activites|activite|adhesion|contact|conditions-utilisation|evenement|formation|galerie|liens-utiles|mentions-legales|planning|sortie|sorties-voyages|statuts)",
       "destination": "/site3/:page.html"
     },
