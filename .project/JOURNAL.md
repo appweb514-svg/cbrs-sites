@@ -57,3 +57,4 @@
 - 2026-10-09 | demande | « Je vois toujours quelque chose autour du logo » : ombre portée du logo du bandeau supprimée ; logo des cartes sans photo (Vie du club) sur fond gris clair au lieu du dégradé bleu (ui-shell.css v=20261009z)
 - 2026-10-09 | demande | « Remet les cartes » : cartes sans photo de Vie du club de nouveau sur fond dégradé bleu (v=20261010a)
 - 2026-10-09 | demande | Bouton « Retour aux événements / sorties » (evenement.html, sortie.html) : même bouton vert plein que les autres
+- 2026-10-09 | demande | Sorties : vignettes photo (assets-premium/vignettes, 240px) à la place des abréviations
