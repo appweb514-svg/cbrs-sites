@@ -62,10 +62,21 @@ html {
   }
 
   ::view-transition-group(cbrs-sidebar),
-  ::view-transition-old(cbrs-sidebar),
   ::view-transition-new(cbrs-sidebar) {
     animation: none;
   }
+}
+
+/* Par défaut les deux captures sont fusionnées en « plus-lighter » : deux images opaques
+   superposées s'additionnent et virent au blanc (encadré blanc derrière le menu). */
+::view-transition-old(root),
+::view-transition-new(root),
+::view-transition-new(cbrs-sidebar) {
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(cbrs-sidebar) {
+  display: none;
 }
 
 @keyframes cbrs-page-in {
