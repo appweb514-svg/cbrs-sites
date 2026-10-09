@@ -304,6 +304,10 @@
           <p id="activity-presentation" class="mt-3 text-sm leading-7 text-gray-600 md:text-base"></p>
         </div>
       </div>
+      <aside id="bon-a-savoir" class="cbrs-bon-a-savoir hidden" aria-labelledby="bon-a-savoir-title">
+        <p id="bon-a-savoir-title" class="cbrs-bon-a-savoir-title">Bon à savoir</p>
+        <dl id="bon-a-savoir-list"></dl>
+      </aside>
     </div>
   </div>
 
@@ -613,6 +617,22 @@ function renderActivity(activity) {
     document.getElementById('presentation-block').classList.remove('hidden');
     document.getElementById('activity-presentation').textContent = activity.presentation;
   }
+
+  // Encadré « Bon à savoir » (CMS, onglet Présentation) : masqué si tout est vide.
+  const tips = activity.tips || {};
+  const effortLabels = { douce: ['Doux', 1], moderee: ['Modéré', 2], soutenue: ['Soutenu', 3] };
+  const effort = effortLabels[tips.intensite];
+  const tipRows = [
+    ['Tenue', tips.tenue ? esc(tips.tenue) : ''],
+    ['Matériel', tips.materiel ? esc(tips.materiel) : ''],
+    ['Effort', effort ? '<span class="cbrs-effort" aria-hidden="true">' + [1, 2, 3].map(function(n) { return '<i class="' + (n <= effort[1] ? 'on' : '') + '"></i>'; }).join('') + '</span>' + effort[0] : ''],
+    ['Durée', tips.duree ? esc(tips.duree) : ''],
+    ['Prix', tips.prix ? esc(tips.prix) : '']
+  ].filter(function(r) { return r[1]; });
+  document.getElementById('bon-a-savoir-list').innerHTML = tipRows.map(function(r) {
+    return '<div><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>';
+  }).join('');
+  document.getElementById('bon-a-savoir').classList.toggle('hidden', !tipRows.length);
 
   // Photos de l'activité (CMS « Photo principale » / « Galerie de l'activité », sinon galerie du club).
   const photos = activity.photos || [];

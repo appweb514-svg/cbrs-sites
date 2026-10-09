@@ -1932,7 +1932,23 @@ body.cbrs-ui :is(a, button):not(.sidebar-link, .cbrs-nav-active, .tab-btn, .filt
 @media (min-width: 1024px) {
   .cbrs-presentation-layout { flex-direction: row; align-items: flex-start; }
   .cbrs-presentation-photos { width: 40%; flex-shrink: 0; }
+  .cbrs-presentation-layout { flex-wrap: wrap; }
+  .cbrs-bon-a-savoir { width: 15.5rem; flex-shrink: 0; }
+  /* Avec des photos à gauche, l'encadré passe sous le texte, sur toute la largeur. */
+  .cbrs-presentation-layout:has(.cbrs-presentation-photos:not(.hidden)) .cbrs-bon-a-savoir { width: 100%; }
+  .cbrs-presentation-layout:has(.cbrs-presentation-photos:not(.hidden)) .cbrs-bon-a-savoir dl { grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); }
 }
+
+/* Encadré « Bon à savoir » de la fiche activité. */
+.cbrs-bon-a-savoir { border-radius: 1.25rem; background: rgb(var(--cbrs-green-rgb, 67 124 20) / .07); border: 1px solid rgb(var(--cbrs-green-rgb, 67 124 20) / .18); padding: 1.25rem 1.35rem; }
+.cbrs-bon-a-savoir.hidden { display: none; }
+.cbrs-bon-a-savoir-title { margin: 0 0 .9rem; font-size: .75rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgb(var(--cbrs-green-rgb, 67 124 20)); }
+.cbrs-bon-a-savoir dl { display: grid; gap: .85rem; margin: 0; }
+.cbrs-bon-a-savoir dt { font-size: .8rem; font-weight: 600; color: #6b7280; }
+.cbrs-bon-a-savoir dd { margin: .15rem 0 0; font-size: .95rem; font-weight: 600; color: var(--cbrs-text, #1f2937); display: flex; align-items: center; gap: .5rem; }
+.cbrs-effort { display: inline-flex; gap: .25rem; }
+.cbrs-effort i { width: .6rem; height: .6rem; border-radius: 50%; background: rgb(var(--cbrs-green-rgb, 67 124 20) / .2); }
+.cbrs-effort i.on { background: rgb(var(--cbrs-green-rgb, 67 124 20)); }
 
 /* Logo du club : l'image source est coupée en bas à gauche ; fondu pour que la coupe ne se voie pas. */
 body.cbrs-ui .cbrs-logo-image {

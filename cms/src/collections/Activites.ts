@@ -49,6 +49,40 @@ export const Activites: CollectionConfig = {
               relationTo: 'media',
               hasMany: true,
             },
+            {
+              name: 'bonASavoir',
+              label: 'Bon à savoir',
+              type: 'group',
+              admin: {
+                description: 'Encadré affiché à droite de la présentation. Laisser vide ce qui ne s’applique pas ; l’encadré est masqué si tout est vide.',
+              },
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    { name: 'tenue', label: 'Tenue', type: 'text', admin: { placeholder: 'Tenue de sport, baskets propres' } },
+                    { name: 'materiel', label: 'Matériel à prévoir', type: 'text', admin: { placeholder: 'Tapis, bouteille d’eau' } },
+                  ],
+                },
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'intensite',
+                      label: 'Effort',
+                      type: 'select',
+                      options: [
+                        { label: 'Doux', value: 'douce' },
+                        { label: 'Modéré', value: 'moderee' },
+                        { label: 'Soutenu', value: 'soutenue' },
+                      ],
+                    },
+                    { name: 'duree', label: 'Durée d’une séance', type: 'text', admin: { placeholder: '1 h 30' } },
+                    { name: 'prix', label: 'Prix', type: 'text', admin: { placeholder: 'Compris dans l’adhésion' } },
+                  ],
+                },
+              ],
+            },
           ],
         },
         {

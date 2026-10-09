@@ -7,6 +7,7 @@ import * as migration_20260929_213723_fix_objectkey from './20260929_213723_fix_
 import * as migration_20260930_082940_formation from './20260930_082940_formation';
 import * as migration_20260930_212404_formation_listes from './20260930_212404_formation_listes';
 import * as migration_20261002_053731_formation_images from './20261002_053731_formation_images';
+import * as migration_20261009_120000_activites_bon_a_savoir from './20261009_120000_activites_bon_a_savoir';
 
 export const migrations = [
   {
@@ -52,6 +53,11 @@ export const migrations = [
   {
     up: migration_20261002_053731_formation_images.up,
     down: migration_20261002_053731_formation_images.down,
-    name: '20261002_053731_formation_images'
+    name: '20261002_053731_formation_images',
+  },
+  {
+    up: migration_20261009_120000_activites_bon_a_savoir.up,
+    down: migration_20261009_120000_activites_bon_a_savoir.down,
+    name: '20261009_120000_activites_bon_a_savoir',
   },
 ];

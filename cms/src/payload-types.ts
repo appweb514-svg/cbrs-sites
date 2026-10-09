@@ -252,6 +252,16 @@ export interface Activite {
   icone?: (number | null) | Media;
   photo?: (number | null) | Media;
   photos?: (number | Media)[] | null;
+  /**
+   * Encadré affiché à droite de la présentation. Laisser vide ce qui ne s’applique pas ; l’encadré est masqué si tout est vide.
+   */
+  bonASavoir?: {
+    tenue?: string | null;
+    materiel?: string | null;
+    intensite?: ('douce' | 'moderee' | 'soutenue') | null;
+    duree?: string | null;
+    prix?: string | null;
+  };
   creneaux?:
     | {
         jour: 'Lundi' | 'Mardi' | 'Mercredi' | 'Jeudi' | 'Vendredi' | 'Samedi' | 'Dimanche' | 'Voir planning';
@@ -625,6 +635,15 @@ export interface ActivitesSelect<T extends boolean = true> {
   icone?: T;
   photo?: T;
   photos?: T;
+  bonASavoir?:
+    | T
+    | {
+        tenue?: T;
+        materiel?: T;
+        intensite?: T;
+        duree?: T;
+        prix?: T;
+      };
   creneaux?:
     | T
     | {

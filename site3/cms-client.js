@@ -333,6 +333,7 @@
         return { name: a.nom, photo: imageUrl(a.photo) || undefined };
       }),
       info: (item.infos || []).map(function (i) { return i.texte; }).filter(Boolean),
+      tips: item.bonASavoir || {},
       photos: [item.photo].concat(item.photos || []).map(function (p) {
         return p && typeof p === 'object' && p.url ? { src: resolveUrl(p.url), alt: p.alt || item.nom || '' } : null;
       }).filter(Boolean)
