@@ -222,14 +222,14 @@ const activities = [
     published: 1
   },
   {
-    id: '12', name: 'Échecs / Bridge', slug: 'echecs-bridge', category: 'Activité',
+    id: '12', name: 'Échecs', slug: 'echecs-bridge', category: 'Activité',
     logo: '12_échecs.png',
-    short_description: "Jouez aux échecs ou au bridge dans une ambiance détendue. Tournois amicaux organisés régulièrement.",
-    presentation: "<p>Le CBRS propose deux activités de réflexion en alternance: échecs et bridge. Les deux disciplines se pratiquent en petits groupes dans une ambiance détendue, idéale pour stimuler les fonctions cognitives.</p>",
+    short_description: "Jouez aux échecs dans une ambiance détendue. Tournois amicaux organisés régulièrement.",
+    presentation: "<p>Le CBRS propose les échecs, une activité de réflexion qui se pratique en petits groupes dans une ambiance détendue, idéale pour stimuler les fonctions cognitives.</p>",
     meeting_point: "Salle de réunion — Maison des associations",
     level: 'Tous niveaux',
     practical_info: [
-      "Échiquiers et cartes fournis",
+      "Échiquiers fournis",
       "Adhésion à la FFE recommandée pour les échecs"
     ],
     animators: [

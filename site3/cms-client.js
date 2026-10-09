@@ -35,26 +35,12 @@
   // Teinte d'en-tête d'origine (bleu du site) : valeurs par défaut de ui-shell.css.
   const TEINTE_EN_TETE_ORIGINE = '#0a3273';
 
+  // Pas d'abandon au bout de TIMEOUT : un CMS lent (démarrage à froid) s'affiche dès qu'il répond,
+  // au lieu de laisser le texte de secours d'origine. Seul `ready` est borné par TIMEOUT.
   function getJSON(path) {
-    return new Promise(function (resolve, reject) {
-      const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-      const timer = setTimeout(function () {
-        if (controller) controller.abort();
-        reject(new Error('timeout'));
-      }, TIMEOUT);
-      fetch(base + path, controller ? { signal: controller.signal } : {})
-        .then(function (response) {
-          if (!response.ok) throw new Error('http ' + response.status);
-          return response.json();
-        })
-        .then(function (data) {
-          clearTimeout(timer);
-          resolve(data);
-        })
-        .catch(function (error) {
-          clearTimeout(timer);
-          reject(error);
-        });
+    return fetch(base + path).then(function (response) {
+      if (!response.ok) throw new Error('http ' + response.status);
+      return response.json();
     });
   }
 
@@ -716,5 +702,6 @@
     return Promise.resolve().then(job).catch(function () { return null; });
   });
 
-  window.CBRSCms = { ready: Promise.all(pending).then(function () { return true; }) };
+  const delai = new Promise(function (resolve) { setTimeout(function () { resolve(false); }, TIMEOUT); });
+  window.CBRSCms = { ready: Promise.race([Promise.all(pending).then(function () { return true; }), delai]) };
 })();

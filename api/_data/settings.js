@@ -10,7 +10,7 @@ const settings = {
   activities_count: '40',
   facebook_url: '',
   site_title: 'CBRS - Club du Beauvaisis de la Retraite Sportive',
-  site_description: "Club du Beauvaisis de la Retraite Sportive — Plus de 40 activités sportives, culturelles et de loisirs pour les retraités du Beauvaisis. Affilié FFRS et CODERS de l'Oise."
+  site_description: "Club du Beauvaisis de la Retraite Sportive — Plus de 40 activités sportives, culturelles et de loisirs pour les retraités du Beauvaisis. Affilié FFRS."
 };
 
 module.exports = settings;
