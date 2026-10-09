@@ -2056,14 +2056,14 @@ body.cbrs-ui #adhesion > div {
   max-width: none;
 }
 
-/* Bandeau aligné sur les bords du contenu (marges internes px-6 des sections) */
+/* Bandeau et contenu : même écart que celui entre le menu et le bord de la fenêtre (20 px) */
 @media (min-width: 768px) {
-  body.cbrs-ui > .cbrs-hero {
-    margin-left: calc(var(--cbrs-content-offset) + 24px);
-    margin-right: 40px;
-  }
-  body.cbrs-ui.sidebar-collapsed > .cbrs-hero {
-    margin-left: calc(var(--cbrs-sidebar-left) + var(--cbrs-sidebar-collapsed-width) + var(--cbrs-layout-gap) + 24px);
-  }
+  body.cbrs-ui > .cbrs-hero { margin-right: var(--cbrs-sidebar-left); }
+  body.cbrs-ui > .cbrs-layout { padding-right: var(--cbrs-sidebar-left); }
+  body.cbrs-ui #contenu > section[class*="max-w-"],
+  body.cbrs-ui #contenu > div[class*="max-w-"],
+  body.cbrs-ui #contenu > section > div.max-w-7xl:not(.text-center),
+  body.cbrs-ui #contenu > div > section.max-w-6xl,
+  body.cbrs-ui #adhesion > div { padding-left: 0; padding-right: 0; }
 }
 body.cbrs-ui #contenu > div > section.max-w-6xl { max-width: none; }
