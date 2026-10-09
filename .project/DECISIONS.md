@@ -14,3 +14,8 @@ Conséquences : les prochains déploiements de production peuvent reprendre auto
 - Contexte : seule Aquagym affichait un bloc « L'équipe qui vous accompagne » (portraits), en doublon avec « Nos animateurs » ; les champs CMS « Photo principale » et « Galerie de l'activité » n'étaient pas affichés.
 - Décision : bloc équipe supprimé ; colonne photos à gauche de « Présentation » alimentée par `photo` + `photos` de l'activité, à défaut par 4 photos de la galerie dont « Activité » = nom de l'activité sans accents (les slugs d'activité sont numériques). Styles dans ui-shell.css (Tailwind précompilé).
 - Conséquences : le client ajoute des photos depuis le CMS ; sans photo, la fiche reste en texte pleine largeur.
+
+## 2026-10-09 — Encadré « Bon à savoir » et logo
+- Contexte : le client veut des repères pratiques sur chaque fiche ; une image générée par IA a été écartée. Le logo apparaissait dans un carré bleu et flou ; une bande blanche apparaissait pendant les transitions de page.
+- Décision : groupe facultatif `bonASavoir` (tenue, matériel, intensité douce/modérée/soutenue, durée, prix) dans l'onglet Présentation des activités, affiché en encadré à droite (sous le texte, pleine largeur, si la colonne photos est présente) et masqué si vide. Cadre CSS du logo supprimé ; pas d'upscale IA disponible, simple affinage — une source HD est demandée au client. Transitions : l'ancienne page reste opaque, la nouvelle apparaît en fondu sans translation.
+- Conséquences : migration additive sur `activites` et `_activites_v`. Le déploiement du CMS passe par le workflow GitHub (AD_API_TOKEN absent en local).
