@@ -72,3 +72,4 @@
 - 2026-10-09 | Demande | Bandeau mobile : logo à droite (barre basse conservée)
 - 2026-10-09 | Demande | Hero mobile : texte centré verticalement (padding haut 7rem/8.5rem → 2.5rem, le cadre logo y est masqué)
 - 2026-10-09 | Demande | Fiches sortie/événement : fil d'Ariane réduit à « Sorties & Voyages »
+- 2026-10-09 | Demande | Fiches sortie/événement : « Sorties & Voyages » en titre h2 (style des titres de section)
