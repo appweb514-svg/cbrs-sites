@@ -107,7 +107,7 @@
   }
 
   const detailTypeLabel = isEvent ? 'événement' : 'sortie';
-  byId('detail-breadcrumb').textContent = `Sorties & Voyages / ${detailTypeLabel}`;
+  byId('detail-breadcrumb').textContent = 'Sorties & Voyages';
   byId('detail-back-link').href = '/sorties-voyages';
 
   const canonical = byId('detail-canonical-description');
