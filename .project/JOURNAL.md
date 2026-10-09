@@ -34,3 +34,7 @@
 - 2026-10-09 | demande utilisateur / réalisé | Boutons Cookies et Accessibilité plus discrets : pastilles bleues de 34 px avec pictogramme dans les coins bas (texte gardé pour les lecteurs d'écran, info-bulle au survol). ui-shell.css et ui-shell.js ?v=20261009d. Déployé en static, vérifié.
 - 2026-10-09 | demande utilisateur / réalisé | Encadré blanc derrière le menu latéral pendant les changements de page : captures du View Transition fusionnées en plus-lighter (deux images opaques additionnées → blanc). Passage en mix-blend-mode normal, ancienne capture du menu masquée. ui-shell.css ?v=20261009e, déployé en static.
 - 2026-10-09 | demande utilisateur / réalisé | Pastilles Cookies/Accessibilité ramenées à 28 px et collées aux coins (le « S » de « social » n'est plus masqué). ui-shell.css ?v=20261009f, déployé et vérifié.
+- 2026-10-09 | demande client | cartes OSM : retirer le bandeau « Signaler un problème », agrandir/dézoomer, rétablir le lien itinéraire
+- 2026-10-09 | cartes | bandeau OSM rogné (iframe ≥ 420 px, marge −80 px), cartes plus hautes, bbox +60 %, bouton « Ouvrir l'itinéraire » réaffiché (bug hidden/Tailwind) ; crédit OSM conservé (licence ODbL)
+- 2026-10-09 | demande client | titres de section cohérents sur Formation, Sorties & Voyages, Liens utiles
+- 2026-10-09 | titres | modèle Activités/Statuts appliqué (surtitre vert, h2 3xl/4xl + mot en italique bleu, intro grise, aligné à gauche)

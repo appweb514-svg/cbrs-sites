@@ -29,3 +29,8 @@ Conséquences : les prochains déploiements de production peuvent reprendre auto
 - Contexte : le client doit pouvoir modifier la présentation et masquer « Bon à savoir » ; les cartes Vie du club n'avaient aucun lien dans le CMS (pas de type de lien « événement », les pages d'événement sont statiques).
 - Décision : case `bonASavoir.afficher` (défaut vrai) et bouton « Voir la page » sur les activités. Côté site, la carte reprend le lien de la carte statique de même titre (normalisé sans accents) quand le CMS n'en donne pas.
 - Conséquences : migration additive ; renommer une actualité dans le CMS casse ce repli — ajouter plus tard un type de lien « événement » (migration d'enum).
+
+## 2026-10-09 — Cartes OSM et titres de section
+- Contexte : bandeau OSM « Signaler un problème » sous les cartes, lieu trop zoomé ; titres de section hétérogènes selon les pages.
+- Décision : iframe OSM élargie (≥ 420 px) et rognée de 80 px en bas dans un conteneur `overflow:hidden`, bbox élargie de 60 % ; le petit crédit « © OpenStreetMap contributors » reste sous la carte (attribution ODbL obligatoire une fois le bandeau masqué). Titres : modèle unique surtitre `text-sm font-semibold uppercase text-cbrs-green` + h2 `text-3xl md:text-4xl` avec mot accent `text-cbrs-blue font-serif-italic` + intro `mt-3 text-gray-600`, aligné à gauche.
+- Conséquences : toute nouvelle section reprend ce modèle ; si OSM change la hauteur de son bandeau, ajuster la marge de rognage dans ui-shell.css.
