@@ -2,7 +2,7 @@
   const isEvent = document.body.dataset.detailType === 'event';
   const records = isEvent ? window.CBRS_EVENTS : window.CBRS_OUTINGS;
   const id = new URLSearchParams(window.location.search).get('id');
-  const record = records.find((item) => item.id === id);
+  const staticRecord = records.find((item) => item.id === id);
   const fallbackImage = window.CBRS_OUTINGS_FALLBACK || 'assets-premium/header-outings-realistic-v1.png';
 
   const byId = (value) => document.getElementById(value);
@@ -16,6 +16,35 @@
   const missing = byId('detail-state');
   const layout = byId('detail-layout');
 
+  // Fiche ajoutée dans le CMS (lien « cms-<id> » posé par cms-client.js) : chargée depuis l'API.
+  const cmsMatch = !staticRecord && /^cms-(\w+)$/.exec(id || '');
+  const meta = document.querySelector('meta[name="cbrs-cms-url"]');
+  const base = meta ? (meta.getAttribute('content') || '').trim().replace(/\/+$/, '') : '';
+  if (cmsMatch && base) {
+    layout.hidden = true;
+    fetch(`${base}/api/sorties/${cmsMatch[1]}?depth=1`)
+      .then((response) => { if (!response.ok) throw new Error(); return response.json(); })
+      .then((doc) => {
+        const photo = doc.image || {};
+        const src = (photo.sizes && photo.sizes.large && photo.sizes.large.url) || photo.url || '';
+        const date = doc.date ? new Date(doc.date) : null;
+        layout.hidden = false;
+        render({
+          title: doc.titre || '',
+          category: { sortie: 'Sortie', voyage: 'Voyage', manifestation: 'Manifestation' }[doc.type] || 'Sortie',
+          teaser: doc.resume || '',
+          description: doc.description || doc.resume || '',
+          date: date && !isNaN(date) ? date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }) : '',
+          location: doc.lieu || '',
+          image: src ? (src.charAt(0) === '/' ? base + src : src) : ''
+        });
+      })
+      .catch(() => render(null));
+    return;
+  }
+  render(staticRecord);
+
+  function render(record) {
   if (!record) {
     document.title = 'Fiche introuvable - CBRS';
     layout.hidden = true;
@@ -86,4 +115,5 @@
     `<span class="font-semibold text-cbrs-blue">${escapeHtml(record.mapLabel || record.location || 'CBRS')}</span>`,
     '<span class="text-gray-500"> — une expérience à vivre avec le club.</span>'
   ].join('');
+  }
 })();

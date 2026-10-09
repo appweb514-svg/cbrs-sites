@@ -39,3 +39,8 @@ Conséquences : les prochains déploiements de production peuvent reprendre auto
 - Contexte : le club doit pouvoir changer titres et introductions sans développeur ; le modèle de titre a un mot en italique bleu.
 - Décision : global Payload `titres` (un onglet par page, un groupe surtitre/titre/motMisEnValeur/introduction par section, valeurs par défaut = texte du site). Le site garde le texte livré si un champ est vide ; le mot mis en valeur est entouré en DOM (dernière occurrence, sinon titre sans accent). Surtitre/intro masqués dans l'admin quand la section n'en a pas sur le site. Droits : section `apparence`. Bandeau aligné sur les bords du contenu.
 - Conséquences : tout nouveau titre de section doit porter `data-cbrs-titre` (+ `-surtitre`/`-intro`) et une entrée dans `cms/src/globals/Titres.ts` (migration).
+
+## 2026-10-09 — Sorties du CMS dans « Nos sorties »
+- Contexte : la liste des sorties était statique ; le client veut que les sorties saisies dans le CMS apparaissent avec leur photo en miniature.
+- Décision : cms-client.js ajoute les sorties (type « sortie ») à la grille statique, miniature = taille `vignette` du média (48 px affichés) ; une sortie de même titre remplace la carte statique (en gardant sa miniature si pas de photo). La fiche `/sortie?id=cms-<id>` est chargée par sortie-detail.js depuis `/api/sorties/<id>`.
+- Conséquences : les fiches CMS n'ont ni carte ni crédit photo (champs absents du CMS) ; le site de test n'est pas dans la liste CORS du CMS de production, vérification faite avec données simulées.

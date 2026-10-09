@@ -669,6 +669,43 @@
     if (cartes && Array.isArray(data.cartes) && data.cartes.length) renderCartes(cartes, data.cartes);
   }
 
+  // Sorties du CMS : ajoutées à la liste « Nos sorties », photo en miniature 48 px comme les cartes statiques.
+  // Une sortie du CMS de même titre qu'une carte statique la remplace.
+  function renderSorties(items) {
+    const grid = document.querySelector('#sorties .grid');
+    if (!grid) return;
+    const titleKey = function (text) {
+      return String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+    };
+    grid.querySelectorAll('a[data-cms-sortie]').forEach(function (a) { a.remove(); });
+    const byTitle = {};
+    grid.querySelectorAll('a').forEach(function (a) {
+      const h3 = a.querySelector('h3');
+      if (h3) byTitle[titleKey(h3.textContent)] = a;
+    });
+    items.forEach(function (item) {
+      const existing = byTitle[titleKey(item.titre)];
+      const previous = existing && existing.querySelector('img');
+      const card = el('a', 'group flex items-start gap-4 rounded-xl bg-white shadow-card p-4 transition hover:bg-blue-50 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cbrs-green');
+      card.href = '/sortie?id=cms-' + encodeURIComponent(item.id);
+      card.setAttribute('data-cms-sortie', '');
+      const img = el('img', 'shrink-0 rounded-lg object-cover');
+      img.src = imageUrl(item.image) || (previous && previous.getAttribute('src')) || 'assets-premium/vignettes/sortie-defaut.jpg';
+      img.alt = '';
+      img.loading = 'lazy';
+      img.style.width = '48px';
+      img.style.height = '48px';
+      card.appendChild(img);
+      const body = el('div', 'min-w-0');
+      body.appendChild(el('h3', 'font-semibold text-gray-900 group-hover:text-cbrs-blue', item.titre || ''));
+      if (item.resume) body.appendChild(el('p', 'text-xs text-gray-500', item.resume));
+      body.appendChild(el('span', 'mt-2 inline-flex text-xs font-bold text-cbrs-blue', 'Voir la fiche ↗'));
+      card.appendChild(body);
+      if (existing) existing.replaceWith(card);
+      else grid.appendChild(card);
+    });
+  }
+
   function renderVoyages(items) {
     const container = document.getElementById('voyages');
     if (!container) return;
@@ -679,6 +716,16 @@
     const list = el('div', 'grid gap-4');
     items.forEach(function (item) {
       const card = el('div', 'flex items-start gap-4 rounded-xl bg-white shadow-card p-4');
+      const src = imageUrl(item.image);
+      if (src) {
+        const img = el('img', 'shrink-0 rounded-lg object-cover');
+        img.src = src;
+        img.alt = '';
+        img.loading = 'lazy';
+        img.style.width = '48px';
+        img.style.height = '48px';
+        card.appendChild(img);
+      }
       const body = el('div', 'min-w-0');
       body.appendChild(el('h3', 'font-semibold text-gray-900', item.titre || ''));
       const meta = [formatDate(item.date), item.lieu].filter(Boolean).join(' — ');
@@ -746,6 +793,13 @@
   register(function () { return Boolean(document.querySelector('[data-cbrs-titre],[data-cbrs-titre-surtitre],[data-cbrs-titre-intro]')); },
     '/api/globals/titres',
     renderTitres);
+
+  register(function () { return Boolean(document.querySelector('#sorties .grid')); },
+    '/api/sorties?where[type][equals]=sortie&sort=date&limit=50&depth=1',
+    function (data) {
+      const items = docs(data);
+      if (items.length) renderSorties(items);
+    });
 
   register(function () { return Boolean(document.getElementById('voyages')); },
     '/api/sorties?where[type][equals]=voyage&sort=date&limit=20&depth=1',

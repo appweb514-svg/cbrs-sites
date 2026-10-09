@@ -58,3 +58,4 @@
 - 2026-10-09 | demande | « Remet les cartes » : cartes sans photo de Vie du club de nouveau sur fond dégradé bleu (v=20261010a)
 - 2026-10-09 | demande | Bouton « Retour aux événements / sorties » (evenement.html, sortie.html) : même bouton vert plein que les autres
 - 2026-10-09 | demande | Sorties : vignettes photo (assets-premium/vignettes, 240px) à la place des abréviations
+- 2026-10-09 | demande | Sorties ajoutées dans le CMS (type « Sortie ») affichées dans « Nos sorties » avec photo en miniature 48 px ; fiche /sortie?id=cms-<id> chargée depuis l'API
