@@ -1905,7 +1905,7 @@ body.cbrs-ui .cbrs-card-placeholder {
   height: 100%;
   align-items: center;
   justify-content: center;
-  background: #f3f4f6;
+  background: linear-gradient(135deg, var(--cbrs-blue), var(--cbrs-teal));
 }
 
 body.cbrs-ui .cbrs-card-placeholder img {
