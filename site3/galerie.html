@@ -18,8 +18,8 @@
   .gallery-item img { width: 100%; height: 150px; object-fit: cover; display: block; transition: transform 0.3s ease; }
   .gallery-item:hover img { transform: scale(1.04); }
   .gallery-item figcaption { padding: 0.45rem 0.75rem 0.55rem; font-size: 0.8rem; color: #4b5563; font-weight: 500; }
-  .gallery-filter-panel { border: 1px solid rgba(10, 50, 115, 0.12); border-radius: 1.25rem; background: linear-gradient(180deg, #fff 0%, #f8fbff 100%); box-shadow: 0 12px 30px rgba(10, 50, 115, 0.08); padding: clamp(1rem, 2vw, 1.5rem); }
-  .gallery-filter-heading { display: flex; align-items: flex-end; justify-content: flex-end; gap: 1rem; margin-bottom: 1rem; }
+  .gallery-filter-panel { border: 1px solid rgba(10, 50, 115, 0.12); border-radius: 1.25rem; background: linear-gradient(180deg, #fff 0%, #f8fbff 100%); box-shadow: 0 12px 30px rgba(10, 50, 115, 0.08); padding: clamp(.75rem, 1.5vw, 1rem) clamp(1rem, 2vw, 1.25rem); }
+  .gallery-filter-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: .75rem; }
   .gallery-filter-kicker { color: var(--cbrs-green); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
   .gallery-filter-title { margin: 0.2rem 0 0; color: #0a3273; font-size: clamp(1.1rem, 2vw, 1.35rem); font-weight: 800; }
   .gallery-filter-description { margin: 0.25rem 0 0; color: #64748b; font-size: 0.85rem; line-height: 1.45; }
@@ -30,14 +30,13 @@
   .gallery-filter-field > span { color: #475569; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
   .gallery-filter-select { width: 100%; min-height: 2.75rem; border: 1px solid rgba(10, 50, 115, 0.18); border-radius: 0.8rem; background: #fff; color: #0a3273; cursor: pointer; font-size: 0.9rem; font-weight: 650; padding: 0.6rem 2.25rem 0.6rem 0.8rem; transition: border-color 0.2s, box-shadow 0.2s; }
   .gallery-filter-select:hover, .gallery-filter-select:focus-visible { border-color: var(--cbrs-green); box-shadow: 0 0 0 3px rgba(88, 160, 26, 0.14); outline: none; }
-  .gallery-filter-summary { margin: 0.9rem 0 0; color: #64748b; font-size: 0.78rem; }
+  .gallery-filter-summary { margin: 0; color: #64748b; font-size: 0.78rem; }
   @media (max-width: 900px) and (min-width: 641px) {
     .gallery-filter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .gallery-filter-field:last-child { grid-column: 1 / -1; }
   }
   @media (max-width: 640px) {
-    .gallery-filter-heading { align-items: flex-start; flex-direction: column; }
-    .gallery-filter-reset { align-self: flex-start; }
+    .gallery-filter-heading { gap: .5rem; }
     .gallery-filter-grid { grid-template-columns: 1fr; }
   }
   .activity-btn { border: 1px solid #d1d5db; border-radius: 999px; background: #fff; color: #4b5563; cursor: pointer; font-size: 0.75rem; font-weight: 600; padding: 0.35rem 0.75rem; transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
@@ -314,9 +313,6 @@
         <p data-cbrs-titre-intro="galerie" class="mt-3 text-gray-600">Revivez les moments qui nous rassemblent : sorties, activités, sourires et souvenirs partagés.</p>
   </div>
   <div class="gallery-filter-panel" aria-label="Filtres de la galerie">
-    <div class="gallery-filter-heading">
-      <button type="button" class="gallery-filter-reset" onclick="resetGalleryFilters()">Réinitialiser</button>
-    </div>
     <div class="gallery-filter-grid">
       <label class="gallery-filter-field" for="gallery-category-filter">
         <span>Contenu</span>
@@ -342,7 +338,10 @@
         </select>
       </label>
     </div>
-    <p id="gallery-filter-summary" class="gallery-filter-summary" aria-live="polite"></p>
+    <div class="gallery-filter-heading">
+      <p id="gallery-filter-summary" class="gallery-filter-summary" aria-live="polite"></p>
+      <button type="button" class="gallery-filter-reset" onclick="resetGalleryFilters()">Réinitialiser</button>
+    </div>
   </div>
 </section>
 
