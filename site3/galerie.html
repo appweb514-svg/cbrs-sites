@@ -12,12 +12,12 @@
     .font-serif-italic { font-family: 'Playfair Display', serif; font-style: italic; }
   </style>
 <style>
-  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .75rem; }
   .gallery-item { border-radius: 0.75rem; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: box-shadow 0.2s; cursor: pointer; }
   .gallery-item:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.14); }
-  .gallery-item img { width: 100%; height: 200px; object-fit: cover; display: block; transition: transform 0.3s ease; }
+  .gallery-item img { width: 100%; height: 150px; object-fit: cover; display: block; transition: transform 0.3s ease; }
   .gallery-item:hover img { transform: scale(1.04); }
-  .gallery-item figcaption { padding: 0.6rem 1rem 0.8rem; font-size: 0.85rem; color: #4b5563; font-weight: 500; }
+  .gallery-item figcaption { padding: 0.45rem 0.75rem 0.55rem; font-size: 0.8rem; color: #4b5563; font-weight: 500; }
   .gallery-filter-panel { border: 1px solid rgba(10, 50, 115, 0.12); border-radius: 1.25rem; background: linear-gradient(180deg, #fff 0%, #f8fbff 100%); box-shadow: 0 12px 30px rgba(10, 50, 115, 0.08); padding: clamp(1rem, 2vw, 1.5rem); }
   .gallery-filter-heading { display: flex; align-items: flex-end; justify-content: flex-end; gap: 1rem; margin-bottom: 1rem; }
   .gallery-filter-kicker { color: var(--cbrs-green); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
@@ -173,7 +173,7 @@
     body.wave-effect-disabled #contenu { padding-top: 0 !important; }
   }
 </style>
-<link rel="stylesheet" href="ui-shell.css?v=20261009u"/>
+<link rel="stylesheet" href="ui-shell.css?v=20261009v"/>
 <script>/* Apparence du CMS mémorisée : appliquée avant l’affichage (voir cms-client.js). */try{var t=JSON.parse(localStorage.getItem("cbrs-theme"));if(t&&t.vars){for(var k in t.vars)document.documentElement.style.setProperty(k,t.vars[k]);if(t.fonts)document.write('<link id="cbrs-theme-fonts" rel="stylesheet" href="'+t.fonts.replace(/"/g,"")+'"/>');}}catch(e){}</script>
 <link rel="stylesheet" href="tailwind.css"/>
 </head>
