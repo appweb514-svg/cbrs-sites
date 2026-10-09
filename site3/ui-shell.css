@@ -36,6 +36,7 @@
 }
 
 html {
+  background: var(--cbrs-surface);
   scroll-behavior: smooth;
   view-transition-name: root;
 }
@@ -51,8 +52,9 @@ html {
     animation-duration: .45s;
   }
 
+  /* L'ancienne page reste opaque dessous : pas de fond blanc qui transparaît. */
   ::view-transition-old(root) {
-    animation: cbrs-page-out .45s ease both;
+    animation: none;
   }
 
   ::view-transition-new(root) {
@@ -66,20 +68,12 @@ html {
   }
 }
 
-@keyframes cbrs-page-out {
-  to {
-    opacity: 0;
-  }
-}
-
 @keyframes cbrs-page-in {
   from {
     opacity: 0;
-    transform: translateY(6px);
   }
   to {
     opacity: 1;
-    transform: none;
   }
 }
 
@@ -173,12 +167,9 @@ body.cbrs-ui .cbrs-logo-frame {
   top: clamp(.75rem, 2vw, 1.35rem);
   right: clamp(.75rem, 2.5vw, 2.5rem);
   width: clamp(180px, 20vw, 260px);
-  padding: .25rem;
-  border: 1px solid rgba(255, 255, 255, .18);
-  border-radius: 22px;
-  background: rgba(255, 255, 255, .06);
-  box-shadow: 0 14px 24px rgba(10, 50, 115, .2);
-  backdrop-filter: blur(3px);
+  padding: 0;
+  border: 0;
+  background: transparent;
 }
 
 body.cbrs-ui .cbrs-logo-image {

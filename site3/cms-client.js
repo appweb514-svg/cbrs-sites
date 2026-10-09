@@ -148,7 +148,7 @@
     } else {
       const placeholder = el('div', 'cbrs-card-placeholder');
       const logo = document.createElement('img');
-      logo.src = 'logo-cbrs.png';
+      logo.src = 'logo-cbrs.png?v=20261009';
       logo.alt = '';
       logo.loading = 'lazy';
       placeholder.appendChild(logo);
