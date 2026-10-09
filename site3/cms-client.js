@@ -678,7 +678,7 @@
     });
     const list = el('div', 'grid gap-4');
     items.forEach(function (item) {
-      const card = el('div', 'flex items-start gap-4 rounded-xl bg-cbrs-gray-100 p-4');
+      const card = el('div', 'flex items-start gap-4 rounded-xl bg-white shadow-card p-4');
       const body = el('div', 'min-w-0');
       body.appendChild(el('h3', 'font-semibold text-gray-900', item.titre || ''));
       const meta = [formatDate(item.date), item.lieu].filter(Boolean).join(' — ');

@@ -50,3 +50,4 @@
 - 2026-10-09 | demande | Toutes les pages : blocs de contenu en cartes blanches arrondies, marge intérieure 32 px (classe cbrs-carte, comme Sorties & voyages) ; validé par l’utilisateur, déployé sur cbrs-test
 - 2026-10-09 | demande | Titre/sous-titre au-dessus de la carte blanche, sur le fond de page (casse entre bandeau et corps) ; toutes les pages, contact inclus ; galerie et encadrés d'appel inchangés
 - 2026-10-09 | demande | Pas de carte blanche autour d'encadrés déjà blancs : retirée sur Activités, Planning, Statuts, Liens utiles, Galerie (titre galerie sorti du panneau de filtres)
+- 2026-10-09 | demande | Sorties & voyages : grandes cartes blanches retirées, fiches en blanc avec ombre sur le fond de page (voyages CMS inclus)
