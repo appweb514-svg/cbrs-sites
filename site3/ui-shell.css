@@ -336,7 +336,7 @@ body.cbrs-ui .cbrs-mobile-header button[aria-controls="mobile-menu"] {
 body.cbrs-ui .cbrs-mobile-header > div {
   min-height: 60px;
   gap: .75rem !important;
-  padding: .5rem .8rem !important;
+  padding: .2rem .8rem !important;
 }
 
 body.cbrs-ui .cbrs-mobile-header #mobile-menu:not(.hidden) {
@@ -1260,7 +1260,7 @@ body.cbrs-ui .cbrs-activity-tag {
   }
 
   body.cbrs-ui > .cbrs-hero {
-    margin: 92px 8px 0;
+    margin: 84px 8px 0;
     min-height: 300px;
     border-radius: 20px;
   }

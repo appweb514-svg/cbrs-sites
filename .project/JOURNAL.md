@@ -66,3 +66,4 @@
 - 2026-10-09 | demande | Bandeau mobile : logo placé à droite, « CBRS » reste à côté du menu
 - 2026-10-09 | demande | Logo du bandeau mobile agrandi à 56 px ; bandeau photo décalé (92 px) pour ne plus être chevauché
 - 2026-10-09 | demande | Bandeau mobile : logo remis à gauche (56 px conservés)
+- 2026-10-09 | Demande | Bandeau mobile moins haut (padding .2rem, hero à 84px)
