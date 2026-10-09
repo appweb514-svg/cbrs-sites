@@ -1279,9 +1279,9 @@ body.cbrs-ui .cbrs-activity-tag {
   }
 
   body.cbrs-ui > .cbrs-hero > .relative.z-10 {
-    padding-top: 7rem;
+    padding-top: 2.5rem;
     padding-right: 1rem;
-    padding-bottom: 2rem;
+    padding-bottom: 2.5rem;
     padding-left: 1rem;
   }
 
@@ -1338,7 +1338,7 @@ body.cbrs-ui .cbrs-activity-tag {
   }
 
   body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero > .relative.z-10 {
-    padding-top: 8.5rem;
+    padding-top: 2.5rem;
   }
 
   body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero > .relative.z-10 > .text-center {
