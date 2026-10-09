@@ -40,3 +40,4 @@
 - 2026-10-09 | titres | modèle Activités/Statuts appliqué (surtitre vert, h2 3xl/4xl + mot en italique bleu, intro grise, aligné à gauche)
 - 2026-10-09 | titres | même taille (3xl/4xl) pour tous les titres de section : Planning hebdomadaire (surtitre « Semaine type »), Adhésion, Accueil, Contact, Documents à télécharger, Fiches formation
 - 2026-10-09 | titres | tous les titres de section alignés à gauche (Qui sommes-nous, Formulaire d'Adhésion décentrés)
+- 2026-10-09 | titres | galerie : « Filtrer les photos » remplacé par « Nos plus beaux souvenirs » au modèle commun
