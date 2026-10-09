@@ -38,3 +38,4 @@
 - 2026-10-09 | cartes | bandeau OSM rogné (iframe ≥ 420 px, marge −80 px), cartes plus hautes, bbox +60 %, bouton « Ouvrir l'itinéraire » réaffiché (bug hidden/Tailwind) ; crédit OSM conservé (licence ODbL)
 - 2026-10-09 | demande client | titres de section cohérents sur Formation, Sorties & Voyages, Liens utiles
 - 2026-10-09 | titres | modèle Activités/Statuts appliqué (surtitre vert, h2 3xl/4xl + mot en italique bleu, intro grise, aligné à gauche)
+- 2026-10-09 | titres | même taille (3xl/4xl) pour tous les titres de section : Planning hebdomadaire (surtitre « Semaine type »), Adhésion, Accueil, Contact, Documents à télécharger, Fiches formation
