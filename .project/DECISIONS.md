@@ -24,3 +24,8 @@ Conséquences : les prochains déploiements de production peuvent reprendre auto
 - Contexte : polices hétérogènes et doublon description/« En détail » ; photo à gauche jugée mal dimensionnée ; encadré « Bon à savoir » rempli seulement sur deux fiches de test.
 - Décision : un seul bloc de texte justifié, photo 16:9 sous le texte, encadré toujours à droite (≥ 1024 px). Contenu de l'encadré déduit des infos pratiques et créneaux, appliqué par un script SQL idempotent (`deploy/alwaysdata/bon-a-savoir.sql`) qui ne remplace pas les champs déjà saisis. Paramètre `?v=` sur ui-shell.css pour contourner le cache.
 - Conséquences : à rejouer après la migration du contenu Neon → alwaysdata ; incrémenter `?v=` à chaque modification de ui-shell.css. Prix et durées « Voir planning » à valider par le client.
+
+## 2026-10-09 — Activités dans le CMS et liens « Vie du club »
+- Contexte : le client doit pouvoir modifier la présentation et masquer « Bon à savoir » ; les cartes Vie du club n'avaient aucun lien dans le CMS (pas de type de lien « événement », les pages d'événement sont statiques).
+- Décision : case `bonASavoir.afficher` (défaut vrai) et bouton « Voir la page » sur les activités. Côté site, la carte reprend le lien de la carte statique de même titre (normalisé sans accents) quand le CMS n'en donne pas.
+- Conséquences : migration additive ; renommer une actualité dans le CMS casse ce repli — ajouter plus tard un type de lien « événement » (migration d'enum).
