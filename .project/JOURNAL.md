@@ -41,3 +41,4 @@
 - 2026-10-09 | titres | même taille (3xl/4xl) pour tous les titres de section : Planning hebdomadaire (surtitre « Semaine type »), Adhésion, Accueil, Contact, Documents à télécharger, Fiches formation
 - 2026-10-09 | titres | tous les titres de section alignés à gauche (Qui sommes-nous, Formulaire d'Adhésion décentrés)
 - 2026-10-09 | titres | galerie : « Filtrer les photos » remplacé par « Nos plus beaux souvenirs » au modèle commun
+- 2026-10-09 | mise en page | contenu des pages élargi à la largeur du bandeau sur grands écrans (Statuts, Formation, Sorties & Voyages, Adhésion, Planning, Liens utiles…) ; ui-shell.css v=20261009l

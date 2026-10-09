@@ -2047,3 +2047,11 @@ body.cbrs-ui .cbrs-map-credit a { color: inherit; text-decoration: underline; }
 /* Cartes plus hautes : la zone visible garde ~16-18rem après le rognage du bandeau OSM. */
 body.cbrs-ui #map-frame { height: calc(18rem + 80px); }
 body.cbrs-ui .detail-map-frame { height: calc(17rem + 80px); }
+
+/* Contenu des pages aligné sur la largeur du bandeau (grands écrans) */
+body.cbrs-ui #contenu > section[class*="max-w-"],
+body.cbrs-ui #contenu > div[class*="max-w-"],
+body.cbrs-ui #contenu > section > div.max-w-7xl:not(.text-center),
+body.cbrs-ui #adhesion > div {
+  max-width: none;
+}
