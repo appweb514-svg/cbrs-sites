@@ -2055,3 +2055,15 @@ body.cbrs-ui #contenu > section > div.max-w-7xl:not(.text-center),
 body.cbrs-ui #adhesion > div {
   max-width: none;
 }
+
+/* Bandeau aligné sur les bords du contenu (marges internes px-6 des sections) */
+@media (min-width: 768px) {
+  body.cbrs-ui > .cbrs-hero {
+    margin-left: calc(var(--cbrs-content-offset) + 24px);
+    margin-right: 40px;
+  }
+  body.cbrs-ui.sidebar-collapsed > .cbrs-hero {
+    margin-left: calc(var(--cbrs-sidebar-left) + var(--cbrs-sidebar-collapsed-width) + var(--cbrs-layout-gap) + 24px);
+  }
+}
+body.cbrs-ui #contenu > div > section.max-w-6xl { max-width: none; }
