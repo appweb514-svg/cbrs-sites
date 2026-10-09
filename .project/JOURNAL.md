@@ -49,3 +49,4 @@
 - 2026-10-09 | demande | Bandeau : même écart (20 px) que le menu gauche avec le bord de la fenêtre ; contenu aligné sur le bandeau (256–1565 px à 1600 px), vérifié sur 11 pages, déployé sur cbrs-test
 - 2026-10-09 | demande | Toutes les pages : blocs de contenu en cartes blanches arrondies, marge intérieure 32 px (classe cbrs-carte, comme Sorties & voyages) ; validé par l’utilisateur, déployé sur cbrs-test
 - 2026-10-09 | demande | Titre/sous-titre au-dessus de la carte blanche, sur le fond de page (casse entre bandeau et corps) ; toutes les pages, contact inclus ; galerie et encadrés d'appel inchangés
+- 2026-10-09 | demande | Pas de carte blanche autour d'encadrés déjà blancs : retirée sur Activités, Planning, Statuts, Liens utiles, Galerie (titre galerie sorti du panneau de filtres)
