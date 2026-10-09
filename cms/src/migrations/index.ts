@@ -9,6 +9,7 @@ import * as migration_20260930_212404_formation_listes from './20260930_212404_f
 import * as migration_20261002_053731_formation_images from './20261002_053731_formation_images';
 import * as migration_20261009_120000_activites_bon_a_savoir from './20261009_120000_activites_bon_a_savoir';
 import * as migration_20261009_180000_activites_bon_a_savoir_afficher from './20261009_180000_activites_bon_a_savoir_afficher';
+import * as migration_20261009_202213_titres_des_pages from './20261009_202213_titres_des_pages';
 
 export const migrations = [
   {
@@ -65,5 +66,10 @@ export const migrations = [
     up: migration_20261009_180000_activites_bon_a_savoir_afficher.up,
     down: migration_20261009_180000_activites_bon_a_savoir_afficher.down,
     name: '20261009_180000_activites_bon_a_savoir_afficher',
+  },
+  {
+    up: migration_20261009_202213_titres_des_pages.up,
+    down: migration_20261009_202213_titres_des_pages.down,
+    name: '20261009_202213_titres_des_pages'
   },
 ];

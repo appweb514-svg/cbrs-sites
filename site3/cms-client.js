@@ -616,11 +616,51 @@
     });
   }
 
+  // Écrit un titre venu du CMS en DOM (jamais en HTML) et met le mot choisi en italique bleu :
+  // dernière occurrence, en respectant la casse d'abord, sinon sans tenir compte de la casse.
+  function accentuer(noeud, titre, mot) {
+    noeud.textContent = '';
+    const cherche = typeof mot === 'string' ? mot.trim() : '';
+    let debut = cherche ? titre.lastIndexOf(cherche) : -1;
+    if (cherche && debut < 0 && titre.toLowerCase().length === titre.length) {
+      debut = titre.toLowerCase().lastIndexOf(cherche.toLowerCase());
+    }
+    if (debut < 0) {
+      noeud.textContent = titre;
+      return;
+    }
+    const fin = debut + cherche.length;
+    if (debut > 0) noeud.appendChild(document.createTextNode(titre.slice(0, debut)));
+    noeud.appendChild(el('span', 'text-cbrs-blue font-serif-italic', titre.slice(debut, fin)));
+    if (fin < titre.length) noeud.appendChild(document.createTextNode(titre.slice(fin)));
+  }
+
+  // Titres de section : un champ vide garde le texte livré avec le site.
+  function renderTitres(data) {
+    if (!data || typeof data !== 'object') return;
+    function groupe(noeud, attribut) {
+      const g = data[noeud.getAttribute(attribut)];
+      return g && typeof g === 'object' ? g : null;
+    }
+    Array.prototype.slice.call(document.querySelectorAll('[data-cbrs-titre]')).forEach(function (noeud) {
+      const g = groupe(noeud, 'data-cbrs-titre');
+      if (g && texteRempli(g.titre)) accentuer(noeud, g.titre, g.motMisEnValeur);
+    });
+    [['data-cbrs-titre-surtitre', 'surtitre'], ['data-cbrs-titre-intro', 'introduction']].forEach(function (paire) {
+      Array.prototype.slice.call(document.querySelectorAll('[' + paire[0] + ']')).forEach(function (noeud) {
+        const g = groupe(noeud, paire[0]);
+        if (g && texteRempli(g[paire[1]])) noeud.textContent = g[paire[1]];
+      });
+    });
+  }
+
   function renderFormation(data) {
     if (!data || typeof data !== 'object') return;
     Array.prototype.slice.call(document.querySelectorAll('[data-cbrs-formation]')).forEach(function (noeud) {
       const texte = valeur(data, noeud.dataset.cbrsFormation);
-      if (texteRempli(texte)) noeud.textContent = texte;
+      if (!texteRempli(texte)) return;
+      if (noeud.hasAttribute('data-cbrs-formation-mot')) accentuer(noeud, texte, valeur(data, noeud.getAttribute('data-cbrs-formation-mot')));
+      else noeud.textContent = texte;
     });
     // Une liste vide (ou absente) garde le contenu livré avec le site.
     const etapes = document.querySelector('[data-cbrs-formation-etapes]');
@@ -702,6 +742,10 @@
   register(function () { return Boolean(document.querySelector('[data-cbrs-formation]') || document.querySelector('[data-cbrs-formation-etapes]')); },
     '/api/globals/formation?depth=1',
     renderFormation);
+
+  register(function () { return Boolean(document.querySelector('[data-cbrs-titre],[data-cbrs-titre-surtitre],[data-cbrs-titre-intro]')); },
+    '/api/globals/titres',
+    renderTitres);
 
   register(function () { return Boolean(document.getElementById('voyages')); },
     '/api/sorties?where[type][equals]=voyage&sort=date&limit=20&depth=1',

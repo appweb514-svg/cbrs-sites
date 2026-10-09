@@ -25,6 +25,7 @@ import { mediaRenommer } from './endpoints/mediaRenommer'
 import { Apparence } from './globals/Apparence'
 import { FlashInfo } from './globals/FlashInfo'
 import { Formation } from './globals/Formation'
+import { Titres } from './globals/Titres'
 import { Parametres } from './globals/Parametres'
 import { Tarifs } from './globals/Tarifs'
 
@@ -82,7 +83,7 @@ export default buildConfig({
     ]),
     'collections',
   ),
-  globals: avecRetourArriere([FlashInfo, Formation, Tarifs, Parametres, Apparence], 'globals'),
+  globals: avecRetourArriere([FlashInfo, Formation, Titres, Tarifs, Parametres, Apparence], 'globals'),
   cors: siteOrigins,
   editor: lexicalEditor(),
   email: smtpHost

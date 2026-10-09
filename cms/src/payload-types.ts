@@ -104,6 +104,7 @@ export interface Config {
   globals: {
     'flash-info': FlashInfo;
     formation: Formation;
+    titres: Titre;
     tarifs: Tarif;
     parametres: Parametre;
     apparence: Apparence;
@@ -111,6 +112,7 @@ export interface Config {
   globalsSelect: {
     'flash-info': FlashInfoSelect<false> | FlashInfoSelect<true>;
     formation: FormationSelect<false> | FormationSelect<true>;
+    titres: TitresSelect<false> | TitresSelect<true>;
     tarifs: TarifsSelect<false> | TarifsSelect<true>;
     parametres: ParametresSelect<false> | ParametresSelect<true>;
     apparence: ApparenceSelect<false> | ApparenceSelect<true>;
@@ -247,13 +249,22 @@ export interface Activite {
    * Affichée sur la carte de la page Activités et sous le titre de la fiche.
    */
   description: string;
+  /**
+   * Bloc « Présentation » de la fiche, sous le titre. Laisser une ligne vide entre deux paragraphes. Si ce champ est vide, la description courte est affichée à la place.
+   */
   presentation?: string | null;
   niveau?: string | null;
   icone?: (number | null) | Media;
+  /**
+   * Affichée en 16:9 sous le texte de présentation (format paysage conseillé).
+   */
   photo?: (number | null) | Media;
+  /**
+   * Vignettes sous la photo principale ; un clic les agrandit.
+   */
   photos?: (number | Media)[] | null;
   /**
-   * Encadré affiché à droite de la présentation. Laisser vide ce qui ne s’applique pas ; l’encadré est masqué si tout est vide.
+   * Encadré affiché à droite de la présentation. Laisser vide ce qui ne s’applique pas ; l’encadré est masqué si tout est vide ou si la case est décochée.
    */
   bonASavoir?: {
     afficher?: boolean | null;
@@ -384,7 +395,7 @@ export interface Galerie {
   createdAt: string;
 }
 /**
- * Documents du club (PDF, Word, Excel, OpenDocument), listés sur la page « Liens utiles et documents ». Un document ne remplace un lien officiel (statuts, fiche d’adhésion…) que si vous le choisissez.
+ * Documents du club (PDF, Word, Excel, OpenDocument), listés sur la page « Liens utiles et documents ». Un document ne remplace un lien officiel (statuts, fiche d’adhésion…) que si vous le choisissez : pour la fiche d’adhésion de la page « Adhérer », choisissez « Fiche d’adhésion (page Adhésion) » dans « Remplace le lien officiel ».
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "documents".
@@ -639,6 +650,7 @@ export interface ActivitesSelect<T extends boolean = true> {
   bonASavoir?:
     | T
     | {
+        afficher?: T;
         tenue?: T;
         materiel?: T;
         intensite?: T;
@@ -890,6 +902,10 @@ export interface Formation {
   id: number;
   parcoursSurtitre?: string | null;
   parcoursTitre?: string | null;
+  /**
+   * Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.
+   */
+  parcoursMotMisEnValeur?: string | null;
   parcoursTexte?: string | null;
   /**
    * Jusqu’à 8 étapes, numérotées dans l’ordre de la liste (glisser-déposer pour réordonner).
@@ -959,7 +975,243 @@ export interface Formation {
   createdAt?: string | null;
 }
 /**
- * Grille tarifaire de la page Adhésion, affichée dans l’ordre saisi.
+ * Titres des sections de chaque page du site. Un champ laissé vide garde le texte d’origine du site. Le mot mis en valeur s’affiche en italique bleu.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "titres".
+ */
+export interface Titre {
+  id: number;
+  vieDuClub?: {
+    /**
+     * Petit texte vert au-dessus du titre.
+     */
+    surtitre?: string | null;
+    titre?: string | null;
+    /**
+     * Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.
+     */
+    motMisEnValeur?: string | null;
+    /**
+     * Phrase sous le titre.
+     */
+    introduction?: string | null;
+  };
+  quiSommesNous?: {
+    /**
+     * Petit texte vert au-dessus du titre.
+     */
+    surtitre?: string | null;
+    titre?: string | null;
+    /**
+     * Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.
+     */
+    motMisEnValeur?: string | null;
+    /**
+     * Phrase sous le titre.
+     */
+    introduction?: string | null;
+  };
+  activites?: {
+    /**
+     * Petit texte vert au-dessus du titre.
+     */
+    surtitre?: string | null;
+    titre?: string | null;
+    /**
+     * Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.
+     */
+    motMisEnValeur?: string | null;
+    /**
+     * Phrase sous le titre.
+     */
+    introduction?: string | null;
+  };
+  adhesion?: {
+    /**
+     * Petit texte vert au-dessus du titre.
+     */
+    surtitre?: string | null;
+    titre?: string | null;
+    /**
+     * Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.
+     */
+    motMisEnValeur?: string | null;
+    /**
+     * Phrase sous le titre.
+     */
+    introduction?: string | null;
+  };
+  nousContacter?: {
+    /**
+     * Petit texte vert au-dessus du titre.
+     */
+    surtitre?: string | null;
+    titre?: string | null;
+    /**
+     * Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.
+     */
+    motMisEnValeur?: string | null;
+    /**
+     * Phrase sous le titre.
+     */
+    introduction?: string | null;
+  };
+  nousTrouver?: {
+    /**
+     * Petit texte vert au-dessus du titre.
+     */
+    surtitre?: string | null;
+    titre?: string | null;
+    /**
+     * Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.
+     */
+    motMisEnValeur?: string | null;
+    /**
+     * Phrase sous le titre.
+     */
+    introduction?: string | null;
+  };
+  fichesFormation?: {
+    /**
+     * Petit texte vert au-dessus du titre.
+     */
+    surtitre?: string | null;
+    titre?: string | null;
+    /**
+     * Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.
+     */
+    motMisEnValeur?: string | null;
+    /**
+     * Phrase sous le titre.
+     */
+    introduction?: string | null;
+  };
+  galerie?: {
+    /**
+     * Petit texte vert au-dessus du titre.
+     */
+    surtitre?: string | null;
+    titre?: string | null;
+    /**
+     * Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.
+     */
+    motMisEnValeur?: string | null;
+    /**
+     * Phrase sous le titre.
+     */
+    introduction?: string | null;
+  };
+  ressources?: {
+    /**
+     * Petit texte vert au-dessus du titre.
+     */
+    surtitre?: string | null;
+    titre?: string | null;
+    /**
+     * Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.
+     */
+    motMisEnValeur?: string | null;
+    /**
+     * Phrase sous le titre.
+     */
+    introduction?: string | null;
+  };
+  documents?: {
+    /**
+     * Petit texte vert au-dessus du titre.
+     */
+    surtitre?: string | null;
+    titre?: string | null;
+    /**
+     * Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.
+     */
+    motMisEnValeur?: string | null;
+    /**
+     * Phrase sous le titre.
+     */
+    introduction?: string | null;
+  };
+  planning?: {
+    /**
+     * Petit texte vert au-dessus du titre.
+     */
+    surtitre?: string | null;
+    titre?: string | null;
+    /**
+     * Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.
+     */
+    motMisEnValeur?: string | null;
+    /**
+     * Phrase sous le titre.
+     */
+    introduction?: string | null;
+  };
+  manifestations?: {
+    /**
+     * Petit texte vert au-dessus du titre.
+     */
+    surtitre?: string | null;
+    titre?: string | null;
+    /**
+     * Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.
+     */
+    motMisEnValeur?: string | null;
+    /**
+     * Phrase sous le titre.
+     */
+    introduction?: string | null;
+  };
+  sorties?: {
+    /**
+     * Petit texte vert au-dessus du titre.
+     */
+    surtitre?: string | null;
+    titre?: string | null;
+    /**
+     * Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.
+     */
+    motMisEnValeur?: string | null;
+    /**
+     * Phrase sous le titre.
+     */
+    introduction?: string | null;
+  };
+  voyages?: {
+    /**
+     * Petit texte vert au-dessus du titre.
+     */
+    surtitre?: string | null;
+    titre?: string | null;
+    /**
+     * Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.
+     */
+    motMisEnValeur?: string | null;
+    /**
+     * Phrase sous le titre.
+     */
+    introduction?: string | null;
+  };
+  statuts?: {
+    /**
+     * Petit texte vert au-dessus du titre.
+     */
+    surtitre?: string | null;
+    titre?: string | null;
+    /**
+     * Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.
+     */
+    motMisEnValeur?: string | null;
+    /**
+     * Phrase sous le titre.
+     */
+    introduction?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Page « Adhérer » : grille tarifaire, affichée dans l’ordre saisi. Pour mettre en ligne la fiche d’adhésion (PDF) : Photos & documents → Documents → Créer, puis « Remplace le lien officiel » = « Fiche d’adhésion (page Adhésion) ».
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tarifs".
@@ -1086,6 +1338,7 @@ export interface FlashInfoSelect<T extends boolean = true> {
 export interface FormationSelect<T extends boolean = true> {
   parcoursSurtitre?: T;
   parcoursTitre?: T;
+  parcoursMotMisEnValeur?: T;
   parcoursTexte?: T;
   etapes?:
     | T
@@ -1113,6 +1366,135 @@ export interface FormationSelect<T extends boolean = true> {
   ctaTitre?: T;
   ctaTexte?: T;
   ctaBouton?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "titres_select".
+ */
+export interface TitresSelect<T extends boolean = true> {
+  vieDuClub?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        motMisEnValeur?: T;
+        introduction?: T;
+      };
+  quiSommesNous?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        motMisEnValeur?: T;
+        introduction?: T;
+      };
+  activites?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        motMisEnValeur?: T;
+        introduction?: T;
+      };
+  adhesion?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        motMisEnValeur?: T;
+        introduction?: T;
+      };
+  nousContacter?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        motMisEnValeur?: T;
+        introduction?: T;
+      };
+  nousTrouver?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        motMisEnValeur?: T;
+        introduction?: T;
+      };
+  fichesFormation?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        motMisEnValeur?: T;
+        introduction?: T;
+      };
+  galerie?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        motMisEnValeur?: T;
+        introduction?: T;
+      };
+  ressources?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        motMisEnValeur?: T;
+        introduction?: T;
+      };
+  documents?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        motMisEnValeur?: T;
+        introduction?: T;
+      };
+  planning?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        motMisEnValeur?: T;
+        introduction?: T;
+      };
+  manifestations?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        motMisEnValeur?: T;
+        introduction?: T;
+      };
+  sorties?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        motMisEnValeur?: T;
+        introduction?: T;
+      };
+  voyages?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        motMisEnValeur?: T;
+        introduction?: T;
+      };
+  statuts?:
+    | T
+    | {
+        surtitre?: T;
+        titre?: T;
+        motMisEnValeur?: T;
+        introduction?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
