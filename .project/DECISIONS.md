@@ -19,3 +19,8 @@ Conséquences : les prochains déploiements de production peuvent reprendre auto
 - Contexte : le client veut des repères pratiques sur chaque fiche ; une image générée par IA a été écartée. Le logo apparaissait dans un carré bleu et flou ; une bande blanche apparaissait pendant les transitions de page.
 - Décision : groupe facultatif `bonASavoir` (tenue, matériel, intensité douce/modérée/soutenue, durée, prix) dans l'onglet Présentation des activités, affiché en encadré à droite (sous le texte, pleine largeur, si la colonne photos est présente) et masqué si vide. Cadre CSS du logo supprimé ; pas d'upscale IA disponible, simple affinage — une source HD est demandée au client. Transitions : l'ancienne page reste opaque, la nouvelle apparaît en fondu sans translation.
 - Conséquences : migration additive sur `activites` et `_activites_v`. Le déploiement du CMS passe par le workflow GitHub (AD_API_TOKEN absent en local).
+
+## 2026-10-09 — Présentation des fiches et contenu « Bon à savoir »
+- Contexte : polices hétérogènes et doublon description/« En détail » ; photo à gauche jugée mal dimensionnée ; encadré « Bon à savoir » rempli seulement sur deux fiches de test.
+- Décision : un seul bloc de texte justifié, photo 16:9 sous le texte, encadré toujours à droite (≥ 1024 px). Contenu de l'encadré déduit des infos pratiques et créneaux, appliqué par un script SQL idempotent (`deploy/alwaysdata/bon-a-savoir.sql`) qui ne remplace pas les champs déjà saisis. Paramètre `?v=` sur ui-shell.css pour contourner le cache.
+- Conséquences : à rejouer après la migration du contenu Neon → alwaysdata ; incrémenter `?v=` à chaque modification de ui-shell.css. Prix et durées « Voir planning » à valider par le client.
