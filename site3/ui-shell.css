@@ -2055,3 +2055,18 @@ body.cbrs-ui #contenu > section > div.max-w-7xl:not(.text-center),
 body.cbrs-ui #adhesion > div {
   max-width: none;
 }
+
+/* Titres de section centrés (surtitre, titre, introduction) */
+body.cbrs-ui #contenu h2.md\:text-4xl,
+body.cbrs-ui #contenu p:has(+ h2.md\:text-4xl),
+body.cbrs-ui #contenu h2.md\:text-4xl + p {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+body.cbrs-ui #contenu h2.md\:text-4xl + p { max-width: 48rem; }
+body.cbrs-ui #contenu :is(div, section):has(> h2.md\:text-4xl) { margin-left: auto; margin-right: auto; }
+body.cbrs-ui #contenu div:has(> h2.md\:text-4xl):is(.max-w-3xl) { max-width: none; }
+body.cbrs-ui #contenu .flex:has(> div > h2.md\:text-4xl) > div { width: 100%; }
+body.cbrs-ui #adhesion h2.md\:text-4xl ~ .inline-flex { display: flex; width: fit-content; margin-left: auto; margin-right: auto; }
+body.cbrs-ui .gallery-filter-heading:has(h2.md\:text-4xl) { flex-direction: column; align-items: center; }
