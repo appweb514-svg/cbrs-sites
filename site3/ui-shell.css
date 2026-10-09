@@ -1953,3 +1953,57 @@ body.cbrs-ui .cbrs-logo-image {
   -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
 }
+
+/* Boutons flottants discrets : pastilles 34 px avec pictogramme, même couleur, dans les coins bas.
+   Le texte reste dans le bouton (lu par les lecteurs d'écran) mais n'est plus affiché. */
+body.cbrs-ui .cbrs-cookie-manage,
+body.cbrs-ui .accessibility-fab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: 1px solid rgba(255, 255, 255, .35) !important;
+  border-radius: 50% !important;
+  background: var(--cbrs-blue) !important;
+  color: #fff !important;
+  font-size: 0 !important;
+  box-shadow: 0 4px 12px rgba(10, 50, 115, .22);
+  opacity: .8;
+  transition: opacity .15s ease, transform .15s ease;
+}
+body.cbrs-ui .cbrs-cookie-manage { left: 8px; bottom: 8px; }
+body.cbrs-ui .accessibility-fab { right: 8px !important; bottom: 8px !important; }
+body.cbrs-ui .cbrs-cookie-manage:hover,
+body.cbrs-ui .cbrs-cookie-manage:focus-visible,
+body.cbrs-ui .accessibility-fab:hover,
+body.cbrs-ui .accessibility-fab:focus-visible,
+body.cbrs-ui .accessibility-fab[aria-expanded="true"] {
+  opacity: 1;
+  transform: scale(1.08);
+}
+body.cbrs-ui .cbrs-cookie-manage::before,
+body.cbrs-ui .accessibility-fab::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background: currentColor;
+  -webkit-mask: var(--cbrs-fab-icon) center / contain no-repeat;
+  mask: var(--cbrs-fab-icon) center / contain no-repeat;
+}
+body.cbrs-ui .cbrs-cookie-manage {
+  --cbrs-fab-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5zm-3.5 7a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm6 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm-7 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2z'/%3E%3C/svg%3E");
+}
+body.cbrs-ui .accessibility-fab {
+  --cbrs-fab-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='4' r='2'/%3E%3Cpath d='M20 8.5l-5.5 1V13l2 8h-2.2L12.6 15h-1.2l-1.7 6H7.5l2-8V9.5L4 8.5l.4-2L12 7.8l7.6-1.3z'/%3E%3C/svg%3E");
+}
+body.cbrs-ui .accessibility-panel { right: 8px !important; bottom: 50px !important; }
+html.a11y-contrast body.cbrs-ui .cbrs-cookie-manage,
+html.a11y-contrast body.cbrs-ui .accessibility-fab {
+  border: 2px solid #000 !important;
+  background: #000 !important;
+  color: #fff !important;
+  opacity: 1;
+}

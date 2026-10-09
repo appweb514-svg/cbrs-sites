@@ -191,7 +191,7 @@
       '<div class="cbrs-cookie-dialog-actions"><button type="button" data-cookie-action="close" class="cbrs-cookie-button cbrs-cookie-button-secondary">Annuler</button><button type="button" data-cookie-action="save" class="cbrs-cookie-button cbrs-cookie-button-primary">Enregistrer mes choix</button></div>',
       '</div>',
       '</section>',
-      '<button type="button" class="cbrs-cookie-manage" data-cookie-open hidden>Cookies</button>',
+      '<button type="button" class="cbrs-cookie-manage" data-cookie-open title="Gérer les cookies" hidden>Cookies</button>',
       '<p class="cbrs-external-status" aria-live="polite"></p>'
     ].join('');
     document.body.appendChild(root);
