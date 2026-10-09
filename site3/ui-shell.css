@@ -1923,9 +1923,10 @@ body.cbrs-ui :is(a, button):not(.sidebar-link, .cbrs-nav-active, .tab-btn, .filt
 .cbrs-presentation-text { flex: 1; min-width: 0; }
 body.cbrs-ui .cbrs-presentation-body { margin-top: 1.25rem; font-size: 1rem; line-height: 1.75; color: #374151; font-weight: 400; text-align: justify; hyphens: auto; }
 body.cbrs-ui .cbrs-presentation-body p + p { margin-top: 0.85rem; }
-.cbrs-presentation-main { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 1rem; background: #f3f5f8; margin: 0; }
+.cbrs-presentation-photos { margin-top: 1.5rem; }
+.cbrs-presentation-main { aspect-ratio: 16 / 9; overflow: hidden; border-radius: 1rem; background: #f3f5f8; margin: 0; }
 .cbrs-presentation-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.cbrs-presentation-thumbs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; margin-top: .75rem; }
+.cbrs-presentation-thumbs { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .75rem; margin-top: .75rem; }
 .cbrs-presentation-thumbs:empty { display: none; }
 .cbrs-presentation-thumb { aspect-ratio: 1; overflow: hidden; border-radius: .75rem; padding: 0; border: 0; cursor: pointer; opacity: .75; box-shadow: 0 0 0 2px transparent; transition: opacity .2s ease, box-shadow .2s ease; }
 .cbrs-presentation-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -1933,12 +1934,7 @@ body.cbrs-ui .cbrs-presentation-body p + p { margin-top: 0.85rem; }
 .cbrs-presentation-thumb[aria-pressed="true"], .cbrs-presentation-thumb:focus-visible { box-shadow: 0 0 0 2px rgb(var(--cbrs-green-rgb, 67 124 20)); outline: none; }
 @media (min-width: 1024px) {
   .cbrs-presentation-layout { flex-direction: row; align-items: flex-start; }
-  .cbrs-presentation-photos { width: 40%; flex-shrink: 0; }
-  .cbrs-presentation-layout { flex-wrap: wrap; }
   .cbrs-bon-a-savoir { width: 15.5rem; flex-shrink: 0; }
-  /* Avec des photos à gauche, l'encadré passe sous le texte, sur toute la largeur. */
-  .cbrs-presentation-layout:has(.cbrs-presentation-photos:not(.hidden)) .cbrs-bon-a-savoir { width: 100%; }
-  .cbrs-presentation-layout:has(.cbrs-presentation-photos:not(.hidden)) .cbrs-bon-a-savoir dl { grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); }
 }
 
 /* Encadré « Bon à savoir » de la fiche activité. */
