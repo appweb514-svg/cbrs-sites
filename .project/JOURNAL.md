@@ -52,3 +52,5 @@
 - 2026-10-09 | demande | Pas de carte blanche autour d'encadrés déjà blancs : retirée sur Activités, Planning, Statuts, Liens utiles, Galerie (titre galerie sorti du panneau de filtres)
 - 2026-10-09 | demande | Sorties & voyages : grandes cartes blanches retirées, fiches en blanc avec ombre sur le fond de page (voyages CMS inclus)
 - 2026-10-09 | demande | Galerie et Activités : espacements réduits, photos (150 px) et icônes (7,5 rem) plus petites
+- 2026-10-09 | demande | « Met un petit margin in » pour toutes les pages : marge intérieure de 20 px sur main#contenu (≥768 px), le contenu ne touche plus les bords du bandeau
+- 2026-10-09 | demande | Reflet bleu (flash info, autour du logo CBRS) : ombres teintées bleu remplacées par des ombres neutres plus légères (ui-shell.css v=20261009x)

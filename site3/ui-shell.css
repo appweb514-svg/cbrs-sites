@@ -17,8 +17,8 @@
   --cbrs-font-body: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --cbrs-font-heading: "Manrope", var(--cbrs-font-body);
   --cbrs-font-accent: "Playfair Display", Georgia, serif;
-  --cbrs-shell-shadow: 0 18px 50px rgba(10, 50, 115, .14);
-  --cbrs-nav-shadow: 0 14px 32px rgba(10, 50, 115, .18);
+  --cbrs-shell-shadow: 0 18px 50px rgba(15, 23, 42, 0.07);
+  --cbrs-nav-shadow: 0 14px 32px rgba(15, 23, 42, 0.09);
   --cbrs-focus: 0 0 0 3px rgba(88, 160, 26, .42);
   --cbrs-shell-top: 12px;
   --cbrs-sidebar-left: 20px;
@@ -188,7 +188,7 @@ body.cbrs-ui .cbrs-logo-image {
   width: 100%;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 8px 10px rgba(10, 50, 115, .14));
+  filter: drop-shadow(0 8px 10px rgba(15, 23, 42, 0.07));
 }
 
 
@@ -324,7 +324,7 @@ body.cbrs-ui .cbrs-mobile-header {
   left: 8px !important;
   border: 1px solid rgba(10, 50, 115, .1);
   border-radius: 16px;
-  box-shadow: 0 10px 24px rgba(10, 50, 115, .12);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
 }
 
 body.cbrs-ui .cbrs-mobile-header button[aria-controls="mobile-menu"] {
@@ -369,7 +369,7 @@ body.cbrs-ui #mobile-menu {
   border: 1px solid rgba(255, 255, 255, .14);
   border-radius: 0 0 18px 18px;
   background: linear-gradient(165deg, rgba(10, 50, 115, .98), rgba(20, 92, 117, .98)) !important;
-  box-shadow: 0 18px 36px rgba(10, 50, 115, .22);
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.11);
 }
 
 body.cbrs-ui #mobile-menu a {
@@ -396,7 +396,7 @@ body.cbrs-ui .accessibility-fab {
   padding: .7rem 1rem !important;
   font-size: .8rem !important;
   font-weight: 700 !important;
-  box-shadow: 0 12px 26px rgba(10, 50, 115, .25);
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.12);
 }
 
 body.cbrs-ui .accessibility-fab:hover {
@@ -539,7 +539,7 @@ body.cbrs-ui #sidebar.cbrs-sidebar {
   border: 1px solid rgba(255, 255, 255, .12);
   border-radius: var(--cbrs-shell-radius) !important;
   background-clip: padding-box;
-  box-shadow: 0 18px 42px rgba(10, 50, 115, .2), inset 0 1px 0 rgba(255, 255, 255, .08);
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, .08);
 }
 
 body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero .cbrs-logo-frame {
@@ -813,7 +813,7 @@ body.cbrs-ui .cbrs-cookie-manage {
   border: 1px solid rgba(10, 50, 115, .25);
   border-radius: 999px;
   background: #fff;
-  box-shadow: 0 8px 22px rgba(10, 50, 115, .16);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
   color: var(--cbrs-blue);
   cursor: pointer;
   font-size: .72rem;
@@ -1047,13 +1047,13 @@ body.cbrs-ui .cbrs-activity-icon {
   border-radius: 2rem;
   aspect-ratio: 1;
   background: #fff;
-  box-shadow: 0 10px 24px rgba(10, 50, 115, .07);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
   transition: box-shadow .3s ease, transform .3s ease;
 }
 
 body.cbrs-ui .cbrs-activity-card:hover .cbrs-activity-icon,
 body.cbrs-ui .cbrs-activity-card:focus-visible .cbrs-activity-icon {
-  box-shadow: 0 14px 30px rgba(10, 50, 115, .12);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.06);
   transform: scale(1.03);
 }
 
@@ -1504,7 +1504,7 @@ body.cbrs-ui .cbrs-board-card {
   padding: 1.25rem;
   border-radius: 20px;
   background: #fff;
-  box-shadow: 0 8px 24px rgba(10, 50, 115, .08);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
   text-align: center;
 }
 
@@ -1551,7 +1551,7 @@ body.cbrs-ui .cbrs-doc-callout {
   border: 1px solid rgba(10, 50, 115, .12);
   border-radius: 18px;
   background: #fff;
-  box-shadow: 0 8px 22px rgba(10, 50, 115, .06);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.03);
   text-align: left;
 }
 
@@ -1664,7 +1664,7 @@ body.cbrs-ui .cbrs-flash {
   margin: 12px 0 2rem;
   border-radius: 20px;
   background: var(--cbrs-blue);
-  box-shadow: 0 14px 30px rgba(10, 50, 115, .18);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.09);
 }
 
 body.cbrs-ui .cbrs-flash-badge {
@@ -1685,7 +1685,7 @@ body.cbrs-ui .cbrs-flash-emblem {
   width: auto;
   height: 48px;
   object-fit: contain;
-  filter: hue-rotate(58deg) saturate(1.15) drop-shadow(0 6px 8px rgba(10, 50, 115, .25));
+  filter: hue-rotate(58deg) saturate(1.15) drop-shadow(0 6px 8px rgba(15, 23, 42, 0.12));
   transform-origin: 50% 50%;
   animation: cbrs-flash-pulse 4s ease-in-out infinite;
 }
@@ -1981,7 +1981,7 @@ body.cbrs-ui .accessibility-fab {
   background: var(--cbrs-blue) !important;
   color: #fff !important;
   font-size: 0 !important;
-  box-shadow: 0 4px 12px rgba(10, 50, 115, .22);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.11);
   opacity: .8;
   transition: opacity .15s ease, transform .15s ease;
 }
@@ -2093,3 +2093,5 @@ body.cbrs-ui main#contenu > .cbrs-carte.cbrs-carte:has(+ footer) { margin-bottom
 /* Activités : icônes plus petites, grille plus serrée */
 body.cbrs-ui .cbrs-activities-grid.cbrs-activities-grid { grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr)); column-gap: 1rem; row-gap: 1.25rem; }
 body.cbrs-ui .cbrs-activities-grid .cbrs-activity-icon { width: min(100%, 7.5rem); border-radius: 1.5rem; }
+/* Petite marge intérieure : le contenu ne touche plus les bords du bandeau (toutes les pages) */
+@media (min-width: 768px) { body.cbrs-ui main#contenu { padding-left: 20px; padding-right: 20px; } }
