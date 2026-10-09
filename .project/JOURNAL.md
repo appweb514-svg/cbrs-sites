@@ -68,3 +68,4 @@
 - 2026-10-09 | demande | Bandeau mobile : logo remis à gauche (56 px conservés)
 - 2026-10-09 | Demande | Bandeau mobile moins haut (padding .2rem, hero à 84px)
 - 2026-10-09 | Demande | Bandeau mobile : logo placé après le texte CBRS
+- 2026-10-09 | Demande | Bandeau mobile : logo remis avant le texte CBRS
