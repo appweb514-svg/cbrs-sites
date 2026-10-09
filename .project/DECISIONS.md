@@ -34,3 +34,8 @@ Conséquences : les prochains déploiements de production peuvent reprendre auto
 - Contexte : bandeau OSM « Signaler un problème » sous les cartes, lieu trop zoomé ; titres de section hétérogènes selon les pages.
 - Décision : iframe OSM élargie (≥ 420 px) et rognée de 80 px en bas dans un conteneur `overflow:hidden`, bbox élargie de 60 % ; le petit crédit « © OpenStreetMap contributors » reste sous la carte (attribution ODbL obligatoire une fois le bandeau masqué). Titres : modèle unique surtitre `text-sm font-semibold uppercase text-cbrs-green` + h2 `text-3xl md:text-4xl` avec mot accent `text-cbrs-blue font-serif-italic` + intro `mt-3 text-gray-600`, aligné à gauche.
 - Conséquences : toute nouvelle section reprend ce modèle ; si OSM change la hauteur de son bandeau, ajuster la marge de rognage dans ui-shell.css.
+
+## 2026-10-09 — Titres de section gérés dans le CMS
+- Contexte : le club doit pouvoir changer titres et introductions sans développeur ; le modèle de titre a un mot en italique bleu.
+- Décision : global Payload `titres` (un onglet par page, un groupe surtitre/titre/motMisEnValeur/introduction par section, valeurs par défaut = texte du site). Le site garde le texte livré si un champ est vide ; le mot mis en valeur est entouré en DOM (dernière occurrence, sinon titre sans accent). Surtitre/intro masqués dans l'admin quand la section n'en a pas sur le site. Droits : section `apparence`. Bandeau aligné sur les bords du contenu.
+- Conséquences : tout nouveau titre de section doit porter `data-cbrs-titre` (+ `-surtitre`/`-intro`) et une entrée dans `cms/src/globals/Titres.ts` (migration).
