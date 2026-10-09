@@ -42,4 +42,4 @@
 - 2026-10-09 | titres | tous les titres de section alignés à gauche (Qui sommes-nous, Formulaire d'Adhésion décentrés)
 - 2026-10-09 | titres | galerie : « Filtrer les photos » remplacé par « Nos plus beaux souvenirs » au modèle commun
 - 2026-10-09 | mise en page | contenu des pages élargi à la largeur du bandeau sur grands écrans (Statuts, Formation, Sorties & Voyages, Adhésion, Planning, Liens utiles…) ; ui-shell.css v=20261009l
-- 2026-10-09 | titres | demande « Et si on centre tout ? » : tous les titres de section centrés (surtitre, h2, intro, bouton Réinitialiser galerie) via ui-shell.css v=20261009m
+- 2026-10-09 | titres | retour en arrière demandé : titres de nouveau alignés à gauche (revert du centrage) ; ui-shell.css v=20261009n
