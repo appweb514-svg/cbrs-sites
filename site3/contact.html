@@ -123,7 +123,7 @@
     body.wave-effect-disabled #contenu { padding-top: 0 !important; }
   }
 </style>
-<link rel="stylesheet" href="ui-shell.css?v=20261009f"/>
+<link rel="stylesheet" href="ui-shell.css?v=20261009k"/>
 <script>/* Apparence du CMS mémorisée : appliquée avant l’affichage (voir cms-client.js). */try{var t=JSON.parse(localStorage.getItem("cbrs-theme"));if(t&&t.vars){for(var k in t.vars)document.documentElement.style.setProperty(k,t.vars[k]);if(t.fonts)document.write('<link id="cbrs-theme-fonts" rel="stylesheet" href="'+t.fonts.replace(/"/g,"")+'"/>');}}catch(e){}</script>
 <link rel="stylesheet" href="tailwind.css"/>
 </head>
@@ -296,7 +296,7 @@
     <div>
       <h2 class="text-2xl font-bold text-cbrs-text mb-6">Nous <span class="text-cbrs-blue font-serif-italic">trouver</span></h2>
       <div class="rounded-2xl overflow-hidden shadow-md">
-        <div class="cbrs-map-with-overlay relative h-72 bg-gray-100">
+        <div class="cbrs-map-with-overlay cbrs-map-clip relative h-72 bg-gray-100">
           <iframe title="Localisation CBRS Beauvais" width="100%" height="100%" style="border:0;" loading="lazy" data-cookie-src="https://www.openstreetmap.org/export/embed.html?bbox=2.0740%2C49.4425%2C2.0860%2C49.4485&amp;layer=mapnik&amp;marker=49.4455806%2C2.0800750"></iframe>
           <div class="absolute left-4 bottom-4 rounded-2xl bg-white/95 backdrop-blur p-4 shadow-lg border border-gray-100">
             <div class="flex items-center gap-3">

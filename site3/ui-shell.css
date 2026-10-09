@@ -2018,3 +2018,32 @@ html.a11y-contrast body.cbrs-ui .accessibility-fab {
   color: #fff !important;
   opacity: 1;
 }
+
+/* Cartes OpenStreetMap : bandeau d'attribution intégré (« Signaler un problème »…) rogné.
+   L'iframe est plus large que son cadre (centrée sur le marqueur) pour que le bandeau tienne
+   sur une ligne, puis ses 22 px du bas sont masqués. La mention © OpenStreetMap, exigée par
+   la licence, est reprise sous la carte (.cbrs-map-credit). */
+body.cbrs-ui .cbrs-map-clip {
+  position: relative;
+  overflow: hidden;
+}
+body.cbrs-ui .cbrs-map-clip > iframe,
+body.cbrs-ui #map-frame {
+  display: block;
+  width: max(100%, 420px) !important;
+  max-width: none;
+  margin-left: calc((100% - max(100%, 420px)) / 2);
+  margin-bottom: -80px;
+}
+body.cbrs-ui .cbrs-map-with-overlay iframe { height: calc(100% + 80px); }
+body.cbrs-ui .cbrs-map-clip:has(> iframe[hidden]),
+body.cbrs-ui .cbrs-map-clip:has(> iframe[hidden]) + .cbrs-map-credit { display: none; }
+body.cbrs-ui .cbrs-map-credit {
+  margin: .35rem 0 .75rem;
+  font-size: .7rem;
+  color: #9ca3af;
+}
+body.cbrs-ui .cbrs-map-credit a { color: inherit; text-decoration: underline; }
+/* Cartes plus hautes : la zone visible garde ~16-18rem après le rognage du bandeau OSM. */
+body.cbrs-ui #map-frame { height: calc(18rem + 80px); }
+body.cbrs-ui .detail-map-frame { height: calc(17rem + 80px); }

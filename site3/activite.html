@@ -121,7 +121,7 @@
     body.wave-effect-disabled #contenu { padding-top: 0 !important; }
   }
 </style>
-<link rel="stylesheet" href="ui-shell.css?v=20261009f"/>
+<link rel="stylesheet" href="ui-shell.css?v=20261009k"/>
 <script>/* Apparence du CMS mémorisée : appliquée avant l’affichage (voir cms-client.js). */try{var t=JSON.parse(localStorage.getItem("cbrs-theme"));if(t&&t.vars){for(var k in t.vars)document.documentElement.style.setProperty(k,t.vars[k]);if(t.fonts)document.write('<link id="cbrs-theme-fonts" rel="stylesheet" href="'+t.fonts.replace(/"/g,"")+'"/>');}}catch(e){}</script>
 <link rel="stylesheet" href="tailwind.css"/>
 </head>
@@ -345,6 +345,7 @@
       <div class="rounded-xl overflow-hidden bg-cbrs-gray-100 border border-gray-200 mb-4">
         <iframe id="map-frame" title="Carte du lieu de l'activité" class="w-full h-56" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
+      <p class="cbrs-map-credit">&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors</p>
       <a id="route-link-card" class="block w-full text-center py-3 bg-cbrs-green hover:bg-cbrs-green-hover text-white font-semibold rounded-xl text-sm transition-colors" target="_blank" rel="noopener">Ouvrir l'itinéraire</a>
       <a href="/planning#planning-content" class="block w-full text-center mt-2 py-3 bg-cbrs-blue/10 hover:bg-cbrs-blue/15 text-cbrs-blue font-semibold rounded-xl text-sm transition-colors">Voir le planning complet</a>
     </div>
@@ -708,7 +709,7 @@ function renderActivity(activity) {
   const route = 'https://www.openstreetmap.org/directions?to='+m.lat+'%2C'+m.lon+'#map=16/'+m.lat+'/'+m.lon;
   document.getElementById('route-link').href = route;
   document.getElementById('route-link-card').href = route;
-  document.getElementById('map-frame').dataset.cookieSrc = 'https://www.openstreetmap.org/export/embed.html?bbox='+(m.lon-0.01)+'%2C'+(m.lat-0.006)+'%2C'+(m.lon+0.01)+'%2C'+(m.lat+0.006)+'&layer=mapnik&marker='+m.lat+'%2C'+m.lon;
+  document.getElementById('map-frame').dataset.cookieSrc = 'https://www.openstreetmap.org/export/embed.html?bbox='+(m.lon-0.016)+'%2C'+(m.lat-0.009)+'%2C'+(m.lon+0.016)+'%2C'+(m.lat+0.009)+'&layer=mapnik&marker='+m.lat+'%2C'+m.lon;
 }
 
 // Fiche absente : « introuvable », ou « plus proposée » quand le CMS confirme qu'elle n'est plus publiée.

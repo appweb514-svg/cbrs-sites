@@ -62,14 +62,19 @@
   const itinerary = byId('detail-itinerary-link');
   if (record.coordinates) {
     const mapUrl = `https://www.openstreetmap.org/?mlat=${record.coordinates.lat}&mlon=${record.coordinates.lng}#map=14/${record.coordinates.lat}/${record.coordinates.lng}`;
-    const embedUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${record.coordinates.bbox}&layer=mapnik&marker=${record.coordinates.lat}%2C${record.coordinates.lng}`;
+    // Cadre élargi de 60 % autour du point pour mieux situer le lieu.
+    const [w, so, e, n] = decodeURIComponent(record.coordinates.bbox).split(',').map(Number);
+    const dx = (e - w) * 0.3, dy = (n - so) * 0.3;
+    const bbox = [w - dx, so - dy, e + dx, n + dy].map((v) => v.toFixed(5)).join('%2C');
+    const embedUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${record.coordinates.lat}%2C${record.coordinates.lng}`;
     const frame = byId('detail-map-frame');
     frame.dataset.cookieSrc = embedUrl;
     frame.title = `Carte de ${record.mapLabel}`;
     frame.hidden = false;
-    byId('detail-map-empty').hidden = true;
+    // Classes Tailwind « flex » / « hidden » : l'attribut hidden seul ne suffit pas.
+    byId('detail-map-empty').classList.replace('flex', 'hidden');
     itinerary.href = mapUrl;
-    itinerary.hidden = false;
+    itinerary.classList.replace('hidden', 'flex');
   }
 
   const detailTypeLabel = isEvent ? 'événement' : 'sortie';
