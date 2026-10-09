@@ -56,3 +56,4 @@
 - 2026-10-09 | demande | Reflet bleu (flash info, autour du logo CBRS) : ombres teintées bleu remplacées par des ombres neutres plus légères (ui-shell.css v=20261009x)
 - 2026-10-09 | demande | « Je vois toujours quelque chose autour du logo » : ombre portée du logo du bandeau supprimée ; logo des cartes sans photo (Vie du club) sur fond gris clair au lieu du dégradé bleu (ui-shell.css v=20261009z)
 - 2026-10-09 | demande | « Remet les cartes » : cartes sans photo de Vie du club de nouveau sur fond dégradé bleu (v=20261010a)
+- 2026-10-09 | demande | Bouton « Retour aux événements / sorties » (evenement.html, sortie.html) : même bouton vert plein que les autres
