@@ -61,3 +61,4 @@
 - 2026-10-09 | demande | Sorties ajoutées dans le CMS (type « Sortie ») affichées dans « Nos sorties » avec photo en miniature 48 px ; fiche /sortie?id=cms-<id> chargée depuis l'API
 - 2026-10-09 | demande | Bandeaux des fiches sortie/événement alignés sur les autres : sans surtitre, titre court « Fiche sortie » / « Fiche événement »
 - 2026-10-09 | demande | Bandeaux des fiches : retour à la version précédente (surtitre + « Une sortie à vivre ensemble »), à la demande du client
+- 2026-10-09 | demande | Fiche sortie : titre du bandeau « Un moment à partager » comme la fiche événement
