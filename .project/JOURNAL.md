@@ -63,3 +63,4 @@
 - 2026-10-09 | demande | Bandeaux des fiches : retour à la version précédente (surtitre + « Une sortie à vivre ensemble »), à la demande du client
 - 2026-10-09 | demande | Fiche sortie : titre du bandeau « Un moment à partager » comme la fiche événement
 - 2026-10-09 | demande | Logo du bandeau mobile agrandi (36 → 48 px) sur toutes les pages
+- 2026-10-09 | demande | Bandeau mobile : logo placé à droite, « CBRS » reste à côté du menu
