@@ -1,6 +1,6 @@
 'use client'
 
-import { useDocumentInfo } from '@payloadcms/ui'
+import { useDocumentInfo, useFormFields } from '@payloadcms/ui'
 import React from 'react'
 
 const PAGES: Record<string, string> = {
@@ -12,8 +12,13 @@ const PAGES: Record<string, string> = {
 }
 
 export const VoirPage: React.FC = () => {
-  const { globalSlug } = useDocumentInfo()
-  const chemin = globalSlug && PAGES[globalSlug]
+  const { globalSlug, collectionSlug } = useDocumentInfo()
+  const slug = useFormFields(([champs]) => champs.slug?.value) as string | undefined
+  // Fiche d'activité : /activite?id=<identifiant>, une fois l'identifiant saisi.
+  const chemin =
+    collectionSlug === 'activites'
+      ? slug && `/activite?id=${encodeURIComponent(slug)}`
+      : globalSlug && PAGES[globalSlug]
   if (!chemin) return null
 
   const origine = (process.env.NEXT_PUBLIC_CBRS_SITE_URL || 'https://cbrs-sites.vercel.app').replace(/\/+$/, '')

@@ -615,7 +615,7 @@ function renderActivity(activity) {
   document.getElementById('animators-grid').innerHTML = '';
   document.getElementById('activity-info').innerHTML = '';
 
-  // Encadré « Bon à savoir » (CMS, onglet Présentation) : masqué si tout est vide.
+  // Encadré « Bon à savoir » (CMS, onglet Présentation) : masqué si tout est vide ou si « Afficher » est décoché.
   const tips = activity.tips || {};
   const effortLabels = { douce: ['Doux', 1], moderee: ['Modéré', 2], soutenue: ['Soutenu', 3] };
   const effort = effortLabels[tips.intensite];
@@ -629,7 +629,7 @@ function renderActivity(activity) {
   document.getElementById('bon-a-savoir-list').innerHTML = tipRows.map(function(r) {
     return '<div><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>';
   }).join('');
-  document.getElementById('bon-a-savoir').classList.toggle('hidden', !tipRows.length);
+  document.getElementById('bon-a-savoir').classList.toggle('hidden', !tipRows.length || tips.afficher === false);
 
   // Photos de l'activité (CMS « Photo principale » / « Galerie de l'activité », sinon galerie du club).
   const photos = activity.photos || [];
@@ -806,5 +806,5 @@ syncStickySidebar();
 })();
 </script>
 <script src="ui-shell.js"></script>
-<script src="cms-client.js" defer></script>
+<script src="cms-client.js?v=20261009d" defer></script>
 </body></html>

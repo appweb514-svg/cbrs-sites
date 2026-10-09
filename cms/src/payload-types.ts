@@ -256,6 +256,7 @@ export interface Activite {
    * Encadré affiché à droite de la présentation. Laisser vide ce qui ne s’applique pas ; l’encadré est masqué si tout est vide.
    */
   bonASavoir?: {
+    afficher?: boolean | null;
     tenue?: string | null;
     materiel?: string | null;
     intensite?: ('douce' | 'moderee' | 'soutenue') | null;

@@ -131,7 +131,7 @@
     return noms[extension] ? 'Télécharger (' + noms[extension] + ')' : 'Télécharger';
   }
 
-  function buildClubCard(item) {
+  function buildClubCard(item, defaultLink) {
     const article = el('article', 'relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group');
     const media = el('div', 'relative h-44 overflow-hidden');
     const image = item.image || {};
@@ -161,7 +161,7 @@
     const date = formatDate(item.date);
     if (date) body.appendChild(el('p', 'text-sm text-gray-500 mb-1', date));
     const heading = el('h3', 'font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors');
-    const link = resolveLien(item.lien);
+    const link = resolveLien(item.lien) || defaultLink || '';
     if (link) {
       const anchor = el('a', 'cbrs-card-link', item.titre || '');
       anchor.href = link;
@@ -183,9 +183,17 @@
     const first = section.querySelector('article');
     const grid = first ? first.parentNode : section.querySelector('.grid');
     if (!grid) return;
+    // Sans lien choisi dans le CMS, la carte garde la page de récit de la carte statique de même titre.
+    const titleKey = function (text) {
+      return String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+    };
+    const staticLinks = {};
+    grid.querySelectorAll('a.cbrs-card-link').forEach(function (a) {
+      staticLinks[titleKey(a.textContent)] = a.getAttribute('href');
+    });
     grid.textContent = '';
     items.slice(0, 3).forEach(function (item) {
-      grid.appendChild(buildClubCard(item));
+      grid.appendChild(buildClubCard(item, staticLinks[titleKey(item.titre)]));
     });
   }
 
