@@ -1905,7 +1905,7 @@ body.cbrs-ui .cbrs-card-placeholder {
   height: 100%;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--cbrs-blue), var(--cbrs-teal));
+  background: #f3f4f6;
 }
 
 body.cbrs-ui .cbrs-card-placeholder img {
@@ -2095,3 +2095,5 @@ body.cbrs-ui .cbrs-activities-grid.cbrs-activities-grid { grid-template-columns:
 body.cbrs-ui .cbrs-activities-grid .cbrs-activity-icon { width: min(100%, 7.5rem); border-radius: 1.5rem; }
 /* Petite marge intérieure : le contenu ne touche plus les bords du bandeau (toutes les pages) */
 @media (min-width: 768px) { body.cbrs-ui main#contenu { padding-left: 20px; padding-right: 20px; } }
+/* Logo CBRS du bandeau : sans ombre portée (elle formait un halo autour du logo) */
+body.cbrs-ui .cbrs-logo-frame .cbrs-logo-image { filter: none !important; }

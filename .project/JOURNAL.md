@@ -54,3 +54,4 @@
 - 2026-10-09 | demande | Galerie et Activités : espacements réduits, photos (150 px) et icônes (7,5 rem) plus petites
 - 2026-10-09 | demande | « Met un petit margin in » pour toutes les pages : marge intérieure de 20 px sur main#contenu (≥768 px), le contenu ne touche plus les bords du bandeau
 - 2026-10-09 | demande | Reflet bleu (flash info, autour du logo CBRS) : ombres teintées bleu remplacées par des ombres neutres plus légères (ui-shell.css v=20261009x)
+- 2026-10-09 | demande | « Je vois toujours quelque chose autour du logo » : ombre portée du logo du bandeau supprimée ; logo des cartes sans photo (Vie du club) sur fond gris clair au lieu du dégradé bleu (ui-shell.css v=20261009z)
