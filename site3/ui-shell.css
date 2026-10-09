@@ -2067,3 +2067,18 @@ body.cbrs-ui #adhesion > div {
   body.cbrs-ui #adhesion > div { padding-left: 0; padding-right: 0; }
 }
 body.cbrs-ui #contenu > div > section.max-w-6xl { max-width: none; }
+
+/* Toutes les pages : blocs de contenu en cartes blanches (comme Sorties & voyages) */
+body.cbrs-ui main#contenu .cbrs-carte.cbrs-carte {
+  background: #fff;
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,.05), 0 2px 4px -1px rgba(0,0,0,.03);
+  padding: 24px;
+  margin: 40px 0;
+  max-width: none;
+}
+body.cbrs-ui main#contenu .cbrs-carte.cbrs-carte:last-child { margin-bottom: 0; }
+@media (min-width: 768px) {
+  body.cbrs-ui main#contenu .cbrs-carte.cbrs-carte { padding: 32px; }
+}

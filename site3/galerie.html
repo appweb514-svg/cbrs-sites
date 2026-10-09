@@ -173,7 +173,7 @@
     body.wave-effect-disabled #contenu { padding-top: 0 !important; }
   }
 </style>
-<link rel="stylesheet" href="ui-shell.css?v=20261009q"/>
+<link rel="stylesheet" href="ui-shell.css?v=20261009r"/>
 <script>/* Apparence du CMS mémorisée : appliquée avant l’affichage (voir cms-client.js). */try{var t=JSON.parse(localStorage.getItem("cbrs-theme"));if(t&&t.vars){for(var k in t.vars)document.documentElement.style.setProperty(k,t.vars[k]);if(t.fonts)document.write('<link id="cbrs-theme-fonts" rel="stylesheet" href="'+t.fonts.replace(/"/g,"")+'"/>');}}catch(e){}</script>
 <link rel="stylesheet" href="tailwind.css"/>
 </head>
@@ -307,7 +307,7 @@
 </div>
 </aside>
 <main id="contenu" class="flex-1 overflow-x-hidden relative md:pt-20 cbrs-content">
-<section class="max-w-7xl mx-auto px-6 pt-8 pb-4 space-y-3">
+<section class="cbrs-carte max-w-7xl mx-auto px-6 pt-8 pb-4 space-y-3">
   <div class="gallery-filter-panel" aria-label="Filtres de la galerie">
     <div class="gallery-filter-heading">
       <div>
@@ -346,7 +346,7 @@
   </div>
 </section>
 
-<section class="max-w-7xl mx-auto px-6 py-8">
+<section class="cbrs-carte max-w-7xl mx-auto px-6 py-8">
   <div class="gallery-grid" id="gallery">
     <figure class="gallery-item" data-cat="sport" data-activity="gymnastique" data-year="2024" onclick="openLightbox('assets-premium/real-gym-group.jpg','Gymnastique douce – Cours collectif')">
       <img src="assets-premium/real-gym-group.jpg" alt="Cours collectif de gymnastique douce"/><figcaption>Gymnastique douce – Cours collectif</figcaption>
@@ -364,7 +364,7 @@
   <p id="no-results" class="hidden text-center text-gray-400 py-16 text-lg">Aucune photo dans cette catégorie.</p>
 </section>
 
-<section class="bg-cbrs-gray-100 py-12">
+<section class="cbrs-carte bg-cbrs-gray-100 py-12">
   <div class="max-w-xl mx-auto px-6 text-center">
     <h2 class="text-2xl font-bold text-cbrs-blue mb-3">Rejoignez l'aventure !</h2>
     <p class="text-gray-600 mb-5">Partagez ces moments avec nous. Adhérez au CBRS et participez à toutes nos activités.</p>
