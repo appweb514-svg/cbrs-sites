@@ -121,7 +121,7 @@
     body.wave-effect-disabled #contenu { padding-top: 0 !important; }
   }
 </style>
-<link rel="stylesheet" href="ui-shell.css?v=20261009r"/>
+<link rel="stylesheet" href="ui-shell.css?v=20261009t"/>
 <script>/* Apparence du CMS mémorisée : appliquée avant l’affichage (voir cms-client.js). */try{var t=JSON.parse(localStorage.getItem("cbrs-theme"));if(t&&t.vars){for(var k in t.vars)document.documentElement.style.setProperty(k,t.vars[k]);if(t.fonts)document.write('<link id="cbrs-theme-fonts" rel="stylesheet" href="'+t.fonts.replace(/"/g,"")+'"/>');}}catch(e){}</script>
 <link rel="stylesheet" href="tailwind.css"/>
 </head>
@@ -257,13 +257,13 @@
 </div>
 </aside>
 <main id="contenu" class="flex-1 overflow-x-hidden relative md:pt-20 cbrs-content">
-<section class="cbrs-carte max-w-7xl mx-auto px-6 py-12">
+<section class="max-w-7xl mx-auto px-6 py-12">
   <div class="mb-10 max-w-3xl">
     <p data-cbrs-titre-surtitre="activites" class="text-sm font-semibold uppercase tracking-wider text-cbrs-green mb-2">Choisissez votre activité</p>
     <h2 data-cbrs-titre="activites" class="text-3xl md:text-4xl font-bold text-cbrs-text">Quelle activité vous donne envie de <span class="text-cbrs-blue font-serif-italic">bouger</span> ?</h2>
     <p data-cbrs-titre-intro="activites" class="mt-3 text-gray-600">Sélectionnez une icône pour découvrir sa fiche, ses horaires et les informations pratiques.</p>
   </div>
-  <div class="cbrs-activities-grid grid gap-x-6 gap-y-10">
+  <div class="cbrs-carte cbrs-activities-grid grid gap-x-6 gap-y-10">
     <a href="/activite?id=01" aria-label="Aquagym" class="cbrs-activity-card group">
       <div class="cbrs-activity-icon"><img src="01_aquagym.png?v=icons-20261009" alt="Aquagym" class="w-full h-full object-contain"/></div>
       <h3 class="sr-only">Aquagym</h3>

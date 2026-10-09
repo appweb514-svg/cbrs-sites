@@ -2068,17 +2068,25 @@ body.cbrs-ui #adhesion > div {
 }
 body.cbrs-ui #contenu > div > section.max-w-6xl { max-width: none; }
 
-/* Toutes les pages : blocs de contenu en cartes blanches (comme Sorties & voyages) */
+/* Toutes les pages : titre sur le fond de page, contenu dans une carte blanche (comme Sorties & voyages) */
 body.cbrs-ui main#contenu .cbrs-carte.cbrs-carte {
   background: #fff;
   border: 0;
   border-radius: 1rem;
   box-shadow: 0 4px 6px -1px rgba(0,0,0,.05), 0 2px 4px -1px rgba(0,0,0,.03);
   padding: 24px;
-  margin: 40px 0;
+  margin: 0 0 40px;
   max-width: none;
 }
 body.cbrs-ui main#contenu .cbrs-carte.cbrs-carte:last-child { margin-bottom: 0; }
+/* Carte posée directement sur la page (sans titre au-dessus) : même respiration que les sections */
+body.cbrs-ui main#contenu > .cbrs-carte.cbrs-carte:first-child,
+body.cbrs-ui main#contenu > #planning-loading.cbrs-carte { margin-top: 48px; }
+body.cbrs-ui main#contenu > .cbrs-carte.cbrs-carte + .cbrs-carte,
+body.cbrs-ui main#contenu > div + .cbrs-carte.cbrs-carte { margin-top: 40px; }
+body.cbrs-ui main#contenu > .cbrs-carte.cbrs-carte:has(+ footer) { margin-bottom: 48px; }
 @media (min-width: 768px) {
   body.cbrs-ui main#contenu .cbrs-carte.cbrs-carte { padding: 32px; }
 }
+/* Section à titre sur le fond de page : bords alignés sur le contenu (sans marge latérale) dès la tablette */
+@media (min-width: 768px) { body.cbrs-ui main#contenu .cbrs-section { padding-left: 0; padding-right: 0; } }
