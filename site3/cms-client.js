@@ -187,10 +187,14 @@
     const titleKey = function (text) {
       return String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '');
     };
-    const staticLinks = {};
-    grid.querySelectorAll('a.cbrs-card-link').forEach(function (a) {
-      staticLinks[titleKey(a.textContent)] = a.getAttribute('href');
-    });
+    // Relevé une seule fois : un second rendu (cache puis réseau) ne trouve plus les cartes statiques.
+    if (!grid.cbrsStaticLinks) {
+      grid.cbrsStaticLinks = {};
+      grid.querySelectorAll('a.cbrs-card-link').forEach(function (a) {
+        grid.cbrsStaticLinks[titleKey(a.textContent)] = a.getAttribute('href');
+      });
+    }
+    const staticLinks = grid.cbrsStaticLinks;
     grid.textContent = '';
     items.slice(0, 3).forEach(function (item) {
       grid.appendChild(buildClubCard(item, staticLinks[titleKey(item.titre)]));
