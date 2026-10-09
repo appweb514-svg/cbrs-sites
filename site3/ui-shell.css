@@ -1942,3 +1942,9 @@ body.cbrs-ui :is(a, button):not(.sidebar-link, .cbrs-nav-active, .tab-btn, .filt
   .cbrs-presentation-layout { flex-direction: row; align-items: flex-start; }
   .cbrs-presentation-photos { width: 40%; flex-shrink: 0; }
 }
+
+/* Logo du club : l'image source est coupée en bas à gauche ; fondu pour que la coupe ne se voie pas. */
+body.cbrs-ui .cbrs-logo-image {
+  -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
+}

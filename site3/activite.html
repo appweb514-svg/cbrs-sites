@@ -194,7 +194,7 @@
     </nav>
     <div class="max-w-3xl">
       <div class="flex items-start gap-5">
-        <div id="activity-logo-frame" class="hidden md:flex flex-shrink-0 items-start justify-center overflow-hidden" style="width:clamp(6rem,10vw,8rem);height:auto;aspect-ratio:1 / .7;">
+        <div id="activity-logo-frame" class="hidden md:flex flex-shrink-0 items-center justify-center overflow-hidden" style="width:clamp(6rem,10vw,8rem);height:auto;aspect-ratio:1 / 1;">
           <img id="activity-logo" src="" alt="" class="block w-full h-auto object-contain opacity-0 transition-opacity duration-200"/>
         </div>
         <div class="min-w-0">
@@ -598,13 +598,6 @@ function renderActivity(activity) {
   document.getElementById('activity-subtitle').textContent = activity.desc;
   document.getElementById('breadcrumb-current').textContent = activity.name;
   document.getElementById('activity-category').textContent = activity.category || 'Tous niveaux';
-  const logoCropRatios = {
-    '01': .74, '02': .74, '03': .73, '04': .71, '05': .70,
-    '06': .69, '07': .71, '08': .70, '09': .70, '10': .66,
-    '11': .68, '12': .65, '13': .52, '14': .50, '15': .51,
-    '16': .52, '17': .68
-  };
-  document.getElementById('activity-logo-frame').style.aspectRatio = '1 / ' + (logoCropRatios[id] || .7);
   const activityLogo = document.getElementById('activity-logo');
   activityLogo.classList.add('opacity-0');
   activityLogo.addEventListener('load', function() { activityLogo.classList.remove('opacity-0'); }, { once: true });
