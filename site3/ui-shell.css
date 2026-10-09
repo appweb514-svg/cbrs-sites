@@ -40,27 +40,42 @@ html {
   view-transition-name: root;
 }
 
+/* Fondu enchaîné : l'ancienne page reste visible pendant que la nouvelle apparaît
+   (plus de passage par un écran vide), et le menu latéral ne bouge pas. */
+#sidebar {
+  view-transition-name: cbrs-sidebar;
+}
+
 @media (prefers-reduced-motion: no-preference) {
+  ::view-transition-group(root) {
+    animation-duration: .45s;
+  }
+
   ::view-transition-old(root) {
-    animation: cbrs-page-out .22s ease both;
+    animation: cbrs-page-out .45s ease both;
   }
 
   ::view-transition-new(root) {
-    animation: cbrs-page-in .38s cubic-bezier(.2, .75, .25, 1) both;
+    animation: cbrs-page-in .45s cubic-bezier(.25, .8, .3, 1) both;
+  }
+
+  ::view-transition-group(cbrs-sidebar),
+  ::view-transition-old(cbrs-sidebar),
+  ::view-transition-new(cbrs-sidebar) {
+    animation: none;
   }
 }
 
 @keyframes cbrs-page-out {
   to {
     opacity: 0;
-    transform: translateY(-5px) scale(.998);
   }
 }
 
 @keyframes cbrs-page-in {
   from {
     opacity: 0;
-    transform: translateY(8px) scale(1.002);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -1013,13 +1028,12 @@ body.cbrs-ui .cbrs-activity-card {
   border-radius: 2rem;
   color: var(--cbrs-blue);
   text-align: center;
-  transition: background-color .2s ease, transform .2s ease;
+  transition: transform .3s ease;
 }
 
 body.cbrs-ui .cbrs-activity-card:hover,
 body.cbrs-ui .cbrs-activity-card:focus-visible {
-  background: rgba(10, 50, 115, .045);
-  transform: translateY(-3px);
+  transform: translateY(-4px);
 }
 
 body.cbrs-ui .cbrs-activity-icon {
@@ -1027,18 +1041,18 @@ body.cbrs-ui .cbrs-activity-icon {
   width: min(100%, 10rem);
   place-items: center;
   overflow: hidden;
-  padding: .35rem;
+  padding: .5rem;
   border-radius: 2rem;
   aspect-ratio: 1;
-  background: rgba(255, 255, 255, .72);
-  box-shadow: 0 12px 28px rgba(10, 50, 115, .08);
-  transition: box-shadow .2s ease, transform .2s ease;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(10, 50, 115, .07);
+  transition: box-shadow .3s ease, transform .3s ease;
 }
 
 body.cbrs-ui .cbrs-activity-card:hover .cbrs-activity-icon,
 body.cbrs-ui .cbrs-activity-card:focus-visible .cbrs-activity-icon {
-  box-shadow: 0 16px 34px rgba(10, 50, 115, .16);
-  transform: scale(1.035);
+  box-shadow: 0 14px 30px rgba(10, 50, 115, .12);
+  transform: scale(1.03);
 }
 
 body.cbrs-ui .cbrs-activity-icon img {
@@ -1050,7 +1064,7 @@ body.cbrs-ui .cbrs-activity-icon img {
 
 body.cbrs-ui .cbrs-activity-card:hover .cbrs-activity-icon img,
 body.cbrs-ui .cbrs-activity-card:focus-visible .cbrs-activity-icon img {
-  transform: scale(1.08);
+  transform: scale(1.04);
 }
 
 body.cbrs-ui .cbrs-activity-tag {
@@ -1911,4 +1925,20 @@ body.cbrs-ui :is(a, button):not(.sidebar-link, .cbrs-nav-active, .tab-btn, .filt
 body.cbrs-ui :is(a, button):not(.sidebar-link, .cbrs-nav-active, .tab-btn, .filter-btn, .year-btn):is([class*="bg-cbrs-blue"], [class*="bg-cbrs-green"]):is(:hover, :focus-visible) {
   border-color: var(--cbrs-green-dark);
   background: var(--cbrs-green-dark);
+}
+
+/* Fiche activité : photos à gauche de la présentation */
+.cbrs-presentation-layout { display: flex; flex-direction: column; gap: 2rem; }
+.cbrs-presentation-text { flex: 1; min-width: 0; }
+.cbrs-presentation-main { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 1rem; background: #f3f5f8; margin: 0; }
+.cbrs-presentation-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cbrs-presentation-thumbs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; margin-top: .75rem; }
+.cbrs-presentation-thumbs:empty { display: none; }
+.cbrs-presentation-thumb { aspect-ratio: 1; overflow: hidden; border-radius: .75rem; padding: 0; border: 0; cursor: pointer; opacity: .75; box-shadow: 0 0 0 2px transparent; transition: opacity .2s ease, box-shadow .2s ease; }
+.cbrs-presentation-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cbrs-presentation-thumb:hover, .cbrs-presentation-thumb[aria-pressed="true"] { opacity: 1; }
+.cbrs-presentation-thumb[aria-pressed="true"], .cbrs-presentation-thumb:focus-visible { box-shadow: 0 0 0 2px rgb(var(--cbrs-green-rgb, 67 124 20)); outline: none; }
+@media (min-width: 1024px) {
+  .cbrs-presentation-layout { flex-direction: row; align-items: flex-start; }
+  .cbrs-presentation-photos { width: 40%; flex-shrink: 0; }
 }

@@ -102,7 +102,7 @@
     document.querySelectorAll('img[src]').forEach(function (image) {
       const src = image.getAttribute('src') || '';
       if (/(^|\/)\d{2}_[^/?#]+\.png(?:\?[^#]*)?$/i.test(src) && !/[?&]v=/.test(src)) {
-        image.setAttribute('src', src + '?v=transparent-icons-20260814-v3');
+        image.setAttribute('src', src + '?v=icons-20261009');
       }
     });
 

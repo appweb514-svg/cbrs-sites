@@ -332,8 +332,26 @@
       animators: (item.animateurs || []).map(function (a) {
         return { name: a.nom, photo: imageUrl(a.photo) || undefined };
       }),
-      info: (item.infos || []).map(function (i) { return i.texte; }).filter(Boolean)
+      info: (item.infos || []).map(function (i) { return i.texte; }).filter(Boolean),
+      photos: [item.photo].concat(item.photos || []).map(function (p) {
+        return p && typeof p === 'object' && p.url ? { src: resolveUrl(p.url), alt: p.alt || item.nom || '' } : null;
+      }).filter(Boolean)
     };
+  }
+
+  // Sans photo saisie sur l'activité : photos de la galerie rattachées à cette activité
+  // (valeur « Activité » de la galerie = nom de l'activité sans accents, ex. « Tennis de table » → tennis-de-table).
+  function withGalleryPhotos(activity) {
+    const key = activity.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+    if (activity.photos.length || !key) return Promise.resolve(activity);
+    return getJSON('/api/galerie?limit=4&sort=_order&depth=1&where[activite][equals]=' + encodeURIComponent(key) + '&where[afficherSurSite][equals]=true')
+      .then(function (data) {
+        activity.photos = docs(data).map(function (g) {
+          return g.photo && g.photo.url ? { src: resolveUrl(g.photo.url), alt: g.legende || activity.name } : null;
+        }).filter(Boolean);
+        return activity;
+      })
+      .catch(function () { return activity; });
   }
 
   function renderActivityList(items) {
@@ -558,7 +576,7 @@
     conteneur.textContent = '';
     cartes.forEach(function (carte) {
       const bloc = el('div', 'bg-white rounded-xl shadow-card p-5 flex items-center gap-4 hover:shadow-card-hover transition-shadow group');
-      const pictogramme = imageUrl(carte.image) || (texteRempli(carte.icone) ? carte.icone + '?v=transparent-icons-20260814-v3' : '');
+      const pictogramme = imageUrl(carte.image) || (texteRempli(carte.icone) ? carte.icone + '?v=icons-20261009' : '');
       if (pictogramme) {
         const cadre = el('div', 'w-14 h-14 bg-gray-50 rounded-xl flex items-center justify-center p-2 shrink-0');
         const image = el('img', 'w-full h-full object-contain');
@@ -694,7 +712,7 @@
     '/api/activites?limit=1&depth=1&where[slug][equals]=' + encodeURIComponent(window.cbrsActivityId || ''),
     function (data) {
       const item = docs(data)[0];
-      if (item) window.cbrsRenderActivity(toSiteActivity(item));
+      if (item) return withGalleryPhotos(toSiteActivity(item)).then(window.cbrsRenderActivity);
       else window.cbrsActivityMissing(Boolean(window.cbrsActivityKnown));
     });
 
