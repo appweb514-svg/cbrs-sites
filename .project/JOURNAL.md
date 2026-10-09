@@ -75,3 +75,4 @@
 - 2026-10-09 | Demande | Fiches sortie/événement : « Sorties & Voyages » en titre h2 (style des titres de section)
 - 2026-10-09 | Demande | Fiches sortie/événement : surtitre du hero supprimé ; titre de section = surtitre catégorie + nom du lieu (sortis de la carte)
 - 2026-10-09 | Demande | Fiche sortie : « Nous trouver » → « Destination »
+- 2026-10-09 | Demande | Fiches activité : présentation alignée à gauche (plus de justification ni césure), interligne 1.6
