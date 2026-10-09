@@ -1921,6 +1921,8 @@ body.cbrs-ui :is(a, button):not(.sidebar-link, .cbrs-nav-active, .tab-btn, .filt
 /* Fiche activité : photos à gauche de la présentation */
 .cbrs-presentation-layout { display: flex; flex-direction: column; gap: 2rem; }
 .cbrs-presentation-text { flex: 1; min-width: 0; }
+body.cbrs-ui .cbrs-presentation-body { margin-top: 1.25rem; font-size: 1rem; line-height: 1.75; color: #374151; font-weight: 400; }
+body.cbrs-ui .cbrs-presentation-body p + p { margin-top: 0.85rem; }
 .cbrs-presentation-main { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 1rem; background: #f3f5f8; margin: 0; }
 .cbrs-presentation-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .cbrs-presentation-thumbs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; margin-top: .75rem; }
