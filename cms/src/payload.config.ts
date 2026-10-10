@@ -1,6 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
-import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { fr } from '@payloadcms/translations/languages/fr'
@@ -20,8 +19,17 @@ import { MembresBureau } from './collections/MembresBureau'
 import { Sorties } from './collections/Sorties'
 import { Users } from './collections/Users'
 import { VieDuClub } from './collections/VieDuClub'
+import { adaptateurEmail } from './email'
 import { galerieLot } from './endpoints/galerieLot'
 import { mediaRenommer } from './endpoints/mediaRenommer'
+import {
+  sauvegardeEtat,
+  sauvegardeLancer,
+  sauvegardeTelecharger,
+  sauvegardeTestExterne,
+} from './endpoints/sauvegardes'
+import { smtpTest } from './endpoints/smtpTest'
+import { demarrerPlanification } from './sauvegarde/planification'
 import { Apparence } from './globals/Apparence'
 import { FlashInfo } from './globals/FlashInfo'
 import { Formation } from './globals/Formation'
@@ -48,9 +56,6 @@ const siteOrigins = (
   .map((origin) => origin.trim())
   .filter(Boolean)
 
-// Envoi des e-mails (mot de passe oublié) uniquement si un serveur SMTP est configuré.
-const smtpHost = process.env.SMTP_HOST
-
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -68,7 +73,15 @@ export default buildConfig({
     // Libellé français par défaut de Payload trop lourd : « Créer un(e) nouveau ou nouvelle ».
     translations: { fr: { general: { createNew: 'Ajouter', createNewLabel: 'Ajouter : {{label}}' } } },
   },
-  endpoints: [galerieLot, mediaRenommer],
+  endpoints: [
+    galerieLot,
+    mediaRenommer,
+    smtpTest,
+    sauvegardeTelecharger,
+    sauvegardeLancer,
+    sauvegardeEtat,
+    sauvegardeTestExterne,
+  ],
   collections: avecRetourArriere(
     avecCasesVX([
       VieDuClub,
@@ -86,19 +99,10 @@ export default buildConfig({
   globals: avecRetourArriere([FlashInfo, Formation, Titres, Tarifs, Parametres, Apparence], 'globals'),
   cors: siteOrigins,
   editor: lexicalEditor(),
-  email: smtpHost
-    ? nodemailerAdapter({
-        defaultFromAddress: process.env.SMTP_FROM || 'no-reply@cbrs60.fr',
-        defaultFromName: 'CBRS',
-        transportOptions: {
-          host: smtpHost,
-          port: Number(process.env.SMTP_PORT || 587),
-          auth: process.env.SMTP_USER
-            ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS || '' }
-            : undefined,
-        },
-      })
-    : undefined,
+  // Réglages relus à chaque envoi : Paramètres (onglet E-mails) sinon variables SMTP_*.
+  email: adaptateurEmail,
+  // Sauvegarde hebdomadaire : seulement avec CBRS_SAUVEGARDES=1 (voir sauvegarde/planification.ts).
+  onInit: (payload) => demarrerPlanification(payload),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

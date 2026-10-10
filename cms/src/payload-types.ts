@@ -1245,6 +1245,53 @@ export interface Parametre {
   activites?: string | null;
   emailContact?: string | null;
   emailSorties?: string | null;
+  smtp?: {
+    actif?: boolean | null;
+    hote?: string | null;
+    port?: number | null;
+    /**
+     * Laissez décoché pour le port 587 (STARTTLS) ou 25.
+     */
+    securise?: boolean | null;
+    utilisateur?: string | null;
+    /**
+     * Enregistré chiffré. Laissez tel quel pour conserver la valeur actuelle.
+     */
+    motDePasse?: string | null;
+    expediteur?: string | null;
+    nomExpediteur?: string | null;
+  };
+  sauvegarde?: {
+    /**
+     * Nécessite CBRS_SAUVEGARDES=1 dans l’environnement du serveur. Instantanés incrémentaux (seuls les fichiers modifiés prennent de la place).
+     */
+    actif?: boolean | null;
+    jour?: ('0' | '1' | '2' | '3' | '4' | '5' | '6') | null;
+    heure?: number | null;
+    conservationJours?: number | null;
+    /**
+     * Après chaque sauvegarde, une copie est envoyée vers ce service. Les versions remplacées ou supprimées sont conservées dans « archives ».
+     */
+    externe?: {
+      fournisseur?: ('aucun' | 's3' | 'dropbox' | 'drive') | null;
+      /**
+       * Vide pour AWS.
+       */
+      endpoint?: string | null;
+      region?: string | null;
+      bucket?: string | null;
+      cleAcces?: string | null;
+      /**
+       * Enregistré chiffré. Laissez tel quel pour conserver la valeur actuelle.
+       */
+      cleSecrete?: string | null;
+      /**
+       * Obtention : sur un ordinateur, installez rclone (rclone.org), lancez « rclone authorize "dropbox" » (Dropbox) ou « rclone authorize "drive" » (Google Drive), connectez-vous dans le navigateur qui s’ouvre, puis copiez ici tout le texte JSON affiché entre les lignes « Paste the following into your remote machine ---> » et « <---End paste ». Enregistré chiffré. Laissez tel quel pour conserver la valeur actuelle.
+       */
+      jeton?: string | null;
+      dossier?: string | null;
+    };
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1530,6 +1577,38 @@ export interface ParametresSelect<T extends boolean = true> {
   activites?: T;
   emailContact?: T;
   emailSorties?: T;
+  smtp?:
+    | T
+    | {
+        actif?: T;
+        hote?: T;
+        port?: T;
+        securise?: T;
+        utilisateur?: T;
+        motDePasse?: T;
+        expediteur?: T;
+        nomExpediteur?: T;
+      };
+  sauvegarde?:
+    | T
+    | {
+        actif?: T;
+        jour?: T;
+        heure?: T;
+        conservationJours?: T;
+        externe?:
+          | T
+          | {
+              fournisseur?: T;
+              endpoint?: T;
+              region?: T;
+              bucket?: T;
+              cleAcces?: T;
+              cleSecrete?: T;
+              jeton?: T;
+              dossier?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
