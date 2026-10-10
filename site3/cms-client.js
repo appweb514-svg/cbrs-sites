@@ -800,6 +800,35 @@
     '/api/globals/formation?depth=1',
     renderFormation);
 
+  // Planning : créneaux saisis dans chaque activité du CMS (les responsables d'activité les tiennent à jour).
+  register(function () { return typeof window.showPlanning === 'function' && Boolean(document.getElementById('week-calendar')); },
+    '/api/activites?limit=100&sort=ordre&depth=0',
+    function (data) {
+      const items = docs(data);
+      if (!items.length) return;
+      const slug = function (v) { return String(v || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); };
+      // Catégorie et couleur reprises du planning d'origine (même nom ou même premier mot).
+      const known = typeof FALLBACK_ACTIVITIES !== 'undefined' ? FALLBACK_ACTIVITIES : [];
+      const style = function (name) {
+        const s = slug(name);
+        return known.find(function (a) { return slug(a.name) === s || a.id === s; }) ||
+          known.find(function (a) { return slug(a.name).split('-')[0] === s.split('-')[0]; }) || null;
+      };
+      const activities = items.map(function (item, i) {
+        const ref = style(item.nom);
+        return {
+          id: slug(item.nom),
+          name: item.nom || '',
+          category: ref ? ref.category : 'loisir',
+          categoryLabel: ref ? ref.categoryLabel : 'Activité',
+          categoryColor: ref ? ref.categoryColor : 'blue',
+          slots: (item.creneaux || []).map(function (c) { return { day: c.jour, time: c.horaire, location: c.lieu || '' }; }),
+          sort_order: i + 1
+        };
+      }).filter(function (a) { return a.slots.length; });
+      if (activities.length) window.showPlanning(activities);
+    });
+
   register(function () { return Boolean(document.querySelector('[data-cbrs-titre],[data-cbrs-titre-surtitre],[data-cbrs-titre-intro]')); },
     '/api/globals/titres',
     renderTitres);

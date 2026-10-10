@@ -30,8 +30,8 @@ export const Tarifs: GlobalConfig = {
     },
     {
       name: 'lignes',
-      label: 'Lignes',
-      labels: { singular: 'Ligne', plural: 'Lignes' },
+      label: 'Tarifs',
+      labels: { singular: 'Tarif', plural: 'Tarifs' },
       type: 'array',
       fields: [
         {
