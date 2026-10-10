@@ -96,3 +96,4 @@
 - 2026-10-10 | demande + livraison | Galerie : pagination 20 photos/page, boutons Précédent/Suivant, retour en haut de la galerie, remise à la page 1 à chaque filtre (déployé test)
 - 2026-10-10 | demande + livraison | Galerie mobile : 2 photos par ligne (<640px), vignettes 120px
 - 2026-10-10 | demande + livraison | Accueil, Présentation du bureau : 2 membres par ligne sur mobile (ui-shell.css 20261010k)
+- 2026-10-10 | demande client (mail 29/09) | fiche d'adhésion 2026-2027 en ligne (site3/docs), CMS « Adhérer » : nouveau champ Fiche d'adhésion (migration 20261010_120000), déployé sur le test

@@ -49,3 +49,8 @@ Conséquences : les prochains déploiements de production peuvent reprendre auto
 - Contexte : flash blanc ponctuel entre pages malgré les view transitions (page suivante lente à charger).
 - Décision : règles Speculation Rules (prerender, eagerness moderate) sur toutes les pages, /admin et PDF exclus.
 - Conséquences : navigation quasi instantanée sur Chrome/Edge ; sans effet sur Safari/Firefox (repli normal).
+
+## 2026-10-10 — Fiche d'adhésion dans le global « Adhérer »
+- Contexte : le client ne trouvait pas où déposer la fiche (passage par Documents → « Remplace le lien officiel » peu visible).
+- Décision : champ upload `ficheAdhesion` (vers Documents) dans le global Tarifs, renommé « Adhérer » ; prioritaire sur Documents dans cms-client.js.
+- Conséquences : migration 20261010_120000_tarifs_fiche_adhesion ; l'ancien mécanisme Documents reste valable.
