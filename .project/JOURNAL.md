@@ -77,3 +77,4 @@
 - 2026-10-09 | Demande | Fiche sortie : « Nous trouver » → « Destination »
 - 2026-10-09 | Demande | Fiches activité : présentation alignée à gauche (plus de justification ni césure), interligne 1.6
 - 2026-10-09 | Demande | Galerie : bouton Réinitialiser sous les filtres (à droite du compteur), panneau moins haut
+- 2026-10-10 | Demande | Accueil : titre « Présentation du bureau » à la taille des titres de section (h2 text-3xl md:text-4xl)
