@@ -856,7 +856,6 @@ body.cbrs-ui .cbrs-map-with-overlay:has(.cbrs-external-placeholder:not([hidden])
 body.cbrs-ui .cbrs-map-with-overlay:has(.cbrs-external-placeholder:not([hidden])) > .cbrs-external-placeholder {
   justify-content: flex-start;
   padding-top: 1.25rem;
-  padding-bottom: 10.5rem;
 }
 
 body.cbrs-ui .cbrs-external-placeholder .cbrs-cookie-button {
