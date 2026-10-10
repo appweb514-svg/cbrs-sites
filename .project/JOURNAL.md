@@ -81,3 +81,4 @@
 - 2026-10-10 | Demande | Titres de section (h2) réduits à 26/32 px pour rester sous les titres du header (30/36/48 px) ; ui-shell.css v20261010f
 - 2026-10-10 | Demande | Adhésion : accroche verte « Bougez, partagez, profitez à votre rythme » au-dessus du titre du header
 - 2026-10-10 | Demande | Adhésion : accroche du header retirée, surtitre vert « Nous rejoindre » au-dessus de « Formulaire d'Adhésion »
+- 2026-10-10 | Demande | Galerie (et Planning) : écart header → surtitre aligné sur les autres pages (48 px)
