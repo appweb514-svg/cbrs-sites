@@ -4,13 +4,13 @@ import { cacheSansDroit, peut } from '../access'
 
 export const Tarifs: GlobalConfig = {
   slug: 'tarifs',
-  label: 'Adhérer (tarifs)',
+  label: 'Adhérer',
   admin: {
     components: { elements: { beforeDocumentControls: ['/admin/VoirPage#VoirPage'] } },
     group: 'Vie du club',
     hidden: cacheSansDroit('tarifs'),
     description:
-      'Page « Adhérer » : grille tarifaire, affichée dans l’ordre saisi. Pour mettre en ligne la fiche d’adhésion (PDF) : Photos & documents → Documents → Créer, puis « Remplace le lien officiel » = « Fiche d’adhésion (page Adhésion) ».',
+      'Page « Adhérer » : fiche d’adhésion à télécharger et grille tarifaire (affichée dans l’ordre saisi).',
   },
   access: {
     read: () => true,
@@ -18,6 +18,16 @@ export const Tarifs: GlobalConfig = {
     update: peut('tarifs', 'modifier'),
   },
   fields: [
+    {
+      name: 'ficheAdhesion',
+      label: 'Fiche d’adhésion (PDF)',
+      type: 'upload',
+      relationTo: 'documents',
+      admin: {
+        description:
+          'Choisissez la fiche déjà déposée ou cliquez sur « Créer nouveau » pour envoyer le PDF de la saison. Le bouton « Fiche d’adhésion » de la page Adhérer pointera vers ce fichier (laisser « Afficher dans la liste des documents » coché).',
+      },
+    },
     {
       name: 'lignes',
       label: 'Lignes',

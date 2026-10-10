@@ -274,7 +274,7 @@
     document.querySelectorAll('a[data-cbrs-doc]').forEach(function (link) {
       const doc = official[docRubrique(link.getAttribute('href'))];
       const url = doc && resolveUrl(doc.url);
-      if (url) link.setAttribute('href', url);
+      if (url && !link.hasAttribute('data-cbrs-fiche')) link.setAttribute('href', url);
     });
 
     const container = document.getElementById('documents');
@@ -780,8 +780,18 @@
     });
 
   register(function () { return Boolean(document.querySelector('.cbrs-price-grid')); },
-    '/api/globals/tarifs',
+    '/api/globals/tarifs?depth=1',
     function (data) {
+      // Fiche d'adhésion choisie dans « Adhérer » : prioritaire sur la collection Documents.
+      const fiche = data && data.ficheAdhesion && resolveUrl(data.ficheAdhesion.url);
+      if (fiche) {
+        document.querySelectorAll('a[data-cbrs-doc]').forEach(function (link) {
+          if (docRubrique(link.getAttribute('href')) === 'adhesion') {
+            link.setAttribute('href', fiche);
+            link.setAttribute('data-cbrs-fiche', '1');
+          }
+        });
+      }
       const lignes = data && Array.isArray(data.lignes) ? data.lignes : [];
       if (lignes.length) renderTarifs(lignes);
     });
