@@ -95,3 +95,4 @@
 - 2026-10-10 | Demande | Fiches événement : « Destination » au lieu de « Nous trouver » (comme les sorties)
 - 2026-10-10 | demande + livraison | Galerie : pagination 20 photos/page, boutons Précédent/Suivant, retour en haut de la galerie, remise à la page 1 à chaque filtre (déployé test)
 - 2026-10-10 | demande + livraison | Galerie mobile : 2 photos par ligne (<640px), vignettes 120px
+- 2026-10-10 | demande + livraison | Accueil, Présentation du bureau : 2 membres par ligne sur mobile (ui-shell.css 20261010k)

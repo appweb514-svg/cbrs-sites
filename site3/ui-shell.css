@@ -2115,3 +2115,12 @@ body.cbrs-ui main h2.text-3xl + p { margin-top: 1rem; }
 body.cbrs-ui main .cbrs-carte-titre,
 body.cbrs-ui main > section > div.mb-6:has(> h2.text-3xl) { margin-bottom: 2rem; }
 body.cbrs-ui main h3:not([class*="mb-"]):has(+ p) { margin-bottom: .25rem; }
+
+/* Bureau : deux membres par ligne sur mobile (2026-10-10) */
+@media (max-width: 639px) {
+  body.cbrs-ui .cbrs-board-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+  body.cbrs-ui .cbrs-board-card { padding: 1rem .6rem; }
+  body.cbrs-ui .cbrs-board-photo { width: 84px; height: 84px; margin-bottom: .6rem; }
+  body.cbrs-ui .cbrs-board-name { font-size: .9rem; }
+  body.cbrs-ui .cbrs-board-role { font-size: .78rem; }
+}
