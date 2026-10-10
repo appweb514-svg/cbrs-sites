@@ -106,3 +106,4 @@
 - 2026-10-10 | demande | Sauvegardes (bouton + téléchargement, hebdomadaire incrémentale purgée à 3 mois, copie S3/Dropbox/Drive) et SMTP modifiable dans Paramètres, admin seulement
 - 2026-10-10 | branche | claude/sauvegardes-smtp (depuis claude/modifs-client-2026-09-29), commit 63ab8be, vitest 104/104, tsc OK
 - 2026-10-10 | déploiement | CMS cbrs-test (migration OK), CBRS_SAUVEGARDES=1 ajouté à ~/cms/.env ; sauvegarde manuelle OK (instantané 2026-10-10_1900, 193 Mo, dump 62 tables), zip téléchargé 199 Mo
+- 2026-10-10 | PR | #26 modifs-client → main ; #27 sauvegardes-smtp → modifs-client (empilée)
