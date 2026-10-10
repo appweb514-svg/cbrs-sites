@@ -2102,3 +2102,10 @@ h2.text-3xl { font-size: 1.625rem; line-height: 2rem; }
 @media (min-width: 768px) {
   h2.text-3xl { font-size: 2rem; line-height: 2.5rem; }
 }
+
+/* Contact (2 colonnes) : la carte « Coordonnées » descend jusqu'au bas de la carte OSM
+   (la ligne © OpenStreetMap, ~3,25rem, reste sous la carte). */
+@media (min-width: 1024px) {
+  body.cbrs-ui div:has(> .contact-panel-card) { display: flex; flex-direction: column; }
+  body.cbrs-ui .contact-panel-card { flex: 1 1 auto; margin-bottom: 3.25rem; }
+}
