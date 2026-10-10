@@ -94,3 +94,4 @@
 - 2026-10-10 | Espacements | Titre de section → intro 12→16 px, bloc titre → contenu 24→32 px (galerie, sorties-voyages), titres de cartes collés → 4 px (ui-shell.css 20261010j)
 - 2026-10-10 | Demande | Fiches événement : « Destination » au lieu de « Nous trouver » (comme les sorties)
 - 2026-10-10 | demande + livraison | Galerie : pagination 20 photos/page, boutons Précédent/Suivant, retour en haut de la galerie, remise à la page 1 à chaque filtre (déployé test)
+- 2026-10-10 | demande + livraison | Galerie mobile : 2 photos par ligne (<640px), vignettes 120px
