@@ -83,3 +83,4 @@
 - 2026-10-10 | Demande | Adhésion : accroche du header retirée, surtitre vert « Nous rejoindre » au-dessus de « Formulaire d'Adhésion »
 - 2026-10-10 | Demande | Galerie (et Planning) : écart header → surtitre aligné sur les autres pages (48 px)
 - 2026-10-10 | Demande | Transitions entre pages : pré-rendu au survol (Speculation Rules, hors /admin et PDF) sur les 15 pages pour supprimer le flash blanc
+- 2026-10-10 | Demande | Fiches activité : liens « Itinéraire » ouvrent la carte OSM avec repère (plus le mode itinéraire)
