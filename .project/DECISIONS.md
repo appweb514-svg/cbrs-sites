@@ -54,3 +54,8 @@ Conséquences : les prochains déploiements de production peuvent reprendre auto
 - Contexte : le client ne trouvait pas où déposer la fiche (passage par Documents → « Remplace le lien officiel » peu visible).
 - Décision : champ upload `ficheAdhesion` (vers Documents) dans le global Tarifs, renommé « Adhérer » ; prioritaire sur Documents dans cms-client.js.
 - Conséquences : migration 20261010_120000_tarifs_fiche_adhesion ; l'ancien mécanisme Documents reste valable.
+
+## 2026-10-10 — Sauvegardes et SMTP dans Paramètres
+- Contexte : le client veut sauvegarder site + CMS lui-même, une sauvegarde hebdomadaire automatique purgée à 3 mois, une copie hors serveur, et régler le SMTP (réinitialisation de mot de passe) sans toucher au serveur.
+- Décision : onglets « E-mails (SMTP) » et « Sauvegardes » du global Paramètres (admin seulement). Secrets chiffrés en base (AES-256-GCM, clé dérivée de `PAYLOAD_SECRET`), masqués à l'affichage. Planification interne au CMS (`setInterval` dans `onInit`, activée par `CBRS_SAUVEGARDES=1`) plutôt qu'un cron alwaysdata, pour que jour/heure soient réglables dans l'admin. Incrémental par `rsync --link-dest` (outil présent, pas de restic). Externalisation via rclone configuré par variables d'environnement (aucun fichier de config). `.env` exclu des sauvegardes.
+- Conséquences : migration 20261011_090000_parametres_smtp_sauvegardes. Changer `PAYLOAD_SECRET` rend illisibles les secrets enregistrés (à ressaisir). Le jeton Google Drive expire sous 7 jours si l'application OAuth n'est pas publiée. Fonction indisponible sur Vercel (409).
