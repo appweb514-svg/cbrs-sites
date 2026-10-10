@@ -78,3 +78,4 @@
 - 2026-10-09 | Demande | Fiches activité : présentation alignée à gauche (plus de justification ni césure), interligne 1.6
 - 2026-10-09 | Demande | Galerie : bouton Réinitialiser sous les filtres (à droite du compteur), panneau moins haut
 - 2026-10-10 | Demande | Accueil : titre « Présentation du bureau » à la taille des titres de section (h2 text-3xl md:text-4xl)
+- 2026-10-10 | Demande | Titres de section (h2) réduits à 26/32 px pour rester sous les titres du header (30/36/48 px) ; ui-shell.css v20261010f

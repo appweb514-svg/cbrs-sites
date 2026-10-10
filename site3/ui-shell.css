@@ -2097,3 +2097,9 @@ body.cbrs-ui .cbrs-activities-grid .cbrs-activity-icon { width: min(100%, 7.5rem
 @media (min-width: 768px) { body.cbrs-ui main#contenu { padding-left: 20px; padding-right: 20px; } }
 /* Logo CBRS du bandeau : sans ombre portée (elle formait un halo autour du logo) */
 body.cbrs-ui .cbrs-logo-frame .cbrs-logo-image { filter: none !important; }
+
+/* Titres de section : un cran sous les titres du header (h1 30/36/48 px) */
+h2.text-3xl { font-size: 1.625rem; line-height: 2rem; }
+@media (min-width: 768px) {
+  h2.text-3xl { font-size: 2rem; line-height: 2.5rem; }
+}
