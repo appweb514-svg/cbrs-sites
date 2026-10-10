@@ -44,3 +44,8 @@ Conséquences : les prochains déploiements de production peuvent reprendre auto
 - Contexte : la liste des sorties était statique ; le client veut que les sorties saisies dans le CMS apparaissent avec leur photo en miniature.
 - Décision : cms-client.js ajoute les sorties (type « sortie ») à la grille statique, miniature = taille `vignette` du média (48 px affichés) ; une sortie de même titre remplace la carte statique (en gardant sa miniature si pas de photo). La fiche `/sortie?id=cms-<id>` est chargée par sortie-detail.js depuis `/api/sorties/<id>`.
 - Conséquences : les fiches CMS n'ont ni carte ni crédit photo (champs absents du CMS) ; le site de test n'est pas dans la liste CORS du CMS de production, vérification faite avec données simulées.
+
+## 2026-10-10 — Pré-rendu des pages au survol
+- Contexte : flash blanc ponctuel entre pages malgré les view transitions (page suivante lente à charger).
+- Décision : règles Speculation Rules (prerender, eagerness moderate) sur toutes les pages, /admin et PDF exclus.
+- Conséquences : navigation quasi instantanée sur Chrome/Edge ; sans effet sur Safari/Firefox (repli normal).
