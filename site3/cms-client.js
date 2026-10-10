@@ -779,7 +779,7 @@
       if (items.length) renderDocuments(items);
     });
 
-  register(function () { return Boolean(document.querySelector('.cbrs-price-grid')); },
+  register(function () { return Boolean(document.querySelector('.cbrs-price-grid, a[data-cbrs-doc]')); },
     '/api/globals/tarifs?depth=1',
     function (data) {
       // Fiche d'adhésion choisie dans « Adhérer » : prioritaire sur la collection Documents.

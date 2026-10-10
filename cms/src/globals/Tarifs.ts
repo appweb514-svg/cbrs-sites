@@ -10,7 +10,7 @@ export const Tarifs: GlobalConfig = {
     group: 'Vie du club',
     hidden: cacheSansDroit('tarifs'),
     description:
-      'Page « Adhérer » : fiche d’adhésion à télécharger et grille tarifaire (affichée dans l’ordre saisi).',
+      'Fiche d’adhésion (bouton de la page « Adhérer ») et grille tarifaire (encadré « Envie de nous rejoindre ? » de la page Planning), affichée dans l’ordre saisi.',
   },
   access: {
     read: () => true,

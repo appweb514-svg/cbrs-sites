@@ -602,8 +602,10 @@
     ready.then(function () {
       document.querySelectorAll('a[data-cbrs-doc]').forEach(function (link) {
         // Seuls les fichiers du site sont vérifiés : un lien remplacé par le CMS pointe vers
-        // un document existant, et l'API Payload répond 404 aux requêtes HEAD.
-        if (new URL(link.href, location.href).origin !== location.origin) return;
+        // un document existant, et l'API Payload répond 404 aux requêtes HEAD (le CMS peut
+        // être servi sur le même domaine, sous /api/).
+        const cible = new URL(link.href, location.href);
+        if (cible.origin !== location.origin || cible.pathname.indexOf('/api/') === 0) return;
         fetch(link.href, { method: 'HEAD' }).then(function (response) {
           if (response.ok) return;
           const pending = document.createElement('span');
