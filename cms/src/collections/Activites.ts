@@ -9,6 +9,7 @@ export const Activites: CollectionConfig = {
     useAsTitle: 'nom',
     defaultColumns: ['nom', 'ordre', '_status'],
     group: 'Activités & sorties',
+    components: { edit: { beforeDocumentControls: ['/admin/VoirPage#VoirPage'] } },
     hidden: cacheSansDroit('activites'),
     description:
       'Pages « Activités » et fiches du site. Une activité dépubliée (ou en brouillon seulement) disparaît du site.',
@@ -33,13 +34,28 @@ export const Activites: CollectionConfig = {
               maxLength: 240,
               admin: { description: 'Affichée sur la carte de la page Activités et sous le titre de la fiche.' },
             },
-            { name: 'presentation', label: 'Présentation', type: 'textarea' },
+            {
+              name: 'presentation',
+              label: 'Texte de présentation',
+              type: 'textarea',
+              admin: {
+                rows: 8,
+                description:
+                  'Bloc « Présentation » de la fiche, sous le titre. Laisser une ligne vide entre deux paragraphes. Si ce champ est vide, la description courte est affichée à la place.',
+              },
+            },
             { name: 'niveau', label: 'Niveau', type: 'text', admin: { placeholder: 'Tous niveaux' } },
             {
               type: 'row',
               fields: [
                 { name: 'icone', label: 'Logo', type: 'upload', relationTo: 'media' },
-                { name: 'photo', label: 'Photo principale', type: 'upload', relationTo: 'media' },
+                {
+                  name: 'photo',
+                  label: 'Photo principale',
+                  type: 'upload',
+                  relationTo: 'media',
+                  admin: { description: 'Affichée en 16:9 sous le texte de présentation (format paysage conseillé).' },
+                },
               ],
             },
             {
@@ -48,6 +64,49 @@ export const Activites: CollectionConfig = {
               type: 'upload',
               relationTo: 'media',
               hasMany: true,
+              admin: { description: 'Vignettes sous la photo principale ; un clic les agrandit.' },
+            },
+            {
+              name: 'bonASavoir',
+              label: 'Bon à savoir',
+              type: 'group',
+              admin: {
+                description: 'Encadré affiché à droite de la présentation. Laisser vide ce qui ne s’applique pas ; l’encadré est masqué si tout est vide ou si la case est décochée.',
+              },
+              fields: [
+                {
+                  name: 'afficher',
+                  label: 'Afficher l’encadré « Bon à savoir » sur la fiche',
+                  type: 'checkbox',
+                  defaultValue: true,
+                },
+                {
+                  type: 'row',
+                  admin: { condition: (_, groupe) => groupe?.afficher !== false },
+                  fields: [
+                    { name: 'tenue', label: 'Tenue', type: 'text', admin: { placeholder: 'Tenue de sport, baskets propres' } },
+                    { name: 'materiel', label: 'Matériel à prévoir', type: 'text', admin: { placeholder: 'Tapis, bouteille d’eau' } },
+                  ],
+                },
+                {
+                  type: 'row',
+                  admin: { condition: (_, groupe) => groupe?.afficher !== false },
+                  fields: [
+                    {
+                      name: 'intensite',
+                      label: 'Effort',
+                      type: 'select',
+                      options: [
+                        { label: 'Doux', value: 'douce' },
+                        { label: 'Modéré', value: 'moderee' },
+                        { label: 'Soutenu', value: 'soutenue' },
+                      ],
+                    },
+                    { name: 'duree', label: 'Durée d’une séance', type: 'text', admin: { placeholder: '1 h 30' } },
+                    { name: 'prix', label: 'Prix', type: 'text', admin: { placeholder: 'Compris dans l’adhésion' } },
+                  ],
+                },
+              ],
             },
           ],
         },

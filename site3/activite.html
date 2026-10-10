@@ -121,7 +121,8 @@
     body.wave-effect-disabled #contenu { padding-top: 0 !important; }
   }
 </style>
-<link rel="stylesheet" href="ui-shell.css"/>
+<link rel="stylesheet" href="ui-shell.css?v=20261010l"/>
+<script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/admin*"}},{"not":{"href_matches":"/*.pdf"}}]},"eagerness":"moderate"}]}</script>
 <script>/* Apparence du CMS mémorisée : appliquée avant l’affichage (voir cms-client.js). */try{var t=JSON.parse(localStorage.getItem("cbrs-theme"));if(t&&t.vars){for(var k in t.vars)document.documentElement.style.setProperty(k,t.vars[k]);if(t.fonts)document.write('<link id="cbrs-theme-fonts" rel="stylesheet" href="'+t.fonts.replace(/"/g,"")+'"/>');}}catch(e){}</script>
 <link rel="stylesheet" href="tailwind.css"/>
 </head>
@@ -133,7 +134,7 @@
     <button onclick="toggleMobileMenu()" class="p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
-    <a href="/" class="flex items-center gap-2 font-bold text-cbrs-blue"><img src="logo-cbrs.png" alt="CBRS" class="w-9 h-9 object-contain"/>CBRS</a>
+    <a href="/" class="flex flex-1 items-center justify-between gap-2 font-bold text-cbrs-blue">CBRS<img src="logo-cbrs.png?v=20261009" alt="CBRS" class="w-14 h-14 object-contain"/></a>
   </div>
   <nav id="mobile-menu" class="hidden bg-cbrs-blue/95 backdrop-blur-sm px-4 py-3 space-y-1 text-sm shadow-lg">
     <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="/">
@@ -194,7 +195,7 @@
     </nav>
     <div class="max-w-3xl">
       <div class="flex items-start gap-5">
-        <div id="activity-logo-frame" class="hidden md:flex flex-shrink-0 items-start justify-center overflow-hidden" style="width:clamp(6rem,10vw,8rem);height:auto;aspect-ratio:1 / .7;">
+        <div id="activity-logo-frame" class="hidden md:flex flex-shrink-0 items-center justify-center overflow-hidden" style="width:clamp(6rem,10vw,8rem);height:auto;aspect-ratio:1 / 1;">
           <img id="activity-logo" src="" alt="" class="block w-full h-auto object-contain opacity-0 transition-opacity duration-200"/>
         </div>
         <div class="min-w-0">
@@ -210,7 +211,7 @@
       </div>
     </div>
   </div>
-  <div class="cbrs-logo-frame"><img src="logo-cbrs.png" alt="CBRS" class="cbrs-logo-image"/></div>
+  <div class="cbrs-logo-frame"><img src="logo-cbrs.png?v=20261009" alt="CBRS" class="cbrs-logo-image"/></div>
   <svg class="header-wave-svg absolute bottom-0" viewBox="0 0 1440 80" preserveAspectRatio="none" style="height:80px;z-index:1">
     <path fill="#f9fafb" d="M0,0 C100,0 130,24 240,24 C350,24 390,0 500,0 C610,0 650,24 760,24 C870,24 910,0 1020,0 C1130,0 1170,24 1280,24 C1370,24 1410,10 1440,6 L1440,80 L0,80 Z"/>
   </svg>
@@ -281,8 +282,8 @@
 <section class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
   <div class="lg:col-span-2">
   <div id="activity-presentation-card" class="bg-white rounded-3xl shadow-card p-6 md:p-8 mb-8 overflow-hidden">
-    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] gap-8 items-stretch">
-      <div class="min-w-0">
+    <div class="cbrs-presentation-layout">
+      <div class="cbrs-presentation-text">
         <div class="flex items-start gap-3">
           <span class="grid h-11 w-11 flex-shrink-0 place-items-center rounded-2xl bg-cbrs-green/10 text-cbrs-green">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -292,18 +293,18 @@
             <h2 class="mt-1 text-2xl font-bold tracking-tight text-cbrs-text">Présentation</h2>
           </div>
         </div>
-        <p id="activity-desc" class="mt-6 text-base font-medium leading-relaxed text-gray-700 md:text-lg"></p>
-        <div id="presentation-block" class="hidden mt-7 border-t border-cbrs-blue/10 pt-6">
-          <p class="text-xs font-bold uppercase tracking-[.16em] text-cbrs-blue/70">En détail</p>
-          <p id="activity-presentation" class="mt-3 text-sm leading-7 text-gray-600 md:text-base"></p>
+        <div id="activity-presentation" class="cbrs-presentation-body"></div>
+        <div id="presentation-photos" class="cbrs-presentation-photos hidden">
+          <figure class="cbrs-presentation-main">
+            <img id="presentation-photo-main" alt=""/>
+          </figure>
+          <div id="presentation-photo-thumbs" class="cbrs-presentation-thumbs"></div>
         </div>
       </div>
-      <div id="presentation-team" class="hidden bg-gradient-to-br from-cbrs-blue to-cbrs-teal p-6 md:p-8 text-white rounded-2xl">
-        <p class="text-xs uppercase tracking-[0.18em] text-white/70">L’équipe qui vous accompagne</p>
-        <h3 class="mt-2 text-lg font-bold">Des bénévoles formés et disponibles</h3>
-        <div id="presentation-team-grid" class="grid grid-cols-3 gap-3 mt-5"></div>
-        <p id="presentation-team-caption" class="mt-4 text-xs leading-relaxed text-white/75"></p>
-      </div>
+      <aside id="bon-a-savoir" class="cbrs-bon-a-savoir hidden" aria-labelledby="bon-a-savoir-title">
+        <p id="bon-a-savoir-title" class="cbrs-bon-a-savoir-title">Bon à savoir</p>
+        <dl id="bon-a-savoir-list"></dl>
+      </aside>
     </div>
   </div>
 
@@ -345,6 +346,7 @@
       <div class="rounded-xl overflow-hidden bg-cbrs-gray-100 border border-gray-200 mb-4">
         <iframe id="map-frame" title="Carte du lieu de l'activité" class="w-full h-56" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
+      <p class="cbrs-map-credit">&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors</p>
       <a id="route-link-card" class="block w-full text-center py-3 bg-cbrs-green hover:bg-cbrs-green-hover text-white font-semibold rounded-xl text-sm transition-colors" target="_blank" rel="noopener">Ouvrir l'itinéraire</a>
       <a href="/planning#planning-content" class="block w-full text-center mt-2 py-3 bg-cbrs-blue/10 hover:bg-cbrs-blue/15 text-cbrs-blue font-semibold rounded-xl text-sm transition-colors">Voir le planning complet</a>
     </div>
@@ -355,10 +357,10 @@
 <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
   <div class="lg:col-span-2">
     <div class="flex items-center gap-3 mb-3">
-      <img src="logo-cbrs.png" alt="CBRS" class="w-8 h-8 object-contain"/>
+      <img src="logo-cbrs.png?v=20261009" alt="CBRS" class="w-8 h-8 object-contain"/>
       <div class="text-xs text-gray-600 font-medium leading-tight">Club du Beauvaisis<br/>de la Retraite Sportive</div>
     </div>
-    <p class="text-xs text-gray-500 mb-2 max-w-xs">Association loi 1901 affiliée à la Fédération Française de la Retraite Sportive (FFRS) et au CODERS de l’Oise.</p>
+    <p class="text-xs text-gray-500 mb-2 max-w-xs">Association loi 1901 affiliée à la Fédération Française de la Retraite Sportive (FFRS).</p>
     <a class="text-xs text-cbrs-blue hover:underline" href="/mentions-legales">Mentions légales</a>
   </div>
   <div>
@@ -411,7 +413,7 @@ function mapFor(activity) {
 
 const activities = {
   '01': {
-    name:'Aquagym', logo:'01_aquagym.png?v=transparent-icons-20260814-v3',
+    name:'Aquagym', logo:'01_aquagym.png?v=icons-20261009',
     desc:'Gymnastique aquatique en piscine. Exercices adaptés pour un renforcement musculaire et une mobilité articulaire en douceur, sans impact sur les articulations.',
     presentation:'Séance de gymnastique en milieu aquatique animée par des bénévoles formés. Les exercices sont adaptés à chacun, permettant de travailler le cardio, le renforcement musculaire et la souplesse dans une eau chauffée.',
     schedule:[{day:'Lundi', time:'Voir planning', location:'Piscine Bellier'},{day:'Vendredi', time:'Voir planning', location:'Piscine Bellier'}],
@@ -428,7 +430,7 @@ const activities = {
     info:['Matériel : maillot, bonnet, serviette','Niveau : débutant à confirmé','Saison : septembre à juin']
   },
   '02': {
-    name:'Pétanque', logo:'02_petanque.png?v=transparent-icons-20260814-v3',
+    name:'Pétanque', logo:'02_petanque.png?v=icons-20261009',
     desc:'La pétanque se pratique toute l’année sur les terrains mis à disposition. Un moment de détente et de convivialité pour tous.',
     presentation:'Séances de pétanque en doublettes ou triplettes, dans une ambiance conviviale. Tournois réguliers organisés entre adhérents. Accès au boulodrome possible tous les jours.',
     schedule:[{day:'Lundi', time:'14h00-16h00', location:'Parc Kennedy'},{day:'Vendredi', time:'14h00-16h00', location:'Parc Kennedy'}],
@@ -437,7 +439,7 @@ const activities = {
     info:['Boules fournies par le club','Tournois réguliers','Tous niveaux acceptés']
   },
   '03': {
-    name:'Cyclisme', logo:'03_cyclisme.png?v=transparent-icons-20260814-v3',
+    name:'Cyclisme', logo:'03_cyclisme.png?v=icons-20261009',
     desc:'Sorties vélo sur les routes du Beauvaisis et du Pays de Bray. Des itinéraires variés adaptés au rythme de chacun.',
     presentation:'Parcours de 40 à 60 km sur routes secondaires et chemins. Les groupes sont constitués selon le niveau. Départ groupé depuis le parking du cimetière du Tilloy.',
     schedule:[{day:'Mercredi', time:'13h30', location:'Parking cimetière du Tilloy'},{day:'Vendredi', time:'13h30', location:'Parking Saint Quentin ou Cimetière du Tilloy'}],
@@ -446,7 +448,7 @@ const activities = {
     info:['Vélo en bon état obligatoire','Casque recommandé','Parcours de 40 à 60 km']
   },
   '04': {
-    name:'Tir à l’arc', logo:'04_tir_a_l_arc.png?v=transparent-icons-20260814-v3',
+    name:'Tir à l’arc', logo:'04_tir_a_l_arc.png?v=icons-20261009',
     desc:'Découverte et pratique du tir à l’arc. Une activité de précision qui développe concentration et maîtrise de soi.',
     presentation:'Séances en plein air de mars à novembre au parc Marcel Dassault. Initiation et perfectionnement avec des animateurs expérimentés.',
     schedule:[{day:'Mardi', time:'9h30-11h00', location:'Parc Marcel Dassault'},{day:'Vendredi', time:'9h30-11h00', location:'Parc Marcel Dassault'}],
@@ -464,7 +466,7 @@ const activities = {
     info:['Raquettes fournies','Tenue sportive','Tous niveaux']
   },
   '06': {
-    name:'Tennis', logo:'06_tennis.png?v=transparent-icons-20260814-v3',
+    name:'Tennis', logo:'06_tennis.png?v=icons-20261009',
     desc:'Pratique du tennis en salle pour maintenir sa condition physique tout en s’amusant.',
     presentation:'Jeu en double sur les courts du complexe sportif de Beauvais. Inscription préalable recommandée.',
     schedule:[{day:'Voir planning', time:'Voir planning', location:'Complexe sportif de Beauvais'}],
@@ -473,7 +475,7 @@ const activities = {
     info:['Raquette personnelle recommandée','Ballons fournis','Inscription préalable']
   },
   '07': {
-    name:'Randonnée', logo:'07_randonnee.png?v=transparent-icons-20260814-v3',
+    name:'Randonnée', logo:'07_randonnee.png?v=icons-20261009',
     desc:'Parcourez les sentiers du Beauvaisis et d’ailleurs. Des itinéraires variés en fonction des saisons et du niveau des participants.',
     presentation:'Randonnées internes au Plan d’eau du Canada et au Bois du Parc Saint Quentin. Randonnées externes le jeudi après-midi vers des destinations variées (caps, baie de Somme, Giverny, Vexin, Andelys, etc.). Les parcours sont annoncés lors des séances précédentes.',
     schedule:[{day:'Jeudi', time:'9h30 (ete) / 14h10 (hiver)', location:'Plan d’eau du Canada'},{day:'Jeudi', time:'14h00', location:'Bois du Parc Saint Quentin'},{day:'Jeudi après-midi', time:'Variable', location:'Randonnées externes'}],
@@ -482,7 +484,7 @@ const activities = {
     info:['Chaussures de marche obligatoires','Batons recommandés','8-12 km en moyenne']
   },
   '08': {
-    name:'Marche Nordique', logo:'08_marche_nordique.png?v=transparent-icons-20260814-v3',
+    name:'Marche Nordique', logo:'08_marche_nordique.png?v=icons-20261009',
     desc:'La marche nordique sollicite l’ensemble du corps grâce aux bâtons spécifiques. Activité complète et accessible.',
     presentation:'Initiation à la marche nordique au Plan d’eau du Canada. Les bâtons sont fournis par le club pour les nouveaux pratiquants. Séances encadrées par des animateurs expérimentés.',
     schedule:[{day:'Mercredi', time:'9h30-11h00', location:'Plan d’eau du Canada'}],
@@ -491,7 +493,7 @@ const activities = {
     info:['Bâtons fournis par le club','Chaussures de sport','Tous niveaux']
   },
   '09': {
-    name:'Gymnastique', logo:'09_gymnastique.png?v=transparent-icons-20260814-v3',
+    name:'Gymnastique', logo:'09_gymnastique.png?v=icons-20261009',
     desc:'Séances de gymnastique d’entretien pour préserver souplesse, équilibre et tonicité musculaire.',
     presentation:'Cours collectifs de gym d’entretien adaptée aux seniors. Exercices de renforcement musculaire, mobilité articulaire, équilibre et étirement. Plusieurs créneaux dans la semaine avec différents animateurs.',
     schedule:[{day:'Lundi', time:'9h30', location:'Salle Carnot'},{day:'Mardi', time:'Voir planning', location:'Salle Coubertin'},{day:'Vendredi', time:'Voir planning', location:'Salle Coubertin'}],
@@ -500,7 +502,7 @@ const activities = {
     info:['Tenue souple','Tapis de sol recommandé','Adapté à tous']
   },
   '10': {
-    name:'Pickleball', logo:'10_pickleball.png?v=transparent-icons-20260814-v3',
+    name:'Pickleball', logo:'10_pickleball.png?v=icons-20261009',
     desc:'Sport de raquette combinant tennis, badminton et ping-pong. Se joue en double sur un terrain réduit.',
     presentation:'Activité ludique et accessible qui mélange les gestes du tennis, du badminton et du ping-pong. Se joue en double avec une balle perforée et des raquettes en composite.',
     schedule:[{day:'Mercredi', time:'11h-13h', location:'Coubertin Plateau'},{day:'Jeudi', time:'11h-13h', location:'Gymnase R Briard St Just'}],
@@ -509,7 +511,7 @@ const activities = {
     info:['Raquettes fournies','Tenue sportive','Facile à apprendre']
   },
   '11': {
-    name:'Tai Chi Chuan', logo:'11_tai_chi.png?v=transparent-icons-20260814-v3',
+    name:'Tai Chi Chuan', logo:'11_tai_chi.png?v=icons-20261009',
     desc:'Art martial chinois pratiqu\u00e9 pour ses bienfaits sur la sant\u00e9. Enchaînements lents favorisant équilibre, concentration et sérénité.',
     presentation:'Le Tai Chi Chuan est animé par Christophe, intervenant extérieur au club. Pratique des mouvements lents et fluides pour améliorer l’équilibre, la souplesse et la relaxation.',
     schedule:[{day:'Lundi', time:'10h-11h', location:'Coubertin Plateau'},{day:'Vendredi', time:'11h15-12h15', location:'Coubertin Plateau'}],
@@ -518,16 +520,16 @@ const activities = {
     info:['Tenue souple','Chaussures plates','Tous niveaux']
   },
   '12': {
-    name:'Échecs / Bridge', logo:'12_echecs.png?v=transparent-icons-20260814-v3',
-    desc:'Jouez aux échecs ou au bridge dans une ambiance détendue. Tournois amicaux organisés régulièrement.',
-    presentation:'Les amateurs d’échecs et de bridge se retrouvent pour des parties en toute convivialité. Tournois internes et initiation pour les débutants.',
+    name:'Échecs', logo:'12_echecs.png?v=icons-20261009',
+    desc:'Jouez aux échecs dans une ambiance détendue. Tournois amicaux organisés régulièrement.',
+    presentation:'Les amateurs d’échecs se retrouvent pour des parties en toute convivialité. Tournois internes et initiation pour les débutants.',
     schedule:[{day:'Lundi', time:'14h00-17h00', location:'Salle de réunion CBRS'},{day:'Jeudi', time:'14h00-17h00', location:'Salle de réunion CBRS'}],
     meetingPoint:'Salle de réunion CBRS. Consulter le planning.',
     animators:[{name:'Animateur bénévole'}],
     info:['Jeux fournis','Tournois internes','Débutants bienvenus']
   },
   '13': {
-    name:'Jeux de Cartes', logo:'13_jeux_de_cartes.png?v=transparent-icons-20260814-v3',
+    name:'Jeux de Cartes', logo:'13_jeux_de_cartes.png?v=icons-20261009',
     desc:'Belote, tarot et autres jeux de cartes dans une ambiance conviviale. Un bon moyen de stimuler sa mémoire.',
     presentation:'Tarot le lundi et mardi, belote le jeudi. Une ambiance conviviale et chaleureuse pour partager un bon moment autour des cartes. Salle Boibessot.',
     schedule:[{day:'Lundi', time:'13h30-17h15', location:'Salle Boibessot'},{day:'Mardi', time:'13h30-17h15', location:'Salle Boibessot'},{day:'Jeudi', time:'13h30-17h15', location:'Salle Boibessot'}],
@@ -536,7 +538,7 @@ const activities = {
     info:['Jeux fournis','Convivialité garantie','Ouvert à tous']
   },
   '14': {
-    name:'Danse', logo:'14_danse.png?v=transparent-icons-20260814-v3',
+    name:'Danse', logo:'14_danse.png?v=icons-20261009',
     desc:'Cours de danse de salon et danse en ligne. Apprenez ou perfectionnez vos pas dans une ambiance musicale et joyeuse.',
     presentation:'Séances de danse de salon et danse en ligne animées par un animateur bénévole. Tous les styles abordés selon la demande du groupe.',
     schedule:[{day:'Voir planning', time:'Voir planning', location:'Salle de danse - Beauvais'}],
@@ -545,7 +547,7 @@ const activities = {
     info:['Tenue confortable','Chaussures adaptées','Débutants acceptés']
   },
   '15': {
-    name:'Atelier Mémoire', logo:'15_atelier_memoire.png?v=transparent-icons-20260814-v3',
+    name:'Atelier Mémoire', logo:'15_atelier_memoire.png?v=icons-20261009',
     desc:'Exercices ludiques pour stimuler et entretenir sa mémoire. Jeux, quiz et activités cognitives en petit groupe.',
     presentation:'Ateliers hebdomadaires en petit groupe pour entretenir sa mémoire par des exercices variés, des jeux et des quiz. Un moment convivial qui stimule les capacités cognitives dans la bonne humeur.',
     schedule:[{day:'Mercredi', time:'Voir planning', location:'Salle de réunion CBRS'}],
@@ -598,42 +600,62 @@ function renderActivity(activity) {
   document.getElementById('activity-subtitle').textContent = activity.desc;
   document.getElementById('breadcrumb-current').textContent = activity.name;
   document.getElementById('activity-category').textContent = activity.category || 'Tous niveaux';
-  const logoCropRatios = {
-    '01': .74, '02': .74, '03': .73, '04': .71, '05': .70,
-    '06': .69, '07': .71, '08': .70, '09': .70, '10': .66,
-    '11': .68, '12': .65, '13': .52, '14': .50, '15': .51,
-    '16': .52, '17': .68
-  };
-  document.getElementById('activity-logo-frame').style.aspectRatio = '1 / ' + (logoCropRatios[id] || .7);
   const activityLogo = document.getElementById('activity-logo');
   activityLogo.classList.add('opacity-0');
   activityLogo.addEventListener('load', function() { activityLogo.classList.remove('opacity-0'); }, { once: true });
   activityLogo.src = activity.logo;
   activityLogo.alt = activity.name;
   if (activityLogo.complete && activityLogo.naturalWidth > 0) activityLogo.classList.remove('opacity-0');
-  document.getElementById('activity-desc').textContent = activity.desc || '';
-
-  document.getElementById('presentation-block').classList.toggle('hidden', !activity.presentation);
-  document.getElementById('presentation-team').classList.add('hidden');
+  // La description courte est déjà sous le titre : la présentation détaillée la remplace ici.
+  const presentationBody = document.getElementById('activity-presentation');
+  presentationBody.innerHTML = '';
+  String(activity.presentation || activity.desc || '').split(/\n\s*\n/).map(s => s.trim()).filter(Boolean).forEach(text => {
+    const p = document.createElement('p');
+    p.textContent = text;
+    presentationBody.appendChild(p);
+  });
   document.getElementById('animators-grid').innerHTML = '';
   document.getElementById('activity-info').innerHTML = '';
-  if (activity.presentation) {
-    document.getElementById('presentation-block').classList.remove('hidden');
-    document.getElementById('activity-presentation').textContent = activity.presentation;
-  }
 
-  const photoAnimators = (activity.animators || []).filter(function(a) { return a.photo; });
-  if (photoAnimators.length) {
-    const presentationTeam = document.getElementById('presentation-team');
-    const presentationTeamGrid = document.getElementById('presentation-team-grid');
-    const presentationTeamCaption = document.getElementById('presentation-team-caption');
-    presentationTeam.classList.remove('hidden');
-    presentationTeamGrid.innerHTML = photoAnimators.slice(0, 3).map(function(a) {
-      return '<figure class="group"><div class="aspect-square overflow-hidden rounded-2xl bg-white/15 ring-1 ring-white/25"><img src="'+esc(a.photo)+'" alt="Portrait de '+esc(a.name)+'" loading="lazy" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"/></div><figcaption class="mt-2 truncate text-center text-xs font-semibold text-white">'+esc(a.name)+'</figcaption></figure>';
-    }).join('');
-    presentationTeamCaption.textContent = photoAnimators.length > 3
-      ? photoAnimators.length + ' portraits disponibles dans la liste des animateurs.'
-      : 'Les autres référents sont affichés avec leur initiale lorsqu’aucun portrait n’est disponible.';
+  // Encadré « Bon à savoir » (CMS, onglet Présentation) : masqué si tout est vide ou si « Afficher » est décoché.
+  const tips = activity.tips || {};
+  const effortLabels = { douce: ['Doux', 1], moderee: ['Modéré', 2], soutenue: ['Soutenu', 3] };
+  const effort = effortLabels[tips.intensite];
+  const tipRows = [
+    ['Tenue', tips.tenue ? esc(tips.tenue) : ''],
+    ['Matériel', tips.materiel ? esc(tips.materiel) : ''],
+    ['Effort', effort ? '<span class="cbrs-effort" aria-hidden="true">' + [1, 2, 3].map(function(n) { return '<i class="' + (n <= effort[1] ? 'on' : '') + '"></i>'; }).join('') + '</span>' + effort[0] : ''],
+    ['Durée', tips.duree ? esc(tips.duree) : ''],
+    ['Prix', tips.prix ? esc(tips.prix) : '']
+  ].filter(function(r) { return r[1]; });
+  document.getElementById('bon-a-savoir-list').innerHTML = tipRows.map(function(r) {
+    return '<div><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>';
+  }).join('');
+  document.getElementById('bon-a-savoir').classList.toggle('hidden', !tipRows.length || tips.afficher === false);
+
+  // Photos de l'activité (CMS « Photo principale » / « Galerie de l'activité », sinon galerie du club).
+  const photos = activity.photos || [];
+  const mainPhoto = document.getElementById('presentation-photo-main');
+  const thumbs = document.getElementById('presentation-photo-thumbs');
+  document.getElementById('presentation-photos').classList.toggle('hidden', !photos.length);
+  thumbs.innerHTML = '';
+  if (photos.length) {
+    const show = function(p) {
+      mainPhoto.src = p.src; mainPhoto.alt = p.alt || activity.name;
+      thumbs.querySelectorAll('button').forEach(function(t) { t.setAttribute('aria-pressed', String(t.dataset.src === p.src)); });
+    };
+    photos.slice(0, 4).forEach(function(p, i) {
+      if (photos.length < 2) return;
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'cbrs-presentation-thumb';
+      b.setAttribute('aria-label', 'Afficher la photo ' + (i + 1));
+      b.innerHTML = '<img src="'+esc(p.src)+'" alt="" loading="lazy"/>';
+      b.dataset.src = p.src;
+      b.addEventListener('click', function() { show(p); });
+      thumbs.appendChild(b);
+    });
+    show(photos[0]);
   }
 
   if (activity.animators) {
@@ -688,7 +710,7 @@ function renderActivity(activity) {
   const route = 'https://www.openstreetmap.org/directions?to='+m.lat+'%2C'+m.lon+'#map=16/'+m.lat+'/'+m.lon;
   document.getElementById('route-link').href = route;
   document.getElementById('route-link-card').href = route;
-  document.getElementById('map-frame').dataset.cookieSrc = 'https://www.openstreetmap.org/export/embed.html?bbox='+(m.lon-0.01)+'%2C'+(m.lat-0.006)+'%2C'+(m.lon+0.01)+'%2C'+(m.lat+0.006)+'&layer=mapnik&marker='+m.lat+'%2C'+m.lon;
+  document.getElementById('map-frame').dataset.cookieSrc = 'https://www.openstreetmap.org/export/embed.html?bbox='+(m.lon-0.016)+'%2C'+(m.lat-0.009)+'%2C'+(m.lon+0.016)+'%2C'+(m.lat+0.009)+'&layer=mapnik&marker='+m.lat+'%2C'+m.lon;
 }
 
 // Fiche absente : « introuvable », ou « plus proposée » quand le CMS confirme qu'elle n'est plus publiée.
@@ -754,7 +776,7 @@ syncStickySidebar();
   <button type="button" data-a11y-toggle="a11y-readable" aria-pressed="false">Police plus lisible</button>
   <button type="button" class="close" onclick="resetAccessibility()">Réinitialiser</button>
 </div>
-<button type="button" class="accessibility-fab" onclick="toggleAccessibilityPanel()" aria-controls="accessibility-panel" aria-expanded="false">Accessibilité</button>
+<button type="button" class="accessibility-fab" title="Accessibilité" onclick="toggleAccessibilityPanel()" aria-controls="accessibility-panel" aria-expanded="false">Accessibilité</button>
 <script id="accessibility-script">
 (function(){
   const key = 'cbrs-accessibility';
@@ -785,6 +807,6 @@ syncStickySidebar();
   apply();
 })();
 </script>
-<script src="ui-shell.js"></script>
-<script src="cms-client.js" defer></script>
+<script src="ui-shell.js?v=20261010c"></script>
+<script src="cms-client.js?v=20261010c" defer></script>
 </body></html>

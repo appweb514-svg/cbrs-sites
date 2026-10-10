@@ -83,10 +83,10 @@
   {
     "slug": "12",
     "ordre": 60,
-    "nom": "Échecs / Bridge",
+    "nom": "Échecs",
     "logo": "12_echecs.png",
-    "description": "Jouez aux échecs ou au bridge dans une ambiance détendue. Tournois amicaux organisés régulièrement.",
-    "presentation": "Les amateurs d’échecs et de bridge se retrouvent pour des parties en toute convivialité. Tournois internes et initiation pour les débutants.",
+    "description": "Jouez aux échecs dans une ambiance détendue. Tournois amicaux organisés régulièrement.",
+    "presentation": "Les amateurs d’échecs se retrouvent pour des parties en toute convivialité. Tournois internes et initiation pour les débutants.",
     "niveau": "",
     "creneaux": [
       {

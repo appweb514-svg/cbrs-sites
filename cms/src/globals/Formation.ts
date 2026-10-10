@@ -46,6 +46,13 @@ const parcours: Tab = {
     { name: 'parcoursSurtitre', label: 'Sur-titre', type: 'text', defaultValue: 'Parcours de formation' },
     { name: 'parcoursTitre', label: 'Titre', type: 'text', defaultValue: 'Devenir animateur vous tente ?' },
     {
+      name: 'parcoursMotMisEnValeur',
+      label: 'Mot mis en valeur du titre',
+      type: 'text',
+      defaultValue: 'animateur',
+      admin: { description: 'Mot ou groupe de mots du titre affiché en italique bleu ; doit figurer tel quel dans le titre.' },
+    },
+    {
       name: 'parcoursTexte',
       label: 'Texte',
       type: 'textarea',

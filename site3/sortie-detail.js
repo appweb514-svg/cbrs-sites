@@ -2,7 +2,7 @@
   const isEvent = document.body.dataset.detailType === 'event';
   const records = isEvent ? window.CBRS_EVENTS : window.CBRS_OUTINGS;
   const id = new URLSearchParams(window.location.search).get('id');
-  const record = records.find((item) => item.id === id);
+  const staticRecord = records.find((item) => item.id === id);
   const fallbackImage = window.CBRS_OUTINGS_FALLBACK || 'assets-premium/header-outings-realistic-v1.png';
 
   const byId = (value) => document.getElementById(value);
@@ -16,6 +16,35 @@
   const missing = byId('detail-state');
   const layout = byId('detail-layout');
 
+  // Fiche ajoutée dans le CMS (lien « cms-<id> » posé par cms-client.js) : chargée depuis l'API.
+  const cmsMatch = !staticRecord && /^cms-(\w+)$/.exec(id || '');
+  const meta = document.querySelector('meta[name="cbrs-cms-url"]');
+  const base = meta ? (meta.getAttribute('content') || '').trim().replace(/\/+$/, '') : '';
+  if (cmsMatch && base) {
+    layout.hidden = true;
+    fetch(`${base}/api/sorties/${cmsMatch[1]}?depth=1`)
+      .then((response) => { if (!response.ok) throw new Error(); return response.json(); })
+      .then((doc) => {
+        const photo = doc.image || {};
+        const src = (photo.sizes && photo.sizes.large && photo.sizes.large.url) || photo.url || '';
+        const date = doc.date ? new Date(doc.date) : null;
+        layout.hidden = false;
+        render({
+          title: doc.titre || '',
+          category: { sortie: 'Sortie', voyage: 'Voyage', manifestation: 'Manifestation' }[doc.type] || 'Sortie',
+          teaser: doc.resume || '',
+          description: doc.description || doc.resume || '',
+          date: date && !isNaN(date) ? date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }) : '',
+          location: doc.lieu || '',
+          image: src ? (src.charAt(0) === '/' ? base + src : src) : ''
+        });
+      })
+      .catch(() => render(null));
+    return;
+  }
+  render(staticRecord);
+
+  function render(record) {
   if (!record) {
     document.title = 'Fiche introuvable - CBRS';
     layout.hidden = true;
@@ -61,19 +90,22 @@
 
   const itinerary = byId('detail-itinerary-link');
   if (record.coordinates) {
-    const mapUrl = `https://www.openstreetmap.org/?mlat=${record.coordinates.lat}&mlon=${record.coordinates.lng}#map=14/${record.coordinates.lat}/${record.coordinates.lng}`;
-    const embedUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${record.coordinates.bbox}&layer=mapnik&marker=${record.coordinates.lat}%2C${record.coordinates.lng}`;
+    // Cadre élargi de 60 % autour du point pour mieux situer le lieu.
+    const [w, so, e, n] = decodeURIComponent(record.coordinates.bbox).split(',').map(Number);
+    const dx = (e - w) * 0.3, dy = (n - so) * 0.3;
+    const bbox = [w - dx, so - dy, e + dx, n + dy].map((v) => v.toFixed(5)).join('%2C');
+    const embedUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${record.coordinates.lat}%2C${record.coordinates.lng}`;
     const frame = byId('detail-map-frame');
     frame.dataset.cookieSrc = embedUrl;
     frame.title = `Carte de ${record.mapLabel}`;
     frame.hidden = false;
-    byId('detail-map-empty').hidden = true;
-    itinerary.href = mapUrl;
-    itinerary.hidden = false;
+    // Classes Tailwind « flex » / « hidden » : l'attribut hidden seul ne suffit pas.
+    byId('detail-map-empty').classList.replace('flex', 'hidden');
+    itinerary.href = `https://www.openstreetmap.org/directions?to=${record.coordinates.lat}%2C${record.coordinates.lng}#map=14/${record.coordinates.lat}/${record.coordinates.lng}`;
+    itinerary.classList.replace('hidden', 'flex');
   }
 
   const detailTypeLabel = isEvent ? 'événement' : 'sortie';
-  byId('detail-breadcrumb').textContent = `Sorties & Voyages / ${detailTypeLabel}`;
   byId('detail-back-link').href = '/sorties-voyages';
 
   const canonical = byId('detail-canonical-description');
@@ -81,4 +113,5 @@
     `<span class="font-semibold text-cbrs-blue">${escapeHtml(record.mapLabel || record.location || 'CBRS')}</span>`,
     '<span class="text-gray-500"> — une expérience à vivre avec le club.</span>'
   ].join('');
+  }
 })();

@@ -35,26 +35,12 @@
   // Teinte d'en-tête d'origine (bleu du site) : valeurs par défaut de ui-shell.css.
   const TEINTE_EN_TETE_ORIGINE = '#0a3273';
 
+  // Pas d'abandon au bout de TIMEOUT : un CMS lent (démarrage à froid) s'affiche dès qu'il répond,
+  // au lieu de laisser le texte de secours d'origine. Seul `ready` est borné par TIMEOUT.
   function getJSON(path) {
-    return new Promise(function (resolve, reject) {
-      const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-      const timer = setTimeout(function () {
-        if (controller) controller.abort();
-        reject(new Error('timeout'));
-      }, TIMEOUT);
-      fetch(base + path, controller ? { signal: controller.signal } : {})
-        .then(function (response) {
-          if (!response.ok) throw new Error('http ' + response.status);
-          return response.json();
-        })
-        .then(function (data) {
-          clearTimeout(timer);
-          resolve(data);
-        })
-        .catch(function (error) {
-          clearTimeout(timer);
-          reject(error);
-        });
+    return fetch(base + path).then(function (response) {
+      if (!response.ok) throw new Error('http ' + response.status);
+      return response.json();
     });
   }
 
@@ -145,7 +131,7 @@
     return noms[extension] ? 'Télécharger (' + noms[extension] + ')' : 'Télécharger';
   }
 
-  function buildClubCard(item) {
+  function buildClubCard(item, defaultLink) {
     const article = el('article', 'relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group');
     const media = el('div', 'relative h-44 overflow-hidden');
     const image = item.image || {};
@@ -162,7 +148,7 @@
     } else {
       const placeholder = el('div', 'cbrs-card-placeholder');
       const logo = document.createElement('img');
-      logo.src = 'logo-cbrs.png';
+      logo.src = 'logo-cbrs.png?v=20261009';
       logo.alt = '';
       logo.loading = 'lazy';
       placeholder.appendChild(logo);
@@ -175,7 +161,7 @@
     const date = formatDate(item.date);
     if (date) body.appendChild(el('p', 'text-sm text-gray-500 mb-1', date));
     const heading = el('h3', 'font-bold text-gray-900 group-hover:text-cbrs-blue transition-colors');
-    const link = resolveLien(item.lien);
+    const link = resolveLien(item.lien) || defaultLink || '';
     if (link) {
       const anchor = el('a', 'cbrs-card-link', item.titre || '');
       anchor.href = link;
@@ -197,9 +183,21 @@
     const first = section.querySelector('article');
     const grid = first ? first.parentNode : section.querySelector('.grid');
     if (!grid) return;
+    // Sans lien choisi dans le CMS, la carte garde la page de récit de la carte statique de même titre.
+    const titleKey = function (text) {
+      return String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+    };
+    // Relevé une seule fois : un second rendu (cache puis réseau) ne trouve plus les cartes statiques.
+    if (!grid.cbrsStaticLinks) {
+      grid.cbrsStaticLinks = {};
+      grid.querySelectorAll('a.cbrs-card-link').forEach(function (a) {
+        grid.cbrsStaticLinks[titleKey(a.textContent)] = a.getAttribute('href');
+      });
+    }
+    const staticLinks = grid.cbrsStaticLinks;
     grid.textContent = '';
     items.slice(0, 3).forEach(function (item) {
-      grid.appendChild(buildClubCard(item));
+      grid.appendChild(buildClubCard(item, staticLinks[titleKey(item.titre)]));
     });
   }
 
@@ -276,7 +274,7 @@
     document.querySelectorAll('a[data-cbrs-doc]').forEach(function (link) {
       const doc = official[docRubrique(link.getAttribute('href'))];
       const url = doc && resolveUrl(doc.url);
-      if (url) link.setAttribute('href', url);
+      if (url && !link.hasAttribute('data-cbrs-fiche')) link.setAttribute('href', url);
     });
 
     const container = document.getElementById('documents');
@@ -346,8 +344,27 @@
       animators: (item.animateurs || []).map(function (a) {
         return { name: a.nom, photo: imageUrl(a.photo) || undefined };
       }),
-      info: (item.infos || []).map(function (i) { return i.texte; }).filter(Boolean)
+      info: (item.infos || []).map(function (i) { return i.texte; }).filter(Boolean),
+      tips: item.bonASavoir || {},
+      photos: [item.photo].concat(item.photos || []).map(function (p) {
+        return p && typeof p === 'object' && p.url ? { src: resolveUrl(p.url), alt: p.alt || item.nom || '' } : null;
+      }).filter(Boolean)
     };
+  }
+
+  // Sans photo saisie sur l'activité : photos de la galerie rattachées à cette activité
+  // (valeur « Activité » de la galerie = nom de l'activité sans accents, ex. « Tennis de table » → tennis-de-table).
+  function withGalleryPhotos(activity) {
+    const key = activity.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+    if (activity.photos.length || !key) return Promise.resolve(activity);
+    return getJSON('/api/galerie?limit=4&sort=_order&depth=1&where[activite][equals]=' + encodeURIComponent(key) + '&where[afficherSurSite][equals]=true')
+      .then(function (data) {
+        activity.photos = docs(data).map(function (g) {
+          return g.photo && g.photo.url ? { src: resolveUrl(g.photo.url), alt: g.legende || activity.name } : null;
+        }).filter(Boolean);
+        return activity;
+      })
+      .catch(function () { return activity; });
   }
 
   function renderActivityList(items) {
@@ -572,7 +589,7 @@
     conteneur.textContent = '';
     cartes.forEach(function (carte) {
       const bloc = el('div', 'bg-white rounded-xl shadow-card p-5 flex items-center gap-4 hover:shadow-card-hover transition-shadow group');
-      const pictogramme = imageUrl(carte.image) || (texteRempli(carte.icone) ? carte.icone + '?v=transparent-icons-20260814-v3' : '');
+      const pictogramme = imageUrl(carte.image) || (texteRempli(carte.icone) ? carte.icone + '?v=icons-20261009' : '');
       if (pictogramme) {
         const cadre = el('div', 'w-14 h-14 bg-gray-50 rounded-xl flex items-center justify-center p-2 shrink-0');
         const image = el('img', 'w-full h-full object-contain');
@@ -599,17 +616,94 @@
     });
   }
 
+  // Écrit un titre venu du CMS en DOM (jamais en HTML) et met le mot choisi en italique bleu :
+  // dernière occurrence, en respectant la casse d'abord, sinon sans tenir compte de la casse.
+  function accentuer(noeud, titre, mot) {
+    noeud.textContent = '';
+    const cherche = typeof mot === 'string' ? mot.trim() : '';
+    let debut = cherche ? titre.lastIndexOf(cherche) : -1;
+    if (cherche && debut < 0 && titre.toLowerCase().length === titre.length) {
+      debut = titre.toLowerCase().lastIndexOf(cherche.toLowerCase());
+    }
+    if (debut < 0) {
+      noeud.textContent = titre;
+      return;
+    }
+    const fin = debut + cherche.length;
+    if (debut > 0) noeud.appendChild(document.createTextNode(titre.slice(0, debut)));
+    noeud.appendChild(el('span', 'text-cbrs-blue font-serif-italic', titre.slice(debut, fin)));
+    if (fin < titre.length) noeud.appendChild(document.createTextNode(titre.slice(fin)));
+  }
+
+  // Titres de section : un champ vide garde le texte livré avec le site.
+  function renderTitres(data) {
+    if (!data || typeof data !== 'object') return;
+    function groupe(noeud, attribut) {
+      const g = data[noeud.getAttribute(attribut)];
+      return g && typeof g === 'object' ? g : null;
+    }
+    Array.prototype.slice.call(document.querySelectorAll('[data-cbrs-titre]')).forEach(function (noeud) {
+      const g = groupe(noeud, 'data-cbrs-titre');
+      if (g && texteRempli(g.titre)) accentuer(noeud, g.titre, g.motMisEnValeur);
+    });
+    [['data-cbrs-titre-surtitre', 'surtitre'], ['data-cbrs-titre-intro', 'introduction']].forEach(function (paire) {
+      Array.prototype.slice.call(document.querySelectorAll('[' + paire[0] + ']')).forEach(function (noeud) {
+        const g = groupe(noeud, paire[0]);
+        if (g && texteRempli(g[paire[1]])) noeud.textContent = g[paire[1]];
+      });
+    });
+  }
+
   function renderFormation(data) {
     if (!data || typeof data !== 'object') return;
     Array.prototype.slice.call(document.querySelectorAll('[data-cbrs-formation]')).forEach(function (noeud) {
       const texte = valeur(data, noeud.dataset.cbrsFormation);
-      if (texteRempli(texte)) noeud.textContent = texte;
+      if (!texteRempli(texte)) return;
+      if (noeud.hasAttribute('data-cbrs-formation-mot')) accentuer(noeud, texte, valeur(data, noeud.getAttribute('data-cbrs-formation-mot')));
+      else noeud.textContent = texte;
     });
     // Une liste vide (ou absente) garde le contenu livré avec le site.
     const etapes = document.querySelector('[data-cbrs-formation-etapes]');
     if (etapes && Array.isArray(data.etapes) && data.etapes.length) renderEtapes(etapes, data.etapes);
     const cartes = document.querySelector('[data-cbrs-formation-cartes]');
     if (cartes && Array.isArray(data.cartes) && data.cartes.length) renderCartes(cartes, data.cartes);
+  }
+
+  // Sorties du CMS : ajoutées à la liste « Nos sorties », photo en miniature 48 px comme les cartes statiques.
+  // Une sortie du CMS de même titre qu'une carte statique la remplace.
+  function renderSorties(items) {
+    const grid = document.querySelector('#sorties .grid');
+    if (!grid) return;
+    const titleKey = function (text) {
+      return String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+    };
+    grid.querySelectorAll('a[data-cms-sortie]').forEach(function (a) { a.remove(); });
+    const byTitle = {};
+    grid.querySelectorAll('a').forEach(function (a) {
+      const h3 = a.querySelector('h3');
+      if (h3) byTitle[titleKey(h3.textContent)] = a;
+    });
+    items.forEach(function (item) {
+      const existing = byTitle[titleKey(item.titre)];
+      const previous = existing && existing.querySelector('img');
+      const card = el('a', 'group flex items-start gap-4 rounded-xl bg-white shadow-card p-4 transition hover:bg-blue-50 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cbrs-green');
+      card.href = '/sortie?id=cms-' + encodeURIComponent(item.id);
+      card.setAttribute('data-cms-sortie', '');
+      const img = el('img', 'shrink-0 rounded-lg object-cover');
+      img.src = imageUrl(item.image) || (previous && previous.getAttribute('src')) || 'assets-premium/vignettes/sortie-defaut.jpg';
+      img.alt = '';
+      img.loading = 'lazy';
+      img.style.width = '48px';
+      img.style.height = '48px';
+      card.appendChild(img);
+      const body = el('div', 'min-w-0');
+      body.appendChild(el('h3', 'font-semibold text-gray-900 group-hover:text-cbrs-blue', item.titre || ''));
+      if (item.resume) body.appendChild(el('p', 'text-xs text-gray-500', item.resume));
+      body.appendChild(el('span', 'mt-2 inline-flex text-xs font-bold text-cbrs-blue', 'Voir la fiche ↗'));
+      card.appendChild(body);
+      if (existing) existing.replaceWith(card);
+      else grid.appendChild(card);
+    });
   }
 
   function renderVoyages(items) {
@@ -621,7 +715,17 @@
     });
     const list = el('div', 'grid gap-4');
     items.forEach(function (item) {
-      const card = el('div', 'flex items-start gap-4 rounded-xl bg-cbrs-gray-100 p-4');
+      const card = el('div', 'flex items-start gap-4 rounded-xl bg-white shadow-card p-4');
+      const src = imageUrl(item.image);
+      if (src) {
+        const img = el('img', 'shrink-0 rounded-lg object-cover');
+        img.src = src;
+        img.alt = '';
+        img.loading = 'lazy';
+        img.style.width = '48px';
+        img.style.height = '48px';
+        card.appendChild(img);
+      }
       const body = el('div', 'min-w-0');
       body.appendChild(el('h3', 'font-semibold text-gray-900', item.titre || ''));
       const meta = [formatDate(item.date), item.lieu].filter(Boolean).join(' — ');
@@ -675,9 +779,19 @@
       if (items.length) renderDocuments(items);
     });
 
-  register(function () { return Boolean(document.querySelector('.cbrs-price-grid')); },
-    '/api/globals/tarifs',
+  register(function () { return Boolean(document.querySelector('.cbrs-price-grid, a[data-cbrs-doc]')); },
+    '/api/globals/tarifs?depth=1',
     function (data) {
+      // Fiche d'adhésion choisie dans « Adhérer » : prioritaire sur la collection Documents.
+      const fiche = data && data.ficheAdhesion && resolveUrl(data.ficheAdhesion.url);
+      if (fiche) {
+        document.querySelectorAll('a[data-cbrs-doc]').forEach(function (link) {
+          if (docRubrique(link.getAttribute('href')) === 'adhesion') {
+            link.setAttribute('href', fiche);
+            link.setAttribute('data-cbrs-fiche', '1');
+          }
+        });
+      }
       const lignes = data && Array.isArray(data.lignes) ? data.lignes : [];
       if (lignes.length) renderTarifs(lignes);
     });
@@ -685,6 +799,46 @@
   register(function () { return Boolean(document.querySelector('[data-cbrs-formation]') || document.querySelector('[data-cbrs-formation-etapes]')); },
     '/api/globals/formation?depth=1',
     renderFormation);
+
+  // Planning : créneaux saisis dans chaque activité du CMS (les responsables d'activité les tiennent à jour).
+  register(function () { return typeof window.showPlanning === 'function' && Boolean(document.getElementById('week-calendar')); },
+    '/api/activites?limit=100&sort=ordre&depth=0',
+    function (data) {
+      const items = docs(data);
+      if (!items.length) return;
+      const slug = function (v) { return String(v || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); };
+      // Catégorie et couleur reprises du planning d'origine (même nom ou même premier mot).
+      const known = typeof FALLBACK_ACTIVITIES !== 'undefined' ? FALLBACK_ACTIVITIES : [];
+      const style = function (name) {
+        const s = slug(name);
+        return known.find(function (a) { return slug(a.name) === s || a.id === s; }) ||
+          known.find(function (a) { return slug(a.name).split('-')[0] === s.split('-')[0]; }) || null;
+      };
+      const activities = items.map(function (item, i) {
+        const ref = style(item.nom);
+        return {
+          id: slug(item.nom),
+          name: item.nom || '',
+          category: ref ? ref.category : 'loisir',
+          categoryLabel: ref ? ref.categoryLabel : 'Activité',
+          categoryColor: ref ? ref.categoryColor : 'blue',
+          slots: (item.creneaux || []).map(function (c) { return { day: c.jour, time: c.horaire, location: c.lieu || '' }; }),
+          sort_order: i + 1
+        };
+      }).filter(function (a) { return a.slots.length; });
+      if (activities.length) window.showPlanning(activities);
+    });
+
+  register(function () { return Boolean(document.querySelector('[data-cbrs-titre],[data-cbrs-titre-surtitre],[data-cbrs-titre-intro]')); },
+    '/api/globals/titres',
+    renderTitres);
+
+  register(function () { return Boolean(document.querySelector('#sorties .grid')); },
+    '/api/sorties?where[type][equals]=sortie&sort=date&limit=50&depth=1',
+    function (data) {
+      const items = docs(data);
+      if (items.length) renderSorties(items);
+    });
 
   register(function () { return Boolean(document.getElementById('voyages')); },
     '/api/sorties?where[type][equals]=voyage&sort=date&limit=20&depth=1',
@@ -708,7 +862,7 @@
     '/api/activites?limit=1&depth=1&where[slug][equals]=' + encodeURIComponent(window.cbrsActivityId || ''),
     function (data) {
       const item = docs(data)[0];
-      if (item) window.cbrsRenderActivity(toSiteActivity(item));
+      if (item) return withGalleryPhotos(toSiteActivity(item)).then(window.cbrsRenderActivity);
       else window.cbrsActivityMissing(Boolean(window.cbrsActivityKnown));
     });
 
@@ -716,5 +870,6 @@
     return Promise.resolve().then(job).catch(function () { return null; });
   });
 
-  window.CBRSCms = { ready: Promise.all(pending).then(function () { return true; }) };
+  const delai = new Promise(function (resolve) { setTimeout(function () { resolve(false); }, TIMEOUT); });
+  window.CBRSCms = { ready: Promise.race([Promise.all(pending).then(function () { return true; }), delai]) };
 })();

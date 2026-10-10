@@ -13,3 +13,93 @@
 - 2026-10-08 | merge PR #24 | squash 34da4cb « Page d'état : disponibilité site/CMS sur 30 jours et charge CPU/RAM », /status/ exclu de Vercel, https://github.com/appweb514-svg/cbrs-sites/pull/24. 0 PR ouverte.
 - 2026-10-08 | vérification | Vercel production cbrs-sites et cbrs-cms OK sur 34da4cb ; cbrs-cms.vercel.app/admin, /api/globals/formation, cbrs-test.alwaysdata.net/ et /status/ répondent 200. Tests/lint locaux non lancés : Node absent de la machine.
 - 2026-10-08 | PR #25 | branche claude/optimistic-matsumoto-353258 : suppression de site1, site2, site4, v3-premium, old-version, logos_rectangulaires et des doublons à la racine (identiques à site3/) ; réécritures /old-version retirées. Builds Vercel verts ; aperçu protégé par SSO, non parcouru. Fusion squash validée par l'utilisateur. https://github.com/appweb514-svg/cbrs-sites/pull/25
+- 2026-10-09 | alwaysdata | Clé de déploiement ed25519 créée (~/.ssh/alwaysdata), clé publique ajoutée à cbrs-test, secrets ALWAYSDATA_SSH_KEY et ALWAYSDATA_API_TOKEN posés sur le dépôt. Connexion SSH vérifiée.
+- 2026-10-09 | déploiement test | Run 37895789178 (cible=static) réussi : / , /planning, /api/public/planning en 200, /admin/ 308. Jeton API remplacé ensuite.
+- 2026-10-09 | déploiement test | Run 37896398120 (cible=cms) réussi : build, migration, redémarrage par l'API (jeton valide). /, /admin, /api/globals/formation en 200. Déploiement alwaysdata entièrement opérationnel.
+- 2026-10-09 | demande utilisateur | Modifs client du 29/09 (zip) + vérifier cookies, cartes, détourage des icônes ; travailler directement sur alwaysdata, plus sur Vercel.
+- 2026-10-09 | demande utilisateur | Ajouter à Payload la sauvegarde/restauration du site et du CMS, sauvegarde automatique SSH (7 j, 1 semaine, 1 mois, 6 mois), puis Google Drive / S3 → chantier 2 dans .project/PLAN.md.
+- 2026-10-09 | branche | claude/modifs-client-2026-09-29 (worktree optimistic-matsumoto-353258) : CODERS retiré, délai cms-client.js, cartes visibles après consentement (CSS [hidden]), nouveau logo et pictogrammes redétourés, fiche Échecs sans bridge, descriptions CMS Adhérer/Documents.
+- 2026-10-09 | demande client | Transitions entre pages plus douces, survol des cartes d'activités (icônes recentrées, plus de fond gris), fiche Aquagym alignée sur les autres avec photos dans « Présentation ».
+- 2026-10-09 | réalisé | Fondu croisé View Transitions (barre latérale fixe) ; 16 pictogrammes recentrés (site3 + médiathèque CMS alwaysdata) ; bloc « équipe » propre à Aquagym retiré ; colonne photos à gauche de la présentation (Photo principale / Galerie de l'activité du CMS, sinon photos de la galerie rattachées à l'activité). Déployé en static sur alwaysdata.
+- 2026-10-09 | réalisé | En-tête des fiches : pictogrammes affichés en entier (suppression des recadrages logoCropRatios) ; logo CBRS (source coupée en bas, y compris dans le docx du client) adouci par un fondu. Déployé en static.
+- 2026-10-09 | demande utilisateur | Logo CBRS : retirer le « carré bleu » autour, détourage et netteté ; bande blanche ponctuelle entre en-tête et contenu (et en bas) lors des changements de page.
+- 2026-10-09 | réalisé | Cadre CSS du logo supprimé (bordure, fond, ombre bleue) ; logo affiné (alpha resserré, accentuation) et cache-buster ?v=20261009 ; transitions : ancienne page opaque dessous, fondu sans décalage, fond html coloré. Commit ee12a5a, déployé en static.
+- 2026-10-09 | demande utilisateur | Encadré « Bon à savoir » à droite de « Présentation » (tenue, matériel, effort, durée, prix) saisi dans le CMS ; photos de personnes dans « Nos animateurs ».
+- 2026-10-09 | réalisé | Groupe CMS `bonASavoir` + migration 20261009_120000 ; CMS déployé via le workflow deploy-alwaysdata (cible cms, run 37932790408) ; valeurs de test sur Aquagym (01) et Gymnastique (09) ; vérifié sur cbrs-test.alwaysdata.net. Commit b58f958.
+- 2026-10-09 | demande utilisateur | Présentation des fiches plus homogène (polices, « En détail »), texte en bloc, photo 16:9 sous le texte ; « Bon à savoir » sur toutes les fiches, adapté aux programmes.
+- 2026-10-09 | réalisé | Présentation en un seul bloc justifié (description courte non répétée), photo 16:9 + vignettes sous le texte, encadré à droite ; ui-shell.css versionné ?v=20261009c sur les 15 pages. « Bon à savoir » rempli pour les 17 activités sur alwaysdata via deploy/alwaysdata/bon-a-savoir.sql (champs vides seulement, table + version latest) ; vérifié par l'API. Prix « Compris dans l'adhésion » à confirmer par le club.
+- 2026-10-09 | demande utilisateur | Activités gérables dans le CMS (texte de présentation, masquer « Bon à savoir »), pistes d'amélioration du CMS ; photos disparues de « Vie du club » ; clic sur les cartes Vie du club vers la bonne page.
+- 2026-10-09 | réalisé | Case `bonASavoir.afficher` (migration 20261009_180000), champs masqués si décochée, descriptions des champs Présentation/Photo/Galerie, bouton « Voir la page » sur les activités. CMS déployé (run 37951367761) : 17/17 activités à `afficher=true`, valeur exposée par l'API.
+- 2026-10-09 | réalisé | Cartes Vie du club cliquables (carte entière) : lien CMS, sinon lien de la carte statique de même titre, relevé une seule fois (rendu cache puis réseau) ; cms-client.js ?v=20261009e. Vérifié : Touquet, plan d'eau, olympiades. Photos absentes = base de test seedée sans images, reviendront avec la migration Neon.
+- 2026-10-09 | demande utilisateur / réalisé | Boutons Cookies et Accessibilité plus discrets : pastilles bleues de 34 px avec pictogramme dans les coins bas (texte gardé pour les lecteurs d'écran, info-bulle au survol). ui-shell.css et ui-shell.js ?v=20261009d. Déployé en static, vérifié.
+- 2026-10-09 | demande utilisateur / réalisé | Encadré blanc derrière le menu latéral pendant les changements de page : captures du View Transition fusionnées en plus-lighter (deux images opaques additionnées → blanc). Passage en mix-blend-mode normal, ancienne capture du menu masquée. ui-shell.css ?v=20261009e, déployé en static.
+- 2026-10-09 | demande utilisateur / réalisé | Pastilles Cookies/Accessibilité ramenées à 28 px et collées aux coins (le « S » de « social » n'est plus masqué). ui-shell.css ?v=20261009f, déployé et vérifié.
+- 2026-10-09 | demande client | cartes OSM : retirer le bandeau « Signaler un problème », agrandir/dézoomer, rétablir le lien itinéraire
+- 2026-10-09 | cartes | bandeau OSM rogné (iframe ≥ 420 px, marge −80 px), cartes plus hautes, bbox +60 %, bouton « Ouvrir l'itinéraire » réaffiché (bug hidden/Tailwind) ; crédit OSM conservé (licence ODbL)
+- 2026-10-09 | demande client | titres de section cohérents sur Formation, Sorties & Voyages, Liens utiles
+- 2026-10-09 | titres | modèle Activités/Statuts appliqué (surtitre vert, h2 3xl/4xl + mot en italique bleu, intro grise, aligné à gauche)
+- 2026-10-09 | titres | même taille (3xl/4xl) pour tous les titres de section : Planning hebdomadaire (surtitre « Semaine type »), Adhésion, Accueil, Contact, Documents à télécharger, Fiches formation
+- 2026-10-09 | titres | tous les titres de section alignés à gauche (Qui sommes-nous, Formulaire d'Adhésion décentrés)
+- 2026-10-09 | titres | galerie : « Filtrer les photos » remplacé par « Nos plus beaux souvenirs » au modèle commun
+- 2026-10-09 | mise en page | contenu des pages élargi à la largeur du bandeau sur grands écrans (Statuts, Formation, Sorties & Voyages, Adhésion, Planning, Liens utiles…) ; ui-shell.css v=20261009l
+- 2026-10-09 | titres | retour en arrière demandé : titres de nouveau alignés à gauche (revert du centrage) ; ui-shell.css v=20261009n
+- 2026-10-09 | demande utilisateur | Bandeau « au même niveau que le corps de page » ; titres de section modifiables dans le CMS avec mot mis en valeur (y compris Formation).
+- 2026-10-09 | réalisé | Bandeau aligné sur les bords du contenu (≥ 768 px), Planning élargi ; ui-shell.css v=20261009p. Commit 717cffb.
+- 2026-10-09 | réalisé | Global CMS « Titres des pages » (16 titres, 10 pages) + Formation.parcoursMotMisEnValeur, migration 20261009_202213_titres_des_pages, cms-client.js v=20261009f. CMS déployé (run 37987061502), rendu vérifié sur 6 pages. Commit fa07c1d.
+- 2026-10-09 | demande | Bandeau : même écart (20 px) que le menu gauche avec le bord de la fenêtre ; contenu aligné sur le bandeau (256–1565 px à 1600 px), vérifié sur 11 pages, déployé sur cbrs-test
+- 2026-10-09 | demande | Toutes les pages : blocs de contenu en cartes blanches arrondies, marge intérieure 32 px (classe cbrs-carte, comme Sorties & voyages) ; validé par l’utilisateur, déployé sur cbrs-test
+- 2026-10-09 | demande | Titre/sous-titre au-dessus de la carte blanche, sur le fond de page (casse entre bandeau et corps) ; toutes les pages, contact inclus ; galerie et encadrés d'appel inchangés
+- 2026-10-09 | demande | Pas de carte blanche autour d'encadrés déjà blancs : retirée sur Activités, Planning, Statuts, Liens utiles, Galerie (titre galerie sorti du panneau de filtres)
+- 2026-10-09 | demande | Sorties & voyages : grandes cartes blanches retirées, fiches en blanc avec ombre sur le fond de page (voyages CMS inclus)
+- 2026-10-09 | demande | Galerie et Activités : espacements réduits, photos (150 px) et icônes (7,5 rem) plus petites
+- 2026-10-09 | demande | « Met un petit margin in » pour toutes les pages : marge intérieure de 20 px sur main#contenu (≥768 px), le contenu ne touche plus les bords du bandeau
+- 2026-10-09 | demande | Reflet bleu (flash info, autour du logo CBRS) : ombres teintées bleu remplacées par des ombres neutres plus légères (ui-shell.css v=20261009x)
+- 2026-10-09 | demande | « Je vois toujours quelque chose autour du logo » : ombre portée du logo du bandeau supprimée ; logo des cartes sans photo (Vie du club) sur fond gris clair au lieu du dégradé bleu (ui-shell.css v=20261009z)
+- 2026-10-09 | demande | « Remet les cartes » : cartes sans photo de Vie du club de nouveau sur fond dégradé bleu (v=20261010a)
+- 2026-10-09 | demande | Bouton « Retour aux événements / sorties » (evenement.html, sortie.html) : même bouton vert plein que les autres
+- 2026-10-09 | demande | Sorties : vignettes photo (assets-premium/vignettes, 240px) à la place des abréviations
+- 2026-10-09 | demande | Sorties ajoutées dans le CMS (type « Sortie ») affichées dans « Nos sorties » avec photo en miniature 48 px ; fiche /sortie?id=cms-<id> chargée depuis l'API
+- 2026-10-09 | demande | Bandeaux des fiches sortie/événement alignés sur les autres : sans surtitre, titre court « Fiche sortie » / « Fiche événement »
+- 2026-10-09 | demande | Bandeaux des fiches : retour à la version précédente (surtitre + « Une sortie à vivre ensemble »), à la demande du client
+- 2026-10-09 | demande | Fiche sortie : titre du bandeau « Un moment à partager » comme la fiche événement
+- 2026-10-09 | demande | Logo du bandeau mobile agrandi (36 → 48 px) sur toutes les pages
+- 2026-10-09 | demande | Bandeau mobile : logo placé à droite, « CBRS » reste à côté du menu
+- 2026-10-09 | demande | Logo du bandeau mobile agrandi à 56 px ; bandeau photo décalé (92 px) pour ne plus être chevauché
+- 2026-10-09 | demande | Bandeau mobile : logo remis à gauche (56 px conservés)
+- 2026-10-09 | Demande | Bandeau mobile moins haut (padding .2rem, hero à 84px)
+- 2026-10-09 | Demande | Bandeau mobile : logo placé après le texte CBRS
+- 2026-10-09 | Demande | Bandeau mobile : logo remis avant le texte CBRS
+- 2026-10-09 | Demande | Bandeau mobile : logo à droite (barre basse conservée)
+- 2026-10-09 | Demande | Hero mobile : texte centré verticalement (padding haut 7rem/8.5rem → 2.5rem, le cadre logo y est masqué)
+- 2026-10-09 | Demande | Fiches sortie/événement : fil d'Ariane réduit à « Sorties & Voyages »
+- 2026-10-09 | Demande | Fiches sortie/événement : « Sorties & Voyages » en titre h2 (style des titres de section)
+- 2026-10-09 | Demande | Fiches sortie/événement : surtitre du hero supprimé ; titre de section = surtitre catégorie + nom du lieu (sortis de la carte)
+- 2026-10-09 | Demande | Fiche sortie : « Nous trouver » → « Destination »
+- 2026-10-09 | Demande | Fiches activité : présentation alignée à gauche (plus de justification ni césure), interligne 1.6
+- 2026-10-09 | Demande | Galerie : bouton Réinitialiser sous les filtres (à droite du compteur), panneau moins haut
+- 2026-10-10 | Demande | Accueil : titre « Présentation du bureau » à la taille des titres de section (h2 text-3xl md:text-4xl)
+- 2026-10-10 | Demande | Titres de section (h2) réduits à 26/32 px pour rester sous les titres du header (30/36/48 px) ; ui-shell.css v20261010f
+- 2026-10-10 | Demande | Adhésion : accroche verte « Bougez, partagez, profitez à votre rythme » au-dessus du titre du header
+- 2026-10-10 | Demande | Adhésion : accroche du header retirée, surtitre vert « Nous rejoindre » au-dessus de « Formulaire d'Adhésion »
+- 2026-10-10 | Demande | Galerie (et Planning) : écart header → surtitre aligné sur les autres pages (48 px)
+- 2026-10-10 | Demande | Transitions entre pages : pré-rendu au survol (Speculation Rules, hors /admin et PDF) sur les 15 pages pour supprimer le flash blanc
+- 2026-10-10 | Demande | Fiches activité : liens « Itinéraire » ouvrent la carte OSM avec repère (plus le mode itinéraire)
+- 2026-10-10 | Demande | Correction : liens itinéraire des fiches activité remis en mode itinéraire ; fiches sortie/événement passent en mode itinéraire OSM (directions?to=)
+- 2026-10-10 | Demande | Remettre les photos Vie du club sur le site de test, réinitialiser le mot de passe admin du CMS de test
+- 2026-10-10 | CMS test | 2 médias ajoutés (plan d'eau, olympiades) et rattachés aux 3 cartes Vie du club ; lien de réinitialisation admin@cbrs.local généré (base de test uniquement)
+- 2026-10-10 | Demande | Contact : adresse au-dessus de la carte, « Voir l'itinéraire » en mode itinéraire
+- 2026-10-10 | Demande | Contact : carte Coordonnées alignée sur le bas de la carte OSM (écran large)
+- 2026-10-10 | Demande | Contact : encart adresse au format de la carte Coordonnées, lien « Ouvrir dans OpenStreetMap » retiré
+- 2026-10-10 | Demande | Tour du site : aérer les espaces autour des titres
+- 2026-10-10 | Espacements | Titre de section → intro 12→16 px, bloc titre → contenu 24→32 px (galerie, sorties-voyages), titres de cartes collés → 4 px (ui-shell.css 20261010j)
+- 2026-10-10 | Demande | Fiches événement : « Destination » au lieu de « Nous trouver » (comme les sorties)
+- 2026-10-10 | demande + livraison | Galerie : pagination 20 photos/page, boutons Précédent/Suivant, retour en haut de la galerie, remise à la page 1 à chaque filtre (déployé test)
+- 2026-10-10 | demande + livraison | Galerie mobile : 2 photos par ligne (<640px), vignettes 120px
+- 2026-10-10 | demande + livraison | Accueil, Présentation du bureau : 2 membres par ligne sur mobile (ui-shell.css 20261010k)
+- 2026-10-10 | demande client (mail 29/09) | fiche d'adhésion 2026-2027 en ligne (site3/docs), CMS « Adhérer » : nouveau champ Fiche d'adhésion (migration 20261010_120000), déployé sur le test
+- 2026-10-10 | demande | Vérifier l'ancien CMS (rien à récupérer), « Ligne » → « Tarif » dans Adhérer, tester chaque rubrique, droits par activité, sauvegardes + SMTP dans Paramètres (à planifier)
+- 2026-10-10 | correctif | Tarifs : colonne version_fiche_adhesion_id manquante dans _tarifs_v (erreur 500) → migration 20261010_180000
+- 2026-10-10 | correctif | Fiche d'adhésion du CMS appliquée sur Adhérer ; documents du CMS (/api/) plus marqués « bientôt disponible »
+- 2026-10-10 | tests | Toutes les rubriques testées sur cbrs-test (titres, flash, planning, activité, vie du club, bureau, sorties, galerie, formation, tarifs, documents) ; valeurs restaurées
+- 2026-10-10 | droits | 16 rôles « Équipe <activité> » (page + horaires de leur activité, médias) + Équipe Galerie, Bureau, Sorties & Voyages ; test vitest créneaux (23/23)
+- 2026-10-10 | demande + livraison | Lecteur PDF commun (ui-shell.js setupPdfViewer, ui-shell.css) pour tous les liens PDF du site et du CMS ; retiré de formation.html (commit 67abec9)

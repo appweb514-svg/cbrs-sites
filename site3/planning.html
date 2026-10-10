@@ -122,7 +122,8 @@
     body.wave-effect-disabled #contenu { padding-top: 0 !important; }
   }
 </style>
-<link rel="stylesheet" href="ui-shell.css"/>
+<link rel="stylesheet" href="ui-shell.css?v=20261010l"/>
+<script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/admin*"}},{"not":{"href_matches":"/*.pdf"}}]},"eagerness":"moderate"}]}</script>
 <script>/* Apparence du CMS mémorisée : appliquée avant l’affichage (voir cms-client.js). */try{var t=JSON.parse(localStorage.getItem("cbrs-theme"));if(t&&t.vars){for(var k in t.vars)document.documentElement.style.setProperty(k,t.vars[k]);if(t.fonts)document.write('<link id="cbrs-theme-fonts" rel="stylesheet" href="'+t.fonts.replace(/"/g,"")+'"/>');}}catch(e){}</script>
 <link rel="stylesheet" href="tailwind.css"/>
 </head>
@@ -134,7 +135,7 @@
     <button onclick="toggleMobileMenu()" class="p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
-    <a href="/" class="flex items-center gap-2 font-bold text-cbrs-blue"><img src="logo-cbrs.png" alt="CBRS" class="w-9 h-9 object-contain"/>CBRS</a>
+    <a href="/" class="flex flex-1 items-center justify-between gap-2 font-bold text-cbrs-blue">CBRS<img src="logo-cbrs.png?v=20261009" alt="CBRS" class="w-14 h-14 object-contain"/></a>
   </div>
   <nav id="mobile-menu" class="hidden bg-cbrs-blue/95 backdrop-blur-sm px-4 py-3 space-y-1 text-sm shadow-lg">
     <a class="flex items-center gap-3 px-3 py-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="/">
@@ -194,7 +195,7 @@
       <p class="text-sm md:text-base lg:text-lg text-white/90 max-w-2xl mx-auto">Retrouvez ici le planning officiel du CBRS pour la saison 2025-2026.</p>
     </div>
   </div>
-  <div class="cbrs-logo-frame"><img src="logo-cbrs.png" alt="CBRS" class="cbrs-logo-image"/></div>
+  <div class="cbrs-logo-frame"><img src="logo-cbrs.png?v=20261009" alt="CBRS" class="cbrs-logo-image"/></div>
   <svg class="header-wave-svg absolute bottom-0" viewBox="0 0 1440 80" preserveAspectRatio="none" style="height:80px;z-index:1">
     <path fill="#f9fafb" d="M0,0 C100,0 130,24 240,24 C350,24 390,0 500,0 C610,0 650,24 760,24 C870,24 910,0 1020,0 C1130,0 1170,24 1280,24 C1370,24 1410,10 1440,6 L1440,80 L0,80 Z"/>
   </svg>
@@ -262,7 +263,7 @@
 
 
 <!-- Loading -->
-<div id="planning-loading" class="max-w-6xl mx-auto px-6 py-10 text-center">
+<div id="planning-loading" class="cbrs-carte max-w-6xl mx-auto px-6 py-10 text-center">
   <div class="animate-pulse space-y-4">
     <div class="h-6 bg-gray-200 rounded w-48 mx-auto"></div>
     <div class="h-4 bg-gray-200 rounded w-32 mx-auto"></div>
@@ -278,11 +279,12 @@
 <div id="planning-content" class="hidden">
 
 <!-- Weekly Calendar View -->
-<section class="max-w-6xl mx-auto px-6 py-10">
+<section class="max-w-6xl mx-auto px-6 py-10" style="padding-top:3rem">
   <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
     <div>
-      <h2 class="text-2xl font-bold text-cbrs-blue">Planning <span class="font-serif-italic">hebdomadaire</span></h2>
-      <p class="text-sm text-gray-500 mt-1">Toutes les activités, jours, horaires et lieux</p>
+      <p data-cbrs-titre-surtitre="planning" class="text-sm font-semibold uppercase tracking-wider text-cbrs-green mb-2">Semaine type</p>
+      <h2 data-cbrs-titre="planning" class="text-3xl md:text-4xl font-bold text-cbrs-text">Planning <span class="text-cbrs-blue font-serif-italic">hebdomadaire</span></h2>
+      <p data-cbrs-titre-intro="planning" class="mt-3 text-gray-600">Toutes les activités, jours, horaires et lieux.</p>
     </div>
   </div>
 
@@ -293,7 +295,7 @@
 </div><!-- /planning-content -->
 
 <!-- CTA -->
-<section class="bg-white border-y border-gray-100 py-12">
+<section class="cbrs-carte bg-white border-y border-gray-100 py-12">
   <div class="max-w-7xl mx-auto px-6 text-center">
     <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Envie de nous rejoindre ?</h2>
     <p class="text-gray-600 text-base mb-6 max-w-xl mx-auto">Toutes les activités sont ouvertes aux adhérents.</p>
@@ -312,10 +314,10 @@
 <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
   <div class="lg:col-span-2">
     <div class="flex items-center gap-3 mb-3">
-      <img src="logo-cbrs.png" alt="CBRS" class="w-8 h-8 object-contain"/>
+      <img src="logo-cbrs.png?v=20261009" alt="CBRS" class="w-8 h-8 object-contain"/>
       <div class="text-xs text-gray-600 font-medium leading-tight">Club du Beauvaisis<br/>de la Retraite Sportive</div>
     </div>
-    <p class="text-xs text-gray-500 mb-2 max-w-xs">Association loi 1901 affiliée à la Fédération Française de la Retraite Sportive (FFRS) et au CODERS de l’Oise.</p>
+    <p class="text-xs text-gray-500 mb-2 max-w-xs">Association loi 1901 affiliée à la Fédération Française de la Retraite Sportive (FFRS).</p>
     <a class="text-xs text-cbrs-blue hover:underline" href="/mentions-legales">Mentions légales</a>
   </div>
   <div>
@@ -404,7 +406,7 @@ const FALLBACK_ACTIVITIES = [
   { id: 'gymnastique', name: 'Gymnastique', category: 'remise-en-forme', categoryLabel: 'Remise en forme', categoryColor: 'purple', slots: [{ day: 'Lundi', time: '9h30', location: 'Salle Carnot' }, { day: 'Mardi', time: 'Voir planning', location: 'Salle Coubertin' }, { day: 'Vendredi', time: 'Voir planning', location: 'Salle Coubertin' }] },
   { id: 'pickleball', name: 'Pickleball', category: 'sport', categoryLabel: 'Sport', categoryColor: 'blue', slots: [{ day: 'Mercredi', time: '11h00 – 13h00', location: 'Coubertin Plateau' }, { day: 'Jeudi', time: '11h00 – 13h00', location: 'Gymnase R Briard, St Just' }] },
   { id: 'tai-chi-chuan', name: 'Tai Chi Chuan', category: 'bien-etre', categoryLabel: 'Bien-être', categoryColor: 'orange', slots: [{ day: 'Lundi', time: '10h00 – 11h00', location: 'Coubertin Plateau' }, { day: 'Vendredi', time: '11h15 – 12h15', location: 'Coubertin Plateau' }] },
-  { id: 'echecs-bridge', name: 'Échecs / Bridge', category: 'loisir', categoryLabel: 'Loisir', categoryColor: 'yellow', slots: [{ day: 'Lundi', time: '14h00 – 17h00', location: 'Salle de réunion CBRS' }, { day: 'Jeudi', time: '14h00 – 17h00', location: 'Salle de réunion CBRS' }] },
+  { id: 'echecs-bridge', name: 'Échecs', category: 'loisir', categoryLabel: 'Loisir', categoryColor: 'yellow', slots: [{ day: 'Lundi', time: '14h00 – 17h00', location: 'Salle de réunion CBRS' }, { day: 'Jeudi', time: '14h00 – 17h00', location: 'Salle de réunion CBRS' }] },
   { id: 'jeux-de-cartes', name: 'Jeux de Cartes', category: 'loisir', categoryLabel: 'Loisir', categoryColor: 'yellow', slots: [{ day: 'Lundi', time: '13h30 – 17h15', location: 'Salle Boibessot' }, { day: 'Mardi', time: '13h30 – 17h15', location: 'Salle Boibessot' }, { day: 'Jeudi', time: '13h30 – 17h15', location: 'Salle Boibessot' }] },
   { id: 'danse', name: 'Danse', category: 'bien-etre', categoryLabel: 'Bien-être', categoryColor: 'orange', slots: [{ day: '—', time: 'Voir planning', location: 'Salle de danse – Beauvais' }] },
   { id: 'atelier-memoire', name: 'Atelier Mémoire', category: 'cognitif', categoryLabel: 'Cognitif', categoryColor: 'pink', slots: [{ day: 'Mercredi', time: 'Voir planning', location: 'Salle de réunion CBRS' }] }
@@ -597,7 +599,7 @@ initPlanning();
   <button type="button" data-a11y-toggle="a11y-readable" aria-pressed="false">Police plus lisible</button>
   <button type="button" class="close" onclick="resetAccessibility()">Réinitialiser</button>
 </div>
-<button type="button" class="accessibility-fab" onclick="toggleAccessibilityPanel()" aria-controls="accessibility-panel" aria-expanded="false">Accessibilité</button>
+<button type="button" class="accessibility-fab" title="Accessibilité" onclick="toggleAccessibilityPanel()" aria-controls="accessibility-panel" aria-expanded="false">Accessibilité</button>
 <script id="accessibility-script">
 (function(){
   const key = 'cbrs-accessibility';
@@ -628,6 +630,6 @@ initPlanning();
   apply();
 })();
 </script>
-<script src="cms-client.js" defer></script>
-<script src="ui-shell.js"></script>
+<script src="cms-client.js?v=20261010c" defer></script>
+<script src="ui-shell.js?v=20261010c"></script>
 </body></html>

@@ -135,7 +135,7 @@ const activities = [
   },
   {
     id: 'echecs-bridge',
-    name: 'Échecs / Bridge',
+    name: 'Échecs',
     category: 'loisir',
     categoryLabel: 'Loisir',
     categoryColor: 'yellow',

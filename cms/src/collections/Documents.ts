@@ -35,7 +35,7 @@ export const Documents: CollectionConfig = {
     group: 'Photos & documents',
     hidden: cacheSansDroit('documents'),
     description:
-      'Documents du club (PDF, Word, Excel, OpenDocument), listés sur la page « Liens utiles et documents ». Un document ne remplace un lien officiel (statuts, fiche d’adhésion…) que si vous le choisissez.',
+      'Documents du club (PDF, Word, Excel, OpenDocument), listés sur la page « Liens utiles et documents ». Un document ne remplace un lien officiel (statuts, fiche d’adhésion…) que si vous le choisissez : pour la fiche d’adhésion de la page « Adhérer », choisissez « Fiche d’adhésion (page Adhésion) » dans « Remplace le lien officiel ».',
   },
   defaultSort: 'ordre',
   access: accesSection('documents', afficheOuEditeur('documents')),

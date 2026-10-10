@@ -4,12 +4,13 @@ import { cacheSansDroit, peut } from '../access'
 
 export const Tarifs: GlobalConfig = {
   slug: 'tarifs',
-  label: 'Tarifs',
+  label: 'Adhérer',
   admin: {
     components: { elements: { beforeDocumentControls: ['/admin/VoirPage#VoirPage'] } },
     group: 'Vie du club',
     hidden: cacheSansDroit('tarifs'),
-    description: 'Grille tarifaire de la page Adhésion, affichée dans l’ordre saisi.',
+    description:
+      'Fiche d’adhésion (bouton de la page « Adhérer ») et grille tarifaire (encadré « Envie de nous rejoindre ? » de la page Planning), affichée dans l’ordre saisi.',
   },
   access: {
     read: () => true,
@@ -18,9 +19,19 @@ export const Tarifs: GlobalConfig = {
   },
   fields: [
     {
+      name: 'ficheAdhesion',
+      label: 'Fiche d’adhésion (PDF)',
+      type: 'upload',
+      relationTo: 'documents',
+      admin: {
+        description:
+          'Choisissez la fiche déjà déposée ou cliquez sur « Créer nouveau » pour envoyer le PDF de la saison. Le bouton « Fiche d’adhésion » de la page Adhérer pointera vers ce fichier (laisser « Afficher dans la liste des documents » coché).',
+      },
+    },
+    {
       name: 'lignes',
-      label: 'Lignes',
-      labels: { singular: 'Ligne', plural: 'Lignes' },
+      label: 'Tarifs',
+      labels: { singular: 'Tarif', plural: 'Tarifs' },
       type: 'array',
       fields: [
         {

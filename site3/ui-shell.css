@@ -17,8 +17,8 @@
   --cbrs-font-body: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --cbrs-font-heading: "Manrope", var(--cbrs-font-body);
   --cbrs-font-accent: "Playfair Display", Georgia, serif;
-  --cbrs-shell-shadow: 0 18px 50px rgba(10, 50, 115, .14);
-  --cbrs-nav-shadow: 0 14px 32px rgba(10, 50, 115, .18);
+  --cbrs-shell-shadow: 0 18px 50px rgba(15, 23, 42, 0.07);
+  --cbrs-nav-shadow: 0 14px 32px rgba(15, 23, 42, 0.09);
   --cbrs-focus: 0 0 0 3px rgba(88, 160, 26, .42);
   --cbrs-shell-top: 12px;
   --cbrs-sidebar-left: 20px;
@@ -36,35 +36,55 @@
 }
 
 html {
+  background: var(--cbrs-surface);
   scroll-behavior: smooth;
   view-transition-name: root;
 }
 
+/* Fondu enchaîné : l'ancienne page reste visible pendant que la nouvelle apparaît
+   (plus de passage par un écran vide), et le menu latéral ne bouge pas. */
+#sidebar {
+  view-transition-name: cbrs-sidebar;
+}
+
 @media (prefers-reduced-motion: no-preference) {
+  ::view-transition-group(root) {
+    animation-duration: .45s;
+  }
+
+  /* L'ancienne page reste opaque dessous : pas de fond blanc qui transparaît. */
   ::view-transition-old(root) {
-    animation: cbrs-page-out .22s ease both;
+    animation: none;
   }
 
   ::view-transition-new(root) {
-    animation: cbrs-page-in .38s cubic-bezier(.2, .75, .25, 1) both;
+    animation: cbrs-page-in .45s cubic-bezier(.25, .8, .3, 1) both;
+  }
+
+  ::view-transition-group(cbrs-sidebar),
+  ::view-transition-new(cbrs-sidebar) {
+    animation: none;
   }
 }
 
-@keyframes cbrs-page-out {
-  to {
-    opacity: 0;
-    transform: translateY(-5px) scale(.998);
-  }
+/* Par défaut les deux captures sont fusionnées en « plus-lighter » : deux images opaques
+   superposées s'additionnent et virent au blanc (encadré blanc derrière le menu). */
+::view-transition-old(root),
+::view-transition-new(root),
+::view-transition-new(cbrs-sidebar) {
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(cbrs-sidebar) {
+  display: none;
 }
 
 @keyframes cbrs-page-in {
   from {
     opacity: 0;
-    transform: translateY(8px) scale(1.002);
   }
   to {
     opacity: 1;
-    transform: none;
   }
 }
 
@@ -158,12 +178,9 @@ body.cbrs-ui .cbrs-logo-frame {
   top: clamp(.75rem, 2vw, 1.35rem);
   right: clamp(.75rem, 2.5vw, 2.5rem);
   width: clamp(180px, 20vw, 260px);
-  padding: .25rem;
-  border: 1px solid rgba(255, 255, 255, .18);
-  border-radius: 22px;
-  background: rgba(255, 255, 255, .06);
-  box-shadow: 0 14px 24px rgba(10, 50, 115, .2);
-  backdrop-filter: blur(3px);
+  padding: 0;
+  border: 0;
+  background: transparent;
 }
 
 body.cbrs-ui .cbrs-logo-image {
@@ -171,7 +188,7 @@ body.cbrs-ui .cbrs-logo-image {
   width: 100%;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 8px 10px rgba(10, 50, 115, .14));
+  filter: drop-shadow(0 8px 10px rgba(15, 23, 42, 0.07));
 }
 
 
@@ -307,7 +324,7 @@ body.cbrs-ui .cbrs-mobile-header {
   left: 8px !important;
   border: 1px solid rgba(10, 50, 115, .1);
   border-radius: 16px;
-  box-shadow: 0 10px 24px rgba(10, 50, 115, .12);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
 }
 
 body.cbrs-ui .cbrs-mobile-header button[aria-controls="mobile-menu"] {
@@ -319,7 +336,7 @@ body.cbrs-ui .cbrs-mobile-header button[aria-controls="mobile-menu"] {
 body.cbrs-ui .cbrs-mobile-header > div {
   min-height: 60px;
   gap: .75rem !important;
-  padding: .5rem .8rem !important;
+  padding: .2rem .8rem !important;
 }
 
 body.cbrs-ui .cbrs-mobile-header #mobile-menu:not(.hidden) {
@@ -352,7 +369,7 @@ body.cbrs-ui #mobile-menu {
   border: 1px solid rgba(255, 255, 255, .14);
   border-radius: 0 0 18px 18px;
   background: linear-gradient(165deg, rgba(10, 50, 115, .98), rgba(20, 92, 117, .98)) !important;
-  box-shadow: 0 18px 36px rgba(10, 50, 115, .22);
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.11);
 }
 
 body.cbrs-ui #mobile-menu a {
@@ -379,7 +396,7 @@ body.cbrs-ui .accessibility-fab {
   padding: .7rem 1rem !important;
   font-size: .8rem !important;
   font-weight: 700 !important;
-  box-shadow: 0 12px 26px rgba(10, 50, 115, .25);
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.12);
 }
 
 body.cbrs-ui .accessibility-fab:hover {
@@ -522,7 +539,7 @@ body.cbrs-ui #sidebar.cbrs-sidebar {
   border: 1px solid rgba(255, 255, 255, .12);
   border-radius: var(--cbrs-shell-radius) !important;
   background-clip: padding-box;
-  box-shadow: 0 18px 42px rgba(10, 50, 115, .2), inset 0 1px 0 rgba(255, 255, 255, .08);
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, .08);
 }
 
 body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero .cbrs-logo-frame {
@@ -569,7 +586,8 @@ body.cbrs-ui .cbrs-cookie-banner {
 
 body.cbrs-ui .cbrs-cookie-banner[hidden],
 body.cbrs-ui .cbrs-cookie-manage[hidden],
-body.cbrs-ui .cbrs-cookie-dialog[hidden] {
+body.cbrs-ui .cbrs-cookie-dialog[hidden],
+body.cbrs-ui .cbrs-external-placeholder[hidden] {
   display: none !important;
 }
 
@@ -795,7 +813,7 @@ body.cbrs-ui .cbrs-cookie-manage {
   border: 1px solid rgba(10, 50, 115, .25);
   border-radius: 999px;
   background: #fff;
-  box-shadow: 0 8px 22px rgba(10, 50, 115, .16);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
   color: var(--cbrs-blue);
   cursor: pointer;
   font-size: .72rem;
@@ -838,7 +856,6 @@ body.cbrs-ui .cbrs-map-with-overlay:has(.cbrs-external-placeholder:not([hidden])
 body.cbrs-ui .cbrs-map-with-overlay:has(.cbrs-external-placeholder:not([hidden])) > .cbrs-external-placeholder {
   justify-content: flex-start;
   padding-top: 1.25rem;
-  padding-bottom: 10.5rem;
 }
 
 body.cbrs-ui .cbrs-external-placeholder .cbrs-cookie-button {
@@ -1012,13 +1029,12 @@ body.cbrs-ui .cbrs-activity-card {
   border-radius: 2rem;
   color: var(--cbrs-blue);
   text-align: center;
-  transition: background-color .2s ease, transform .2s ease;
+  transition: transform .3s ease;
 }
 
 body.cbrs-ui .cbrs-activity-card:hover,
 body.cbrs-ui .cbrs-activity-card:focus-visible {
-  background: rgba(10, 50, 115, .045);
-  transform: translateY(-3px);
+  transform: translateY(-4px);
 }
 
 body.cbrs-ui .cbrs-activity-icon {
@@ -1026,18 +1042,18 @@ body.cbrs-ui .cbrs-activity-icon {
   width: min(100%, 10rem);
   place-items: center;
   overflow: hidden;
-  padding: .35rem;
+  padding: .5rem;
   border-radius: 2rem;
   aspect-ratio: 1;
-  background: rgba(255, 255, 255, .72);
-  box-shadow: 0 12px 28px rgba(10, 50, 115, .08);
-  transition: box-shadow .2s ease, transform .2s ease;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+  transition: box-shadow .3s ease, transform .3s ease;
 }
 
 body.cbrs-ui .cbrs-activity-card:hover .cbrs-activity-icon,
 body.cbrs-ui .cbrs-activity-card:focus-visible .cbrs-activity-icon {
-  box-shadow: 0 16px 34px rgba(10, 50, 115, .16);
-  transform: scale(1.035);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.06);
+  transform: scale(1.03);
 }
 
 body.cbrs-ui .cbrs-activity-icon img {
@@ -1049,7 +1065,7 @@ body.cbrs-ui .cbrs-activity-icon img {
 
 body.cbrs-ui .cbrs-activity-card:hover .cbrs-activity-icon img,
 body.cbrs-ui .cbrs-activity-card:focus-visible .cbrs-activity-icon img {
-  transform: scale(1.08);
+  transform: scale(1.04);
 }
 
 body.cbrs-ui .cbrs-activity-tag {
@@ -1243,7 +1259,7 @@ body.cbrs-ui .cbrs-activity-tag {
   }
 
   body.cbrs-ui > .cbrs-hero {
-    margin: 72px 8px 0;
+    margin: 84px 8px 0;
     min-height: 300px;
     border-radius: 20px;
   }
@@ -1262,9 +1278,9 @@ body.cbrs-ui .cbrs-activity-tag {
   }
 
   body.cbrs-ui > .cbrs-hero > .relative.z-10 {
-    padding-top: 7rem;
+    padding-top: 2.5rem;
     padding-right: 1rem;
-    padding-bottom: 2rem;
+    padding-bottom: 2.5rem;
     padding-left: 1rem;
   }
 
@@ -1321,7 +1337,7 @@ body.cbrs-ui .cbrs-activity-tag {
   }
 
   body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero > .relative.z-10 {
-    padding-top: 8.5rem;
+    padding-top: 2.5rem;
   }
 
   body.cbrs-ui > .cbrs-hero.cbrs-activities-index-hero > .relative.z-10 > .text-center {
@@ -1487,7 +1503,7 @@ body.cbrs-ui .cbrs-board-card {
   padding: 1.25rem;
   border-radius: 20px;
   background: #fff;
-  box-shadow: 0 8px 24px rgba(10, 50, 115, .08);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
   text-align: center;
 }
 
@@ -1534,7 +1550,7 @@ body.cbrs-ui .cbrs-doc-callout {
   border: 1px solid rgba(10, 50, 115, .12);
   border-radius: 18px;
   background: #fff;
-  box-shadow: 0 8px 22px rgba(10, 50, 115, .06);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.03);
   text-align: left;
 }
 
@@ -1647,7 +1663,7 @@ body.cbrs-ui .cbrs-flash {
   margin: 12px 0 2rem;
   border-radius: 20px;
   background: var(--cbrs-blue);
-  box-shadow: 0 14px 30px rgba(10, 50, 115, .18);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.09);
 }
 
 body.cbrs-ui .cbrs-flash-badge {
@@ -1668,7 +1684,7 @@ body.cbrs-ui .cbrs-flash-emblem {
   width: auto;
   height: 48px;
   object-fit: contain;
-  filter: hue-rotate(58deg) saturate(1.15) drop-shadow(0 6px 8px rgba(10, 50, 115, .25));
+  filter: hue-rotate(58deg) saturate(1.15) drop-shadow(0 6px 8px rgba(15, 23, 42, 0.12));
   transform-origin: 50% 50%;
   animation: cbrs-flash-pulse 4s ease-in-out infinite;
 }
@@ -1911,3 +1927,213 @@ body.cbrs-ui :is(a, button):not(.sidebar-link, .cbrs-nav-active, .tab-btn, .filt
   border-color: var(--cbrs-green-dark);
   background: var(--cbrs-green-dark);
 }
+
+/* Fiche activité : photos à gauche de la présentation */
+.cbrs-presentation-layout { display: flex; flex-direction: column; gap: 2rem; }
+.cbrs-presentation-text { flex: 1; min-width: 0; }
+body.cbrs-ui .cbrs-presentation-body { margin-top: 1.25rem; font-size: 1rem; line-height: 1.6; color: #374151; font-weight: 400; text-align: left; hyphens: manual; }
+body.cbrs-ui .cbrs-presentation-body p + p { margin-top: 0.85rem; }
+.cbrs-presentation-photos { margin-top: 1.5rem; }
+.cbrs-presentation-main { aspect-ratio: 16 / 9; overflow: hidden; border-radius: 1rem; background: #f3f5f8; margin: 0; }
+.cbrs-presentation-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cbrs-presentation-thumbs { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .75rem; margin-top: .75rem; }
+.cbrs-presentation-thumbs:empty { display: none; }
+.cbrs-presentation-thumb { aspect-ratio: 1; overflow: hidden; border-radius: .75rem; padding: 0; border: 0; cursor: pointer; opacity: .75; box-shadow: 0 0 0 2px transparent; transition: opacity .2s ease, box-shadow .2s ease; }
+.cbrs-presentation-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cbrs-presentation-thumb:hover, .cbrs-presentation-thumb[aria-pressed="true"] { opacity: 1; }
+.cbrs-presentation-thumb[aria-pressed="true"], .cbrs-presentation-thumb:focus-visible { box-shadow: 0 0 0 2px rgb(var(--cbrs-green-rgb, 67 124 20)); outline: none; }
+@media (min-width: 1024px) {
+  .cbrs-presentation-layout { flex-direction: row; align-items: flex-start; }
+  .cbrs-bon-a-savoir { width: 15.5rem; flex-shrink: 0; }
+}
+
+/* Encadré « Bon à savoir » de la fiche activité. */
+.cbrs-bon-a-savoir { border-radius: 1.25rem; background: rgb(var(--cbrs-green-rgb, 67 124 20) / .07); border: 1px solid rgb(var(--cbrs-green-rgb, 67 124 20) / .18); padding: 1.25rem 1.35rem; }
+.cbrs-bon-a-savoir.hidden { display: none; }
+.cbrs-bon-a-savoir-title { margin: 0 0 .9rem; font-size: .75rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgb(var(--cbrs-green-rgb, 67 124 20)); }
+.cbrs-bon-a-savoir dl { display: grid; gap: .85rem; margin: 0; }
+.cbrs-bon-a-savoir dt { font-size: .8rem; font-weight: 600; color: #6b7280; }
+.cbrs-bon-a-savoir dd { margin: .15rem 0 0; font-size: .95rem; font-weight: 600; color: var(--cbrs-text, #1f2937); display: flex; align-items: center; gap: .5rem; }
+.cbrs-effort { display: inline-flex; gap: .25rem; }
+.cbrs-effort i { width: .6rem; height: .6rem; border-radius: 50%; background: rgb(var(--cbrs-green-rgb, 67 124 20) / .2); }
+.cbrs-effort i.on { background: rgb(var(--cbrs-green-rgb, 67 124 20)); }
+
+/* Logo du club : l'image source est coupée en bas à gauche ; fondu pour que la coupe ne se voie pas. */
+body.cbrs-ui .cbrs-logo-image {
+  -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
+}
+
+/* Boutons flottants discrets : pastilles 28 px avec pictogramme, même couleur, dans les coins bas.
+   Le texte reste dans le bouton (lu par les lecteurs d'écran) mais n'est plus affiché. */
+body.cbrs-ui .cbrs-cookie-manage,
+body.cbrs-ui .accessibility-fab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: 1px solid rgba(255, 255, 255, .35) !important;
+  border-radius: 50% !important;
+  background: var(--cbrs-blue) !important;
+  color: #fff !important;
+  font-size: 0 !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.11);
+  opacity: .8;
+  transition: opacity .15s ease, transform .15s ease;
+}
+body.cbrs-ui .cbrs-cookie-manage { left: 3px; bottom: 3px; }
+body.cbrs-ui .accessibility-fab { right: 4px !important; bottom: 4px !important; }
+body.cbrs-ui .cbrs-cookie-manage:hover,
+body.cbrs-ui .cbrs-cookie-manage:focus-visible,
+body.cbrs-ui .accessibility-fab:hover,
+body.cbrs-ui .accessibility-fab:focus-visible,
+body.cbrs-ui .accessibility-fab[aria-expanded="true"] {
+  opacity: 1;
+  transform: scale(1.08);
+}
+body.cbrs-ui .cbrs-cookie-manage::before,
+body.cbrs-ui .accessibility-fab::before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  background: currentColor;
+  -webkit-mask: var(--cbrs-fab-icon) center / contain no-repeat;
+  mask: var(--cbrs-fab-icon) center / contain no-repeat;
+}
+body.cbrs-ui .cbrs-cookie-manage {
+  --cbrs-fab-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5zm-3.5 7a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm6 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm-7 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2z'/%3E%3C/svg%3E");
+}
+body.cbrs-ui .accessibility-fab {
+  --cbrs-fab-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='4' r='2'/%3E%3Cpath d='M20 8.5l-5.5 1V13l2 8h-2.2L12.6 15h-1.2l-1.7 6H7.5l2-8V9.5L4 8.5l.4-2L12 7.8l7.6-1.3z'/%3E%3C/svg%3E");
+}
+body.cbrs-ui .accessibility-panel { right: 4px !important; bottom: 40px !important; }
+html.a11y-contrast body.cbrs-ui .cbrs-cookie-manage,
+html.a11y-contrast body.cbrs-ui .accessibility-fab {
+  border: 2px solid #000 !important;
+  background: #000 !important;
+  color: #fff !important;
+  opacity: 1;
+}
+
+/* Cartes OpenStreetMap : bandeau d'attribution intégré (« Signaler un problème »…) rogné.
+   L'iframe est plus large que son cadre (centrée sur le marqueur) pour que le bandeau tienne
+   sur une ligne, puis ses 22 px du bas sont masqués. La mention © OpenStreetMap, exigée par
+   la licence, est reprise sous la carte (.cbrs-map-credit). */
+body.cbrs-ui .cbrs-map-clip {
+  position: relative;
+  overflow: hidden;
+}
+body.cbrs-ui .cbrs-map-clip > iframe,
+body.cbrs-ui #map-frame {
+  display: block;
+  width: max(100%, 420px) !important;
+  max-width: none;
+  margin-left: calc((100% - max(100%, 420px)) / 2);
+  margin-bottom: -80px;
+}
+body.cbrs-ui .cbrs-map-with-overlay iframe { height: calc(100% + 80px); }
+body.cbrs-ui .cbrs-map-clip:has(> iframe[hidden]),
+body.cbrs-ui .cbrs-map-clip:has(> iframe[hidden]) + .cbrs-map-credit { display: none; }
+body.cbrs-ui .cbrs-map-credit {
+  margin: .35rem 0 .75rem;
+  font-size: .7rem;
+  color: #9ca3af;
+}
+body.cbrs-ui .cbrs-map-credit a { color: inherit; text-decoration: underline; }
+/* Cartes plus hautes : la zone visible garde ~16-18rem après le rognage du bandeau OSM. */
+body.cbrs-ui #map-frame { height: calc(18rem + 80px); }
+body.cbrs-ui .detail-map-frame { height: calc(17rem + 80px); }
+
+/* Contenu des pages aligné sur la largeur du bandeau (grands écrans) */
+body.cbrs-ui #contenu > section[class*="max-w-"],
+body.cbrs-ui #contenu > div[class*="max-w-"],
+body.cbrs-ui #contenu > section > div.max-w-7xl:not(.text-center),
+body.cbrs-ui #adhesion > div {
+  max-width: none;
+}
+
+/* Bandeau et contenu : même écart que celui entre le menu et le bord de la fenêtre (20 px) */
+@media (min-width: 768px) {
+  body.cbrs-ui > .cbrs-hero { margin-right: var(--cbrs-sidebar-left); }
+  body.cbrs-ui > .cbrs-layout { padding-right: var(--cbrs-sidebar-left); }
+  body.cbrs-ui #contenu > section[class*="max-w-"],
+  body.cbrs-ui #contenu > div[class*="max-w-"],
+  body.cbrs-ui #contenu > section > div.max-w-7xl:not(.text-center),
+  body.cbrs-ui #contenu > div > section.max-w-6xl,
+  body.cbrs-ui #adhesion > div { padding-left: 0; padding-right: 0; }
+}
+body.cbrs-ui #contenu > div > section.max-w-6xl { max-width: none; }
+
+/* Toutes les pages : titre sur le fond de page, contenu dans une carte blanche (comme Sorties & voyages) */
+body.cbrs-ui main#contenu .cbrs-carte.cbrs-carte {
+  background: #fff;
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,.05), 0 2px 4px -1px rgba(0,0,0,.03);
+  padding: 24px;
+  margin: 0 0 40px;
+  max-width: none;
+}
+body.cbrs-ui main#contenu .cbrs-carte.cbrs-carte:last-child { margin-bottom: 0; }
+/* Carte posée directement sur la page (sans titre au-dessus) : même respiration que les sections */
+body.cbrs-ui main#contenu > .cbrs-carte.cbrs-carte:first-child,
+body.cbrs-ui main#contenu > #planning-loading.cbrs-carte { margin-top: 48px; }
+body.cbrs-ui main#contenu > .cbrs-carte.cbrs-carte + .cbrs-carte,
+body.cbrs-ui main#contenu > div + .cbrs-carte.cbrs-carte { margin-top: 40px; }
+body.cbrs-ui main#contenu > .cbrs-carte.cbrs-carte:has(+ footer) { margin-bottom: 48px; }
+@media (min-width: 768px) {
+  body.cbrs-ui main#contenu .cbrs-carte.cbrs-carte { padding: 32px; }
+}
+/* Section à titre sur le fond de page : bords alignés sur le contenu (sans marge latérale) dès la tablette */
+@media (min-width: 768px) { body.cbrs-ui main#contenu .cbrs-section { padding-left: 0; padding-right: 0; } }
+/* Activités : icônes plus petites, grille plus serrée */
+body.cbrs-ui .cbrs-activities-grid.cbrs-activities-grid { grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr)); column-gap: 1rem; row-gap: 1.25rem; }
+body.cbrs-ui .cbrs-activities-grid .cbrs-activity-icon { width: min(100%, 7.5rem); border-radius: 1.5rem; }
+/* Petite marge intérieure : le contenu ne touche plus les bords du bandeau (toutes les pages) */
+@media (min-width: 768px) { body.cbrs-ui main#contenu { padding-left: 20px; padding-right: 20px; } }
+/* Logo CBRS du bandeau : sans ombre portée (elle formait un halo autour du logo) */
+body.cbrs-ui .cbrs-logo-frame .cbrs-logo-image { filter: none !important; }
+
+/* Titres de section : un cran sous les titres du header (h1 30/36/48 px) */
+h2.text-3xl { font-size: 1.625rem; line-height: 2rem; }
+@media (min-width: 768px) {
+  h2.text-3xl { font-size: 2rem; line-height: 2.5rem; }
+}
+
+/* Contact (2 colonnes) : la carte « Coordonnées » descend jusqu'au bas de la carte OSM
+   (la ligne © OpenStreetMap, ~1,5rem, reste sous la carte). */
+@media (min-width: 1024px) {
+  body.cbrs-ui div:has(> .contact-panel-card) { display: flex; flex-direction: column; }
+  body.cbrs-ui .contact-panel-card { flex: 1 1 auto; margin-bottom: 1.5rem; }
+}
+
+/* Respiration autour des titres (tour du site 2026-10-10) */
+body.cbrs-ui main h2.text-3xl + p { margin-top: 1rem; }
+body.cbrs-ui main .cbrs-carte-titre,
+body.cbrs-ui main > section > div.mb-6:has(> h2.text-3xl) { margin-bottom: 2rem; }
+body.cbrs-ui main h3:not([class*="mb-"]):has(+ p) { margin-bottom: .25rem; }
+
+/* Bureau : deux membres par ligne sur mobile (2026-10-10) */
+@media (max-width: 639px) {
+  body.cbrs-ui .cbrs-board-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+  body.cbrs-ui .cbrs-board-card { padding: 1rem .6rem; }
+  body.cbrs-ui .cbrs-board-photo { width: 84px; height: 84px; margin-bottom: .6rem; }
+  body.cbrs-ui .cbrs-board-name { font-size: .9rem; }
+  body.cbrs-ui .cbrs-board-role { font-size: .78rem; }
+}
+/* Lecteur PDF commun (ui-shell.js : setupPdfViewer) */
+  .pdf-lightbox { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(10, 20, 40, 0.72); backdrop-filter: blur(3px); justify-content: center; align-items: center; padding: 1rem; }
+  .pdf-lightbox.active { display: flex; }
+  .pdf-lightbox-card { display: flex; flex-direction: column; width: min(92vw, 60rem); height: min(92vh, 52rem); background: #fff; border-radius: 1rem; box-shadow: 0 24px 70px rgba(0,0,0,0.45); overflow: hidden; }
+  .pdf-lightbox-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; padding: .6rem .9rem; background: #0a3273; color: #fff; }
+  .pdf-lightbox-toolbar-title { flex: 1 1 auto; min-width: 0; font-size: .85rem; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pdf-lightbox-tool { display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .7rem; border: 1px solid rgba(255,255,255,.28); border-radius: .6rem; background: rgba(255,255,255,.08); color: #fff; font-size: .78rem; font-weight: 600; cursor: pointer; transition: background-color .15s, border-color .15s; }
+  .pdf-lightbox-tool:hover, .pdf-lightbox-tool:focus-visible { background: var(--cbrs-green); border-color: var(--cbrs-green); outline: none; }
+  .pdf-lightbox-tool svg { width: 1rem; height: 1rem; fill: currentColor; }
+  .pdf-lightbox-body { position: relative; flex: 1 1 auto; min-height: 0; overflow: hidden; background: #525659; }
+  .pdf-lightbox-body iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .pdf-lightbox-close { position: absolute; top: 1rem; right: 1.25rem; z-index: 2; display: grid; width: 2.5rem; height: 2.5rem; place-items: center; border-radius: 999px; background: rgba(10, 20, 40, .55); color: #fff; font-size: 1.6rem; line-height: 1; cursor: pointer; border: 1px solid rgba(255,255,255,.3); transition: background-color .15s; }
+  .pdf-lightbox-close:hover, .pdf-lightbox-close:focus-visible { background: #8f1d27; outline: none; }
