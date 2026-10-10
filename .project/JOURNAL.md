@@ -92,3 +92,4 @@
 - 2026-10-10 | Demande | Contact : encart adresse au format de la carte Coordonnées, lien « Ouvrir dans OpenStreetMap » retiré
 - 2026-10-10 | Demande | Tour du site : aérer les espaces autour des titres
 - 2026-10-10 | Espacements | Titre de section → intro 12→16 px, bloc titre → contenu 24→32 px (galerie, sorties-voyages), titres de cartes collés → 4 px (ui-shell.css 20261010j)
+- 2026-10-10 | Demande | Fiches événement : « Destination » au lieu de « Nous trouver » (comme les sorties)
