@@ -101,7 +101,7 @@ describe('Droits d’accès du CMS', () => {
     })
 
     it('modifie les horaires de son activité (affichés sur le Planning), pas ceux des autres', async () => {
-      const creneaux = [{ jour: 'Mardi', horaire: '14h00 - 17h00', lieu: 'Salle des fêtes' }]
+      const creneaux = [{ jour: 'Mardi' as const, horaire: '14h00 - 17h00', lieu: 'Salle des fêtes' }]
       const updated = await payload.update({
         collection: 'activites',
         id: jeuxCartes.id,
