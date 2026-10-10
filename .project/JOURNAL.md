@@ -97,3 +97,9 @@
 - 2026-10-10 | demande + livraison | Galerie mobile : 2 photos par ligne (<640px), vignettes 120px
 - 2026-10-10 | demande + livraison | Accueil, Présentation du bureau : 2 membres par ligne sur mobile (ui-shell.css 20261010k)
 - 2026-10-10 | demande client (mail 29/09) | fiche d'adhésion 2026-2027 en ligne (site3/docs), CMS « Adhérer » : nouveau champ Fiche d'adhésion (migration 20261010_120000), déployé sur le test
+- 2026-10-10 | demande | Vérifier l'ancien CMS (rien à récupérer), « Ligne » → « Tarif » dans Adhérer, tester chaque rubrique, droits par activité, sauvegardes + SMTP dans Paramètres (à planifier)
+- 2026-10-10 | correctif | Tarifs : colonne version_fiche_adhesion_id manquante dans _tarifs_v (erreur 500) → migration 20261010_180000
+- 2026-10-10 | correctif | Fiche d'adhésion du CMS appliquée sur Adhérer ; documents du CMS (/api/) plus marqués « bientôt disponible »
+- 2026-10-10 | tests | Toutes les rubriques testées sur cbrs-test (titres, flash, planning, activité, vie du club, bureau, sorties, galerie, formation, tarifs, documents) ; valeurs restaurées
+- 2026-10-10 | droits | 16 rôles « Équipe <activité> » (page + horaires de leur activité, médias) + Équipe Galerie, Bureau, Sorties & Voyages ; test vitest créneaux (23/23)
+- 2026-10-10 | demande + livraison | Lecteur PDF commun (ui-shell.js setupPdfViewer, ui-shell.css) pour tous les liens PDF du site et du CMS ; retiré de formation.html (commit 67abec9)

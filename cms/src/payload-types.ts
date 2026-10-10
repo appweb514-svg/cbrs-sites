@@ -1211,13 +1211,17 @@ export interface Titre {
   createdAt?: string | null;
 }
 /**
- * Page « Adhérer » : grille tarifaire, affichée dans l’ordre saisi. Pour mettre en ligne la fiche d’adhésion (PDF) : Photos & documents → Documents → Créer, puis « Remplace le lien officiel » = « Fiche d’adhésion (page Adhésion) ».
+ * Fiche d’adhésion (bouton de la page « Adhérer ») et grille tarifaire (encadré « Envie de nous rejoindre ? » de la page Planning), affichée dans l’ordre saisi.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tarifs".
  */
 export interface Tarif {
   id: number;
+  /**
+   * Choisissez la fiche déjà déposée ou cliquez sur « Créer nouveau » pour envoyer le PDF de la saison. Le bouton « Fiche d’adhésion » de la page Adhérer pointera vers ce fichier (laisser « Afficher dans la liste des documents » coché).
+   */
+  ficheAdhesion?: (number | null) | Document;
   lignes?:
     | {
         montant: string;
@@ -1504,6 +1508,7 @@ export interface TitresSelect<T extends boolean = true> {
  * via the `definition` "tarifs_select".
  */
 export interface TarifsSelect<T extends boolean = true> {
+  ficheAdhesion?: T;
   lignes?:
     | T
     | {
