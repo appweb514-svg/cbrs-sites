@@ -89,3 +89,5 @@
 - 2026-10-10 | CMS test | 2 médias ajoutés (plan d'eau, olympiades) et rattachés aux 3 cartes Vie du club ; lien de réinitialisation admin@cbrs.local généré (base de test uniquement)
 - 2026-10-10 | Demande | Contact : adresse au-dessus de la carte, « Voir l'itinéraire » en mode itinéraire
 - 2026-10-10 | Demande | Contact : carte Coordonnées alignée sur le bas de la carte OSM (écran large)
+- 2026-10-10 | Demande | Contact : encart adresse au format de la carte Coordonnées, lien « Ouvrir dans OpenStreetMap » retiré
+- 2026-10-10 | Demande | Tour du site : aérer les espaces autour des titres

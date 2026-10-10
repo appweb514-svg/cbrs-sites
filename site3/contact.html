@@ -123,7 +123,7 @@
     body.wave-effect-disabled #contenu { padding-top: 0 !important; }
   }
 </style>
-<link rel="stylesheet" href="ui-shell.css?v=20261010h"/>
+<link rel="stylesheet" href="ui-shell.css?v=20261010i"/>
 <script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/admin*"}},{"not":{"href_matches":"/*.pdf"}}]},"eagerness":"moderate"}]}</script>
 <script>/* Apparence du CMS mémorisée : appliquée avant l’affichage (voir cms-client.js). */try{var t=JSON.parse(localStorage.getItem("cbrs-theme"));if(t&&t.vars){for(var k in t.vars)document.documentElement.style.setProperty(k,t.vars[k]);if(t.fonts)document.write('<link id="cbrs-theme-fonts" rel="stylesheet" href="'+t.fonts.replace(/"/g,"")+'"/>');}}catch(e){}</script>
 <link rel="stylesheet" href="tailwind.css"/>
@@ -296,32 +296,27 @@
     </div>
     <div>
       <h2 data-cbrs-titre="nousTrouver" class="text-3xl md:text-4xl font-bold text-cbrs-text mb-6">Nous <span class="text-cbrs-blue font-serif-italic">trouver</span></h2>
-      <div class="mb-4 rounded-2xl bg-white p-4 shadow-md border border-gray-100">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
+      <div class="mb-4 rounded-2xl bg-white p-6 shadow-card md:p-8">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
             <svg class="w-5 h-5 text-cbrs-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.8 7 12 7 12z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="2"/></svg>
           </div>
           <div>
-            <p class="text-xs uppercase tracking-wide text-gray-500">Adresse du club</p>
-            <address class="not-italic mt-1 text-base font-semibold leading-relaxed text-gray-900">98 rue de Notre-Dame du Thil<br/>60000 Beauvais</address>
+            <h3 class="font-semibold text-gray-900 mb-1">Adresse du club</h3>
+            <address class="not-italic text-gray-600 text-sm">98 rue de Notre-Dame du Thil<br/>60000 Beauvais</address>
+            <a href="https://www.openstreetmap.org/directions?to=49.4455806%2C2.0800750#map=16/49.4455806/2.0800750" target="_blank" rel="noopener" class="inline-flex items-center gap-1 mt-2 text-sm text-cbrs-green hover:underline">
+              Voir l’itinéraire
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+            </a>
           </div>
         </div>
-        <a href="https://www.openstreetmap.org/directions?to=49.4455806%2C2.0800750#map=16/49.4455806/2.0800750" target="_blank" rel="noopener" class="inline-flex items-center gap-1 mt-3 text-sm font-semibold text-cbrs-green hover:underline">
-          Voir l’itinéraire
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
-        </a>
       </div>
       <div class="rounded-2xl overflow-hidden shadow-md">
         <div class="cbrs-map-with-overlay cbrs-map-clip relative h-72 bg-gray-100">
           <iframe title="Localisation CBRS Beauvais" width="100%" height="100%" style="border:0;" loading="lazy" data-cookie-src="https://www.openstreetmap.org/export/embed.html?bbox=2.0740%2C49.4425%2C2.0860%2C49.4485&amp;layer=mapnik&amp;marker=49.4455806%2C2.0800750"></iframe>
         </div>
       </div>
-      <div class="mt-2 flex flex-wrap items-center justify-between gap-2">
-        <p class="text-xs text-gray-400">&copy; OpenStreetMap contributors</p>
-        <a href="https://www.openstreetmap.org/?mlat=49.4455806&amp;mlon=2.0800750#map=18/49.4455806/2.0800750" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-sm text-cbrs-green hover:underline">
-          Ouvrir dans OpenStreetMap <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-        </a>
-      </div>
+      <p class="mt-2 text-xs text-gray-400">&copy; OpenStreetMap contributors</p>
     </div>
   </div>
 </section>
