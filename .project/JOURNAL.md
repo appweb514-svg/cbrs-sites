@@ -84,3 +84,4 @@
 - 2026-10-10 | Demande | Galerie (et Planning) : écart header → surtitre aligné sur les autres pages (48 px)
 - 2026-10-10 | Demande | Transitions entre pages : pré-rendu au survol (Speculation Rules, hors /admin et PDF) sur les 15 pages pour supprimer le flash blanc
 - 2026-10-10 | Demande | Fiches activité : liens « Itinéraire » ouvrent la carte OSM avec repère (plus le mode itinéraire)
+- 2026-10-10 | Demande | Correction : liens itinéraire des fiches activité remis en mode itinéraire ; fiches sortie/événement passent en mode itinéraire OSM (directions?to=)

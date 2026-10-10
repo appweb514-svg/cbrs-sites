@@ -90,7 +90,6 @@
 
   const itinerary = byId('detail-itinerary-link');
   if (record.coordinates) {
-    const mapUrl = `https://www.openstreetmap.org/?mlat=${record.coordinates.lat}&mlon=${record.coordinates.lng}#map=14/${record.coordinates.lat}/${record.coordinates.lng}`;
     // Cadre élargi de 60 % autour du point pour mieux situer le lieu.
     const [w, so, e, n] = decodeURIComponent(record.coordinates.bbox).split(',').map(Number);
     const dx = (e - w) * 0.3, dy = (n - so) * 0.3;
@@ -102,7 +101,7 @@
     frame.hidden = false;
     // Classes Tailwind « flex » / « hidden » : l'attribut hidden seul ne suffit pas.
     byId('detail-map-empty').classList.replace('flex', 'hidden');
-    itinerary.href = mapUrl;
+    itinerary.href = `https://www.openstreetmap.org/directions?to=${record.coordinates.lat}%2C${record.coordinates.lng}#map=14/${record.coordinates.lat}/${record.coordinates.lng}`;
     itinerary.classList.replace('hidden', 'flex');
   }
 
