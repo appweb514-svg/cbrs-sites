@@ -2109,3 +2109,9 @@ h2.text-3xl { font-size: 1.625rem; line-height: 2rem; }
   body.cbrs-ui div:has(> .contact-panel-card) { display: flex; flex-direction: column; }
   body.cbrs-ui .contact-panel-card { flex: 1 1 auto; margin-bottom: 1.5rem; }
 }
+
+/* Respiration autour des titres (tour du site 2026-10-10) */
+body.cbrs-ui main h2.text-3xl + p { margin-top: 1rem; }
+body.cbrs-ui main .cbrs-carte-titre,
+body.cbrs-ui main > section > div.mb-6:has(> h2.text-3xl) { margin-bottom: 2rem; }
+body.cbrs-ui main h3:not([class*="mb-"]):has(+ p) { margin-bottom: .25rem; }
