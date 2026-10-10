@@ -85,3 +85,5 @@
 - 2026-10-10 | Demande | Transitions entre pages : pré-rendu au survol (Speculation Rules, hors /admin et PDF) sur les 15 pages pour supprimer le flash blanc
 - 2026-10-10 | Demande | Fiches activité : liens « Itinéraire » ouvrent la carte OSM avec repère (plus le mode itinéraire)
 - 2026-10-10 | Demande | Correction : liens itinéraire des fiches activité remis en mode itinéraire ; fiches sortie/événement passent en mode itinéraire OSM (directions?to=)
+- 2026-10-10 | Demande | Remettre les photos Vie du club sur le site de test, réinitialiser le mot de passe admin du CMS de test
+- 2026-10-10 | CMS test | 2 médias ajoutés (plan d'eau, olympiades) et rattachés aux 3 cartes Vie du club ; lien de réinitialisation admin@cbrs.local généré (base de test uniquement)
