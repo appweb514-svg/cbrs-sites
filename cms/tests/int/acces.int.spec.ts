@@ -100,6 +100,20 @@ describe('Droits d’accès du CMS', () => {
       ).rejects.toThrow()
     })
 
+    it('modifie les horaires de son activité (affichés sur le Planning), pas ceux des autres', async () => {
+      const creneaux = [{ jour: 'Mardi', horaire: '14h00 - 17h00', lieu: 'Salle des fêtes' }]
+      const updated = await payload.update({
+        collection: 'activites',
+        id: jeuxCartes.id,
+        data: { creneaux, _status: 'published' },
+        ...withUser(cartes),
+      })
+      expect(updated.creneaux?.[0]).toMatchObject(creneaux[0])
+      await expect(
+        payload.update({ collection: 'activites', id: danse.id, data: { creneaux }, ...withUser(cartes) }),
+      ).rejects.toThrow()
+    })
+
     it('ne voit que son activité dans l’administration', async () => {
       const { docs } = await payload.find({ collection: 'activites', draft: true, ...withUser(cartes) })
       expect(docs.map((doc) => doc.slug)).toEqual(['13'])

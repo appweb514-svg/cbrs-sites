@@ -123,7 +123,7 @@
     body.wave-effect-disabled #contenu { padding-top: 0 !important; }
   }
 </style>
-<link rel="stylesheet" href="ui-shell.css?v=20261010k"/>
+<link rel="stylesheet" href="ui-shell.css?v=20261010l"/>
 <script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/admin*"}},{"not":{"href_matches":"/*.pdf"}}]},"eagerness":"moderate"}]}</script>
 <script>/* Apparence du CMS mémorisée : appliquée avant l’affichage (voir cms-client.js). */try{var t=JSON.parse(localStorage.getItem("cbrs-theme"));if(t&&t.vars){for(var k in t.vars)document.documentElement.style.setProperty(k,t.vars[k]);if(t.fonts)document.write('<link id="cbrs-theme-fonts" rel="stylesheet" href="'+t.fonts.replace(/"/g,"")+'"/>');}}catch(e){}</script>
 <link rel="stylesheet" href="tailwind.css"/>
@@ -434,95 +434,8 @@
 </footer>
 </main></div></div>
 
-<style>
-  .pdf-lightbox { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(10, 20, 40, 0.72); backdrop-filter: blur(3px); justify-content: center; align-items: center; padding: 1rem; }
-  .pdf-lightbox.active { display: flex; }
-  .pdf-lightbox-card { display: flex; flex-direction: column; width: min(92vw, 60rem); height: min(92vh, 52rem); background: #fff; border-radius: 1rem; box-shadow: 0 24px 70px rgba(0,0,0,0.45); overflow: hidden; }
-  .pdf-lightbox-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; padding: .6rem .9rem; background: #0a3273; color: #fff; }
-  .pdf-lightbox-toolbar-title { flex: 1 1 auto; min-width: 0; font-size: .85rem; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .pdf-lightbox-tool { display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .7rem; border: 1px solid rgba(255,255,255,.28); border-radius: .6rem; background: rgba(255,255,255,.08); color: #fff; font-size: .78rem; font-weight: 600; cursor: pointer; transition: background-color .15s, border-color .15s; }
-  .pdf-lightbox-tool:hover, .pdf-lightbox-tool:focus-visible { background: var(--cbrs-green); border-color: var(--cbrs-green); outline: none; }
-  .pdf-lightbox-tool svg { width: 1rem; height: 1rem; fill: currentColor; }
-  .pdf-lightbox-body { position: relative; flex: 1 1 auto; min-height: 0; overflow: hidden; background: #525659; }
-  .pdf-lightbox-body iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .pdf-lightbox-close { position: absolute; top: 1rem; right: 1.25rem; z-index: 2; display: grid; width: 2.5rem; height: 2.5rem; place-items: center; border-radius: 999px; background: rgba(10, 20, 40, .55); color: #fff; font-size: 1.6rem; line-height: 1; cursor: pointer; border: 1px solid rgba(255,255,255,.3); transition: background-color .15s; }
-  .pdf-lightbox-close:hover, .pdf-lightbox-close:focus-visible { background: #8f1d27; outline: none; }
-</style>
-
-<div class="pdf-lightbox" id="pdf-lightbox" role="dialog" aria-modal="true" aria-label="Aperçu du document PDF" onclick="if (event.target === this) closePdf()">
-  <button type="button" class="pdf-lightbox-close" onclick="closePdf()" aria-label="Fermer">×</button>
-  <div class="pdf-lightbox-card" onclick="event.stopPropagation()">
-    <div class="pdf-lightbox-toolbar">
-      <span class="pdf-lightbox-toolbar-title" id="pdf-lightbox-title">Document</span>
-      <button type="button" class="pdf-lightbox-tool" onclick="pdfZoom(-0.2)" aria-label="Zoom arrière">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13H5v-2h14v2z"/></svg> Zoom -
-      </button>
-      <button type="button" class="pdf-lightbox-tool" onclick="pdfZoom(0.2)" aria-label="Zoom avant">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> Zoom +
-      </button>
-      <span class="pdf-lightbox-tool" id="pdf-zoom-label" aria-live="polite">100 %</span>
-      <button type="button" class="pdf-lightbox-tool" onclick="pdfPrint()" aria-label="Imprimer le document">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg> Imprimer
-      </button>
-      <button type="button" class="pdf-lightbox-tool" onclick="pdfDownload()" aria-label="Télécharger le document">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Télécharger
-      </button>
-    </div>
-    <div class="pdf-lightbox-body" id="pdf-lightbox-body">
-      <iframe id="pdf-lightbox-frame" title="Aperçu du document PDF" loading="lazy"></iframe>
-    </div>
-  </div>
-</div>
 <script>
 let sidebarCollapsed = false;
-
-let pdfCurrentSrc = '';
-let pdfZoomLevel = 1;
-function openPdf(src, title) {
-  pdfCurrentSrc = src;
-  pdfZoomLevel = 1;
-  document.getElementById('pdf-lightbox-title').textContent = title || 'Document';
-  const frame = document.getElementById('pdf-lightbox-frame');
-  frame.src = src;
-  applyPdfZoom();
-  document.body.classList.add('overflow-hidden');
-  document.getElementById('pdf-lightbox').classList.add('active');
-  document.getElementById('pdf-lightbox-frame').focus();
-}
-function closePdf() {
-  const frame = document.getElementById('pdf-lightbox-frame');
-  frame.src = '';
-  document.getElementById('pdf-lightbox').classList.remove('active');
-  document.body.classList.remove('overflow-hidden');
-}
-function applyPdfZoom() {
-  const body = document.getElementById('pdf-lightbox-body');
-  const frame = document.getElementById('pdf-lightbox-frame');
-  frame.style.transform = 'scale(' + pdfZoomLevel + ')';
-  frame.style.transformOrigin = 'top center';
-  body.style.overflow = pdfZoomLevel > 1 ? 'auto' : 'hidden';
-  document.getElementById('pdf-zoom-label').textContent = Math.round(pdfZoomLevel * 100) + ' %';
-}
-function pdfZoom(delta) {
-  pdfZoomLevel = Math.min(3, Math.max(0.5, +(pdfZoomLevel + delta).toFixed(2)));
-  applyPdfZoom();
-}
-function pdfPrint() {
-  const frame = document.getElementById('pdf-lightbox-frame');
-  if (frame && frame.contentWindow) frame.contentWindow.focus();
-  if (frame && frame.contentWindow && frame.contentWindow.print) frame.contentWindow.print();
-}
-function pdfDownload() {
-  const a = document.createElement('a');
-  a.href = pdfCurrentSrc;
-  a.download = pdfCurrentSrc.split('/').pop() || 'fiche-cbrs.pdf';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-}
-document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape') closePdf();
-});
 
 function toggleMobileMenu() {
   const menu = document.getElementById('mobile-menu');
@@ -601,6 +514,6 @@ syncStickySidebar();
   apply();
 })();
 </script>
-<script src="ui-shell.js?v=20261010a"></script>
+<script src="ui-shell.js?v=20261010c"></script>
 <script src="cms-client.js?v=20261010c" defer></script>
 </body></html>

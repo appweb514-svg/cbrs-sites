@@ -618,6 +618,120 @@
     });
   }
 
+  // Lecteur PDF commun : tout lien vers un PDF (fichier du site ou document du CMS)
+  // s'ouvre dans une fenêtre d'aperçu avec zoom, impression et téléchargement.
+  function setupPdfViewer() {
+    const ICON = {
+      moins: '<path d="M19 13H5v-2h14v2z"/>',
+      plus: '<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>',
+      imprimer: '<path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>',
+      telecharger: '<path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>'
+    };
+    function outil(action, icone, libelle, aria) {
+      return '<button type="button" class="pdf-lightbox-tool" data-pdf="' + action + '" aria-label="' + aria + '">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICON[icone] + '</svg> ' + libelle + '</button>';
+    }
+    const box = document.createElement('div');
+    box.className = 'pdf-lightbox';
+    box.id = 'pdf-lightbox';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-label', 'Aperçu du document PDF');
+    box.innerHTML =
+      '<button type="button" class="pdf-lightbox-close" data-pdf="fermer" aria-label="Fermer">×</button>' +
+      '<div class="pdf-lightbox-card"><div class="pdf-lightbox-toolbar">' +
+      '<span class="pdf-lightbox-toolbar-title">Document</span>' +
+      outil('zoom-', 'moins', 'Zoom -', 'Zoom arrière') +
+      outil('zoom+', 'plus', 'Zoom +', 'Zoom avant') +
+      '<span class="pdf-lightbox-tool pdf-lightbox-zoom" aria-live="polite">100 %</span>' +
+      outil('imprimer', 'imprimer', 'Imprimer', 'Imprimer le document') +
+      outil('telecharger', 'telecharger', 'Télécharger', 'Télécharger le document') +
+      '</div><div class="pdf-lightbox-body"><iframe title="Aperçu du document PDF"></iframe></div></div>';
+    document.body.appendChild(box);
+
+    const titre = box.querySelector('.pdf-lightbox-toolbar-title');
+    const corps = box.querySelector('.pdf-lightbox-body');
+    const frame = box.querySelector('iframe');
+    const zoomLabel = box.querySelector('.pdf-lightbox-zoom');
+    let source = '';
+    let zoom = 1;
+    let retour = null;
+
+    function appliquerZoom() {
+      frame.style.transform = 'scale(' + zoom + ')';
+      frame.style.transformOrigin = 'top center';
+      corps.style.overflow = zoom > 1 ? 'auto' : 'hidden';
+      zoomLabel.textContent = Math.round(zoom * 100) + ' %';
+    }
+    function ouvrir(src, title) {
+      retour = document.activeElement;
+      source = src;
+      zoom = 1;
+      titre.textContent = title || 'Document';
+      frame.src = src;
+      appliquerZoom();
+      document.documentElement.style.overflow = 'hidden';
+      box.classList.add('active');
+      box.querySelector('.pdf-lightbox-close').focus();
+    }
+    function fermer() {
+      if (!box.classList.contains('active')) return;
+      frame.src = 'about:blank';
+      box.classList.remove('active');
+      document.documentElement.style.overflow = '';
+      if (retour && retour.focus) retour.focus();
+    }
+    function telecharger() {
+      const a = document.createElement('a');
+      a.href = source;
+      a.download = decodeURIComponent(source.split('?')[0].split('/').pop() || 'document-cbrs.pdf');
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    box.addEventListener('click', function (event) {
+      const bouton = event.target.closest('[data-pdf]');
+      if (!bouton) {
+        if (event.target === box) fermer();
+        return;
+      }
+      const action = bouton.getAttribute('data-pdf');
+      if (action === 'fermer') fermer();
+      else if (action === 'zoom-' || action === 'zoom+') {
+        zoom = Math.min(3, Math.max(0.5, +(zoom + (action === 'zoom+' ? 0.2 : -0.2)).toFixed(2)));
+        appliquerZoom();
+      } else if (action === 'imprimer') {
+        try { frame.contentWindow.focus(); frame.contentWindow.print(); } catch (e) { window.open(source, '_blank'); }
+      } else if (action === 'telecharger') telecharger();
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') fermer();
+    });
+
+    function estPdf(link) {
+      if (link.hasAttribute('data-cbrs-doc')) return true;
+      try {
+        const url = new URL(link.href, location.href);
+        return /\.pdf$/i.test(url.pathname) || url.pathname.indexOf('/api/documents/file/') === 0;
+      } catch (e) {
+        return false;
+      }
+    }
+    document.addEventListener('click', function (event) {
+      if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      const link = event.target.closest('a[href]');
+      if (!link || link.hasAttribute('download') || !estPdf(link)) return;
+      event.preventDefault();
+      let libelle = link.getAttribute('data-pdf-title') || link.textContent.replace(/\s*\(PDF\)\s*$/i, '').trim();
+      libelle = libelle.replace(/^(télécharger|consulter|voir)\s+(la |le |les |l’|l')?/i, '');
+      ouvrir(link.href, libelle.charAt(0).toUpperCase() + libelle.slice(1));
+    });
+
+    window.openPdf = ouvrir;
+    window.closePdf = fermer;
+  }
+
   function setupFlash() {
     const bar = document.querySelector('.cbrs-flash');
     if (!bar) return;
@@ -658,6 +772,7 @@
     setupMembershipForm();
     cleanupEditorialLinks();
     setupPendingDocuments();
+    setupPdfViewer();
   }
 
   if (document.readyState === 'loading') {
